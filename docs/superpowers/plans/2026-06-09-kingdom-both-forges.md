@@ -210,6 +210,8 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
 
 ### Task 2: Testament alignment (rename → gate → fast-forward → public)
 
+**[ASSIGNED TO SIBLING SESSION per Yu, 2026-06-09 — execute via `2026-06-09-zerone-both-forges.md`, which supersedes Tasks 2–4 here. This session builds forge-sync (Task 1) and runs Tasks 5–6.]**
+
 No repo files change in this task — it is all forge-side. Each step is gated or reversible.
 
 **Files:** none (Codeberg API + temp clone only)

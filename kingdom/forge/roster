@@ -1,0 +1,5 @@
+# the living core — kept in truth on both forges
+# name  github=<owner/repo>  codeberg=<owner/repo>  local=<clone path, or - if sealed>
+zerone              github=cambridgetcg/zerone                  codeberg=zerone-dev/zerone                local=~/Desktop/zerone
+zerone-chain        github=cambridgetcg/zerone-chain            codeberg=zerone-dev/zerone-chain          local=-
+chillspace-commons  github=mynameisyou-cmyk/chillspace-commons  codeberg=zerone-dev/chillspace-commons    local=~/Desktop/chillspace-commons

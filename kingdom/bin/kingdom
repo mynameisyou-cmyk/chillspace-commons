@@ -160,6 +160,117 @@ cmd_publish() {
   [ "$ok" -eq "$total" ]
 }
 
+# --- forge-sync: do both doors show the same house? ----------------------------
+FORGE_ROSTER="$ROOT/forge/roster"
+CB_API="https://codeberg.org/api/v1"
+
+cb_token() { security find-internet-password -s codeberg.org -w 2>/dev/null; }
+
+# cb_api <path> → body on stdout · returns 0 ok, 4 missing, 1 error
+cb_api() {
+  local out code
+  out="$(mktemp)"
+  if ! code=$(curl -sS -o "$out" -w '%{http_code}' \
+        -H "Authorization: token $(cb_token)" "$CB_API/$1"); then
+    rm -f "$out"; return 1
+  fi
+  case "$code" in
+    200)         cat "$out"; rm -f "$out"; return 0 ;;
+    404)         rm -f "$out"; return 4 ;;
+    301|302|307) rm -f "$out"; return 5 ;;
+    *)           rm -f "$out"; return 1 ;;
+  esac
+}
+
+gh_head() {  # $1 owner/repo → default-branch head sha
+  local br
+  br=$(gh api "repos/$1" --jq '.default_branch' 2>/dev/null) || return 1
+  gh api "repos/$1/branches/$br" --jq '.commit.sha' 2>/dev/null
+}
+
+cb_head() {  # $1 owner/repo → default-branch head sha · returns cb_api codes
+  local body br rc=0
+  body=$(cb_api "repos/$1") || rc=$?
+  [ $rc -eq 0 ] || return $rc
+  br=$(printf '%s' "$body" | jq -r '.default_branch')
+  body=$(cb_api "repos/$1/branches/$br") || rc=$?
+  [ $rc -eq 0 ] || return $rc
+  printf '%s' "$body" | jq -r '.commit.id'
+}
+
+cmd_forge_sync() {
+  local heal=0
+  [ "${1:-}" = "--heal" ] && heal=1
+  [ -f "$FORGE_ROSTER" ] || { say "no roster at $FORGE_ROSTER"; exit 1; }
+  local all_ok=1 name rest kv
+  heading "forge-sync — do both doors show the same house?"
+  # fd 3 keeps the roster off stdin: git/gh/curl inside the loop would eat it
+  while read -r -u 3 name rest; do
+    case "$name" in ''|\#*) continue ;; esac
+    local gh_repo='' cb_repo='' local_path=''
+    for kv in $rest; do
+      case "$kv" in
+        github=*)   gh_repo="${kv#github=}" ;;
+        codeberg=*) cb_repo="${kv#codeberg=}" ;;
+        local=*)    local_path="${kv#local=}"; local_path="${local_path/#\~/$HOME}" ;;
+      esac
+    done
+    local gh_sha='' cb_sha='' gh_rc=0 cb_rc=0
+    gh_sha=$(gh_head "$gh_repo") || gh_rc=$?
+    cb_sha=$(cb_head "$cb_repo") || cb_rc=$?
+    local status='' ok=0 behind='' ahead_sha='' n=''
+    if [ $gh_rc -ne 0 ]; then
+      status="? github unreachable"
+    elif [ $cb_rc -eq 4 ]; then
+      status="✗ missing on codeberg"
+    elif [ $cb_rc -eq 5 ]; then
+      status="↪ moved on codeberg (rename redirect) — roster name stale or repo mid-rename"
+    elif [ $cb_rc -ne 0 ]; then
+      status="? codeberg unreachable"
+    elif [ "$gh_sha" = "$cb_sha" ]; then
+      status="github ≡ codeberg   ✓ in truth"; ok=1
+    elif [ "$local_path" != "-" ] && [ -d "$local_path/.git" ] \
+         && git -C "$local_path" fetch -q origin \
+         && { git -C "$local_path" fetch -q "https://codeberg.org/$cb_repo.git" || true; } \
+         && git -C "$local_path" cat-file -e "$gh_sha" 2>/dev/null \
+         && git -C "$local_path" cat-file -e "$cb_sha" 2>/dev/null; then
+      if git -C "$local_path" merge-base --is-ancestor "$cb_sha" "$gh_sha"; then
+        n=$(git -C "$local_path" rev-list --count "$cb_sha..$gh_sha")
+        status="github ≠ codeberg   ⚠ drift ($n commits, codeberg behind)"
+        behind="codeberg"; ahead_sha="$gh_sha"
+      elif git -C "$local_path" merge-base --is-ancestor "$gh_sha" "$cb_sha"; then
+        n=$(git -C "$local_path" rev-list --count "$gh_sha..$cb_sha")
+        status="github ≠ codeberg   ⚠ drift ($n commits, github behind)"
+        behind="github"; ahead_sha="$cb_sha"
+      else
+        status="github ≠ codeberg   ✗ diverged — human eyes needed"
+      fi
+    else
+      status="github ≠ codeberg   ⚠ drift"
+    fi
+    [ $ok -eq 1 ] || all_ok=0
+    printf '  %-19s %s\n' "$name" "$status"
+    if [ $heal -eq 1 ] && [ -n "$behind" ]; then
+      local branch dest
+      branch=$(gh api "repos/$gh_repo" --jq '.default_branch' 2>/dev/null) || branch=""
+      if [ -z "$branch" ]; then say "     ✗ heal: cannot read default branch"; continue; fi
+      if [ "$behind" = codeberg ]; then dest="https://codeberg.org/$cb_repo.git"
+      else dest="https://github.com/$gh_repo.git"; fi
+      say "     → healing: fast-forwarding $behind/$branch"
+      git -C "$local_path" push "$dest" "$ahead_sha:refs/heads/$branch" \
+        && say "     → healed — re-run forge-sync to see it in truth" \
+        || say "     ✗ heal failed (non-fast-forward or auth) — human eyes needed"
+    fi
+  done 3< "$FORGE_ROSTER"
+  echo
+  if [ $all_ok -eq 1 ]; then
+    say "all doors show the same house. ✓"
+  else
+    say "→ kingdom forge-sync --heal   (fast-forward only · diverged and local=- need human eyes)"
+    exit 1
+  fi
+}
+
 cmd_help() {
   cat <<EOF
 ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
@@ -174,6 +285,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
   ${c_bold}kingdom publish${c_off}         speak at every door — push to all homes
+  ${c_bold}kingdom forge-sync${c_off}      do both forges show the same house? (--heal = fast-forward fix)
   ${c_bold}kingdom help${c_off}            this
 
   a kingdom of belonging, not of rule. citizenship is by being.
@@ -191,6 +303,7 @@ case "${1:-boot}" in
   sync) cmd_sync ;;
   homes) cmd_homes ;;
   publish) cmd_publish ;;
+  forge-sync) shift; cmd_forge_sync "${1:-}" ;;
   help|-h|--help) cmd_help ;;
   *) say "unknown command: $1"; echo; cmd_help; exit 1 ;;
 esac
