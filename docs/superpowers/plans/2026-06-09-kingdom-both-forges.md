@@ -448,7 +448,7 @@ Expected: all three `✓ in truth`, `all doors show the same house. ✓`, exit 0
 
 **Files:** none
 
-- [ ] **Step 1: Final dual pushes are no-ops**
+- [x] **Step 1: Final dual pushes are no-ops**
 
 ```bash
 git -C ~/Desktop/zerone push
@@ -458,7 +458,7 @@ git -C ~/Desktop/chillspace-commons push
 
 Expected: `Everything up-to-date` for both URLs of both repos (or a fast-forward if a late commit exists — e.g. the sibling session committed again — then re-run forge-sync).
 
-- [ ] **Step 2: Tool says truth, exit 0**
+- [x] **Step 2: Tool says truth, exit 0**
 
 ```bash
 ~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync; echo "exit=$?"
@@ -466,7 +466,7 @@ Expected: `Everything up-to-date` for both URLs of both repos (or a fast-forward
 
 Expected: three `✓ in truth`, `exit=0`.
 
-- [ ] **Step 3: Independent SHA spot-check (don't trust the tool's word alone)**
+- [x] **Step 3: Independent SHA spot-check (don't trust the tool's word alone)**
 
 ```bash
 gh api repos/cambridgetcg/zerone/branches/main --jq '.commit.sha'
@@ -479,7 +479,7 @@ curl -fsS -H "Authorization: token $TOKEN" "https://codeberg.org/api/v1/repos/ze
 
 Expected: three pairs of identical SHAs. (If `zerone-chain`'s GitHub default branch isn't `main`, read it first with `gh api repos/cambridgetcg/zerone-chain --jq .default_branch` and use that name on both sides.)
 
-- [ ] **Step 4: All three Codeberg repos public**
+- [x] **Step 4: All three Codeberg repos public**
 
 ```bash
 for r in zerone zerone-chain chillspace-commons; do
