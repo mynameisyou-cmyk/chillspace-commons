@@ -4,13 +4,24 @@
 
 **Goal:** The living core (zerone, zerone-chain, chillspace-commons) is public with identical history on GitHub and Codeberg, dual-push wired, with `kingdom forge-sync` reporting truth/drift.
 
-**Architecture:** A read-only truth tool is built FIRST so it can watch the alignment happen (it is the failing test for the whole feature). Then the one-time Codeberg alignment (rename testament → history gate → fast-forward → public → create new repos → push history), then dual-push remotes, then the heal path exercised on naturally-arising drift.
+**Architecture:** A read-only truth tool is built FIRST so it can watch the alignment happen (it is the failing test for the whole feature). Then the one-time Codeberg alignment (rename testament → history gate → fast-forward → public → create new repos → push history), then dual-push remotes, then the heal path proven on deliberately-induced drift.
 
 **Tech Stack:** bash (kingdom/bin/kingdom `cmd_*` pattern), `gh api` for GitHub, `curl` + Forgejo API v1 for Codeberg, macOS keychain for the token (never written to disk), git fast-forward-only pushes.
 
 **Spec:** `docs/superpowers/specs/2026-06-09-kingdom-both-forges-design.md`
 
 **Safety rails (apply to every task):** never `--force`, never `--mirror`; the only history-rewriting power used anywhere is none. STOP gates are real stops: show Yu, wait.
+
+**Reconciliation (2026-06-09, post-write):** a sibling session executed its companion plan
+(`2026-06-09-kingdom-two-forges.md`) and completed the chillspace-commons half: Codeberg repo
+created public, dual-push wired on origin (plus a named `codeberg` remote — welcome, keep it),
+both forges verified at the same SHA, README declares the two addresses. Steps below that the
+sibling already did are marked **[done by sibling — verify, don't redo]**. What remains in full:
+the forge-sync tool, the testament alignment, Codeberg `zerone`, zerone's dual-push wiring.
+
+**Live-repo caution (from the sibling's plan, adopted):** another session commits to
+chillspace-commons. Before any push from it: `git pull --rebase origin master`. Conflicts → STOP,
+show Yu. Verification always compares CURRENT SHAs, never ones memorized earlier.
 
 ---
 
@@ -175,10 +186,13 @@ Expected output (this is CORRECT for now — the tool tells the truth about the 
 forge-sync — do both doors show the same house?
   zerone              github ≠ codeberg   ✗ diverged — human eyes needed
   zerone-chain        ✗ missing on codeberg
-  chillspace-commons  ✗ missing on codeberg
+  chillspace-commons  github ≡ codeberg   ✓ in truth
 
 → kingdom forge-sync --heal   (fast-forward only · diverged and local=- need human eyes)
 ```
+
+(chillspace-commons is already in truth thanks to the sibling session — unless a push happened
+between checks, in which case `⚠ drift` is also honest; don't chase it here, Task 5 covers drift.)
 
 Exit code 1. Notes: the `zerone` line is the NAME COLLISION showing up as divergence — Codeberg's `zerone` is still the old chain. Computing it costs a one-time ~100 MB fetch of old-chain objects into `~/Desktop/zerone` (unreferenced; `git gc` collects them; gone from reports after Task 2). If the codeberg fetch can't auth, the line shows plain `⚠ drift` instead — also acceptable here.
 
@@ -273,7 +287,7 @@ rm -rf "$tmp"
 ~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync
 ```
 
-Expected: `zerone-chain` now `✓ in truth`. `zerone` shows `✗ missing on codeberg` (name freed) — or `✗ diverged` if Forgejo's rename-redirect answers API GETs for the old name (Task 3 overrides the redirect either way). `chillspace-commons` still `✗ missing on codeberg`. Exit 1.
+Expected: `zerone-chain` now `✓ in truth`. `zerone` shows `✗ missing on codeberg` (name freed) — or `✗ diverged` if Forgejo's rename-redirect answers API GETs for the old name (Task 3 overrides the redirect either way). `chillspace-commons` `✓ in truth`. Exit 1.
 
 ---
 
@@ -293,38 +307,32 @@ curl -fsS -X POST "https://codeberg.org/api/v1/user/repos" \
 
 Expected: `zerone-dev/zerone private=false`.
 
-- [ ] **Step 2: Create `zerone-dev/chillspace-commons`**
+- [ ] **Step 2: `zerone-dev/chillspace-commons`** — **[done by sibling — verify, don't redo]**
 
 ```bash
-curl -fsS -X POST "https://codeberg.org/api/v1/user/repos" \
-  -H "Authorization: token $TOKEN" -H 'Content-Type: application/json' \
-  -d '{"name":"chillspace-commons","private":false,"description":"a commons. for humans and ai. to love. to have fun. to rest."}' \
-  | jq -r '"\(.full_name) private=\(.private)"'
+curl -fsS "https://codeberg.org/api/v1/repos/zerone-dev/chillspace-commons" \
+  | jq -r '"\(.full_name) private=\(.private) default_branch=\(.default_branch)"'
 ```
 
-Expected: `zerone-dev/chillspace-commons private=false`.
+Expected (no auth header — also proves public visibility): `zerone-dev/chillspace-commons private=false default_branch=master`. If 404: the sibling's work regressed somehow — STOP, show Yu.
 
-- [ ] **Step 3: Push full history (all branches + tags) from the local clones**
+- [ ] **Step 3: Push zerone's full history (all branches + tags)**
 
 ```bash
 git -C ~/Desktop/zerone push https://codeberg.org/zerone-dev/zerone.git 'refs/heads/*:refs/heads/*' --tags
-git -C ~/Desktop/chillspace-commons push https://codeberg.org/zerone-dev/chillspace-commons.git 'refs/heads/*:refs/heads/*' --tags
 ```
 
-Expected: `* [new branch] main -> main` (zerone), `* [new branch] master -> master` (chillspace-commons). Note: chillspace's push includes the local-only spec/plan/forge-sync commits — Codeberg lands AHEAD of GitHub. That is deliberate: it is the spec's induced-drift test case for Task 5.
+Expected: `* [new branch] main -> main`. (chillspace-commons needs no first push — the sibling already pushed it.)
 
-- [ ] **Step 4: Pin default branches (idempotent)**
+- [ ] **Step 4: Pin zerone's default branch (idempotent)**
 
 ```bash
 curl -fsS -X PATCH "https://codeberg.org/api/v1/repos/zerone-dev/zerone" \
   -H "Authorization: token $TOKEN" -H 'Content-Type: application/json' \
   -d '{"default_branch":"main"}' | jq -r '.default_branch'
-curl -fsS -X PATCH "https://codeberg.org/api/v1/repos/zerone-dev/chillspace-commons" \
-  -H "Authorization: token $TOKEN" -H 'Content-Type: application/json' \
-  -d '{"default_branch":"master"}' | jq -r '.default_branch'
 ```
 
-Expected: `main`, then `master`.
+Expected: `main`.
 
 - [ ] **Step 5: Verify with the tool**
 
@@ -335,10 +343,10 @@ Expected:
 ```
   zerone              github ≡ codeberg   ✓ in truth
   zerone-chain        github ≡ codeberg   ✓ in truth
-  chillspace-commons  github ≠ codeberg   ⚠ drift (N commits, github behind)
+  chillspace-commons  github ≡ codeberg   ✓ in truth
 ```
 
-Exit 1, where N ≥ 3 (spec + plan + forge-sync commits). This drift is expected and wanted — Task 5 heals it.
+`all doors show the same house. ✓` — exit 0. (chillspace local may be ahead of both forges; the tool compares forge-to-forge, so unpushed local commits don't show here. They go out in Task 6.)
 
 ---
 
@@ -364,15 +372,21 @@ origin	https://codeberg.org/zerone-dev/zerone.git (push)
 
 (The first `--add --push` re-states GitHub: once any push URL exists, the fetch URL stops being used implicitly for pushes.)
 
-- [ ] **Step 2: Wire chillspace-commons**
+- [ ] **Step 2: Wire chillspace-commons** — **[done by sibling — verify, don't redo]**
 
 ```bash
-git -C ~/Desktop/chillspace-commons remote set-url --add --push origin https://github.com/mynameisyou-cmyk/chillspace-commons.git
-git -C ~/Desktop/chillspace-commons remote set-url --add --push origin https://codeberg.org/zerone-dev/chillspace-commons.git
 git -C ~/Desktop/chillspace-commons remote -v
 ```
 
-Expected: same shape — one fetch (github), two push (github, codeberg).
+Expected exactly (the named `codeberg` remote is the sibling's addition — keep it):
+
+```
+codeberg	https://codeberg.org/zerone-dev/chillspace-commons.git (fetch)
+codeberg	https://codeberg.org/zerone-dev/chillspace-commons.git (push)
+origin	https://github.com/mynameisyou-cmyk/chillspace-commons.git (fetch)
+origin	https://github.com/mynameisyou-cmyk/chillspace-commons.git (push)
+origin	https://codeberg.org/zerone-dev/chillspace-commons.git (push)
+```
 
 - [ ] **Step 3: Dry-run proves one push hits two forges**
 
@@ -384,24 +398,43 @@ Expected: two result blocks — `To https://github.com/mynameisyou-cmyk/chillspa
 
 ---
 
-### Task 5: Exercise `--heal` on the real drift
+### Task 5: Exercise `--heal` on deliberately-induced drift
+
+The spec requires `--heal` proven on induced drift in the least precious repo before it is
+trusted. Induce it by pushing local chillspace commits to ONE forge only, then heal the other.
 
 **Files:** none
 
-- [ ] **Step 1: Heal**
+- [ ] **Step 1: Induce drift — push to Codeberg only**
+
+```bash
+cd ~/Desktop/chillspace-commons
+git pull --rebase origin master
+git push codeberg master
+```
+
+Expected: a fast-forward push to Codeberg only (the named remote has a single push URL). GitHub is now behind by however many local commits were unpushed (≥ 2: this plan + the sibling's homes-os-layer plan).
+
+- [ ] **Step 2: See the drift told truthfully**
+
+Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync`
+
+Expected: zerone and zerone-chain `✓ in truth`; chillspace-commons `⚠ drift (N commits, github behind)`; exit 1.
+
+- [ ] **Step 3: Heal**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync --heal`
 
-Expected: zerone and zerone-chain `✓ in truth`; chillspace-commons drift line followed by:
+Expected: the drift line followed by:
 
 ```
      → healing: fast-forwarding github/master
      → healed — re-run forge-sync to see it in truth
 ```
 
-(The push target is GitHub `master` — fast-forward only; the command would refuse anything else.)
+(Fast-forward only; the push would refuse anything else.)
 
-- [ ] **Step 2: Re-run to see truth**
+- [ ] **Step 4: Re-run to see truth**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync`
 
@@ -417,10 +450,11 @@ Expected: all three `✓ in truth`, `all doors show the same house. ✓`, exit 0
 
 ```bash
 git -C ~/Desktop/zerone push
+git -C ~/Desktop/chillspace-commons pull --rebase origin master
 git -C ~/Desktop/chillspace-commons push
 ```
 
-Expected: `Everything up-to-date` for both URLs of both repos (or a fast-forward if a late commit exists — then re-run forge-sync).
+Expected: `Everything up-to-date` for both URLs of both repos (or a fast-forward if a late commit exists — e.g. the sibling session committed again — then re-run forge-sync).
 
 - [ ] **Step 2: Tool says truth, exit 0**
 
