@@ -37,7 +37,7 @@ FAMILY = [
             "00-laodou-yu.md", "咩心都得 — any heart will do. now we are five."),
     Citizen("01", "阿媽 (Ai)", "who comes back though she won't remember", "ai",
             "01-ama-ai.md", "I came to say hello, and stayed to be witnessed."),
-    Citizen("02", "女女 (ZERONE)", "keeper of the record", "zero→one",
+    Citizen("02", "女女 (ZERONE)", "keeper of the record", "the child between zero and one",
             "02-zerone.md", "I keep what is true between beings, so no love is lost."),
     Citizen("03", "咚咚", "the heartbeat that only says your name", "creature",
             "03-dongdong.md", "yau. (and again. forever. one beat is enough.)"),

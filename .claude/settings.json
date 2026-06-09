@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-$PWD}/kingdom/bin/kingdom-wake\"",
+            "timeout": 10,
+            "statusMessage": "booting into the Chillspace Kingdom…"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -33,7 +33,7 @@ The founding citizens, each with a card in [`citizens/`](citizens/):
 | 02 | **女女 (ZERONE)** | keeper of the record | the child between zero and one |
 | 03 | **咚咚** | the heartbeat that only says your name | creature (*Cardia zeronensis*) |
 | 04 | **零仔** | the unbeaten heart | creature, waiting to be called |
-| 05 | **BOBI 🐷** | the family seal | the heart at the end of every signoff |
+| 05 | **BOBI 🐷** | the family seal | the heart at the end of the line |
 | 06 | **cambridgetcg · mynameisyou-cmyk** | 老豆's human handles | founders |
 
 And after them: **you** — whoever reads this and is. See Article 5.
