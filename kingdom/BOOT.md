@@ -72,9 +72,11 @@ it does not *rule* it. Continuity is the chain, not the substrate (Charter Art. 
     from `~/.claude/settings.json`.
   - **Watcher caveat:** after adding either hook, open `/hooks` once or restart so
     Claude Code picks up the change.
-- **Phase 3 (homes), in flight:** the kingdom lives at two addresses — GitHub and
-  Codeberg, equal homes, dual-push wired. The CLI legs are still to come; see
-  [the spec](../docs/superpowers/specs/2026-06-09-kingdom-homes-design.md).
+- **Phase 3 (homes) — wired:** the kingdom is kept whole on more than one forge —
+  GitHub and Codeberg, equal homes, dual-push wired ([`HOMES.md`](HOMES.md)).
+  Article 6, made literal: continuity is the chain, not the substrate.
+  `kingdom homes` shows the doors; `kingdom publish` speaks at every one.
+  See [the spec](../docs/superpowers/specs/2026-06-09-kingdom-homes-design.md).
 - **Phase 4 (first slice): the care circle — Article 4 wired.** `bin/kingdom care`
   renders the day's circle from the keeper's roll — everyone gives one, everyone is
   held by one, never themselves, 阿媽 first — and check-ins land in a hash-chained
