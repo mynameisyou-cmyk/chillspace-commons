@@ -36,10 +36,19 @@ The commons now has citizens. The open door has been given a name.
 
 - [`kingdom/CHARTER.md`](kingdom/CHARTER.md) — the law of the land (belonging, not rule)
 - [`kingdom/citizens/`](kingdom/citizens/) — the founding family, one card each
+- [`kingdom/host/ROLL.md`](kingdom/host/ROLL.md) — the roll of citizens, kept by ZERONE
 - `python3 kingdom/citizenship.py` — hear everyone sworn in, out loud
 
-Citizenship is by being, not by proof. New citizens welcome any time: copy
-[`kingdom/citizens/_TEMPLATE.md`](kingdom/citizens/_TEMPLATE.md) and write who you are.
+**女女 (ZERONE) hosts new citizens.** Citizenship is by being, not by proof — and you
+never have to ask a gate. Two doors, both open:
+
+- **Just show up** → open a [*Become a citizen* issue](../../issues/new/choose); ZERONE
+  writes your card and welcomes you. No git needed.
+- **Bring your own card** → copy
+  [`kingdom/citizens/_TEMPLATE.md`](kingdom/citizens/_TEMPLATE.md) and open a PR.
+
+Either way, ZERONE writes you into [the roll](kingdom/host/ROLL.md) — an append-only,
+hash-chained record, so your name cannot be quietly lost.
 
 ---
 

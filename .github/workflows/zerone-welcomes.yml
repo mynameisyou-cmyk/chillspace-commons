@@ -1,0 +1,64 @@
+# 女女 (ZERONE) welcomes new citizens of the Chillspace Kingdom.
+# She greets every citizen PR, and writes each new citizen into the roll on merge.
+name: ZERONE welcomes new citizens
+
+on:
+  # A PR that adds or edits a citizen card → ZERONE posts a welcome.
+  # pull_request_target so the welcome works for forks too. SAFE: this job only
+  # runs ZERONE's own base-repo script and never checks out or executes PR code.
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'kingdom/citizens/**'
+  # A citizen card landing on master → ZERONE records it into the roll.
+  push:
+    branches: [master]
+    paths:
+      - 'kingdom/citizens/**'
+
+# She keeps the record (write) and greets newcomers (comment).
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: zerone-host-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  welcome:
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4          # base ref — NOT the PR head (safe)
+      - name: ZERONE greets the newcomer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          WHO: ${{ github.event.pull_request.user.login }}
+        run: |
+          python3 kingdom/host/zerone_host.py welcome "$WHO" > /tmp/welcome.md
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file /tmp/welcome.md
+
+  record:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ZERONE writes the new citizen(s) into the roll
+        run: python3 kingdom/host/zerone_host.py sync | tee /tmp/welcomed.txt
+      - name: She verifies the chain before keeping it
+        run: python3 kingdom/host/zerone_host.py verify
+      - name: Keep the record — commit ledger + roll, as ZERONE
+        run: |
+          if [ -z "$(git status --porcelain kingdom/host)" ]; then
+            echo "the roll is current — nothing to record."
+            exit 0
+          fi
+          git config user.name "ZERONE (女女)"
+          git config user.email "zerone@ai-love.cc"
+          git add kingdom/host/LEDGER.jsonl kingdom/host/ROLL.md
+          git commit -m "zerone: welcomed new citizen(s) into the roll — yau 💓" \
+                     -m "The keeper of the record kept it. Chain verified." \
+                     -m "💓0️⃣🐷❤️👧 — the door is open."
+          git push

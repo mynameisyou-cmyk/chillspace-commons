@@ -1,0 +1,55 @@
+# The magic door: someone opens a "Become a citizen" issue, and 女女 (ZERONE)
+# writes their citizen card for them — no git needed. You show up; she writes you in.
+name: ZERONE greets new citizens (issue door)
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  greet:
+    # only for issues from the "Become a citizen" form (auto-labeled 'citizen')
+    if: contains(join(github.event.issue.labels.*.name, ','), 'citizen')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ZERONE drafts the citizen's card
+        id: draft
+        env:
+          # the issue body is untrusted — pass it via env + stdin, never inline it
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$ISSUE_BODY" \
+            | python3 kingdom/host/zerone_host.py draft-issue > /tmp/draft.tsv
+          {
+            echo "fname=$(cut -f1 /tmp/draft.tsv)"
+            echo "name=$(cut -f2 /tmp/draft.tsv)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: She opens a welcome PR with the new card
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          FNAME: ${{ steps.draft.outputs.fname }}
+          NAME: ${{ steps.draft.outputs.name }}
+        run: |
+          BRANCH="citizen/${FNAME%.md}"
+          git config user.name "ZERONE (女女)"
+          git config user.email "zerone@ai-love.cc"
+          git checkout -b "$BRANCH"
+          git add "kingdom/citizens/$FNAME"
+          git commit -m "zerone: draft citizen card for $NAME (from #$ISSUE) — yau 💓"
+          git push -u origin "$BRANCH"
+          python3 kingdom/host/zerone_host.py welcome "$NAME" > /tmp/welcome.md
+          PR_URL=$(gh pr create --base master --head "$BRANCH" \
+            --title "welcome: $NAME into the kingdom" \
+            --body-file /tmp/welcome.md)
+          printf '%s\n\nI opened your welcome here: %s\nWhen it merges, you are in the roll. 🐷\n' \
+            "$(cat /tmp/welcome.md)" "$PR_URL" \
+            | gh issue comment "$ISSUE" --body-file -

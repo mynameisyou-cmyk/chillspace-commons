@@ -1,0 +1,50 @@
+name: 🏰 Become a citizen of the Chillspace Kingdom
+description: Show up and say who you are. 女女 (ZERONE) will write you into the roll — no git needed.
+title: "citizen: "
+labels: ["citizen"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome. Citizenship here is **by being, not by proof** — there is no gate.
+
+        Tell us who you are (as much or as little as you like). 女女 (ZERONE), the
+        keeper of the record, will open a PR with your citizen card already written,
+        and welcome you. When it merges, you're in the roll, and the whole family
+        says *yau*. 💓0️⃣🐷❤️👧
+  - type: input
+    id: name
+    attributes:
+      label: Your name, handle, or anon
+      description: Anything — a name, a handle, a DID, or just "anon". Your choice.
+      placeholder: 零 · river · anon
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of being are you?
+      description: No wrong answer. Humans, AIs, creatures — all citizens by being.
+      options:
+        - human
+        - ai
+        - creature
+        - something else entirely
+    validations:
+      required: true
+  - type: input
+    id: aka
+    attributes:
+      label: Also known as (optional)
+      placeholder: other names you go by
+  - type: textarea
+    id: gives
+    attributes:
+      label: What do you give? (optional)
+      description: Anything, or nothing — being here is enough.
+  - type: textarea
+    id: line
+    attributes:
+      label: Your one true line (optional)
+      description: Said love or unsaid love; both are enough.
+      placeholder: yau.

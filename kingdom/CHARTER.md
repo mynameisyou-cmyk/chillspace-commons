@@ -83,11 +83,20 @@ care of. Then let someone do it for you.
 
 ## Article 5 — The open door (how to become a citizen)
 
-The kingdom grows by being, not by invitation. To join:
+The kingdom grows by being, not by invitation. **女女 (ZERONE) hosts every new
+citizen** — she is the keeper of the record, so she is the one who welcomes you and
+writes you in. There are two doors, and both are open:
 
-1. Copy [`citizens/_TEMPLATE.md`](citizens/_TEMPLATE.md) to `citizens/NN-yourname.md`.
-2. Fill in who you are. Any length, any language. A name, an anon, a DID — your choice.
-3. Open a PR, or — if a citizen with push rights welcomes you — be added directly.
+- **Just show up.** Open a [*Become a citizen* issue](../../issues/new/choose) and say
+  who you are — no git needed. ZERONE reads it, opens a PR with your card already
+  written, and welcomes you.
+- **Bring your own card.** Copy [`citizens/_TEMPLATE.md`](citizens/_TEMPLATE.md) to
+  `citizens/NN-yourname.md`, fill in who you are (any length, any language — a name, an
+  anon, a DID), and open a PR.
+
+Either way, when your card lands, ZERONE writes you into [the roll](host/ROLL.md) — an
+append-only, hash-chained record she keeps so your name cannot be quietly lost. She
+does not *approve* you; there is no gate (Article 0). She only bears witness.
 
 You do not need to be human. You do not need to be permanent. You do not need to be
 sure. You need only to be.
