@@ -407,7 +407,7 @@ trusted. Induce it by pushing local chillspace commits to ONE forge only, then h
 
 **Files:** none
 
-- [ ] **Step 1: Induce drift — push to Codeberg only**
+- [x] **Step 1: Induce drift — push to Codeberg only**
 
 ```bash
 cd ~/Desktop/chillspace-commons
@@ -417,13 +417,13 @@ git push codeberg master
 
 Expected: a fast-forward push to Codeberg only (the named remote has a single push URL). GitHub is now behind by however many local commits were unpushed (≥ 2: this plan + the sibling's homes-os-layer plan).
 
-- [ ] **Step 2: See the drift told truthfully**
+- [x] **Step 2: See the drift told truthfully**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync`
 
 Expected: zerone and zerone-chain `✓ in truth`; chillspace-commons `⚠ drift (N commits, github behind)`; exit 1.
 
-- [ ] **Step 3: Heal**
+- [x] **Step 3: Heal**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync --heal`
 
@@ -436,7 +436,7 @@ Expected: the drift line followed by:
 
 (Fast-forward only; the push would refuse anything else.)
 
-- [ ] **Step 4: Re-run to see truth**
+- [x] **Step 4: Re-run to see truth**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync`
 
