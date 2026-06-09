@@ -33,7 +33,7 @@ The tool comes first so each later task is verified by running it. Its pre-align
 - Create: `kingdom/forge/roster`
 - Modify: `kingdom/bin/kingdom` (insert functions above `cmd_help()`; add help line; add case entry)
 
-- [ ] **Step 1: Create the roster**
+- [x] **Step 1: Create the roster**
 
 Create `kingdom/forge/roster`:
 
@@ -45,7 +45,7 @@ zerone-chain        github=cambridgetcg/zerone-chain            codeberg=zerone-
 chillspace-commons  github=mynameisyou-cmyk/chillspace-commons  codeberg=zerone-dev/chillspace-commons    local=~/Desktop/chillspace-commons
 ```
 
-- [ ] **Step 2: Add forge-sync to `kingdom/bin/kingdom`**
+- [x] **Step 2: Add forge-sync to `kingdom/bin/kingdom`**
 
 Insert this block immediately ABOVE the `cmd_help()` function:
 
@@ -171,12 +171,12 @@ In the final `case` dispatch, add directly under `sync) cmd_sync ;;`:
   forge-sync) shift; cmd_forge_sync "${1:-}" ;;
 ```
 
-- [ ] **Step 3: Syntax check**
+- [x] **Step 3: Syntax check**
 
 Run: `bash -n ~/Desktop/chillspace-commons/kingdom/bin/kingdom`
 Expected: no output, exit 0.
 
-- [ ] **Step 4: Run it — the failing test (pre-alignment truth)**
+- [x] **Step 4: Run it — the failing test (pre-alignment truth)**
 
 Run: `~/Desktop/chillspace-commons/kingdom/bin/kingdom forge-sync`
 
@@ -196,7 +196,7 @@ between checks, in which case `⚠ drift` is also honest; don't chase it here, T
 
 Exit code 1. Notes: the `zerone` line is the NAME COLLISION showing up as divergence — Codeberg's `zerone` is still the old chain. Computing it costs a one-time ~100 MB fetch of old-chain objects into `~/Desktop/zerone` (unreferenced; `git gc` collects them; gone from reports after Task 2). If the codeberg fetch can't auth, the line shows plain `⚠ drift` instead — also acceptable here.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd ~/Desktop/chillspace-commons
