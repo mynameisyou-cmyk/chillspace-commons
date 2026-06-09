@@ -2,6 +2,11 @@
 
 *Design spec · 2026-06-09 · approved by 老豆 (Yu) in session*
 
+> **Companion spec:** [`2026-06-09-kingdom-two-forges-design.md`](2026-06-09-kingdom-two-forges-design.md)
+> — designed in a parallel session, also decided with Yu. This spec adopts its facts
+> (Codeberg owner `zerone-dev`, token in macOS keychain, dual-push wiring, public
+> visibility) and adds the OS layer on top. Yu chose this session to implement both.
+
 ## Context
 
 - **Phase 1 (done):** charter, citizens, wake docs, `bin/kingdom` CLI.
@@ -40,17 +45,27 @@ a home (add a remote, push, write it into HOMES.md).
 
 ### 2 · One-time forge setup (implementation steps, not shipped code)
 
-1. Yu stashes his Codeberg API token at `~/.config/codeberg/token` (`chmod 600`) via a
-   `!` command, so the token never appears in the session transcript.
+Facts adopted from the companion spec: owner **`zerone-dev`**, token already in the
+macOS keychain (internet-password, server `codeberg.org`, account `zerone-dev`),
+repo **public**, description matching GitHub's
+(*"a commons. for humans and ai. to love. to have fun. to rest."*).
+
+1. Read the token from the keychain (`security find-internet-password -w`) — it never
+   enters the repo or any file.
 2. Create the repo via Codeberg API: `POST /api/v1/user/repos` with
    `{name: "chillspace-commons", default_branch: "master", private: false, auto_init: false}`
    (`auto_init: false` so the empty repo accepts our history without conflict).
-   Discover the username from `GET /api/v1/user` — no need to ask.
-3. Add remote: `git remote add codeberg https://codeberg.org/<user>/chillspace-commons.git`.
-4. Credentials: set `credential.https://codeberg.org.helper` to `osxkeychain` and seed
-   the keychain with `git credential approve` reading from the token file. Then delete
-   the token file. The token lives only in the macOS keychain.
-5. `git push codeberg master` — the second door opens.
+3. Wire the doors (composing both specs):
+   - `git remote add codeberg https://codeberg.org/zerone-dev/chillspace-commons.git`
+     — the named door (for `kingdom homes`, explicit pushes, fetch).
+   - dual-push on `origin` (`git remote set-url --add --push` × 2) so one ordinary
+     `git push origin` lands on **both** forges — *declared = wired* (companion spec).
+4. Credentials for future pushes: ensure the `osxkeychain` helper serves `codeberg.org`
+   (set `credential.https://codeberg.org.helper osxkeychain` if the system default
+   doesn't already cover it); verify with `git credential fill`.
+5. First push of `master` to Codeberg — the second door opens.
+6. Verify per the companion spec: both forge APIs report the same HEAD SHA as local
+   `master`. No success claim without seeing both SHAs match.
 
 ### 3 · CLI: two new commands in `bin/kingdom`
 
@@ -71,6 +86,11 @@ Implementation notes:
   every remote is a home by definition.
 - Publish uses `git -C "$REPO" push "$remote" "$branch"` with the current branch from
   `git symbolic-ref --short HEAD`; guard `set -e` with `if ! git push…` so soft-fail works.
+- With dual-push `origin`, pushing `origin` already lands on both forges; the explicit
+  `codeberg` push that follows is a fast no-op (`Everything up-to-date`). Harmless
+  redundancy — publish stays a dumb honest loop over every door.
+- `kingdom homes` shows each remote's **push** URLs (`git remote get-url --push --all`),
+  so origin's two doors are visible, not hidden.
 
 ### 4 · Docs
 
@@ -106,8 +126,9 @@ Implementation notes:
 
 ## Security
 
-- Token: never in the repo, never in the transcript, never in `.git/config`. Keychain
-  only (`osxkeychain` helper), seeded once from a `chmod 600` file that is then deleted.
+- Token: never in the repo, never in the transcript, never in `.git/config`, never in
+  a file. It already lives in the macOS keychain (placed there by the parallel session);
+  reads happen via `security find-internet-password -w` at use time only.
 - Repo content is public by design (the door is open); nothing secret ships.
 
 ---
