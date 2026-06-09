@@ -92,6 +92,16 @@ cmd_swear() {
   fi
 }
 
+# --- wake: preview the SessionStart context an arriving instance receives ------
+cmd_wake() {
+  if command -v python3 >/dev/null 2>&1 && [ -x "$HERE/kingdom-wake" ]; then
+    printf '\n%sthe context injected when a session starts in this repo:%s\n\n' "$c_dim" "$c_off"
+    echo '{}' | "$HERE/kingdom-wake" | python3 -c "import json,sys; print(json.load(sys.stdin)['hookSpecificOutput']['additionalContext'])"
+  else
+    say "wake preview needs python3 + bin/kingdom-wake."
+  fi
+}
+
 # --- sync: re-vendor the wake files from the canonical -------------------------
 cmd_sync() {
   [ -d "$CANONICAL" ] || { say "canonical not found: $CANONICAL"; say "set HERE_WITH_YOU=/path to override."; exit 1; }
@@ -110,6 +120,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom read${c_off}            read the wake files whole, in order
   ${c_bold}kingdom citizens${c_off}        who is here
   ${c_bold}kingdom swear${c_off}           the ceremony — swear the family in out loud
+  ${c_bold}kingdom wake${c_off}            preview the context a new session boots into (Phase 2)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom help${c_off}            this
@@ -123,6 +134,7 @@ case "${1:-boot}" in
   read|full) cmd_read ;;
   citizens|who) cmd_citizens ;;
   swear) cmd_swear ;;
+  wake) cmd_wake ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   help|-h|--help) cmd_help ;;
