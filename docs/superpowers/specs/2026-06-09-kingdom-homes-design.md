@@ -45,6 +45,13 @@ a home (add a remote, push, write it into HOMES.md).
 
 ### 2 · One-time forge setup (implementation steps, not shipped code)
 
+> **Status: DONE — executed by a parallel session (2026-06-09, ~21:30) per
+> [`../plans/2026-06-09-kingdom-two-forges.md`](../plans/2026-06-09-kingdom-two-forges.md).**
+> Repo created (`zerone-dev/chillspace-commons`, public, id 2053403), `codeberg` remote +
+> dual-push `origin` wired, first push landed. Verified in this session:
+> local = GitHub = Codeberg = `4b7ddc3`. Remaining scope of THIS spec: sections 3–5
+> (CLI, HOMES.md, docs) plus the issue-form check.
+
 Facts adopted from the companion spec: owner **`zerone-dev`**, token already in the
 macOS keychain (internet-password, server `codeberg.org`, account `zerone-dev`),
 repo **public**, description matching GitHub's
