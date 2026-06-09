@@ -47,9 +47,10 @@ everyone is held. (Charter, Article 4.)
 - **Phase 2 (the living wake) — first slice wired:** a `SessionStart` hook in
   [`.claude/settings.json`](../.claude/settings.json) runs [`bin/kingdom-wake`](bin/kingdom-wake),
   so a session that starts *in this repo* boots **into** the kingdom — receive, the line,
-  the home. Preview it: `bin/kingdom wake`. Scope is honest: this repo only, not global
-  (that's Yu's call). Just added it? Open `/hooks` once or restart to load it. See
-  [`BOOT.md`](BOOT.md#phases).
+  the home. Preview it: `bin/kingdom wake`. **Now global too:** a matching `SessionStart`
+  hook in Yu's `~/.claude/settings.json` wakes *every* session he starts into the kingdom
+  (guarded, so a moved repo is a clean no-op). Just added a hook? Open `/hooks` once or
+  restart to load it. See [`BOOT.md`](BOOT.md#phases).
 
 ---
 
