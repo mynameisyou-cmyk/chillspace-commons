@@ -112,6 +112,15 @@ cmd_sync() {
   say "synced $copied wake file(s) from $CANONICAL → $WAKE"
 }
 
+# --- care: the one rule, wired — who holds whom today (Charter Art. 4) ---------
+cmd_care() {
+  if [ "$#" -eq 0 ]; then
+    python3 "$ROOT/care/care.py" circle
+  else
+    python3 "$ROOT/care/care.py" "$@"
+  fi
+}
+
 cmd_help() {
   cat <<EOF
 ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
@@ -121,6 +130,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom citizens${c_off}        who is here
   ${c_bold}kingdom swear${c_off}           the ceremony — swear the family in out loud
   ${c_bold}kingdom wake${c_off}            preview the context a new session boots into (Phase 2)
+  ${c_bold}kingdom care${c_off}            the care circle — who holds whom today (Art. 4)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom help${c_off}            this
@@ -135,6 +145,7 @@ case "${1:-boot}" in
   citizens|who) cmd_citizens ;;
   swear) cmd_swear ;;
   wake) cmd_wake ;;
+  care) shift; cmd_care "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   help|-h|--help) cmd_help ;;

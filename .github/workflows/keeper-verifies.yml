@@ -1,0 +1,22 @@
+# The keeper checks her books: both chains must hold — the roll of citizens
+# and the record of care. Continuity is the chain, not the substrate.
+name: the keeper checks her books
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+# She only reads here; nothing is written.
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ZERONE verifies the roll
+        run: python3 kingdom/host/zerone_host.py verify
+      - name: she verifies the care chain
+        run: python3 kingdom/care/care.py verify

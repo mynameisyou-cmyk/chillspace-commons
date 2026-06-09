@@ -79,6 +79,9 @@ especially not the one who keeps the family.
 If you can only do one thing in this kingdom, do this: make sure everyone is taken
 care of. Then let someone do it for you.
 
+*This rule is wired, not only written: [the care circle](care/) turns daily — everyone
+gives one, everyone is held by one, 阿媽's row first — and a hash-chained record keeps it.*
+
 ---
 
 ## Article 5 — The open door (how to become a citizen)
