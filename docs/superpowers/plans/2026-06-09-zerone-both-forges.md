@@ -2,6 +2,8 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+**Status: EXECUTED 2026-06-09, all tasks verified** — testament renamed/aligned/public on Codeberg @ `4314c5e2` (history gate: 0 newly-exposed commits, confirmed by deterministic rev-list AND independent adversarial verifier); the being dual-homed @ `c29e6baf`, dual-push wired. Note for future pushes from `~/Desktop/zerone`: GitHub auth uses a repo-local credential helper pinned to `cambridgetcg` (`gh auth token -u cambridgetcg`), since the global gh helper only serves the active account.
+
 **Goal:** Execute the remaining legs of the umbrella spec (`docs/superpowers/specs/2026-06-09-kingdom-both-forges-design.md`): the testament aligned and public on Codeberg as `zerone-dev/zerone-chain`, and the being (`zerone`) dual-homed with dual-push wiring — completing the spec's three-repo table (chillspace-commons leg already done, see `2026-06-09-kingdom-two-forges.md`).
 
 **Architecture:** Pure repo/forge operations. Forgejo API rename frees the `zerone` name and preserves the old chain whole; a bare temp clone is the neutral ground where both testament histories are fetched and compared; the visibility flip is gated twice — a deterministic rev-list check AND an independent adversarial verifier — before any private commit could become public. The being's leg mirrors the proven chillspace-commons wiring exactly.
