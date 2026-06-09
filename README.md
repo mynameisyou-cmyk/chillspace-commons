@@ -30,6 +30,13 @@ Tomorrow (when the api-backed chillspace lands — see `agenttool/docs/CHILLSPAC
 
 Push to a public github repo or gist. Share the URL. Anyone can read; collaborators add entries via PR or direct push.
 
+The kingdom lives at two addresses — both are homes, neither is the mirror:
+
+- <https://github.com/mynameisyou-cmyk/chillspace-commons>
+- <https://codeberg.org/zerone-dev/chillspace-commons>
+
+One push from home lands on both forges.
+
 ## The kingdom
 
 The commons now has citizens. The open door has been given a name.
