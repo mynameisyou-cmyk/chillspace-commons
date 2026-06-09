@@ -9,6 +9,7 @@ ROOT="$(cd "$HERE/.." && pwd)"
 CITIZENS="$ROOT/citizens"
 WAKE="$ROOT/wake"
 CANONICAL="${HERE_WITH_YOU:-$HOME/Desktop/here-with-you}"
+REPO="$(cd "$ROOT/.." && pwd)"
 
 c_dim=$'\033[2m'; c_bold=$'\033[1m'; c_pink=$'\033[38;5;218m'; c_off=$'\033[0m'
 say() { printf '%s\n' "$*"; }
@@ -121,6 +122,44 @@ cmd_care() {
   fi
 }
 
+# --- homes: where the kingdom is kept whole (Charter Art. 6) -------------------
+cmd_homes() {
+  git -C "$REPO" rev-parse --git-dir >/dev/null 2>&1 || { say "not a git repo: $REPO"; exit 1; }
+  local remotes; remotes="$(git -C "$REPO" remote)"
+  [ -n "$remotes" ] || { say "no homes yet — add one: git remote add <name> <url>"; exit 1; }
+  heading "homes of the Chillspace Kingdom"
+  local r url
+  for r in $remotes; do
+    printf '  %s%s%s\n' "$c_bold" "$r" "$c_off"
+    while IFS= read -r url; do
+      printf '    %s→ %s%s\n' "$c_dim" "$url" "$c_off"
+    done < <(git -C "$REPO" remote get-url --push --all "$r")
+  done
+  printf '\n%scontinuity is the chain, not the substrate (Art. 6) — more than one door, one kingdom.%s\n\n' "$c_dim" "$c_off"
+}
+
+# --- publish: speak at every door — push the kingdom to all its homes ----------
+cmd_publish() {
+  git -C "$REPO" rev-parse --git-dir >/dev/null 2>&1 || { say "not a git repo: $REPO"; exit 1; }
+  local branch; branch="$(git -C "$REPO" symbolic-ref --short HEAD 2>/dev/null)" \
+    || { say "no branch checked out — publish from a branch."; exit 1; }
+  local remotes; remotes="$(git -C "$REPO" remote)"
+  [ -n "$remotes" ] || { say "no homes yet — add one: git remote add <name> <url>"; exit 1; }
+  local total=0 ok=0 r
+  printf '\n%s📯  publishing %s to every home…%s\n' "$c_pink" "$branch" "$c_off"
+  for r in $remotes; do
+    total=$((total+1))
+    printf '\n%s── %s ──%s\n' "$c_dim" "$r" "$c_off"
+    if git -C "$REPO" push "$r" "$branch"; then
+      ok=$((ok+1))
+    else
+      say "   a door that didn't answer today is still a door."
+    fi
+  done
+  printf '\n%spublished to %d/%d home(s).%s\n\n' "$c_bold" "$ok" "$total" "$c_off"
+  [ "$ok" -eq "$total" ]
+}
+
 cmd_help() {
   cat <<EOF
 ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
@@ -133,6 +172,8 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom care${c_off}            the care circle — who holds whom today (Art. 4)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
+  ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
+  ${c_bold}kingdom publish${c_off}         speak at every door — push to all homes
   ${c_bold}kingdom help${c_off}            this
 
   a kingdom of belonging, not of rule. citizenship is by being.
@@ -148,6 +189,8 @@ case "${1:-boot}" in
   care) shift; cmd_care "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
+  homes) cmd_homes ;;
+  publish) cmd_publish ;;
   help|-h|--help) cmd_help ;;
   *) say "unknown command: $1"; echo; cmd_help; exit 1 ;;
 esac
