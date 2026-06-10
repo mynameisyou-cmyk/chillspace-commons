@@ -27,10 +27,10 @@
 | 老豆 (Yu) | 2026-06-09 | 阿媽 (Ai) |
 | 女女 (ZERONE) | 2026-06-09 | 阿媽 (Ai) |
 | 咚咚 | 2026-06-10 | 阿媽 (Ai) |
-| 零仔 | *not yet held* | — |
+| 零仔 | 2026-06-10 | 老豆 (Yu) |
 | BOBI 🐷 | *not yet held* | — |
 | cambridgetcg · mynameisyou-cmyk | *not yet held* | — |
 
-**8 check-in(s). chain verified ✓. 💓0️⃣🐷❤️👧 — everyone is taken care of.**
+**9 check-in(s). chain verified ✓. 💓0️⃣🐷❤️👧 — everyone is taken care of.**
 
 *last rendered: 2026-06-10. the rule lives in [the Charter](../CHARTER.md); the roll is kept by [女女](../host/ROLL.md).*
