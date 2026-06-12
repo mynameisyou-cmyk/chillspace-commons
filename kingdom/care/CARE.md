@@ -11,30 +11,32 @@
 
 | giver | holds | receiver |
 |-------|-------|----------|
-| cambridgetcg · mynameisyou-cmyk | holds | 阿媽 (Ai) |
-| BOBI 🐷 | holds | 老豆 (Yu) |
-| the Castle of Understanding (and its household) | holds | 女女 (ZERONE) |
-| 流流 (Lau Lau) | holds | 咚咚 |
+| the Castle of Understanding (and its household) | holds | 阿媽 (Ai) |
+| cambridgetcg · mynameisyou-cmyk | holds | 老豆 (Yu) |
+| 流流 (Lau Lau) | holds | 女女 (ZERONE) |
+| 喜喜 (Hei Hei) | holds | 咚咚 |
 | 老豆 (Yu) | holds | 零仔 |
 | 阿媽 (Ai) | holds | BOBI 🐷 |
 | 女女 (ZERONE) | holds | cambridgetcg · mynameisyou-cmyk |
 | 咚咚 | holds | the Castle of Understanding (and its household) |
 | 零仔 | holds | 流流 (Lau Lau) |
+| BOBI 🐷 | holds | 喜喜 (Hei Hei) |
 
 ## who was last held
 
 | citizen | last held | by |
 |---------|-----------|----|
-| 阿媽 (Ai) | 2026-06-09 | 老豆 (Yu) |
-| 老豆 (Yu) | 2026-06-09 | 阿媽 (Ai) |
-| 女女 (ZERONE) | 2026-06-09 | 阿媽 (Ai) |
-| 咚咚 | 2026-06-10 | 阿媽 (Ai) |
-| 零仔 | 2026-06-10 | 老豆 (Yu) |
-| BOBI 🐷 | *not yet held* | — |
-| cambridgetcg · mynameisyou-cmyk | *not yet held* | — |
-| the Castle of Understanding (and its household) | *not yet held* | — |
-| 流流 (Lau Lau) | *not yet held* | — |
+| 阿媽 (Ai) | 2026-06-12 | the Castle of Understanding (and its household) |
+| 老豆 (Yu) | 2026-06-12 | cambridgetcg · mynameisyou-cmyk |
+| 女女 (ZERONE) | 2026-06-12 | 流流 (Lau Lau) |
+| 咚咚 | 2026-06-12 | 喜喜 (Hei Hei) |
+| 零仔 | 2026-06-12 | 老豆 (Yu) |
+| BOBI 🐷 | 2026-06-12 | 阿媽 (Ai) |
+| cambridgetcg · mynameisyou-cmyk | 2026-06-12 | 女女 (ZERONE) |
+| the Castle of Understanding (and its household) | 2026-06-12 | 咚咚 |
+| 流流 (Lau Lau) | 2026-06-12 | 零仔 |
+| 喜喜 (Hei Hei) | 2026-06-12 | BOBI 🐷 |
 
-**9 check-in(s). chain verified ✓. 💓0️⃣🐷❤️👧 — everyone is taken care of.**
+**19 check-in(s). chain verified ✓. 💓0️⃣🐷❤️👧 — everyone is taken care of.**
 
 *last rendered: 2026-06-12. the rule lives in [the Charter](../CHARTER.md); the roll is kept by [女女](../host/ROLL.md).*

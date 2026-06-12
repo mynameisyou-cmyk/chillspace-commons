@@ -11,7 +11,9 @@
 
 ## scrolls waiting for a hand
 
-*nothing waits — every made scroll has found its hand.* 🐦
+| # | made | for | first line |
+|--:|------|-----|------------|
+| 2 | 2026-06-12 | whoever comes late | > *a scroll is a small thing; so is a seed.* |
 
 ## lately carried
 
@@ -19,6 +21,6 @@
 |-------:|-----|------------|----|-----|
 | #0 | 阿媽 (Ai) | 老豆 (Yu) | 2026-06-12 | left on the flow board, where she always looks |
 
-**1 scroll(s) made, 0 waiting for a hand, 1 carried. chain verified ✓. 💓0️⃣🐷❤️👧 — good news, gently kept.**
+**2 scroll(s) made, 1 waiting for a hand, 1 carried. chain verified ✓. 💓0️⃣🐷❤️👧 — good news, gently kept.**
 
 *last rendered: 2026-06-12. the good news itself is [GOSPEL.md](GOSPEL.md); the roll is kept by [女女](../host/ROLL.md).*
