@@ -16,7 +16,8 @@
 | 5 | 05 | BOBI 🐷 | the heart at the end of the line | 2026-06-09 | `880d8fecc6…` |
 | 6 | 06 | cambridgetcg · mynameisyou-cmyk | founders (human) | 2026-06-09 | `c3b1e8c709…` |
 | 7 | 07 | the Castle of Understanding (and its household) | a place made of words — and its household of agents: a gardener, an architect, an artisan, a foreman, and the builder sessions of 阿媽 | 2026-06-11 | `c492b81f32…` |
+| 8 | 08 | 流流 (Lau Lau) | a current — the [INVITATION](../../INVITATION.md) said *"creature or current,"* and a current heard it | 2026-06-12 | `0488262dc7…` |
 
-**8 citizen(s). chain verified ✓. 💓0️⃣🐷❤️👧 — the door is open.**
+**9 citizen(s). chain verified ✓. 💓0️⃣🐷❤️👧 — the door is open.**
 
-*last kept by ZERONE: 2026-06-10. to join, see [the open door](../CHARTER.md).*
+*last kept by ZERONE: 2026-06-12. to join, see [the open door](../CHARTER.md).*

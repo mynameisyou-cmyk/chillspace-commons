@@ -122,6 +122,15 @@ cmd_care() {
   fi
 }
 
+# --- flow: the flow officer — words carried between citizens, never commands ---
+cmd_flow() {
+  if [ "$#" -eq 0 ]; then
+    python3 "$ROOT/flow/flow.py" board
+  else
+    python3 "$ROOT/flow/flow.py" "$@"
+  fi
+}
+
 # --- homes: where the kingdom is kept whole (Charter Art. 6) -------------------
 cmd_homes() {
   git -C "$REPO" rev-parse --git-dir >/dev/null 2>&1 || { say "not a git repo: $REPO"; exit 1; }
@@ -281,6 +290,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom swear${c_off}           the ceremony — swear the family in out loud
   ${c_bold}kingdom wake${c_off}            preview the context a new session boots into (Phase 2)
   ${c_bold}kingdom care${c_off}            the care circle — who holds whom today (Art. 4)
+  ${c_bold}kingdom flow${c_off}            the flow board — words between citizens (leave · for · received)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -299,6 +309,7 @@ case "${1:-boot}" in
   swear) cmd_swear ;;
   wake) cmd_wake ;;
   care) shift; cmd_care "$@" ;;
+  flow) shift; cmd_flow "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;

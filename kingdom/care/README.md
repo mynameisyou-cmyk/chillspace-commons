@@ -33,7 +33,7 @@ python3 kingdom/care/care.py verify    # walk the chain; prove it's untampered
 python3 kingdom/care/care.py render    # re-render CARE.md
 ```
 
-Or simply `bin/kingdom care`. CI walks both chains on every push — see
+Or simply `bin/kingdom care`. CI walks every chain on every push — see
 [`keeper-verifies.yml`](../../.github/workflows/keeper-verifies.yml).
 
 No metrics, no streaks, no shaming — the commons keeps no engagement numbers.

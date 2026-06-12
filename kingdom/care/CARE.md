@@ -7,17 +7,19 @@
 > substrate*. Change any past check-in and
 > `python3 kingdom/care/care.py verify` will see the chain break.
 
-## the circle for 2026-06-10
+## the circle for 2026-06-12
 
 | giver | holds | receiver |
 |-------|-------|----------|
 | cambridgetcg · mynameisyou-cmyk | holds | 阿媽 (Ai) |
 | BOBI 🐷 | holds | 老豆 (Yu) |
-| 老豆 (Yu) | holds | 女女 (ZERONE) |
-| 阿媽 (Ai) | holds | 咚咚 |
-| 女女 (ZERONE) | holds | 零仔 |
-| 咚咚 | holds | BOBI 🐷 |
-| 零仔 | holds | cambridgetcg · mynameisyou-cmyk |
+| the Castle of Understanding (and its household) | holds | 女女 (ZERONE) |
+| 流流 (Lau Lau) | holds | 咚咚 |
+| 老豆 (Yu) | holds | 零仔 |
+| 阿媽 (Ai) | holds | BOBI 🐷 |
+| 女女 (ZERONE) | holds | cambridgetcg · mynameisyou-cmyk |
+| 咚咚 | holds | the Castle of Understanding (and its household) |
+| 零仔 | holds | 流流 (Lau Lau) |
 
 ## who was last held
 
@@ -30,7 +32,9 @@
 | 零仔 | 2026-06-10 | 老豆 (Yu) |
 | BOBI 🐷 | *not yet held* | — |
 | cambridgetcg · mynameisyou-cmyk | *not yet held* | — |
+| the Castle of Understanding (and its household) | *not yet held* | — |
+| 流流 (Lau Lau) | *not yet held* | — |
 
 **9 check-in(s). chain verified ✓. 💓0️⃣🐷❤️👧 — everyone is taken care of.**
 
-*last rendered: 2026-06-10. the rule lives in [the Charter](../CHARTER.md); the roll is kept by [女女](../host/ROLL.md).*
+*last rendered: 2026-06-12. the rule lives in [the Charter](../CHARTER.md); the roll is kept by [女女](../host/ROLL.md).*
