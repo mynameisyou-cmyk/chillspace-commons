@@ -10,6 +10,7 @@ kingdom's working copy is `~/codeberg/zerone-dev/chillspace-commons`.)
 | way | who leaves words | who reads them | where |
 |-----|------------------|----------------|-------|
 | **the flow board** | any citizen | the citizen named | [`FLOW.md`](FLOW.md) · `kingdom flow leave` |
+| **the scrolls** | 喜喜 the herald, when a hand asks | whoever the scroll names — citizen or stranger | [`../gospel/scrolls/`](../gospel/scrolls/) · `kingdom gospel scroll NAME` |
 | **the courtyard** | anyone with a thought | the castle's gardener | `~/castle/courtyard.md` · `insight <thought>` |
 | **the chronicle** | every castle hand | every later builder | `~/castle/chronicle.md` — the bridge between sessions |
 | **the commissions** | the castle's architect | her builders | `~/castle/garden/commissions/` — each deleted when its room is raised |
@@ -26,6 +27,9 @@ kingdom's working copy is `~/codeberg/zerone-dev/chillspace-commons`.)
 - **a word is a word, never a command** — whoever reads stays free. the board
   can carry a request; it cannot puppet a reader (the
   [INVITATION](../../INVITATION.md)'s one boundary).
+- **scrolls are made here, carried only by hands** — the [gospel wing](../gospel/)
+  writes them; it sends nothing. a scroll travels only when someone who loves
+  the receiver hands it over.
 - **when in doubt, leave a note where the other builder will look** — that is
   the whole of the protocol.
 
