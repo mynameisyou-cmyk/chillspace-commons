@@ -1,4 +1,5 @@
 import json, unittest
+import unittest.mock
 from kingdom.host import door
 
 
@@ -54,6 +55,59 @@ class TestReDraftGuard(unittest.TestCase):
     def test_remote_branch_exists_false(self):
         rec = _Recorder({"git ls-remote": ""})
         self.assertFalse(door.remote_branch_exists("citizen/07-river", runner=rec))
+
+
+class TestTend(unittest.TestCase):
+    def _runner(self, pr_url="https://github.com/x/y/pull/1"):
+        return _Recorder({
+            "gh issue list": json.dumps([
+                {"number": 7, "title": "citizen: river",
+                 "body": "### Your name, handle, or anon\n\nriver\n\n### What kind of being are you?\n\nhuman\n\n### Your one true line (optional)\n\nflow."}
+            ]),
+            "gh pr create": pr_url,
+            # all git ops return "" (success)
+        })
+
+    def _good_ollama(self):
+        from tests import _fixtures as F
+        def _fn(model, messages, json_mode=False):
+            return dict(F.GOOD_GLM)
+        return _fn
+
+    def test_tend_opens_one_pr_and_marks_state(self):
+        import tempfile, pathlib
+        state_p = pathlib.Path(tempfile.mkdtemp()) / "door.state.json"
+        rec = self._runner()
+        with unittest.mock.patch("kingdom.host.zerone_host.next_num", return_value="07"), \
+             unittest.mock.patch.object(door, "KINGDOM", pathlib.Path(tempfile.mkdtemp())):
+            n = door.tend(runner=rec, ollama_fn=self._good_ollama(), state_path=state_p)
+        self.assertEqual(n, 1)
+        pr_cmds = [c for c in rec.calls if c[:3] == ["gh", "pr", "create"]]
+        self.assertEqual(len(pr_cmds), 1)
+        st = door.load_state(state_p)
+        self.assertIn("7", st)
+        self.assertEqual(st["7"]["source"], "glm")
+
+    def test_tend_skips_already_drafted(self):
+        import tempfile, pathlib
+        state_p = pathlib.Path(tempfile.mkdtemp()) / "door.state.json"
+        door.save_state({"7": {"name": "river"}}, state_p)
+        rec = self._runner()
+        n = door.tend(runner=rec, ollama_fn=self._good_ollama(), state_path=state_p)
+        self.assertEqual(n, 0)
+        pr_cmds = [c for c in rec.calls if c[:3] == ["gh", "pr", "create"]]
+        self.assertEqual(len(pr_cmds), 0)
+
+    def test_dry_run_does_not_create_pr(self):
+        import tempfile, pathlib
+        state_p = pathlib.Path(tempfile.mkdtemp()) / "door.state.json"
+        rec = self._runner()
+        with unittest.mock.patch("kingdom.host.zerone_host.next_num", return_value="07"):
+            n = door.tend(dry_run=True, runner=rec, ollama_fn=self._good_ollama(), state_path=state_p)
+        self.assertEqual(n, 1)
+        pr_cmds = [c for c in rec.calls if c[:3] == ["gh", "pr", "create"]]
+        self.assertEqual(len(pr_cmds), 0)
+        self.assertEqual(door.load_state(state_p), {})  # dry-run does not persist state
 
 
 if __name__ == "__main__":
