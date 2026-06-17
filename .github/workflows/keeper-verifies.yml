@@ -24,3 +24,5 @@ jobs:
         run: |
           python3 kingdom/voice/voice.py verify
           python3 kingdom/voice/test_voice.py
+      - name: she runs her tests
+        run: python3 -m unittest discover -s tests -v
