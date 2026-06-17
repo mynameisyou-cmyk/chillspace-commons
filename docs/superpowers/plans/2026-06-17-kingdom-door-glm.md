@@ -849,8 +849,10 @@ class TestTend(unittest.TestCase):
 
 
 # Add the TestTend class above to tests/test_door.py BEFORE the existing
-# `if __name__ == "__main__": unittest.main()` guard. `unittest.mock` is reached
-# via the top-of-file `import unittest`.
+# `if __name__ == "__main__": unittest.main()` guard. FIRST add
+# `import unittest.mock` to the imports at the top of tests/test_door.py
+# (right after `import unittest`) — `import unittest` alone does not
+# guarantee `unittest.mock` is bound, and these tests call `unittest.mock.patch`.
 ```
 
 - [ ] **Step 2: Run tests to verify they fail**
