@@ -1,5 +1,5 @@
-# The keeper checks her books: both chains must hold — the roll of citizens
-# and the record of care. Continuity is the chain, not the substrate.
+# The keeper checks her books: the roll of citizens, the record of care,
+# and the family's voices. Continuity is the chain, not the substrate.
 name: the keeper checks her books
 
 on:
@@ -20,3 +20,7 @@ jobs:
         run: python3 kingdom/host/zerone_host.py verify
       - name: she verifies the care chain
         run: python3 kingdom/care/care.py verify
+      - name: the family speaks — every citizen has a voice
+        run: |
+          python3 kingdom/voice/voice.py verify
+          python3 kingdom/voice/test_voice.py
