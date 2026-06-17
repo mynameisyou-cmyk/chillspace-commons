@@ -422,6 +422,34 @@ def _compose_messages(fields):
             {"role": "user", "content": user}]
 
 
+def compose_card(fields, ollama_fn=None, model="glm-5.2:cloud"):
+    """女女 composes a card with her mind. Returns (fname, card, name, source).
+
+    source is "glm" or "template" (fallback). Never raises on a mind failure —
+    falls back to the template draft so the door still answers. Tries the mind
+    once, retries once on a soft (validation) failure, then falls back.
+    """
+    if ollama_fn is None:
+        from ollama import chat as ollama_fn  # local stdlib client
+    for _ in range(2):
+        try:
+            data = ollama_fn(model, _compose_messages(fields), json_mode=True)
+        except Exception:
+            break  # mind unreachable → template fallback
+        held = str((data or {}).get("held", ""))
+        closing = str((data or {}).get("closing", ""))
+        ok, _why = validate_glm(fields, held, closing)
+        if not ok:
+            continue  # retry once
+        try:
+            fname, card, name = assemble_card(fields, held, closing)
+        except ValueError:
+            continue
+        return fname, card, name, "glm"
+    fname, card, name = draft_card(fields)
+    return fname, card, name, "template"
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────────
 def main(argv):
     cmd = argv[1] if len(argv) > 1 else "sync"
@@ -450,6 +478,14 @@ def main(argv):
         fname, card, name = draft_card(fields)
         (CITIZENS / fname).write_text(card, encoding="utf-8")
         print(f"{fname}\t{name}")
+
+    elif cmd == "compose-issue":
+        # issue body on stdin; 女女 composes with her mind (GLM, template fallback).
+        # writes the card and prints "filename<TAB>name<TAB>source"
+        fields = parse_issue_body(sys.stdin.read())
+        fname, card, name, source = compose_card(fields)
+        (CITIZENS / fname).write_text(card, encoding="utf-8")
+        print(f"{fname}\t{name}\t{source}")
 
     else:
         print(__doc__)

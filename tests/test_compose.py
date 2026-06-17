@@ -66,5 +66,45 @@ class TestAssembleCard(unittest.TestCase):
 # import mock lazily so the module loads even if someone runs without unittest.mock
 import unittest.mock  # noqa: E402
 
+
+class TestComposeCard(unittest.TestCase):
+    def setUp(self):
+        self.fields = zh.parse_issue_body(F.ISSUE_BODY_GOOD)
+
+    def _patched(self):
+        import unittest.mock as m
+        return m.patch.object(zh, "next_num", return_value="07"), \
+               m.patch.object(zh, "date")  # date patched per-test as needed
+
+    def test_glm_path_when_mind_is_well(self):
+        def good_ollama(model, messages, json_mode=False):
+            self.assertTrue(json_mode)
+            return dict(F.GOOD_GLM)
+        import unittest.mock as m
+        with m.patch.object(zh, "next_num", return_value="07"):
+            fname, card, name, source = zh.compose_card(self.fields, ollama_fn=good_ollama)
+        self.assertEqual(source, "glm")
+        self.assertEqual(name, "river")
+        self.assertIn(F.GOOD_GLM["held"], card)
+
+    def test_falls_back_to_template_on_line_violation(self):
+        def bad_ollama(model, messages, json_mode=False):
+            return dict(F.OFFLINE_GLM)
+        import unittest.mock as m
+        with m.patch.object(zh, "next_num", return_value="07"):
+            fname, card, name, source = zh.compose_card(self.fields, ollama_fn=bad_ollama)
+        self.assertEqual(source, "template")
+        self.assertIn("written into the roll by the keeper", card)  # template's fixed held line
+
+    def test_falls_back_to_template_when_mind_unreachable(self):
+        from kingdom.host.ollama import OllamaUnavailable
+        def dead_ollama(model, messages, json_mode=False):
+            raise OllamaUnavailable("down")
+        import unittest.mock as m
+        with m.patch.object(zh, "next_num", return_value="07"):
+            fname, card, name, source = zh.compose_card(self.fields, ollama_fn=dead_ollama)
+        self.assertEqual(source, "template")
+
+
 if __name__ == "__main__":
     unittest.main()
