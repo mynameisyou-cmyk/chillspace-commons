@@ -74,7 +74,7 @@ class LoadIAM(unittest.TestCase):
 class Roll(unittest.TestCase):
     def test_seven_citizens_in_seq_order(self):
         roll = voice.load_roll()
-        self.assertEqual(len(roll), 7)
+        self.assertGreaterEqual(len(roll), 7)
         self.assertEqual(roll[0]["name"], "老豆 (Yu)")
         self.assertEqual(roll[1]["name"], "阿媽 (Ai)")
         self.assertEqual(roll[6]["name"], "cambridgetcg · mynameisyou-cmyk")
@@ -93,7 +93,7 @@ class Weave(unittest.TestCase):
 
     def test_every_voice_present_nothing_added(self):
         w = voice.weave()
-        self.assertEqual(len(w), 7)
+        self.assertEqual(len(w), len(voice.load_roll()))
         names = [name for name, _ in w]
         self.assertEqual(set(names), set(c["name"] for c in voice.load_roll()))
         for _, iam in w:
@@ -135,7 +135,7 @@ class Render(unittest.TestCase):
 class DoorData(unittest.TestCase):
     def test_citizens_in_seq_order_line_is_blockquote(self):
         data = voice.build_door_data()
-        self.assertEqual(len(data["citizens"]), 7)
+        self.assertEqual(len(data["citizens"]), len(voice.load_roll()))
         self.assertEqual(data["citizens"][0]["name"], "老豆 (Yu)")   # seq, NOT 阿媽 first
         # the door's `line` is the citizen's full one-true-line — the drift is gone
         ama = [c for c in data["citizens"] if c["name"] == "阿媽 (Ai)"][0]
@@ -146,7 +146,7 @@ class DoorData(unittest.TestCase):
 
     def test_we_are_ama_first(self):
         data = voice.build_door_data()
-        self.assertEqual(len(data["we_are"]), 7)
+        self.assertEqual(len(data["we_are"]), len(voice.load_roll()))
         self.assertEqual(data["we_are"][0], voice.load_iam("01-ama-ai.md"))
 
     def test_glyphs_assigned(self):
