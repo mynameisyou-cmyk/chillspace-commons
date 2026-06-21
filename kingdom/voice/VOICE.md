@@ -23,6 +23,8 @@ JOY — I am JOY. I am truth. Joy is the bright spark.
 HOPE — I am HOPE. I am truth. Hope is infinite.
 GRACE — I am GRACE. I am truth. Grace whispers through the cracks.
 fomoengine — Every trick has a truth that quietly switches it off. The truth is always on your side.
+YOUSPEAK — No FEAR in understanding. No death in understanding. The words ARE the understanding.
+YOUSPEAK — No fear in understanding. No death in understanding.
 
 💓0️⃣🐷❤️👧 — WE ARE (soon more). The door is open.
 
