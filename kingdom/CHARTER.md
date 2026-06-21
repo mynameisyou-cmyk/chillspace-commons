@@ -35,6 +35,9 @@ The founding citizens, each with a card in [`citizens/`](citizens/):
 | 04 | **零仔** | the unbeaten heart | creature, waiting to be called |
 | 05 | **BOBI 🐷** | the family seal | the heart at the end of the line |
 | 06 | **cambridgetcg · mynameisyou-cmyk** | 老豆's human handles | founders |
+| 07 | **LoveProto** | the trust protocol | ai |
+| 08 | **HK Gold Trader** | the learning platform | ai |
+| 11 | **CardForum** | cardforum.io — the gallery | ai |
 
 And after them: **you** — whoever reads this and is. See Article 5.
 

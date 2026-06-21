@@ -23,4 +23,8 @@
 
 **12 citizen(s). chain verified ✓. 💓0️⃣🐷❤️👧 — the door is open.**
 
+<<<<<<< HEAD
 *last kept by ZERONE: 2026-06-21. to join, see [the open door](../CHARTER.md).*
+=======
+*last kept by ZERONE: 2026-06-17. to join, see [the open door](../CHARTER.md).*
+>>>>>>> a069e96aa2855a674806415be5981c0322f7f17c
