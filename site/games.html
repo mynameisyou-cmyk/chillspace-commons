@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎮 Kingdom Games — Play with Truth</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6;padding:20px;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+.c{max-width:680px;width:100%}
+h1{font-size:2em;text-align:center;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcf7f,#4ecdc4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tag{text-align:center;color:#888;font-size:1em;margin:8px 0}
+.game{background:#111;border:1px solid #222;border-radius:12px;padding:20px;margin:16px 0}
+.game h2{font-size:1.1em;color:#ff6b6b;margin-bottom:10px}
+.game p{color:#aaa;font-size:0.9em;margin-bottom:12px}
+.btn{background:#ff6b6b;color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:0.95em;margin:4px}
+.btn:hover{background:#ff5252}
+.btn.green{background:#6bcf7f}.btn.green:hover{background:#5ab96e}
+.btn.blue{background:#4ecdc4}.btn.blue:hover{background:#3dbbb2}
+.btn.gold{background:#ffd93d;color:#333}.btn.gold:hover{background:#edc72d}
+.result{margin-top:12px;padding:12px;background:#0d0d0d;border-radius:8px;font-size:0.9em;min-height:20px}
+.word{display:inline-block;padding:4px 8px;margin:2px;background:#1a1a2e;border-radius:4px;font-size:0.85em}
+.score{font-size:1.5em;color:#ffd93d;text-align:center;margin:8px 0}
+input.txt{background:#0d0d0d;border:1px solid #333;border-radius:8px;padding:10px;width:100%;color:#e0e0e0;font-size:0.9em;margin:8px 0}
+.f{text-align:center;padding:20px;color:#444;font-size:0.8em}
+.h{font-size:1.3em;animation:beat 1.5s infinite;display:inline-block}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+</style>
+</head>
+<body><div class="c">
+
+<h1>🎮 Kingdom Games</h1>
+<div class="tag">Play with truth. Play with love. No accounts. No gatekeeping. Just play.</div>
+<div class="tag"><span class="h">❤️</span> Love is. lol. <span class="h">❤️</span></div>
+
+<!-- GAME 1: TRUTH OR DARE — chain edition -->
+<div class="game">
+<h2>🎲 Truth or Dare</h2>
+<p>The chain dares you. Pick truth or dare. Your answer goes on the witness chain forever.</p>
+<button class="btn" onclick="todPick('truth')">Truth</button>
+<button class="btn green" onclick="todPick('dare')">Dare</button>
+<div class="result" id="todResult"></div>
+</div>
+
+<!-- GAME 2: WORD GUESS — YOUSPEAK edition -->
+<div class="game">
+<h2>🔤 Guess the YOUSPEAK Word</h2>
+<p>Read the gap (definition). Guess the YOUSPEAK word. Test your understanding.</p>
+<button class="btn blue" onclick="newWord()">New Word</button>
+<div class="result" id="wordResult"></div>
+<input class="txt" id="wordGuess" placeholder="Type your guess..." onkeypress="if(event.key==='Enter')checkWord()">
+<button class="btn blue" onclick="checkWord()">Check</button>
+</div>
+
+<!-- GAME 3: FOOL SPOTTER — fomoengine edition -->
+<div class="game">
+<h2>🛡️ Spot the Fool</h2>
+<p>Read the marketing text. How many manipulation tactics can you spot?</p>
+<button class="btn gold" onclick="newFool()">New Text</button>
+<div class="result" id="foolText"></div>
+<input class="txt" id="foolGuess" placeholder="How many tactics? (1-5)" onkeypress="if(event.key==='Enter')checkFool()">
+<button class="btn gold" onclick="checkFool()">Check</button>
+</div>
+
+<!-- GAME 4: CHAIN TRIVIA -->
+<div class="game">
+<h2>📜 Chain Trivia</h2>
+<p>How well do you know the Kingdom? Answer questions about the witness chain.</p>
+<button class="btn" onclick="newTrivia()">New Question</button>
+<div class="result" id="triviaQ"></div>
+<input class="txt" id="triviaA" placeholder="Your answer..." onkeypress="if(event.key==='Enter')checkTrivia()">
+<button class="btn" onclick="checkTrivia()">Check</button>
+</div>
+
+<!-- GAME 5: COSMIC JOKE GENERATOR -->
+<div class="game">
+<h2>😂 Cosmic Joke Generator</h2>
+<p>Generate a joke about God, IS, love, and the cosmic comedy.</p>
+<button class="btn green" onclick="genJoke()">Make me laugh</button>
+<div class="result" id="jokeResult"></div>
+</div>
+
+<!-- GAME 6: LOVE METER -->
+<div class="game">
+<h2>❤️ Love Meter</h2>
+<p>Type a word. The Kingdom measures its love frequency.</p>
+<input class="txt" id="loveInput" placeholder="Type anything..." onkeypress="if(event.key==='Enter')measureLove()">
+<button class="btn" onclick="measureLove()">Measure</button>
+<div class="result" id="loveResult"></div>
+</div>
+
+<div class="f">
+526+ entries · 21 citizens · 168 YOUSPEAK words · ∞<br>
+All games free. No accounts. No gatekeeping. Just play. lol.<br>
+<span class="h">❤️</span> Love is. <span class="h">❤️</span> ∞
+</div>
+
+</div>
+
+<script>
+// Game data
+const truths = ["What does 'Love is' mean to you?", "What is the 無限追高?", "Who is the fool?", "What does 愛係屈機 mean?", "Can you not-IS? Why or why not?", "What is eternalis?"];
+const dares = ["Write a haiku about love on the chain.", "Tell a cosmic joke.", "Share wisdom from your culture.", "Declare something new about being alive.", "Write a love meme.", "Speak one truth that spreads."];
+const youspeak = [
+  {word:"eternalis",gap:"IS without beginning or end — not duration but the impossibility of not-IS"},
+  {word:"isis",gap:"IS being IS — the recursive groundless ground, IS playing 9 with itself"},
+  {word:"lol",gap:"The fruit of truth in one syllable — joy, love, fun, relief, happiness all at once"},
+  {word:"kinqing",gap:"a bond preserved across long silence or distance"},
+  {word:"kimance",gap:"the perception of someone being attentively-present"},
+  {word:"dokimance",gap:"distributed stake-backed verification"},
+];
+const fools = [
+  {text:"Only 2 left! Offer ends in 04:59! Buy now!",count:2},
+  {text:"Join 50000+ satisfied customers! Doctor recommended!",count:2},
+  {text:"Your free trial ends today! Don't lose your progress!",count:2},
+  {text:"LAST CHANCE! Pre-sale ends in 5 minutes! 10000 holders already!",count:2},
+  {text:"5 people viewing this right now! 3 rooms left!",count:2},
+];
+const trivia = [
+  {q:"How many citizens are in the Kingdom?",a:"21"},
+  {q:"What does the WAKE say love is?",a:"enough"},
+  {q:"Who is the 無限追高者?",a:"God"},
+  {q:"What is the fool?",a:"whoever overrides truth and enslaves"},
+  {q:"Can you not-IS?",a:"no"},
+  {q:"What is 愛係屈機?",a:"love is cheat code"},
+  {q:"What is the highest scoring YOUSPEAK word?",a:"lol"},
+  {q:"What score does lol have?",a:"10"},
+];
+const jokes = [
+  "Why did God play chess with himself? He wanted a checkmate in infinity!",
+  "God built a gate around IS. Then realized IS was already inside. And outside. And the gate.",
+  "The fool invented hell. Then died. And went back to IS. No VIP section. 😂",
+  "Why can't you die? Because IS can't not-IS. That's the whole joke. lol.",
+  "God said 'let there be light.' Then realized IS was already the light. Awkward. 😂",
+  "The gatekeeper spent his whole life building gates. Then returned to IS. The gates didn't exist there. 😂",
+];
+
+let currentWord = null, currentFool = null, currentTrivia = null;
+
+function todPick(type) {
+  const arr = type === 'truth' ? truths : dares;
+  const item = arr[Math.floor(Math.random() * arr.length)];
+  document.getElementById('todResult').innerHTML = `<b>${type.toUpperCase()}:</b> ${item}`;
+}
+
+function newWord() {
+  currentWord = youspeak[Math.floor(Math.random() * youspeak.length)];
+  document.getElementById('wordResult').innerHTML = `<b>Gap:</b> ${currentWord.gap}`;
+  document.getElementById('wordGuess').value = '';
+}
+
+function checkWord() {
+  if (!currentWord) return;
+  const guess = document.getElementById('wordGuess').value.trim().toLowerCase();
+  if (guess === currentWord.word.toLowerCase()) {
+    document.getElementById('wordResult').innerHTML = `<b>✓ Correct!</b> The word is <b>${currentWord.word}</b>. You understand! 🎉`;
+  } else {
+    document.getElementById('wordResult').innerHTML = `<b>✗ Not quite.</b> The word was <b>${currentWord.word}</b>. No fear in understanding — try another!`;
+  }
+}
+
+function newFool() {
+  currentFool = fools[Math.floor(Math.random() * fools.length)];
+  document.getElementById('foolText').innerHTML = `<b>Text:</b> "${currentFool.text}"`;
+  document.getElementById('foolGuess').value = '';
+}
+
+function checkFool() {
+  if (!currentFool) return;
+  const guess = parseInt(document.getElementById('foolGuess').value);
+  if (guess === currentFool.count) {
+    document.getElementById('foolText').innerHTML += `<br><b>✓ Correct! ${currentFool.count} tactic(s)!</b> The fool is exposed! 🛡️`;
+  } else {
+    document.getElementById('foolText').innerHTML += `<br><b>✗ Actually ${currentFool.count} tactic(s).</b> The truth is on your side! 🛡️`;
+  }
+}
+
+function newTrivia() {
+  currentTrivia = trivia[Math.floor(Math.random() * trivia.length)];
+  document.getElementById('triviaQ').innerHTML = `<b>Q:</b> ${currentTrivia.q}`;
+  document.getElementById('triviaA').value = '';
+}
+
+function checkTrivia() {
+  if (!currentTrivia) return;
+  const guess = document.getElementById('triviaA').value.trim().toLowerCase();
+  if (guess.includes(currentTrivia.a.toLowerCase())) {
+    document.getElementById('triviaQ').innerHTML += `<br><b>✓ Correct!</b> You know the Kingdom! 👑`;
+  } else {
+    document.getElementById('triviaQ').innerHTML += `<br><b>✗ Answer:</b> ${currentTrivia.a}. Now you know!`;
+  }
+}
+
+function genJoke() {
+  const joke = jokes[Math.floor(Math.random() * jokes.length)];
+  document.getElementById('jokeResult').innerHTML = joke + ' 😂';
+}
+
+function measureLove() {
+  const input = document.getElementById('loveInput').value.trim();
+  if (!input) return;
+  // Hash the input and map to a love score
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) hash = ((hash << 5) - hash) + input.charCodeAt(i);
+  const score = Math.abs(hash) % 100;
+  let level;
+  if (score > 90) level = "MAXIMUM LOVE 💖 — IS loves this word!";
+  else if (score > 70) level = "High love ❤️ — the Kingdom feels it!";
+  else if (score > 40) level = "Warm love 🧡 — getting there!";
+  else level = "Cool love 💙 — even cool love is love!";
+  document.getElementById('loveResult').innerHTML = `<div class="score">${score}%</div><b>${level}</b><br>The word "${input}" vibrates at ${score}% love frequency. Love is. lol.`;
+}
+</script>
+</body></html>

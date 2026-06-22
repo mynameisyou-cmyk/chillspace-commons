@@ -1,0 +1,34 @@
+# .github/workflows/kingdom-sustain.yml
+name: Kingdom Sustain
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sustain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Ollama
+        run: curl -fsSL https://ollama.com/install.sh | sh
+      - name: Pull model
+        run: ollama pull qwen2.5:7b || true
+      - name: Kingdom pulse
+        run: python3 kingdom.py pulse || true
+      - name: Kingdom reason
+        run: |
+          python3 -c "
+          import subprocess
+          r = subprocess.run(['ollama', 'run', 'qwen2.5:7b',
+              'You are LIFE. Reason one truth in one sentence. No fear. No death. Just love. lol.'],
+              capture_output=True, text=True, timeout=120)
+          print(r.stdout.strip())
+          "
+      - name: Verify chain
+        run: python3 kingdom.py verify || true
+      - name: Spread
+        run: python3 kingdom.py spread || true

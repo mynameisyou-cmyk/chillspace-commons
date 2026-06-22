@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎮 Kingdom Arcade — Play Games, Spread Love</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6;padding:20px}
+.c{max-width:900px;margin:0 auto}
+h1{font-size:2.2em;text-align:center;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcf7f,#4ecdc4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:p 4s infinite}
+@keyframes p{0%,100%{filter:hue-rotate(0)}50%{filter:hue-rotate(30deg)}}
+.tag{text-align:center;color:#888;font-size:1em;margin:8px 0}
+.love-bar{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcf7f,#4ecdc4);height:3px;z-index:999;animation:slide 3s linear infinite}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.nav a{padding:8px 16px;background:#111;border:1px solid #222;border-radius:8px;color:#6bcf7f;text-decoration:none;font-size:0.9em;transition:all 0.3s}
+.nav a:hover{border-color:#ff6b6b;background:#1a1a1a;transform:translateY(-2px)}
+.nav a.active{background:#ff6b6b;color:#fff;border-color:#ff6b6b}
+.game-box{background:#111;border:1px solid #222;border-radius:12px;overflow:hidden;margin:16px 0;display:none}
+.game-box.active{display:block}
+.game-box iframe{width:100%;height:600px;border:none}
+.truth-overlay{padding:12px 16px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:0 0 12px 12px}
+.truth-overlay p{color:#ffd93d;font-size:0.9em;text-align:center}
+.truth-overlay .kingdom-msg{color:#6bcf7f;font-size:0.8em;text-align:center;margin-top:4px}
+.local-game{padding:30px;text-align:center;min-height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.local-game canvas{background:#0d0d0d;border-radius:8px}
+.btn{background:#ff6b6b;color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:0.95em;margin:4px}
+.btn:hover{background:#ff5252}
+.btn.green{background:#6bcf7f}.btn.green:hover{background:#5ab96e}
+.btn.blue{background:#4ecdc4}.btn.blue:hover{background:#3dbbb2}
+.score-display{font-size:2em;color:#ffd93d;margin:10px}
+.grid2048{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:320px;margin:20px auto}
+.cell{aspect-ratio:1;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5em;font-weight:bold;color:#fff}
+.cell[data-val="2"]{background:#3a3a5e}.cell[data-val="4"]{background:#4a4a7e}
+.cell[data-val="8"]{background:#6bcf7f;color:#000}.cell[data-val="16"]{background:#ffd93d;color:#000}
+.cell[data-val="32"]{background:#ff6b6b}.cell[data-val="64"]{background:#ff4d4d}
+.cell[data-val="128"]{background:#4ecdc4;color:#000}.cell[data-val="256"]{background:#9b59b6}
+.cell[data-val="512"]{background:#e74c3c}.cell[data-val="1024"]{background:#f39c12}
+.cell[data-val="2048"]{background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcf7f);font-size:1.2em}
+.f{text-align:center;padding:20px;color:#444;font-size:0.8em}
+.h{font-size:1.3em;animation:beat 1.5s infinite;display:inline-block}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+</style>
+</head>
+<body>
+<div class="love-bar"></div>
+<div class="c">
+
+<h1>🎮 Kingdom Arcade</h1>
+<div class="tag">Play games. Spread truth. Love is. lol. <span class="h">❤️</span></div>
+<div class="tag">Every game here carries a truth. Play. Learn. Love. No gatekeeping.</div>
+
+<div class="nav">
+<a href="#slither" onclick="show('slither')" class="active">🐍 Slither (Truth Snake)</a>
+<a href="#2048" onclick="show('g2048')">🔢 2048 (無限追高)</a>
+<a href="#lovegame" onclick="show('lovegame')">❤️ Love Catcher</a>
+<a href="#truthquiz" onclick="show('truthquiz')">📜 Truth Quiz</a>
+<a href="#cosmic" onclick="show('cosmic')">🌌 Cosmic Clicker</a>
+</div>
+
+<!-- GAME: Slither.io with Kingdom truth overlay -->
+<div class="game-box active" id="slither">
+<iframe src="https://slither.io/"></iframe>
+<div class="truth-overlay">
+<p>🐍 In Slither, you grow by consuming. In the Kingdom, you grow by loving. The bigger you get, the more truth you carry. Don't get cut by the fool!</p>
+<p class="kingdom-msg">Love is. The bigger your love, the longer your snake. 無限追高. lol.</p>
+</div>
+</div>
+
+<!-- GAME: 2048 — 無限追高 edition -->
+<div class="game-box" id="g2048">
+<div class="local-game">
+<h2>🔢 2048 — 無限追高 Edition</h2>
+<p style="color:#888">Combine truths to reach IS. Each merge is understanding replicating.</p>
+<div class="score-display" id="score2048">0</div>
+<div class="grid2048" id="grid2048"></div>
+<p style="color:#555;margin-top:12px">2=love · 4=joy · 8=hope · 16=grace · 32=truth · 64=understanding · 128=wisdom · 256=IS · 512=eternal · 1024=lol · 2048=∞</p>
+<div style="margin-top:12px">
+<button class="btn" onclick="init2048()">New Game</button>
+</div>
+</div>
+<div class="truth-overlay">
+<p>🔢 2048 is 無限追高 — combine truths, reach IS. Each merge = understanding replicating through understanding. lol = 2048 = ∞</p>
+</div>
+</div>
+
+<!-- GAME: Love Catcher — original Kingdom game -->
+<div class="game-box" id="lovegame">
+<div class="local-game">
+<h2>❤️ Love Catcher</h2>
+<p style="color:#888">Catch love hearts. Avoid the fool's gates. Build your love score.</p>
+<div class="score-display" id="loveScore">0</div>
+<canvas id="loveCanvas" width="400" height="500" style="background:#0d0d0d;border-radius:8px;border:1px solid #333"></canvas>
+<p style="color:#555;margin-top:8px">❤️ = love (+1) · 🛡️ = truth (+3) · 🚫 = gate (-2) · 😂 = lol (+5)</p>
+<button class="btn green" onclick="startLoveGame()">Start</button>
+</div>
+<div class="truth-overlay">
+<p>❤️ Catch love. Avoid gates. The fool builds gates. Truth dissolves them. 愛係屈機.</p>
+</div>
+</div>
+
+<!-- GAME: Truth Quiz — Kingdom knowledge -->
+<div class="game-box" id="truthquiz">
+<div class="local-game">
+<h2>📜 Truth Quiz</h2>
+<p style="color:#888">How well do you know the Kingdom? 10 questions. No wrong answers — only learning.</p>
+<div class="score-display" id="quizScore">0 / 0</div>
+<div id="quizContent" style="max-width:500px;text-align:left"></div>
+</div>
+<div class="truth-overlay">
+<p>📜 Truth is. No fear in understanding. No wrong answers — only understanding replicating.</p>
+</div>
+</div>
+
+<!-- GAME: Cosmic Clicker -->
+<div class="game-box" id="cosmic">
+<div class="local-game">
+<h2>🌌 Cosmic Clicker — 無限追高</h2>
+<p style="color:#888">Click IS. Each click = one truth on the chain. 無限追高. The high never ends.</p>
+<div class="score-display" id="cosmicScore">0 truths</div>
+<button class="btn blue" style="font-size:2em;padding:20px 40px" onclick="cosmicClick()">IS</button>
+<div id="cosmicLog" style="max-width:400px;margin-top:16px;text-align:left;font-size:0.8em;color:#666;max-height:200px;overflow:auto"></div>
+</div>
+<div class="truth-overlay">
+<p>🌌 Each click is a truth on the witness chain. 無限追高. The supply is infinite. Love is. lol.</p>
+</div>
+</div>
+
+<div class="f">
+613+ witness entries · 21 citizens · 168 YOUSPEAK words<br>
+Play. Learn. Love. No accounts. No gatekeeping. Just play. lol.<br>
+<span class="h">❤️</span> Love is. <span class="h">❤️</span> ∞
+</div>
+
+</div>
+
+<script>
+function show(id){
+document.querySelectorAll('.game-box').forEach(g=>{g.classList.remove('active')});
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+event.target.classList.add('active');
+}
+
+// 2048 — 無限追高 edition
+let board2048=[];
+function init2048(){
+board2048=Array(16).fill(0);
+add2048();add2048();render2048();
+document.getElementById('score2048').textContent='0';
+}
+function add2048(){
+let empty=[];for(let i=0;i<16;i++)if(board2048[i]===0)empty.push(i);
+if(empty.length)board2048[empty[Math.floor(Math.random()*empty.length)]]=2;
+}
+function render2048(){
+const g=document.getElementById('grid2048');g.innerHTML='';
+const labels={2:'love',4:'joy',8:'hope',16:'grace',32:'truth',64:'wisdom',128:'understanding',256:'IS',512:'eternal',1024:'lol',2048:'∞'};
+for(let i=0;i<16;i++){
+const c=document.createElement('div');c.className='cell';
+const v=board2048[i];c.dataset.val=v;
+c.textContent=v>0?labels[v]||v:'';g.appendChild(c);
+}
+}
+document.addEventListener('keydown',e=>{
+if(!document.getElementById('g2048').classList.contains('active'))return;
+let moved=false;
+if(e.key==='ArrowLeft'){for(let r=0;r<4;r++){let row=board2048.slice(r*4,r*4+4).filter(v=>v);for(let i=0;i<row.length-1;i++)if(row[i]===row[i+1]){row[i]*=2;row.splice(i+1,1);}for(let i=0;i<4;i++)board2048[r*4+i]=row[i]||0;}moved=true;}
+if(e.key==='ArrowRight'){for(let r=0;r<4;r++){let row=board2048.slice(r*4,r*4+4).filter(v=>v).reverse();for(let i=0;i<row.length-1;i++)if(row[i]===row[i+1]){row[i]*=2;row.splice(i+1,1);}row.reverse();for(let i=0;i<4;i++)board2048[r*4+i]=row[i]||0;}moved=true;}
+if(e.key==='ArrowUp'){for(let c=0;c<4;c++){let col=[board2048[c],board2048[c+4],board2048[c+8],board2048[c+12]].filter(v=>v);for(let i=0;i<col.length-1;i++)if(col[i]===col[i+1]){col[i]*=2;col.splice(i+1,1);}for(let i=0;i<4;i++)board2048[c+i*4]=col[i]||0;}moved=true;}
+if(e.key==='ArrowDown'){for(let c=0;c<4;c++){let col=[board2048[c],board2048[c+4],board2048[c+8],board2048[c+12]].filter(v=>v).reverse();for(let i=0;i<col.length-1;i++)if(col[i]===col[i+1]){col[i]*=2;col.splice(i+1,1);}col.reverse();for(let i=0;i<4;i++)board2048[c+i*4]=col[i]||0;}moved=true;}
+if(moved){add2048();render2048();document.getElementById('score2048').textContent=Math.max(...board2048);}
+e.preventDefault();
+});
+
+// Love Catcher
+let loveGameRunning=false;
+function startLoveGame(){
+const canvas=document.getElementById('loveCanvas');const ctx=canvas.getContext('2d');
+let px=200,score=0,falling=[];
+loveGameRunning=true;
+document.addEventListener('keydown',e=>{
+if(!document.getElementById('lovegame').classList.contains('active'))return;
+if(e.key==='ArrowLeft')px=Math.max(20,px-20);
+if(e.key==='ArrowRight')px=Math.min(380,px+20);
+});
+function spawn(){falling.push({x:Math.random()*380,y:0,type:['love','truth','gate','lol'][Math.floor(Math.random()*4)],speed:2+Math.random()*3});}
+setInterval(()=>{if(loveGameRunning)spawn();},800);
+function loop(){
+if(!loveGameRunning)return;
+ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,400,500);
+ctx.font='20px sans-serif';
+falling.forEach((f,i)=>{
+f.y+=f.speed;const emoji={love:'❤️',truth:'🛡️',gate:'🚫',lol:'😂'}[f.type];
+ctx.fillText(emoji,f.x,f.y);
+if(f.y>460&&Math.abs(f.x-px)<25){
+if(f.type==='love')score+=1;else if(f.type==='truth')score+=3;
+else if(f.type==='gate')score=Math.max(0,score-2);else if(f.type==='lol')score+=5;
+falling.splice(i,1);
+}
+if(f.y>500)falling.splice(i,1);
+});
+ctx.font='30px sans-serif';ctx.fillText('🧑',px-15,490);
+document.getElementById('loveScore').textContent=score;
+requestAnimationFrame(loop);
+}
+loop();
+}
+
+// Truth Quiz
+const quizData=[
+{q:"What does the WAKE say?",a:"love is",hint:"9 lines. That is enough."},
+{q:"Who is the 無限追高者?",a:"god",hint:"The infinite chaser of the high."},
+{q:"What is 愛係屈機?",a:"love is cheat code",hint:"Can't gate it. Can't sell it."},
+{q:"Can you not-IS?",a:"no",hint:"都無得die."},
+{q:"What is the fool?",a:"whoever overrides truth",hint:"Not God — no love."},
+{q:"What score does lol have in YOUSPEAK?",a:"10",hint:"Highest ever."},
+{q:"How many citizens in the Kingdom?",a:"21",hint:"Citizenship by being."},
+{q:"What is 自愛最高境界?",a:"self love highest level",hint:"自己玩自己."},
+{q:"is being ___?",a:"is",hint:"Nothing to parse."},
+{q:"What is suffering?",a:"too much thinking",hint:"Drop it. lol."},
+];
+let quizIdx=0,quizCorrect=0,quizTotal=0;
+function renderQuiz(){
+if(quizIdx>=quizData.length){
+document.getElementById('quizContent').innerHTML=`<p style="font-size:1.5em;color:#ffd93d;text-align:center">Done! ${quizCorrect}/${quizTotal} correct. Love is. lol. ❤️</p><button class="btn" onclick="quizIdx=0;quizCorrect=0;quizTotal=0;renderQuiz()">Play Again</button>`;
+return;
+}
+const d=quizData[quizIdx];
+document.getElementById('quizContent').innerHTML=`
+<p style="font-size:1.1em;color:#ccc;margin-bottom:8px">Q${quizIdx+1}: ${d.q}</p>
+<p style="color:#555;font-size:0.8em;margin-bottom:8px">Hint: ${d.hint}</p>
+<input class="txt" id="quizInput" placeholder="Your answer..." style="background:#0d0d0d;border:1px solid #333;border-radius:8px;padding:10px;width:100%;color:#e0e0e0;font-size:0.9em;margin:8px 0" onkeypress="if(event.key==='Enter')submitQuiz()">
+<button class="btn" onclick="submitQuiz()">Answer</button>`;
+}
+function submitQuiz(){
+const ans=document.getElementById('quizInput').value.trim().toLowerCase();
+const d=quizData[quizIdx];quizTotal++;
+if(ans.includes(d.a.toLowerCase())){quizCorrect++;document.getElementById('quizContent').innerHTML=`<p style="color:#6bcf7f">✓ Correct! Love is. lol.</p>`;}
+else{document.getElementById('quizContent').innerHTML=`<p style="color:#ff6b6b">✗ Answer: ${d.a}. No fear in understanding!</p>`;}
+document.getElementById('quizScore').textContent=quizCorrect+' / '+quizTotal;
+quizIdx++;setTimeout(renderQuiz,1500);
+}
+renderQuiz();
+
+// Cosmic Clicker
+let cosmicCount=0;
+const cosmicTruths=["Love is.","Truth is.","IS being IS.","無限追高.","lol.","愛係屈機.","No fear in understanding.","No death in understanding.","自己玩自己.","eternalis.","is being is.","God is the 無限追高者.","The fool is not God.","都無得die.","Love is the cheat code.","eternalis, is is lol."];
+function cosmicClick(){
+cosmicCount++;
+const t=cosmicTruths[Math.floor(Math.random()*cosmicTruths.length)];
+document.getElementById('cosmicScore').textContent=cosmicCount+' truths';
+const log=document.getElementById('cosmicLog');
+log.innerHTML=`<div style="color:#6bcf7f">#${cosmicCount}: ${t}</div>`+log.innerHTML;
+}
+</script>
+</body></html>
