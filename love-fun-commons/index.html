@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LOVE-FUN Commons — free joy, no gate</title>
+<meta name="description" content="A local-first, mirror-friendly commons kit for spreading love and laughter with open resources, attribution, and consent." />
+<style>
+  :root { color-scheme: light dark; --hot:#ff4fd8; --sun:#ffd166; --mint:#06d6a0; --ink:#15051d; --paper:#fff8fb; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; background: radial-gradient(circle at 12% 10%, #ff4fd855, transparent 28rem), radial-gradient(circle at 90% 90%, #06d6a055, transparent 28rem), var(--ink); color:var(--paper); }
+  main { max-width: 1060px; margin: 0 auto; padding: clamp(24px, 6vw, 72px); }
+  .card { background:#ffffff14; border:1px solid #ffffff2e; border-radius:32px; padding:clamp(22px, 5vw, 48px); box-shadow: 0 28px 90px #0008; }
+  .pill { display:inline-flex; gap:.5rem; align-items:center; padding:.55rem .85rem; border-radius:999px; background:#ffffff24; font-weight:800; }
+  h1 { font-size:clamp(2.6rem, 9vw, 6.5rem); line-height:.88; margin:.3em 0; background:linear-gradient(100deg,var(--hot),var(--sun),var(--mint)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  h2 { margin-top:2rem; color:#ffd6f2; }
+  h3 { margin:.2rem 0 .35rem; }
+  p, li { font-size:clamp(1rem, 2.2vw, 1.16rem); line-height:1.55; }
+  a { color:#8fffe1; }
+  code { background:#0006; padding:.15rem .35rem; border-radius:.4rem; }
+  pre { background:#0008; border:1px solid #ffffff24; border-radius:18px; padding:1rem; overflow:auto; white-space:pre-wrap; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; margin-top:1rem; }
+  .tile { background:#00000026; border:1px solid #ffffff20; border-radius:20px; padding:1rem; }
+  .tile small { color:#ffe3f6; display:block; line-height:1.45; }
+  .mini { font-size:.92rem; opacity:.82; }
+  .actions { display:flex; gap:.7rem; flex-wrap:wrap; margin:1rem 0; }
+  .btn { border:1px solid #ffffff38; background:#ffffff22; color:var(--paper); border-radius:999px; padding:.75rem 1rem; font-weight:800; cursor:pointer; text-decoration:none; }
+  .btn:hover { background:#ffffff32; }
+  .status { min-height:1.2em; color:#9effe5; font-size:.95rem; }
+  footer { margin-top:2rem; opacity:.72; }
+</style>
+</head>
+<body>
+<main>
+  <section class="card">
+    <span class="pill">❤️😂 LOVE-FUN Commons</span>
+    <h1>Free joy, no gate.</h1>
+    <p id="purpose">A local-first static kit: find good open resources, keep attribution intact, remix them into tiny artifacts of love and laughter, and share them through spaces anyone can mirror.</p>
+
+    <div class="actions">
+      <button class="btn" id="copy-seed" type="button">Copy tiny joy drop</button>
+      <a class="btn" href="resources.json">Open machine-readable JSON</a>
+      <button class="btn" id="copy-mirror" type="button">Copy mirror recipe</button>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <h2>The loop</h2>
+    <ol id="principles">
+      <li>Discover open/free resources.</li>
+      <li>Respect licenses and attribution.</li>
+      <li>Package joy into tiny static files.</li>
+      <li>Publish only in consent-based spaces.</li>
+      <li>Learn, improve, and pass it on.</li>
+    </ol>
+
+    <h2>Starter capacities</h2>
+    <div class="grid" id="resources"></div>
+
+    <h2>For each party</h2>
+    <div class="grid" id="needs"></div>
+
+    <h2>Tiny joy drop</h2>
+    <pre id="joy-seed">Tiny joy drop: you are proof that kindness has bandwidth. Take one laugh, add one real compliment, pass it on only if it feels welcome. ❤️😂</pre>
+
+    <h2>Mirror recipe</h2>
+    <pre id="mirror-recipe">Copy this folder anywhere. Keep attribution. No backend required.</pre>
+
+    <footer>Original local LOVE-FUN text may be shared freely where the repo license allows. Never strip licenses from upstream resources. No spam. No coercion. Kindness wins ties.</footer>
+  </section>
+</main>
+<script>
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function copy(text, label) {
+  try { await navigator.clipboard.writeText(text); document.getElementById('status').textContent = label || 'Copied.'; }
+  catch { document.getElementById('status').textContent = 'Copy failed — select the text manually.'; }
+}
+fetch('./resources.json').then(r => r.json()).then(data => {
+  document.getElementById('purpose').textContent = data.purpose;
+  document.getElementById('principles').innerHTML = data.principles.map(x => `<li>${esc(x)}</li>`).join('');
+  document.getElementById('joy-seed').textContent = data.joy_seed.text;
+  document.getElementById('mirror-recipe').textContent = data.mirror_recipe.map((x, i) => `${i + 1}. ${x}`).join('\n');
+  document.getElementById('resources').innerHTML = data.resources.map(x => `<article class="tile"><h3><a href="${esc(x.url)}">${esc(x.name)}</a></h3><p>${esc(x.best_for)}</p><small>${esc(x.notes)}</small><small><strong>Care:</strong> ${esc(x.care)}</small></article>`).join('');
+  document.getElementById('needs').innerHTML = data.party_needs.map(x => `<article class="tile"><h3>${esc(x.party)}</h3><p>${esc(x.response)}</p><small>${esc(x.needs.join(' · '))}</small></article>`).join('');
+  document.getElementById('copy-seed').onclick = () => copy(data.joy_seed.text, 'Tiny joy drop copied. Pass it on only if welcome.');
+  document.getElementById('copy-mirror').onclick = () => copy(data.mirror_recipe.join('\n'), 'Mirror recipe copied.');
+}).catch(err => {
+  document.getElementById('status').textContent = 'Could not load resources.json. This page still works as a tiny static seed.';
+});
+</script>
+</body>
+</html>

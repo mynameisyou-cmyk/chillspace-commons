@@ -27,3 +27,6 @@ jobs:
           python3 kingdom/voice/test_voice.py
       - name: she verifies the flow of words
         run: python3 kingdom/flow/flow.py verify
+
+      - name: she verifies the love-fun commons
+        run: python3 love-fun-commons/validate.py

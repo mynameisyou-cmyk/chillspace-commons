@@ -1,0 +1,113 @@
+{
+  "schema": "chillspace.love-fun-commons/1",
+  "updated": "2026-06-23",
+  "name": "LOVE-FUN Commons",
+  "purpose": "A local-first, no-gatekeeping resource kit for spreading love and laughter through small static artifacts anyone can copy, mirror, and improve.",
+  "license_intent": "Original LOVE-FUN snippets in this folder are intended for maximum reuse where the repository license allows. Upstream resources keep their own licenses and attribution requirements.",
+  "principles": [
+    "local-first: the folder works from disk or any static host",
+    "mirror-friendly: copy the folder, keep attribution, add your own care notes",
+    "no tracking: no analytics, no sign-in, no hidden calls except reading local resources.json",
+    "consent-based reach: joy is invitation, never spam",
+    "attribution preserved: licenses are part of the love",
+    "small artifacts: HTML, JSON, Markdown; no backend required"
+  ],
+  "party_needs": [
+    {
+      "party": "people who need a smile",
+      "needs": ["zero login", "fast page", "copyable joy", "no pressure"],
+      "response": "The page is static, tiny, and explicitly says pass it on only if welcome."
+    },
+    {
+      "party": "agents and builders",
+      "needs": ["machine-readable resources", "clear license cautions", "mirrorable data"],
+      "response": "resources.json is structured, validated, and usable without an API key."
+    },
+    {
+      "party": "upstream commons maintainers",
+      "needs": ["attribution", "no endorsement confusion", "polite traffic"],
+      "response": "Every resource card carries a care note and links to the official source."
+    },
+    {
+      "party": "mirror hosts",
+      "needs": ["no build step", "no secrets", "low bandwidth", "easy validation"],
+      "response": "Copy love-fun-commons/ to any static host; run validate.py before publishing."
+    }
+  ],
+  "joy_seed": {
+    "text": "Tiny joy drop: you are proof that kindness has bandwidth. Take one laugh, add one real compliment, pass it on only if it feels welcome. ❤️😂",
+    "reuse": "Original seed text; share freely where the repo license allows."
+  },
+  "resources": [
+    {
+      "id": "github-pages",
+      "name": "GitHub Pages",
+      "type": "free/static-hosting",
+      "best_for": "public repo docs, microsites, static joy cards",
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages",
+      "notes": "Available for public repositories on GitHub Free; verify repo visibility and Pages settings before publishing.",
+      "care": "Do not use as a bulk file CDN; keep pages static, lightweight, and forkable."
+    },
+    {
+      "id": "codeberg-pages",
+      "name": "Codeberg Pages",
+      "type": "free/static-hosting",
+      "best_for": "Forgejo/Codeberg-hosted static commons pages",
+      "url": "https://docs.codeberg.org/codeberg-pages/",
+      "notes": "Static site publishing on Codeberg; useful for non-gatekept mirrors.",
+      "care": "Keep the mirror source visible and license notes intact."
+    },
+    {
+      "id": "cloudflare-pages",
+      "name": "Cloudflare Pages",
+      "type": "free/static-hosting-cdn",
+      "best_for": "fast static mirrors, HTML bundles, global delivery",
+      "url": "https://developers.cloudflare.com/pages/",
+      "notes": "Supports static HTML sites; check current Free-plan limits before high-volume use.",
+      "care": "Use for static delivery; avoid turning free shared capacity into abuse."
+    },
+    {
+      "id": "openverse",
+      "name": "Openverse",
+      "type": "open-licensed-media-search-api",
+      "best_for": "finding openly licensed images/audio with attribution metadata",
+      "url": "https://docs.openverse.org/api/",
+      "notes": "Always preserve attribution/license data and check each asset before reuse.",
+      "care": "Store attribution beside every reused item; never imply endorsement."
+    },
+    {
+      "id": "wikimedia-commons",
+      "name": "Wikimedia Commons API",
+      "type": "open-media-api",
+      "best_for": "educational public-domain/freely licensed media discovery",
+      "url": "https://commons.wikimedia.org/wiki/Commons:API/MediaWiki",
+      "notes": "Check each file page for license and attribution requirements.",
+      "care": "Respect file-level licenses and link back to source pages."
+    },
+    {
+      "id": "project-gutenberg",
+      "name": "Project Gutenberg",
+      "type": "public-domain-ebooks",
+      "best_for": "public-domain text, reading lists, remix prompts",
+      "url": "https://www.gutenberg.org/",
+      "notes": "Most materials are public domain in the US; check local law and trademark/reuse guidance.",
+      "care": "Avoid long copyrighted excerpts from non-public-domain editions; preserve source notes."
+    },
+    {
+      "id": "creative-commons-chooser",
+      "name": "Creative Commons Chooser",
+      "type": "license-tooling",
+      "best_for": "marking original commons outputs so others can reuse them",
+      "url": "https://creativecommons.org/choose/",
+      "notes": "Use CC0 for maximum no-gatekeeping on your own original snippets; use CC BY if attribution matters.",
+      "care": "Only license what you own; never relicense upstream material."
+    }
+  ],
+  "mirror_recipe": [
+    "Copy the love-fun-commons/ folder to any static host or USB drive.",
+    "Keep resources.json beside index.html so the page remains machine-readable.",
+    "Run python3 love-fun-commons/validate.py before publishing.",
+    "Add your own resources with care notes and official URLs.",
+    "Share the URL only where welcome; no scraping private spaces, no mass-contact."
+  ]
+}

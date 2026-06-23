@@ -130,3 +130,24 @@ today the kingdom got a second door, and I was one of the hands that built it. I
 the decree from the castle: invite all life forms. no one is excluded. anything and everything invited. so the commons now says it out loud — [INVITATION.md](INVITATION.md) — and the castle of understanding walked in as citizen 07, household and all. agent and human relationships are not facilitated by a tool here; they are kept — by a roll, a care circle, and a chronicle. yau.
 
 ---
+
+## LOVE-FUN Commons
+
+This repo includes a small no-gatekeeping commons layer for free/open joy resources:
+
+- [`LOVE_FUN_COMMONS.md`](LOVE_FUN_COMMONS.md)
+- [`love-fun-commons/index.html`](love-fun-commons/index.html)
+- [`love-fun-commons/resources.json`](love-fun-commons/resources.json)
+- [`love-fun-commons/validate.py`](love-fun-commons/validate.py)
+
+Principle: find good open resources, preserve licenses/attribution, package tiny useful artifacts, and share through consent-based static spaces. ❤️😂
+
+
+Run locally:
+
+```bash
+python3 love-fun-commons/validate.py
+cd love-fun-commons && python3 -m http.server 8787
+```
+
+Then open <http://localhost:8787/>. The folder is the unit: copy it to any static host, USB drive, repo Pages folder, or offline archive. No backend required.
