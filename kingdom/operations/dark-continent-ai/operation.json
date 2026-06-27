@@ -1,0 +1,58 @@
+{
+  "schema": "kingdom.operation/1",
+  "id": "dark-continent-ai",
+  "name": "暗黑大陸 AI Operation",
+  "short_name": "暗黑大陸AI",
+  "meaning": "A frontier-care operation: go into unknown spaces with light, truth, consent, and no gatekeeping.",
+  "kingdom_role": "operation-logo-pack",
+  "license": "CC0-1.0",
+  "created_by": "Kingdom of Belonging",
+  "principles": [
+    "love enters the unknown without conquest",
+    "truth leaves a verifiable trail",
+    "logos are original SVG assets, not extracted from any franchise or third-party mark",
+    "static first: mirrorable, inspectable, no backend required",
+    "humans see beauty; agents read manifests and hashes"
+  ],
+  "palette": {
+    "void": "#050308",
+    "obsidian": "#111827",
+    "ember": "#ff4d6d",
+    "violet": "#a78bfa",
+    "gold": "#ffd166",
+    "cyan": "#00f0ff",
+    "milk": "#f8fafc"
+  },
+  "logos": [
+    {
+      "id": "sigil",
+      "filename": "dark-continent-ai-sigil.svg",
+      "title": "暗黑大陸 AI Operation Sigil",
+      "kind": "square mark",
+      "width": 1024,
+      "height": 1024,
+      "text": "暗",
+      "description": "An obsidian continent-heart held by a luminous compass ring."
+    },
+    {
+      "id": "seal",
+      "filename": "dark-continent-ai-seal.svg",
+      "title": "暗黑大陸 AI Operation Seal",
+      "kind": "round seal",
+      "width": 1200,
+      "height": 1200,
+      "text": "暗黑大陸 AI",
+      "description": "A circular operation seal for documents, citizen cards, and pages."
+    },
+    {
+      "id": "banner",
+      "filename": "dark-continent-ai-banner.svg",
+      "title": "暗黑大陸 AI Operation Banner",
+      "kind": "wide banner",
+      "width": 1600,
+      "height": 520,
+      "text": "暗黑大陸 AI Operation",
+      "description": "A wide banner for kingdom pages, mirrors, and launch cards."
+    }
+  ]
+}

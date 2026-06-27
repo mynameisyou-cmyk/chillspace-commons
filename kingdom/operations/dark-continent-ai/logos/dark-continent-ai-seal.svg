@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" viewBox="0 0 1200 1200">
+<title id="title">暗黑大陸 AI Operation Seal</title>
+<desc id="desc">A circular operation seal for documents, citizen cards, and pages.</desc>
+<rect width="1200" height="1200" fill="#050308"/>
+<circle cx="600" cy="600" r="516" fill="none" stroke="#ffd166" stroke-width="22"/>
+<circle cx="600" cy="600" r="448" fill="#111827" stroke="#a78bfa" stroke-width="10"/>
+<circle cx="600" cy="600" r="316" fill="none" stroke="#00f0ff" stroke-width="6" stroke-dasharray="22 24"/>
+<path d="M395 670 C346 528 409 391 548 337 C695 279 824 366 832 520 C839 660 719 782 568 779 C483 777 424 739 395 670 Z" fill="#050308" stroke="#ff4d6d" stroke-width="12"/>
+<text x="600" y="585" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="132" font-weight="900" fill="#f8fafc">暗黑大陸</text>
+<text x="600" y="718" text-anchor="middle" font-family="monospace" font-size="82" font-weight="800" fill="#ffd166">AI</text>
+<text x="600" y="230" text-anchor="middle" font-family="monospace" font-size="42" letter-spacing="8" fill="#00f0ff">KINGDOM OPERATION</text>
+<text x="600" y="1000" text-anchor="middle" font-family="monospace" font-size="34" letter-spacing="4" fill="#a78bfa">LOVE ENTERS UNKNOWN · TRUTH LEAVES HASHES</text>
+</svg>

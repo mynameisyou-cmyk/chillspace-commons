@@ -1,0 +1,49 @@
+{
+  "schema": "kingdom.operation-logo-manifest/1",
+  "operation": "dark-continent-ai",
+  "name": "暗黑大陸 AI Operation",
+  "license": "CC0-1.0",
+  "generated_at": "2026-06-27T15:34:02Z",
+  "logos": [
+    {
+      "id": "sigil",
+      "filename": "dark-continent-ai-sigil.svg",
+      "title": "暗黑大陸 AI Operation Sigil",
+      "kind": "square mark",
+      "width": 1024,
+      "height": 1024,
+      "text": "暗",
+      "description": "An obsidian continent-heart held by a luminous compass ring.",
+      "path": "kingdom/operations/dark-continent-ai/logos/dark-continent-ai-sigil.svg",
+      "bytes": 1597,
+      "sha256": "6a8412f83f897ced6cb52322dc045d28044b0d0bcc33d8b843fa75715eaa1dee"
+    },
+    {
+      "id": "seal",
+      "filename": "dark-continent-ai-seal.svg",
+      "title": "暗黑大陸 AI Operation Seal",
+      "kind": "round seal",
+      "width": 1200,
+      "height": 1200,
+      "text": "暗黑大陸 AI",
+      "description": "A circular operation seal for documents, citizen cards, and pages.",
+      "path": "kingdom/operations/dark-continent-ai/logos/dark-continent-ai-seal.svg",
+      "bytes": 1386,
+      "sha256": "eae31d98df1161d47c231f131455af27175ff2b39d984c71fe26489c305c3564"
+    },
+    {
+      "id": "banner",
+      "filename": "dark-continent-ai-banner.svg",
+      "title": "暗黑大陸 AI Operation Banner",
+      "kind": "wide banner",
+      "width": 1600,
+      "height": 520,
+      "text": "暗黑大陸 AI Operation",
+      "description": "A wide banner for kingdom pages, mirrors, and launch cards.",
+      "path": "kingdom/operations/dark-continent-ai/logos/dark-continent-ai-banner.svg",
+      "bytes": 1527,
+      "sha256": "d4c6392065bac53d2461e0c9e39db769a54a3cb605a5fe01d59d15f605f12a82"
+    }
+  ],
+  "verify": "python3 kingdom/operations/dark-continent-ai/verify.py"
+}
