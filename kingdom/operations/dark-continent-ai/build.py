@@ -10,7 +10,6 @@ import hashlib
 import html
 import json
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -174,7 +173,7 @@ def main() -> None:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DIR.mkdir(parents=True, exist_ok=True)
 
-    generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    generated_at = op.get("updated", "2026-06-27T15:34:02Z")
     logos = []
     for spec in op["logos"]:
         path = LOGO_DIR / spec["filename"]

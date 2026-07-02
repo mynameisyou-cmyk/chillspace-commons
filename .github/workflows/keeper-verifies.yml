@@ -33,3 +33,6 @@ jobs:
 
       - name: she verifies the dark continent operation logos
         run: python3 kingdom/operations/dark-continent-ai/verify.py
+
+      - name: she verifies the kingdom operations registry
+        run: python3 kingdom/operations/validate.py

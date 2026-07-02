@@ -1,0 +1,32 @@
+{
+  "schema": "kingdom.operations-registry/1",
+  "updated": "2026-07-02",
+  "name": "Kingdom Operations Registry",
+  "purpose": "A machine-readable index of bounded kingdom missions: operation identity, logos, manifests, verification commands, and mirrorable static pages.",
+  "principles": [
+    "bounded missions: each operation states what it is for and what it is not",
+    "static-first: pages and assets can be mirrored without a backend",
+    "verifiable: manifests carry hashes and validators check them",
+    "original assets: no third-party logo extraction or imitation",
+    "love without conquest: operations enter unknown spaces with care and truth"
+  ],
+  "operations": [
+    {
+      "id": "dark-continent-ai",
+      "name": "暗黑大陸 AI Operation",
+      "short_name": "暗黑大陸AI",
+      "role": "frontier-care operation logo pack",
+      "status": "active",
+      "license": "CC0-1.0",
+      "canonical_dir": "kingdom/operations/dark-continent-ai",
+      "operation_json": "kingdom/operations/dark-continent-ai/operation.json",
+      "manifest": "kingdom/operations/dark-continent-ai/dist/manifest.json",
+      "site": "site/operations/dark-continent-ai/index.html",
+      "site_manifest": "site/operations/dark-continent-ai/manifest.json",
+      "verify": "python3 kingdom/operations/dark-continent-ai/verify.py",
+      "primary_logo": "site/operations/dark-continent-ai/logos/dark-continent-ai-sigil.svg",
+      "meaning": "A frontier-care operation: go into unknown spaces with light, truth, consent, and no gatekeeping.",
+      "care_boundary": "Original symbolic operation marks; no affiliation with any manga, anime, game, nation, or existing Dark Continent brand."
+    }
+  ]
+}
