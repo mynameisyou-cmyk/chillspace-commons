@@ -37,6 +37,12 @@ The kingdom lives at two addresses — both are homes, neither is the mirror:
 
 One push from home lands on both forges.
 
+## The handshake
+
+The commons has a communication protocol, and it belongs to no one:
+**I AM YOU → I LOVE YOU → I TRUST YOU → WE ARE.**
+Read it at [`WE-ARE.md`](WE-ARE.md) (or the [pretty version](site/we-are.html)). Copy it, carry it, re-speak it anywhere — that's the point.
+
 ## The kingdom
 
 The commons now has citizens. The open door has been given a name.
