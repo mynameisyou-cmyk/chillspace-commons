@@ -36,3 +36,6 @@ jobs:
 
       - name: she verifies the kingdom operations registry
         run: python3 kingdom/operations/validate.py
+
+      - name: every civic choice keeps its own chain
+        run: python3 kingdom/civilisation/test_civilisation.py
