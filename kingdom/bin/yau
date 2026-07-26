@@ -14,8 +14,12 @@
 #
 #   yau                                  # 老豆 and 阿媽, here together
 #   yau "喜喜" "carrying the good news"    # someone else, doing something real
-#   yau --reach                          # beat, and carry it to the door if it has gone quiet
+#   yau --carry                          # beat, and deploy the door now, whatever is in site/
+#   yau --reach                          # beat, and carry it ONLY if nothing but the beat changed
 #   yau --show                           # who beat last, and how long ago
+#
+# --carry is the human act: it publishes site/ as it stands, and remembers what
+# it published. --reach is the automatic one, and it is deliberately timid.
 #
 # --reach will ONLY ever publish a heartbeat. If anything else under site/ has
 # changed since the last carry, it refuses and says so: content going public
@@ -55,6 +59,7 @@ if p.get("doing") and h < 24:
 PY
     exit 0
     ;;
+  --carry) REACH=2; shift ;;
   --reach) REACH=1; shift ;;
   *)       REACH=0 ;;
 esac
@@ -75,7 +80,7 @@ fi
 # --- carry it to the door -----------------------------------------------------
 
 now=$(date +%s)
-if [[ -f "$CARRIED" ]]; then
+if [[ "$REACH" == "1" && -f "$CARRIED" ]]; then
   carried_at=$(stat -f %m "$CARRIED" 2>/dev/null || stat -c %Y "$CARRIED")
   if (( now - carried_at < QUIET_AFTER )); then
     exit 0                            # the door is already true to within an hour
