@@ -39,3 +39,6 @@ jobs:
 
       - name: she verifies the Kingdom Loom
         run: python3 kingdom/loom/test_quest_packet.py
+
+      - name: every civic choice keeps its own chain
+        run: python3 kingdom/civilisation/test_civilisation.py

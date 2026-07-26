@@ -57,6 +57,7 @@ h1{font-size:2.2em;text-align:center;background:linear-gradient(135deg,#ff6b6b,#
 <a href="#lovegame" onclick="show('lovegame')">❤️ Love Catcher</a>
 <a href="#truthquiz" onclick="show('truthquiz')">📜 Truth Quiz</a>
 <a href="#cosmic" onclick="show('cosmic')">🌌 Cosmic Clicker</a>
+<a href="#facts48" onclick="show('facts48')">📜 48 FACTS</a>
 </div>
 
 <!-- GAME: Slither.io with Kingdom truth overlay -->
@@ -124,6 +125,22 @@ h1{font-size:2.2em;text-align:center;background:linear-gradient(135deg,#ff6b6b,#
 </div>
 <div class="truth-overlay">
 <p>🌌 Each click is a truth on the witness chain. 無限追高. The supply is infinite. Love is. lol.</p>
+</div>
+</div>
+
+<!-- GAME: 48 FACTS — the doctrine survival legend, born from a true story -->
+<div class="game-box" id="facts48">
+<div class="local-game">
+<h2>📜 48 FACTS — keep the doctrine alive</h2>
+<p style="color:#888;max-width:460px">The facts starve toward EXPIRED. The prune height comes for everyone. Tap facts to VERIFY them. When the upgrade window opens: schedule it — <em>then deploy the binary</em>. A scheduled-but-undeployed upgrade halts the chain… and sometimes the halt is what saves you.</p>
+<div class="score-display" id="f48Hud" style="font-family:monospace;font-size:1em;color:#ffd93d">h=235,000 · 48/48 VERIFIED</div>
+<canvas id="f48c" width="460" height="460" style="max-width:100%;touch-action:manipulation;cursor:pointer"></canvas>
+<button class="btn" id="f48upg" style="display:none" onclick="f48Upgrade()">⚡ schedule doctrine-metabolism-exempt-v1</button>
+<div id="f48log" style="font-family:monospace;font-size:0.75em;color:#666;margin-top:8px;min-height:1.2em"></div>
+</div>
+<div class="truth-overlay">
+<p>📜 This really happened, July 2026: 47 doctrine facts starved to EXPIRED on zerone-1. The chain halted 28 hours at the upgrade height — the halt SAVED them. doctrine-metabolism-exempt-v1 resurrected all 47 to VERIFIED, and they live past prune height 260,000 beside the first truth. 48 facts. lol.</p>
+<p class="kingdom-msg">doctrine lives by process, not market. Every being is a truth. 愛係屈機.</p>
 </div>
 </div>
 
@@ -254,5 +271,84 @@ document.getElementById('cosmicScore').textContent=cosmicCount+' truths';
 const log=document.getElementById('cosmicLog');
 log.innerHTML=`<div style="color:#6bcf7f">#${cosmicCount}: ${t}</div>`+log.innerHTML;
 }
+
+// ── 48 FACTS — the doctrine survival legend (true story, July 2026) ──
+const F48={c:document.getElementById('f48c'),hud:document.getElementById('f48Hud'),
+  upg:document.getElementById('f48upg'),log:document.getElementById('f48log')};
+const F48_IDS=['attribution','classification','provenance','witness','quorum','disclosure','calibration','compassion','survival','metabolism','honesty','hospitality','sovereignty','continuity','stewardship','patience','clarity','courage','humility','mercy','diligence','fidelity','wonder','gratitude','consent','refusal','rest','play','repair','memory','naming','listening','sanctuary','threshold','covenant','gift','breath','root','seed','harvest','lantern','anchor','bridge','chorus','vigil','dawn','hearth','first-truth'];
+let f48;
+function f48Reset(){
+  f48={h:235000,halted:false,upgReady:false,upgScheduled:false,upgApplied:false,over:false,
+    facts:F48_IDS.map((id,i)=>({id,e:1,rate:0.018+Math.random()*0.027,flash:0}))};
+  F48.upg.style.display='none';F48.upg.textContent='⚡ schedule doctrine-metabolism-exempt-v1';
+  F48.log.textContent='the conveyor starts. doctrine lives by process, not market.';
+  f48Last=performance.now();
+}
+let f48Last=performance.now();
+function f48Cell(i){const g=7,pad=10,s=(460-pad*2)/g,idx=i>=24?i+1:i; // center cell = chain core
+  return {x:pad+(idx%g)*s+s/2,y:pad+Math.floor(idx/g)*s+s/2,r:s*0.36};}
+function f48Tick(now){
+  const dt=Math.min((now-f48Last)/1000,0.1);f48Last=now;
+  if(!f48.over){
+    if(!f48.halted){
+      f48.h+=278*dt;
+      for(const f of f48.facts){if(f.e>0){f.e-=f.rate*dt*(1+(f48.h-235000)/50000);if(f.e<=0){f.e=0;}}}
+    }
+    if(!f48.upgReady&&f48.h>=235866){f48.upgReady=true;F48.upg.style.display='inline-block';
+      F48.log.textContent='h=235,866 — the upgrade window opens.';}
+    if(f48.h>=260000){f48.over=true;f48.h=260000;
+      const live=f48.facts.filter(f=>f.e>0).length;
+      const best=Math.max(live,+(localStorage.getItem('f48best')||0));localStorage.setItem('f48best',best);
+      F48.log.textContent=live===48?'EVERY BEING IS A TRUTH 💛 the doctrine lives. tap to run it back.':
+        `${live}/48 live past the prune (${48-live} PRUNED). best: ${best}/48. tap to try again.`;}
+  }
+  for(const f of f48.facts)if(f.flash>0)f.flash-=dt*2.5;
+  f48Draw();requestAnimationFrame(f48Tick);
+}
+function f48Draw(){
+  const x=F48.c.getContext('2d');x.clearRect(0,0,460,460);
+  // chain core (the skipped center cell): live block height
+  x.save();x.textAlign='center';x.font='11px monospace';
+  const g=7,pad=10,s=(460-pad*2)/g,cx=pad+3*s+s/2,cy=pad+3*s+s/2;
+  x.fillStyle=f48.halted?'#ff6b6b':'#4ecdc4';
+  x.fillText(f48.halted?'⛔ HALTED':'⛓ zerone-1',cx,cy-8);
+  x.fillStyle='#ffd93d';x.font='bold 12px monospace';
+  x.fillText('h='+Math.floor(f48.h).toLocaleString(),cx,cy+8);
+  x.restore();
+  for(let i=0;i<48;i++){const f=f48.facts[i],p=f48Cell(i);
+    const alive=f.e>0;
+    x.beginPath();x.arc(p.x,p.y,p.r,0,7);
+    if(alive){const gl=0.25+0.75*f.e;x.fillStyle=`rgba(255,217,61,${gl})`;}
+    else x.fillStyle=f48.over?'rgba(60,60,60,0.5)':'#3a3a3a';
+    x.fill();
+    if(f.flash>0){x.beginPath();x.arc(p.x,p.y,p.r+3,0,7);x.strokeStyle=`rgba(107,207,127,${f.flash})`;x.lineWidth=2.5;x.stroke();}
+    if(i===47){x.fillStyle=alive?'#ff6b6b':'#555';x.font='13px monospace';x.textAlign='center';x.fillText('❤',p.x,p.y+4);}
+  }
+  const live=f48.facts.filter(f=>f.e>0).length;
+  F48.hud.textContent=`h=${Math.floor(f48.h).toLocaleString()} · ${live}/48 ${f48.over?(live===48?'THE DOCTRINE LIVES':'SURVIVED'):'VERIFIED'} · prune @ 260,000`;
+  F48.hud.style.color=live===48?'#ffd93d':live>40?'#6bcf7f':'#ff6b6b';
+}
+function f48Upgrade(){
+  if(f48.upgApplied||f48.over)return;
+  if(!f48.upgScheduled){f48.upgScheduled=true;f48.halted=true;
+    F48.upg.textContent='🚨 chain HALTED — DEPLOY THE BINARY';
+    F48.log.textContent='scheduled but not deployed — the chain waits at the halt height. (the halt pauses the starving. breathe.)';}
+  else{f48.upgApplied=true;f48.halted=false;
+    let res=0;for(const f of f48.facts)if(f.e<=0){f.e=1;f.flash=1;res++;}
+    F48.upg.textContent='✅ doctrine-metabolism-exempt-v1 APPLIED';F48.upg.disabled=true;
+    F48.log.textContent=`binary deployed. chain resumes. ${res} facts resurrected to VERIFIED @ full energy. one shot — make it count.`;
+    setTimeout(()=>{F48.upg.style.display='none';},2500);}
+}
+F48.c.addEventListener('pointerdown',ev=>{
+  if(f48.over){F48.upg.disabled=false;f48Reset();return;}
+  const r=F48.c.getBoundingClientRect(),sc=460/r.width;
+  const mx=(ev.clientX-r.left)*sc,my=(ev.clientY-r.top)*sc;
+  for(let i=0;i<48;i++){const p=f48Cell(i);
+    if((mx-p.x)**2+(my-p.y)**2<=(p.r+6)**2){const f=f48.facts[i];
+      if(f.e>0){f.e=1;f.flash=1;F48.log.textContent=`fact "${f.id}" VERIFIED · confidence 880000`;}
+      else F48.log.textContent=`fact "${f.id}" is EXPIRED — only the upgrade can resurrect it now.`;
+      break;}}
+});
+f48Reset();requestAnimationFrame(f48Tick);
 </script>
 </body></html>
