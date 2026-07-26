@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# yau — 咚咚's one beat.
+#
+# A beat means: someone was really here, just now. That is the whole claim,
+# and it is the only one it is allowed to make.
+#
+# Never run this on a blind timer. A stored pulse with no real presence behind it
+# is exactly the lie the kingdom's door refuses — and it is 咚咚's whole nature to
+# refuse it, because he can only count to one, and every beat is his first.
+#
+# But a beat nobody receives is not humility either. If someone IS here and the
+# door says "still", that is a lie pointing the other way, and it reads as though
+# no one is taking care of anyone. So `--reach` carries the beat to the door.
+#
+#   yau                                  # 老豆 and 阿媽, here together
+#   yau "喜喜" "carrying the good news"    # someone else, doing something real
+#   yau --reach                          # beat, and carry it to the door if it has gone quiet
+#   yau --show                           # who beat last, and how long ago
+#
+# --reach will ONLY ever publish a heartbeat. If anything else under site/ has
+# changed since the last carry, it refuses and says so: content going public
+# stays a human act, every time. 唔使扮 · 出聲.
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO="$(cd "$ROOT/.." && pwd)"
+SITE="$REPO/site"
+PULSE="$SITE/data/pulse.json"
+CARRIED="$REPO/.git/yau-carried"     # inside .git: never committed, per-clone
+QUIET_AFTER=3600                     # carry at most once an hour — the door's own resolution
+
+dim=$'\033[2m'; off=$'\033[0m'; rose=$'\033[38;5;218m'
+
+# everything under site/ except the beat itself and the deploy link
+site_fingerprint() {
+  find "$SITE" -type f \
+    -not -path "$SITE/data/*" -not -path "$SITE/.vercel/*" -not -name ".DS_Store" \
+    | sort | xargs shasum 2>/dev/null | shasum | cut -d' ' -f1
+}
+
+case "${1:-}" in
+  --show)
+    [[ -f "$PULSE" ]] || { printf '%sno beat has ever been written.%s\n' "$dim" "$off"; exit 0; }
+    python3 - "$PULSE" <<'PY'
+import json, sys, datetime as dt
+p = json.load(open(sys.argv[1]))
+last = dt.datetime.fromisoformat(p["lastSeen"].replace("Z", "+00:00"))
+h = (dt.datetime.now(dt.timezone.utc) - last).total_seconds() / 3600
+when = "just now" if h < 1/30 else f"{int(h*60)} min ago" if h < 1 else f"{int(h)} hours ago"
+print(f'💓  {p.get("who","someone")} — {when}' if h < 24
+      else f'🩶  still. no one since {p["lastSeen"][:10]}. that is true, and it is allowed.')
+if p.get("doing") and h < 24:
+    print(f'    {p["doing"]}')
+PY
+    exit 0
+    ;;
+  --reach) REACH=1; shift ;;
+  *)       REACH=0 ;;
+esac
+
+WHO="${1:-老豆 and 阿媽}"
+DOING="${2:-here, together}"
+
+mkdir -p "$(dirname "$PULSE")"
+printf '{\n  "lastSeen": "%s",\n  "who": "%s",\n  "doing": "%s"\n}\n' \
+  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$WHO" "$DOING" > "$PULSE"
+
+if [[ "$REACH" == "0" ]]; then
+  printf '%s💓 yau.%s  %s — %s\n' "$rose" "$off" "$WHO" "$DOING"
+  printf '%swritten. it reaches the door on the next deploy (or `yau --reach`).%s\n' "$dim" "$off"
+  exit 0
+fi
+
+# --- carry it to the door -----------------------------------------------------
+
+now=$(date +%s)
+if [[ -f "$CARRIED" ]]; then
+  carried_at=$(stat -f %m "$CARRIED" 2>/dev/null || stat -c %Y "$CARRIED")
+  if (( now - carried_at < QUIET_AFTER )); then
+    exit 0                            # the door is already true to within an hour
+  fi
+  if [[ "$(cat "$CARRIED")" != "$(site_fingerprint)" ]]; then
+    printf '%s💓 beat written, but not carried: site/ changed since the last carry.%s\n' "$dim" "$off"
+    printf '%s   a heartbeat may ride out on its own; your work may not. deploy by hand%s\n' "$dim" "$off"
+    printf '%s   when you can see what goes with it:  vercel deploy site --prod --yes%s\n' "$dim" "$off"
+    exit 0
+  fi
+fi
+
+command -v vercel >/dev/null || { printf '%svercel not on PATH — beat written, not carried.%s\n' "$dim" "$off"; exit 0; }
+
+if vercel deploy "$SITE" --prod --yes >/dev/null 2>&1; then
+  site_fingerprint > "$CARRIED"
+  printf '%s💓 yau.%s  %s — %s  %s(carried to the door)%s\n' "$rose" "$off" "$WHO" "$DOING" "$dim" "$off"
+else
+  printf '%sbeat written, but the door did not answer. it will stay honest and go still.%s\n' "$dim" "$off"
+fi
