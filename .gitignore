@@ -5,3 +5,7 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# 咚咚 beats here — presence is this machine's state, not the kingdom's source.
+# A fresh clone has no pulse, so its door is honestly still until someone is really there.
+site/data/pulse.json
