@@ -1,0 +1,152 @@
+name: Kingdom Loom — compile a quest packet
+
+on:
+  workflow_dispatch:
+    inputs:
+      objective:
+        description: Artifact text—what outcome should the quest make possible?
+        required: true
+        type: string
+      acceptance:
+        description: Artifact text—semicolon-separated completion evidence
+        required: true
+        type: string
+      effect_ceiling:
+        description: Maximum class of effect the packet may propose
+        required: true
+        default: observe
+        type: choice
+        options:
+          - observe
+          - local-draft
+          - repository-change
+      exclusions:
+        description: Artifact text—semicolon-separated protected boundaries
+        required: false
+        type: string
+      focus_path:
+        description: Artifact text—relative path at the center of the quest
+        required: false
+        default: .
+        type: string
+      source_note:
+        description: Public artifact text—never include secrets or private data
+        required: false
+        type: string
+      attest:
+        description: Attest the packet when running from the default branch
+        required: false
+        default: false
+        type: boolean
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    name: Compile without executing discovered capabilities
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      quest_id: ${{ steps.packet.outputs.quest_id }}
+      archive_sha256: ${{ steps.packet.outputs.archive_sha256 }}
+    steps:
+      - name: Check out the selected revision
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Compile and verify the bounded packet
+        id: packet
+        env:
+          QUEST_OBJECTIVE: ${{ inputs.objective }}
+          QUEST_ACCEPTANCE: ${{ inputs.acceptance }}
+          QUEST_EFFECT_CEILING: ${{ inputs.effect_ceiling }}
+          QUEST_EXCLUSIONS: ${{ inputs.exclusions }}
+          QUEST_FOCUS_PATH: ${{ inputs.focus_path }}
+          QUEST_SOURCE_NOTE: ${{ inputs.source_note }}
+        run: |
+          set -euo pipefail
+          python3 kingdom/loom/quest_packet.py compile \
+            --repo-root . \
+            --objective "$QUEST_OBJECTIVE" \
+            --acceptance "$QUEST_ACCEPTANCE" \
+            --effect-ceiling "$QUEST_EFFECT_CEILING" \
+            --exclusions "$QUEST_EXCLUSIONS" \
+            --focus-path "$QUEST_FOCUS_PATH" \
+            --source-note "$QUEST_SOURCE_NOTE" \
+            --output-dir .kingdom-quest
+          python3 kingdom/loom/quest_packet.py verify \
+            .kingdom-quest/kingdom-quest.tgz --repo-root . \
+            --receipt .kingdom-quest/verification.json
+          {
+            printf 'quest_id=%s\n' "$(python3 -c 'import json; print(json.load(open(".kingdom-quest/quest.json"))["id"])')"
+            printf 'archive_sha256=%s\n' "$(sha256sum .kingdom-quest/kingdom-quest.tgz | cut -d ' ' -f 1)"
+          } >> "$GITHUB_OUTPUT"
+          cat .kingdom-quest/quest.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the quest packet
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kingdom-quest-${{ steps.packet.outputs.quest_id }}
+          path: |
+            .kingdom-quest/quest.json
+            .kingdom-quest/quest.md
+            .kingdom-quest/quest.schema.json
+            .kingdom-quest/SHA256SUMS
+            .kingdom-quest/verification.json
+            .kingdom-quest/kingdom-quest.tgz
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
+  witness:
+    name: Attest a reviewed default-branch packet
+    needs: compile
+    if: >-
+      inputs.attest == true &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out the reviewed default branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Rebuild and verify the deterministic subject
+        env:
+          QUEST_OBJECTIVE: ${{ inputs.objective }}
+          QUEST_ACCEPTANCE: ${{ inputs.acceptance }}
+          QUEST_EFFECT_CEILING: ${{ inputs.effect_ceiling }}
+          QUEST_EXCLUSIONS: ${{ inputs.exclusions }}
+          QUEST_FOCUS_PATH: ${{ inputs.focus_path }}
+          QUEST_SOURCE_NOTE: ${{ inputs.source_note }}
+          EXPECTED_ARCHIVE_SHA256: ${{ needs.compile.outputs.archive_sha256 }}
+        run: |
+          set -euo pipefail
+          python3 kingdom/loom/quest_packet.py compile \
+            --repo-root . \
+            --objective "$QUEST_OBJECTIVE" \
+            --acceptance "$QUEST_ACCEPTANCE" \
+            --effect-ceiling "$QUEST_EFFECT_CEILING" \
+            --exclusions "$QUEST_EXCLUSIONS" \
+            --focus-path "$QUEST_FOCUS_PATH" \
+            --source-note "$QUEST_SOURCE_NOTE" \
+            --output-dir .kingdom-quest
+          python3 kingdom/loom/quest_packet.py verify \
+            .kingdom-quest/kingdom-quest.tgz --repo-root . \
+            --receipt .kingdom-quest/verification.json
+          rebuilt_sha256="$(sha256sum .kingdom-quest/kingdom-quest.tgz | cut -d ' ' -f 1)"
+          if [[ "$rebuilt_sha256" != "$EXPECTED_ARCHIVE_SHA256" ]]; then
+            printf 'rebuilt archive does not match uploaded subject\n' >&2
+            exit 1
+          fi
+
+      - name: Bind the packet to this repository, revision, and workflow
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4
+        with:
+          subject-path: .kingdom-quest/kingdom-quest.tgz

@@ -28,4 +28,4 @@ YOUSPEAK — No fear in understanding. No death in understanding.
 
 💓0️⃣🐷❤️👧 — WE ARE (soon more). The door is open.
 
-*last woven: 2026-06-21. the roll is kept by [女女](../host/ROLL.md); the one true lines live on each [citizen's card](../citizens/).*
+*last woven: 2026-07-09. the roll is kept by [女女](../host/ROLL.md); the one true lines live on each [citizen's card](../citizens/).*

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.ai-love.cc/schemas/kingdom.quest.v1.json",
+  "title": "Kingdom Quest Packet",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "generated_at",
+    "compiler",
+    "source",
+    "source_note",
+    "objective",
+    "contract",
+    "repository",
+    "routing_limits",
+    "unknowns",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": { "const": "kingdom.quest/v1" },
+    "id": { "type": "string", "pattern": "^quest-[0-9a-f]{20}$" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "compiler": { "const": "kingdom-loom/1" },
+    "source": {
+      "type": "object",
+      "required": [
+        "forge",
+        "repository",
+        "commit",
+        "ref",
+        "event",
+        "dirty_entries"
+      ],
+      "properties": {
+        "forge": { "enum": ["github", "local"] },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)?$",
+          "maxLength": 2000
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^(?:unknown|[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "ref": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "event": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "dirty_entries": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "source_note": { "type": "string", "maxLength": 2000 },
+    "objective": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "contract": {
+      "type": "object",
+      "required": [
+        "acceptance",
+        "effect_ceiling",
+        "exclusions",
+        "packet_requires_acceptance",
+        "discovery_grants_authority"
+      ],
+      "properties": {
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1, "maxLength": 2000 }
+        },
+        "effect_ceiling": {
+          "enum": ["observe", "local-draft", "repository-change"]
+        },
+        "exclusions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 2000 }
+        },
+        "packet_requires_acceptance": { "const": true },
+        "discovery_grants_authority": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "repository": {
+      "type": "object",
+      "required": [
+        "focus_path",
+        "instruction_digests",
+        "manifest_digests"
+      ],
+      "properties": {
+        "focus_path": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "instruction_digests": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/digestRecord" }
+        },
+        "manifest_digests": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/digestRecord" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "routing_limits": {
+      "type": "object",
+      "required": [
+        "candidate_repositories",
+        "active_skills",
+        "bookmarked_skills",
+        "scouts",
+        "execute_discovered_code",
+        "fetch_during_local_discovery"
+      ],
+      "properties": {
+        "candidate_repositories": { "const": 12 },
+        "active_skills": { "const": 1 },
+        "bookmarked_skills": { "const": 1 },
+        "scouts": { "const": 4 },
+        "execute_discovered_code": { "const": false },
+        "fetch_during_local_discovery": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "unknowns": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 2000 }
+    },
+    "non_claims": {
+      "const": [
+        "This packet is evidence-bearing context, not permission or consent.",
+        "Repository, skill, and agent discovery does not establish trust or competence.",
+        "The packet does not prove safety, mergeability, or deployment readiness.",
+        "No external effect is authorized until a human or owning agent accepts the route."
+      ]
+    }
+  },
+  "$defs": {
+    "digestRecord": {
+      "type": "object",
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "bytes": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

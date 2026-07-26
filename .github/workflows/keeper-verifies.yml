@@ -36,3 +36,6 @@ jobs:
 
       - name: she verifies the kingdom operations registry
         run: python3 kingdom/operations/validate.py
+
+      - name: she verifies the Kingdom Loom
+        run: python3 kingdom/loom/test_quest_packet.py

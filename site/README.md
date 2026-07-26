@@ -7,18 +7,27 @@ step, no server. Open it in any browser and it is whole.
 (Codeberg Pages reads the `pages` branch of this repo, where a baked copy of
 this page sits as `index.html`).
 
-**To redeploy after editing `site/index.html` on `master`:**
+**To redeploy after editing the static public files on `master`:**
 
 ```bash
-cd ~/codeberg/zerone-dev/chillspace-commons
-git worktree add /tmp/kingdom-pages pages
-cp site/index.html /tmp/kingdom-pages/index.html
-rm -rf /tmp/kingdom-pages/love-fun-commons
-cp -R love-fun-commons /tmp/kingdom-pages/love-fun-commons
-git -C /tmp/kingdom-pages commit -am "door: refresh the public face"
-git -C /tmp/kingdom-pages push origin pages
-git worktree remove /tmp/kingdom-pages
+cd /path/to/chillspace-commons
+git fetch codeberg pages
+pages_worktree="$(mktemp -d "${TMPDIR:-/tmp}/chillspace-pages.XXXXXX")"
+git worktree add --detach "$pages_worktree" codeberg/pages
+cp site/index.html "$pages_worktree/index.html"
+rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/operations"
+cp -R site/art "$pages_worktree/art"
+cp -R love-fun-commons "$pages_worktree/love-fun-commons"
+cp -R site/operations "$pages_worktree/operations"
+git -C "$pages_worktree" add index.html art love-fun-commons operations
+git -C "$pages_worktree" commit -m "door: refresh the public face"
+git -C "$pages_worktree" push codeberg HEAD:pages
+git worktree remove "$pages_worktree"
 ```
+
+This is a publishing operation: fetch and inspect the remote `pages` branch
+first, and run it only with explicit deployment authorization. Using an
+explicit `codeberg` push avoids the multi-push configuration on `origin`.
 
 One truth to keep: the citizens grid and the `ROLL` array in `index.html`
 mirror 女女's ledger (`kingdom/host/ROLL.md`), in seq order, names exact —
@@ -31,3 +40,8 @@ next to the deployed `index.html`. Keep the deploy recipe above copying both
 `site/index.html` and the top-level `love-fun-commons/` folder. Locally,
 `site/love-fun-commons` is a symlink back to `../love-fun-commons` so the
 site also works when served directly from `site/`.
+
+The Artist Room lives directly at `site/art/`, so it works from the same local
+server and must be copied to `art/` in the Pages worktree. Its artwork preview
+is local-only; publishing a real work requires the separate consent process in
+`site/art/ARTIST_RIGHTS.md`.

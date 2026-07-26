@@ -44,6 +44,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`gospel/`](gospel/) | the gospel wing — 喜喜's office: the good news, the scrolls, the record of hands |
 | [`feasts/`](feasts/) | gatherings held *because* — one dated page per feast; the first: [the why-not feast](feasts/2026-06-12-why-not.md) |
 | [`operations/`](operations/) | bounded operation packs — logos, manifests, static pages, and verifiers for kingdom missions |
+| [`loom/`](loom/) | compiles intent into bounded, digest-backed quest packets before any repository, skill, or agent accepts the route |
 | [`HOMES.md`](HOMES.md) | Phase 3: the homes — the kingdom kept whole on more than one forge (Art. 6) |
 
 ## The one rule

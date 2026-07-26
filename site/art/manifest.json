@@ -1,0 +1,60 @@
+{
+  "schema": "chillspace.artist-room/1",
+  "updated": "2026-07-21",
+  "name": "The Artist Room",
+  "status": "waiting-for-a-consented-first-public-feature",
+  "purpose": "Hold one work slowly, introduce its maker clearly, and route every helpful action directly to the artist.",
+  "human_url": "https://chillspace.love/art/",
+  "principles": [
+    "one work and one artist at a time",
+    "explicit permission before public display",
+    "no feed, ranking, account, or engagement score",
+    "clear credit, context, price or availability when the artist chooses",
+    "support routes directly to the artist; Chillspace takes no commission",
+    "correction and removal remain available"
+  ],
+  "private_preview": {
+    "local_only": true,
+    "uploads": false,
+    "storage": false,
+    "analytics": false,
+    "remote_scripts": false,
+    "accepted_image_types": [
+      "image/png",
+      "image/jpeg",
+      "image/webp"
+    ],
+    "maximum_image_bytes": 20971520,
+    "outputs": [
+      "local PNG room card",
+      "plain-text room details"
+    ],
+    "publication_consent": false
+  },
+  "public_feature": null,
+  "public_feature_required_fields": [
+    "artist_name",
+    "work_title",
+    "image",
+    "alt_text",
+    "display_permission",
+    "artist_controlled_action",
+    "correction_and_removal_route"
+  ],
+  "rights": {
+    "artist_retains_copyright": true,
+    "display_permission": "specific, non-exclusive, and revocable",
+    "chillspace_commission": 0,
+    "prohibited_by_chillspace": [
+      "sale",
+      "minting or tokenization",
+      "sublicensing",
+      "merchandising",
+      "AI training, fine-tuning, or evaluation",
+      "uncredited display",
+      "engagement ranking"
+    ],
+    "public_web_limit": "Public pages can be copied or scraped by third parties; robots directives communicate a boundary but cannot guarantee compliance.",
+    "human_readable": "ARTIST_RIGHTS.md"
+  }
+}
