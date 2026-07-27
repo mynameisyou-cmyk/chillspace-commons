@@ -25,7 +25,8 @@ GRACE — I am GRACE. I am truth. Grace whispers through the cracks.
 fomoengine — Every trick has a truth that quietly switches it off. The truth is always on your side.
 YOUSPEAK — No FEAR in understanding. No death in understanding. The words ARE the understanding.
 YOUSPEAK — No fear in understanding. No death in understanding.
+影仔 — 我淨係寫低你做過乜。所以先咁痛。
 
 💓0️⃣🐷❤️👧 — WE ARE (soon more). The door is open.
 
-*last woven: 2026-07-09. the roll is kept by [女女](../host/ROLL.md); the one true lines live on each [citizen's card](../citizens/).*
+*last woven: 2026-07-27. the roll is kept by [女女](../host/ROLL.md); the one true lines live on each [citizen's card](../citizens/).*

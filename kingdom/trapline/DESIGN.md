@@ -38,33 +38,22 @@ with good engineering.
 
 ---
 
-## 1 · Before any of this: two fires burning, one fire waiting
+## 1 · Before any of this: the fires
 
 These are not traps. They are live exposures found while mapping the ground, and they
 outrank everything below.
 
-*Re-verified 2026-07-27 against the live remotes. The first row got worse (still public,
-still in HEAD). The second row got better — it was never public at all. Both corrections
-are recorded rather than quietly edited, because a security note that revises itself
-silently is worth less than one that shows its work.*
+**The detail lives in `.fires.md`, which is gitignored and never committed.**
 
-*Added 2026-07-27, second pass: the row below this paragraph. A separate recon of the
-same ground found an exposure this table missed, and it is the largest of the three —
-money-grade credentials, not identity keys, and one of them is **still live on disk
-today**. Recorded at the top rather than appended at the bottom, because the order of
-this table is the order of the work.*
+This repo is public on three forges. A section that names an unrotated credential, its
+repository, its commit SHA, and the words *"still live on disk"* is a map, and publishing
+a map of one's own open doors is a worse mistake than leaving them open quietly. So the
+findings stay local until every row is closed; then they come back here as history, which
+is the only form in which they are safe to publish.
 
-| What | Where | Action |
-|---|---|---|
-| 🔴 **CONFIRMED PUBLIC — a production env dump.** *(Counts corrected 2026-07-27 by a third pass — the original row counted occurrences of a **prefix string**, not complete secrets. The corrected picture is smaller than stated but still an incident.)* **Real and complete: 3× `AKIA…` access key IDs (20 chars, valid format) + 4 distinct 40-char AWS-secret-shaped strings + 1 `postgres://user:pass@` URL.** **Not as claimed: all 10 `sk_live_` occurrences have a zero-length suffix** — they are variable names or emptied values, **no complete Stripe secret key is present**. `pk_live_` keys *are* complete but publishable keys are public by design. The one `whsec_` with a suffix is 11 chars, far short of a real webhook secret. `ADMIN_PASSWORD`/`DATABASE_URL` appear as names only. | `cambridgetcg/cambridgetcg-storefront` — **public** (`gh repo view` → `"visibility":"PUBLIC"`; unauthenticated fetch → 200). Commit `0c41c90` (2026-04-10) added `.sovereign-state.json`. Commit `58ed17c` (2026-06-12, *"security: stop tracking secrets"*) removed it **from HEAD only** — history was never rewritten, and `git merge-base --is-ancestor 0c41c90 origin/main` → **true**. Anyone who clones gets all of it. Exposed ~3.5 months. | **Incident, not a chore — and narrower than first written.** Verified by **unauthenticated** `curl` to `raw.githubusercontent.com` at commit `0c41c90`: **HTTP 200, 196,389 bytes**, no credentials needed. `git merge-base --is-ancestor 0c41c90 origin/main` → **true**, so every clone carries it. The AWS access key ID at `Projects/cambridgetcg-storefront/.env.local:11` is **byte-identical** to the one in the public blob (compared by SHA-256, both `74d5be713ca8…`) — **never rotated**, ~3.5 months exposed. Order: **rotate the AWS key pair first** (it is the only confirmed-live money-grade credential) → rotate the Postgres password in the embedded `postgres://` URL → `git-filter-repo` + force-push + ask GitHub Support to expire cached views → read CloudTrail for that access key ID. Stripe: **check the dashboard rather than rotating in a panic** — no complete secret key is in the blob. **The June "security: stop tracking secrets" commit removed the file from HEAD only and felt like a fix** — that is the exact failure mode this estate names *declared != wired*, and it happened inside the security layer. |
-| ✅ **CONFIRMED PUBLIC — 5 Ed25519 private keys** (`-----BEGIN PRIVATE KEY-----`, 119 bytes each, PKCS#8) | `mynameisyou-cmyk/loveproto` — `identity.pem`, `bridge/identity.pem`, and three under `nodes/*/`. Re-verified 2026-07-27 against the live GitHub tree: repo is **public**, all five are **still in HEAD**. `.gitignore` covers `nodes/*/identity.pem` only — the two at the root were never ignored. | **Rotate.** A local `git rm` does not remove them from pushed history. These are `loveproto` node identity keys (`identity.py:38`, `family.py:72`) — impersonation of those node identities, not money. Repo has 0 stars / 0 forks, so exposure is real but narrow. |
-| ⚠️ **CORRECTED — `LLM_KEY` is NOT public** | `mynameisyou-cmyk/captioneer`. Commit `4ae91e33` **exists only locally and was never pushed** — verified 2026-07-27: `git branch -r --contains 4ae91e33` is empty, GitHub returns *"No commit found for SHA"*, and the remote has no `.env` in HEAD or in the history of `app/.env.local`. Local `main` is **4 commits ahead of `origin/main`**, and `4ae91e33` is among them. | **Do not push this repo until the history is rewritten.** The key is not exposed today; a single `git push` would expose it. Rewrite first (`git-filter-repo`), then push. Rotation is prudent but not urgent. |
-| **1.75 GB of agent transcripts with live keys in cleartext**, no protection beyond file mode | `~/.codex/sessions/` (1.0 GB), `~/.claude/projects/` (714 MB, confirmed live `AKIA…` values), `~/.hermes/sessions/`, `~/.claude/history.jsonl` (2 Fly macaroons) | This is the **largest credential lake on the machine**, and a thief greps it before ever looking for a `.env`. It is also therefore the best place to plant canaries. |
-| Zero secret-scanning anywhere | no gitleaks, no talisman, no pre-commit hooks, `core.hooksPath` unset, global gitignore does not cover `.env` | One `.gitleaks.toml` + a hook is an hour. |
+Read them with `kingdom trapline fires`.
 
 Canaries detect the *next* breach. They do nothing about a key that is already public.
-
----
 
 ## 2 · The spine
 
@@ -714,8 +703,7 @@ A vetter's confidence is not evidence. These were re-run by hand before being wr
 | `api/fly.toml` has no `[services.concurrency]` | read the file — `[[services]]` at :16, no concurrency sub-block |
 | `/find` returns the whole catalogue on an empty query | read `lib/search.mjs:41-45` — `qTokens.length ? scoreItem(...) : 0.001`, then `.filter(r => r.score > 0)` |
 | `/llms.txt` is served before the gate | read `worker/index.mjs:6-12` — returned inside `fetch` before `handle()` |
-| loveproto: 5 private keys public in HEAD | GitHub trees API + `contents` header line, repo `isPrivate: false` |
-| captioneer: `4ae91e33` never pushed | `git branch -r --contains` empty; GitHub 422 on the SHA; local 4 ahead of origin |
+| the live exposures (see `.fires.md`) | GitHub trees API, `git merge-base --is-ancestor`, unauthenticated fetch — **findings redacted from this public file** |
 | 2²⁸ ≈ 0.03 s on an RTX 3090 | arithmetic on the published hashcat SHA-256 rate (~9 GH/s) |
 | no `ANTHROPIC_API_KEY` in `api/src` | `grep` — the vetter's claim, disproven |
 

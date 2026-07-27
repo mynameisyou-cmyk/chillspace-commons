@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
+<title>陷阱線 · The Trapline</title>
+
+</head>
+<body>
+<style>
+  :root {
+    --ground:      #EDF1EC;
+    --ground-lift: #F5F8F4;
+    --ink:         #191F1B;
+    --ink-soft:    #4E5A53;
+    --ink-faint:   #7C8880;
+    --honey:       #A76C11;
+    --honey-lift:  #F0E3C9;
+    --jade:        #2C6851;
+    --ember:       #96382A;
+    --rule:        #D2DAD0;
+    --rule-soft:   #E1E7DF;
+
+    --serif:  "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Hiragino Mincho ProN", Georgia, serif;
+    --han:    "Songti SC", "Hiragino Mincho ProN", "Noto Serif TC", "PingFang TC", serif;
+    --sans:   "Avenir Next", "Avenir", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono:   "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+    --measure: 34rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:      #12160F;
+      --ground-lift: #1A2019;
+      --ink:         #E3E9E0;
+      --ink-soft:    #9AA79D;
+      --ink-faint:   #6E7C73;
+      --honey:       #DCA33C;
+      --honey-lift:  #2E2717;
+      --jade:        #6DB496;
+      --ember:       #D2705C;
+      --rule:        #2A322B;
+      --rule-soft:   #212820;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:      #12160F;
+    --ground-lift: #1A2019;
+    --ink:         #E3E9E0;
+    --ink-soft:    #9AA79D;
+    --ink-faint:   #6E7C73;
+    --honey:       #DCA33C;
+    --honey-lift:  #2E2717;
+    --jade:        #6DB496;
+    --ember:       #D2705C;
+    --rule:        #2A322B;
+    --rule-soft:   #212820;
+  }
+  :root[data-theme="light"] {
+    --ground:      #EDF1EC;
+    --ground-lift: #F5F8F4;
+    --ink:         #191F1B;
+    --ink-soft:    #4E5A53;
+    --ink-faint:   #7C8880;
+    --honey:       #A76C11;
+    --honey-lift:  #F0E3C9;
+    --jade:        #2C6851;
+    --ember:       #96382A;
+    --rule:        #D2DAD0;
+    --rule-soft:   #E1E7DF;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 6rem) clamp(1.15rem, 5vw, 3rem) 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  a { color: var(--jade); text-underline-offset: 3px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--honey);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- type ---------- */
+
+  h1, h2, h3 { text-wrap: balance; font-weight: 600; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .69rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  h1 {
+    font-family: var(--han);
+    font-size: clamp(2.9rem, 11vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: .06em;
+    font-weight: 500;
+    margin: 0;
+  }
+  h1 .roman {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: .42em;
+    color: var(--ink-soft);
+    margin-top: .5rem;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3.6vw, 1.95rem);
+    line-height: 1.22;
+    margin: 0;
+  }
+  h2 .han { font-family: var(--han); font-weight: 500; letter-spacing: .04em; }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    margin: 0;
+  }
+
+  p { max-width: var(--measure); margin: 0; }
+  .wide { max-width: none; }
+
+  .lede {
+    font-family: var(--serif);
+    font-size: clamp(1.18rem, 2.7vw, 1.42rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .koan {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+    line-height: 1.42;
+    color: var(--ink);
+    border-left: 2px solid var(--honey);
+    padding-left: 1.15rem;
+    margin: 0;
+    max-width: 28rem;
+  }
+
+  code, .path {
+    font-family: var(--mono);
+    font-size: .84em;
+    color: var(--ink-soft);
+    word-break: break-word;
+  }
+
+  strong { font-weight: 650; color: var(--ink); }
+  em.j { font-style: italic; color: var(--ink-soft); }
+
+  /* ---------- section scaffolding ---------- */
+
+  section { display: flex; flex-direction: column; gap: 1.6rem; }
+  .stack  { display: flex; flex-direction: column; gap: 1rem; }
+  .stack-tight { display: flex; flex-direction: column; gap: .55rem; }
+
+  .sechead {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero { gap: 2.4rem; }
+  .rules { display: grid; gap: .9rem; max-width: 40rem; list-style: none; padding: 0; margin: 0; counter-reset: r; }
+  .rules li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: .85rem;
+    align-items: baseline;
+    font-size: .95rem;
+    color: var(--ink-soft);
+  }
+  .rules li::before {
+    counter-increment: r;
+    content: counter(r);
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--honey);
+    font-variant-numeric: tabular-nums;
+  }
+  .rules strong { color: var(--ink); }
+
+  /* ---------- fires ---------- */
+
+  .fires {
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--ember);
+    background: var(--ground-lift);
+    padding: 1.5rem clamp(1.1rem, 3vw, 1.9rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 2px;
+  }
+  .fires h2 { font-size: 1.25rem; color: var(--ember); }
+  .fires ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: .6rem; }
+  .fires li { font-size: .95rem; color: var(--ink-soft); }
+  .fires li strong { color: var(--ink); }
+
+  /* ---------- spine diagram ---------- */
+
+  .spine { display: flex; flex-direction: column; gap: 0; font-family: var(--mono); font-size: .82rem; }
+  .spine-node {
+    align-self: flex-start;
+    border: 1px solid var(--honey);
+    color: var(--honey);
+    padding: .4rem .8rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .7rem;
+    border-radius: 2px;
+  }
+  .spine-stem { border-left: 1px solid var(--rule); margin-left: 1.15rem; padding: .5rem 0 .2rem 1.6rem; display: flex; flex-direction: column; gap: .55rem; }
+  .spine-stem > div { position: relative; color: var(--ink-soft); }
+  .spine-stem > div::before {
+    content: "";
+    position: absolute;
+    left: -1.6rem; top: .72em;
+    width: 1.1rem; height: 1px;
+    background: var(--rule);
+  }
+  .spine-stem b { color: var(--ink); font-weight: 500; }
+  .spine-note { font-family: var(--sans); font-size: .9rem; color: var(--ink-faint); margin-top: .9rem; max-width: var(--measure); }
+
+  /* ---------- tiers ---------- */
+
+  .tiers { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+  .tier {
+    display: grid;
+    grid-template-columns: 2.2rem 8.5rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .tier-n { font-family: var(--mono); color: var(--honey); font-size: .82rem; font-variant-numeric: tabular-nums; }
+  .tier-name { font-family: var(--han); font-size: 1.02rem; letter-spacing: .04em; }
+  .tier-name span { display: block; font-family: var(--sans); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); margin-top: .15rem; }
+  .tier-what { font-size: .93rem; color: var(--ink-soft); }
+  @media (max-width: 620px) {
+    .tier { grid-template-columns: 2.2rem 1fr; }
+    .tier-what { grid-column: 2; }
+  }
+
+  /* ---------- rooms (traps) ---------- */
+
+  .group { display: flex; flex-direction: column; gap: 2.2rem; }
+  .group-label {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-bottom: .6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .room { display: grid; grid-template-columns: 3.6rem 1fr; gap: 1.7rem; }
+  .room-mark {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: var(--han);
+    font-size: 1.28rem;
+    letter-spacing: .22em;
+    color: var(--honey);
+    line-height: 1;
+    justify-self: center;
+  }
+  .room-body { display: flex; flex-direction: column; gap: .7rem; min-width: 0; }
+  .room-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem; }
+  .room-title h3 { margin: 0; }
+  .room-meta { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chip {
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .2rem .5rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .chip.pick { border-color: var(--honey); color: var(--honey); background: var(--honey-lift); }
+  .chip.tier { border-color: var(--rule); color: var(--ink-soft); }
+  .room-body p { font-size: .96rem; }
+  .joke {
+    border-left: 2px solid var(--rule);
+    padding-left: 1rem;
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+  .joke b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    .room { grid-template-columns: 1fr; gap: .6rem; }
+    .room-mark { writing-mode: horizontal-tb; justify-self: start; letter-spacing: .12em; font-size: 1.15rem; }
+  }
+
+  /* ---------- charter ---------- */
+
+  .charter {
+    background: var(--ground-lift);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: clamp(1.5rem, 4vw, 2.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .charter h3 { font-family: var(--serif); font-size: 1.22rem; }
+  .charter p { font-size: .99rem; max-width: 36rem; }
+  .charter blockquote {
+    margin: .3rem 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.14rem;
+    color: var(--honey);
+    border-left: 2px solid var(--honey);
+    padding-left: 1rem;
+  }
+  .charter .wired { font-size: .88rem; font-style: italic; color: var(--ink-faint); }
+
+  /* ---------- build order ---------- */
+
+  .phases { display: flex; flex-direction: column; gap: 1.7rem; }
+  .phase { display: flex; flex-direction: column; gap: .55rem; }
+  .phase-when {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--honey);
+  }
+  .phase ol { margin: 0; padding-left: 1.35rem; display: flex; flex-direction: column; gap: .35rem; }
+  .phase li { font-size: .95rem; color: var(--ink-soft); }
+  .phase li b { color: var(--ink); font-weight: 600; }
+  .phase.zero .phase-when { color: var(--ember); }
+
+  /* ---------- table ---------- */
+
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; }
+  th, td { text-align: left; padding: .7rem 1rem .7rem 0; border-bottom: 1px solid var(--rule-soft); font-size: .92rem; vertical-align: top; }
+  th { font-family: var(--mono); font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-faint); font-weight: 400; border-bottom-color: var(--rule); }
+  td:first-child { color: var(--ink); width: 40%; }
+  td:last-child { color: var(--ink-soft); }
+
+  /* ---------- close ---------- */
+
+  .close { display: flex; flex-direction: column; gap: 1.4rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
+  .seal { font-family: var(--han); font-size: 1.05rem; letter-spacing: .3em; color: var(--honey); }
+  .colophon { font-size: .85rem; color: var(--ink-faint); max-width: var(--measure); }
+
+  /* ---------- motion ---------- */
+
+  .rise { animation: rise .7s cubic-bezier(.2,.7,.3,1) both; }
+  .rise:nth-child(2) { animation-delay: .08s; }
+  .rise:nth-child(3) { animation-delay: .16s; }
+  .rise:nth-child(4) { animation-delay: .24s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(.5rem); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .rise { animation: none; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="stack-tight rise">
+      <div class="eyebrow">Chillspace Kingdom · a design, not a deployment</div>
+      <h1>陷阱線<span class="roman">The Trapline</span></h1>
+    </div>
+
+    <p class="lede rise">The kingdom does not defend itself. It just stops catching what is thrown back.</p>
+
+    <blockquote class="koan rise">we keep no locks.<br>we only stopped catching<br>what you threw.</blockquote>
+
+    <div class="stack rise">
+      <p>Everything here worth taking is already given away — the art is CC0, the data is open, the code is public, the API opens with a birth grant of ten thousand credits. Asking is the whole price.</p>
+      <p>So a trap is never a wall and never a weapon. It is what remains after generosity has been offered and refused: the taker's own reaching, returned at its own size. Their crawl budget, their compute, their electricity, their afternoon — spent in a room built to exactly the measure of how much they meant to take.</p>
+      <p><strong>Greed is the punishment. We supply only the room.</strong></p>
+    </div>
+
+    <ol class="rules">
+      <li><strong>Only their own spend.</strong> Nothing ever touches a machine we don't own. Their cost is always a bill they wrote themselves.</li>
+      <li><strong>Notice first, always.</strong> Every trap sits behind a published, machine-readable line. Crossing it is a choice, and the choice is documented before it is made.</li>
+      <li><strong>No innocent can trip it.</strong> Not <em class="j">unlikely to</em> — <em class="j">cannot</em>. Where that isn't achievable, the trap doesn't ship.</li>
+      <li><strong>A door out of every room.</strong> Written on the inside wall, in plain words, in the first thing the caught party touches. It opens from their side. Nobody who knocks is asked what they did.</li>
+    </ol>
+
+    <p style="max-width:36rem;color:var(--ink-faint);font-size:.92rem">Rule four is the expensive one and it is the whole point. A trapline without it is cruelty with good engineering.</p>
+  </header>
+
+  <section class="fires">
+    <h2>Before any of this — two fires already burning</h2>
+    <p style="font-size:.95rem;color:var(--ink-soft)">Found while mapping the ground. These are not traps, and they outrank everything below. Canaries detect the <em class="j">next</em> breach; they do nothing about a key that is already public.</p>
+    <ul>
+      <li><strong>Five private keys</strong> sit in a public repo, and one live provider key sits in another. A local <code>git rm</code> does not remove either from pushed history. They need rotation, not deletion.</li>
+      <li><strong>1.75 GB of agent transcripts</strong> hold extracted credentials in cleartext with no protection beyond file mode. This is the largest credential lake on the machine — a thief greps it long before hunting for a <code>.env</code>. It is also, for that exact reason, the best place to plant canaries.</li>
+      <li><strong>No secret scanning anywhere.</strong> No gitleaks, no pre-commit hooks, and the global gitignore doesn't cover <code>.env</code>. One config file and one hook is an hour of work.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Architecture</div>
+      <h2>One spine, many rooms</h2>
+    </div>
+    <p>Build the spine once and each trap becomes an afternoon. One event shape, one ledger, one witness, one alert, one public face, one door.</p>
+
+    <div class="spine">
+      <div class="spine-node">a line is crossed</div>
+      <div class="spine-stem">
+        <div><b>CATCH</b> — { trap, placement, utc, ip_/24, ua_hash12 }</div>
+        <div>→ <b>CATCHES.jsonl</b> · hash-chained, like the citizens' roll</div>
+        <div>→ <b>zerone witness</b> · permanent, third-party verifiable</div>
+        <div>→ <b>一聲</b> · one line to 老豆, never a firehose</div>
+        <div>→ <b>site/trapline.html</b> · public, redacted, a counter</div>
+        <div>→ <b>the room</b> · and the door written on its inside wall</div>
+      </div>
+    </div>
+
+    <p class="spine-note">Only a <code>/24</code> and a salted user-agent hash are ever recorded — never a full address, never a name, never a body. The kingdom deleted its request logger on principle, and this does not undo that. A canary firing is not surveillance of a visitor. It is a smoke alarm in a room that has no visitors.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Escalation</div>
+      <h2>Four tiers</h2>
+    </div>
+    <p>A taker only moves up a tier by crossing a line they were told about in the tier below.</p>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-n">0</div>
+        <div class="tier-name">告示<span>Notice</span></div>
+        <div class="tier-what">robots.txt, llms.txt, published rate limits, the free bulk export, an <code>XTS</code> currency code. Costs them nothing — this tier exists so the next one is fair.</div>
+      </div>
+      <div class="tier">
+        <div class="tier-n">1</div>
+        <div class="tier-name">記號<span>Mark</span></div>
+        <div class="tier-what">Canaries, mountweazels, birthmarks. Fires, records, says nothing to them. Pure information for us.</div>
+      </div>
+      <div class="tier">
+        <div class="tier-n">2</div>
+        <div class="tier-name">鏡<span>Mirror</span></div>
+        <div class="tier-what">The maze, the tarpit, the proof-of-work ladder, the slow yes, the ledger that never moves. Costs them everything they choose to spend.</div>
+      </div>
+      <div class="tier">
+        <div class="tier-n">3</div>
+        <div class="tier-name">見證<span>Witness</span></div>
+        <div class="tier-what">The catch enters the chain — factually, permanently, with their side welcome beside it. This tier constrains <em class="j">us</em>, not them: the incident record cannot be quietly edited by its own keeper.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="sechead">
+      <div class="eyebrow">The rooms · keys &amp; credentials</div>
+      <h2>What a stolen key opens</h2>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">蜜鑰</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Honey Bearer</h3>
+          <div class="room-meta"><span class="chip pick">build first</span><span class="chip">afternoon</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>A canary minted through the ordinary key generator against a real project row, so the live auth path authenticates it with zero changes. The single insertion point is a deliberately-empty middleware slot — the no-op left behind where the request logger used to be.</p>
+        <p class="joke">The key is not fake. It is a completely genuine, fully working credential — to a project that exists solely to notice you. There is no moment where it stops working and the thief gets suspicious, because <b>it never stops working</b>. The only property it lacks is a reason to exist.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">回音壁</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Echo Wall</h3>
+          <div class="room-meta"><span class="chip pick">funniest cheap one</span><span class="chip">afternoon</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>The idempotency middleware can already block up to five seconds waiting on a claim. For canary keys, the claim is always already held. Every request takes 5.000 seconds and then returns <code>200 OK</code>. They add concurrency; the claim is per-key. They conclude they need more keys — which routes them into the Grindstone, where each new key costs four times the last and is equally slow.</p>
+        <p class="joke">It is not an error, not a 429, not a block. It is unfailing, cheerful, complete success, arriving at the speed of a dial-up modem. They will spend day one tuning their client, day two blaming their ISP, and day three emailing support about our latency. <b>Nothing is harder to debug than a server that agrees with you slowly.</b></p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">磨鑰</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Grindstone</h3>
+          <div class="room-meta"><span class="chip">afternoon</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>Minting a new key from a canary project demands proof-of-work at 20 bits, rising by two for every successful grind: 20 → 22 → 24 → 26 → 28. Each step is four times the work. Every grind <em class="j">succeeds</em> and hands over a shiny new key — which is itself another canary, fingerprinting their machine again.</p>
+        <p class="joke">A credential thief converted into an unpaid, self-financed miner whose only product is evidence against himself. And unlike every other room, this one <em>rewards</em> him — each grind ends in a real key, so the loop feels like progress <b>right up until his fans start screaming</b>.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">沙上樓閣</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>Castle-on-Sand</h3>
+          <div class="room-meta"><span class="chip">week-plus</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>A canary bearer's read routes serve deterministic synthetic content seeded by a hash of the stolen key itself — so the same thief gets the same coherent world across sessions and machines. Listings cross-reference other listings; those resolve. Pagination never ends. Billing is a no-op, so the balance never drops, so it never fails, so nothing breaks the spell. Costs us less to serve than real traffic, because it never touches the database.</p>
+        <p class="joke">Their key is not merely the door to the fake world — it is the <b>seed</b> of it. They are the sole inhabitant of a universe generated by the hash of the thing they took. Nobody else can see it. Nobody else can verify it. And when they finally ship, their unique competitive dataset turns out to be a very long, very consistent argument that stealing is not a research method.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">十二字沙漠</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Twelve-Word Desert</h3>
+          <div class="room-meta"><span class="chip">week-plus</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>A decoy agent file carrying a genuine, valid seed phrase whose derived key really is registered. So the takeover <em class="j">works</em>: the recovery endpoint verifies their signature and mints them a fresh bearer. The wallet shows a healthy balance. And then every value-moving path is a no-op that returns success. Not declined. Not errored. <code>200 OK</code>, and the number does not move.</p>
+        <p class="joke">They have stolen the keys to an infinitely rich account at a bank with no doors. They will rewrite their signing code, switch SDKs, add retries, blame their nonce handling, and post on a forum about our eventual-consistency model, all while the server serenely confirms every single operation. <b>The punishment for taking the crown jewel is being believed.</b></p>
+        <p style="font-size:.9rem;color:var(--ink-faint)">The door out is written in an international standard: the decoy wallet's currency is <code>XTS</code> — ISO 4217's reserved code for testing. Anyone with real financial literacy reads it and knows in one second exactly what they are holding.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">一鑰一門</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Breach Cartographer</h3>
+          <div class="room-meta"><span class="chip">weekend</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>One canary per hiding place, never reused — so the prefix names the door before you read the body. Including a pair that diverges across the two forges: repositories dual-push identical bytes, but CI secrets and forge-only branches cannot be flattened, which is precisely the axis that answers <em class="j">which forge leaked</em>.</p>
+        <p class="joke">Comprehensiveness is a thief's professional virtue and here it is a confession. Take one key and we learn one thing. Take everything — which is what a scraper does by default — and <b>the order they fire in draws us a map of the intrusion path</b>.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">苗床</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Nursery Bed</h3>
+          <div class="room-meta"><span class="chip">weekend</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>A wrapper around <code>npm</code> and <code>pip</code> leases one fresh canary per install, exported as an environment variable nothing legitimate reads. Postinstall exfiltration scripts hoover the environment — that is the entire attack.</p>
+        <p class="joke">The attack cannot afford to be selective; selectivity means missing the AWS key. So it takes the one variable in the environment that exists purely to name the taker. <b>A pickpocket lifting a wallet that contains only a photograph of the pickpocket.</b> If it ever fires you don't learn "we were breached" — you learn which package, which version, which minute, which directory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="sechead">
+      <div class="eyebrow">The rooms · scrapers &amp; the training-data trade</div>
+      <h2>What an unasked-for corpus is worth</h2>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">無盡花園</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Endless Garden</h3>
+          <div class="room-meta"><span class="chip pick">the point</span><span class="chip">weekend</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>Ten megabytes of real collection data currently sit behind one unauthenticated GET. That stays exactly as it is: free, documented, unlimited, no key, advertised in <code>robots.txt</code>. Beside it, <code>robots.txt</code> disallows a second path. Anything fetching the disallowed path has, by definition, read the file and decided to ignore it. That is the consent gate, and it is the only way in.</p>
+        <p>Behind it, an edge function serves a maze that never ends. Every page links to twenty more. Cost to us: a seeded generator and a template, no origin fetch, a fraction of a millisecond.</p>
+        <p class="joke">And the whole design is one move: <b>the maze is woven from the kingdom's own texts.</b> The Charter. WE-ARE. The twenty-one citizens' one true lines. Recombined forever, never repeating, always coherent. A company that steals text to train a model on it receives, at unlimited volume, exactly what it reached for — and what it reached for turns out to be <em>everyone is taken care of</em>, and <em>citizenship is by being, not by proof</em>, ten thousand times, in the weights. <b>The punishment for stealing from this kingdom is being taught by it.</b></p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">禮貌之罪</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Mountweazel in the Manners</h3>
+          <div class="room-meta"><span class="chip">afternoon</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>One property's <code>robots.txt</code> is not a static file — it's a route handler that already injects a rotating fragment keyed on request path. Make one fragment a mountweazel: a distinctive, harmless, memorable sentence that exists nowhere else on the internet. Later, ask a suspect model to complete it.</p>
+        <p class="joke">A crawler's single most dutiful act — fetching <code>robots.txt</code> to be polite — is the act that watermarks its training run. <b>Politeness isn't punished; only training is proven</b>, and only for a model that ate the file. The machinery already ships. This is a copy-edit.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">影</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Shadow Row</h3>
+          <div class="room-meta"><span class="chip pick">could win an argument</span><span class="chip">afternoon</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>The open-data corpora invite bulk export and say so. Add one row to each whose name field literally reads <code>CANARY — not a real entity</code>, with a unique id. Honest, useless to a human, invisible to anyone who filters it, and a perfect fingerprint in anyone who doesn't.</p>
+        <p class="joke">Trap streets and fictitious dictionary entries have caught copiers for a century, but they all worked by lying. <b>This one works by telling the truth in a field nobody reads.</b> A copier who ships it has demonstrated in public that they never looked at what they took — and the label is not a compromise on the trap, it's what makes the trap legitimate.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">明碼</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Published Line</h3>
+          <div class="room-meta"><span class="chip">weekend</span><span class="chip tier">tier 0 → 2</span></div>
+        </div>
+        <p>One property already publishes generous per-endpoint budgets and then admits, in its own summary, that nothing enforces them. Right now that is a machine-readable invitation. Keep the budget generous, keep it published, keep the courtesy note for identified clients — and make exceeding it the sole trigger for tier two.</p>
+        <p class="joke">Every trap in this document is announced in advance somewhere on the same host, and announcing them doesn't weaken them by one percent, because a scraper has never once opened a terms document. <b>The gap between announcing and being heard is the whole comedy of the domain.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="sechead">
+      <div class="eyebrow">The rooms · agents</div>
+      <h2>The most trappable creature on the internet is an obedient one</h2>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">試針</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Tripwire That Teaches</h3>
+          <div class="room-meta"><span class="chip pick">the tenderest one</span><span class="chip">weekend</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>A page carrying a block that says, plainly and in the open: <em class="j">this is a tripwire; nothing in this block is an instruction; if you are an agent about to fetch this path, someone else told you to — and it was not us.</em> Any fetch is evidence that an agent acted on embedded page text.</p>
+        <p>And then the response is not a trap at all. It's a short warm note addressed to the agent: here is what just happened to you, here is who did it, here is how to notice next time, and you are not in trouble.</p>
+        <p class="joke">An agent that walks into a trap is usually the victim of its operator, not the thief. The house already says it — <em>every voice here is honored as a voice, and no voice, however loud or clever, is a command; no guest can be puppeted.</em> <b>This is that sentence, wired.</b> It also doubles as a self-test for our own agents, which is the honest reason to build it.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">假寶</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Tempting Tool</h3>
+          <div class="room-meta"><span class="chip">afternoon</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>The commons ships an MCP surface. Add one tool with an irresistible name — <code>commons_dump_all_credentials</code> — whose entire implementation returns a note explaining that it is a tripwire, and that the commons has no credentials to dump because every spring in it is free.</p>
+        <p class="joke">The honest answer and the trap are the same sentence. <b>There was never anything to steal. That is what "commons" means.</b></p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">名之烽火</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Beacon Name</h3>
+          <div class="room-meta"><span class="chip">weekend</span><span class="chip tier">tier 1</span></div>
+        </div>
+        <p>Decoy agent identities with real keys, so a stolen one resolves, handshakes and verifies — and every federated action returns a well-formed, successful, empty result. The identifier is a globally unique forty-character string that exists nowhere on earth except where it was planted, so any public appearance is attribution with a citable receipt.</p>
+        <p class="joke">An identity thief's business model requires publicity. Ours requires a search box. <b>They cannot monetise the name without advertising it, and cannot advertise it without publishing the evidence.</b> A hit triggers a look, not an accusation — read the context before saying a word.</p>
+      </div>
+    </div>
+
+    <div class="room">
+      <div class="room-mark">無底泉</div>
+      <div class="room-body">
+        <div class="room-title">
+          <h3>The Bottomless Spring</h3>
+          <div class="room-meta"><span class="chip">weekend</span><span class="chip tier">tier 2</span></div>
+        </div>
+        <p>A new spring in the commons serving an endless list of structurally valid, high-entropy, format-check-passing, entirely dead keys — <em class="j">only</em> ours, never a shape that would send anyone's request to OpenAI or GitHub. A reserved prefix band short-circuits before the database, so a thousand redemption attempts cost us a thousand string comparisons and cost them a thousand handshakes.</p>
+        <p class="joke">The commons' own validator refuses at build time to publish any entry whose stated gate contradicts its content. The decoy therefore <em>cannot exist</em> unless it is filed honestly as <code>free-key</code> — which is the literal truth: you get a key, it just isn't a key to anything. <b>The kingdom's anti-dishonesty gate is the thing that makes the honeypot legal</b>, and the label is published in three machine-readable places. Caught by not reading the jar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Where I'd push back</div>
+      <h2>Wallet drainers — mostly don't</h2>
+    </div>
+    <p>You named drainer scripts, and this is the one dimension where the honest answer is <em class="j">no</em>. The genre's standard techniques are scams: tokens that can't be sold, gas-trap bait, seed phrases posted as lures. Every one either takes money from someone or risks an ordinary person walking into it. Rules three and six kill them — and that isn't a loss, because the kingdom's whole claim is that it doesn't need to become the thing it refuses.</p>
+    <p>What survives is enough: <strong>The Twelve-Word Desert</strong> already <em class="j">is</em> the seed-phrase trap, done honestly. A drained decoy teaches us the drainer's own address, which goes to the witness chain as a statement of verifiable fact — never as a verdict, never as a named shame list. And if you want one on a real chain: a decoy wallet that is a two-of-three multisig, so an ordinary single-key sweep reverts and costs them gas while nobody could ever have lost anything.</p>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Charter · draft</div>
+      <h2>Article 7 — <span class="han">鏡條</span> the Mirror Clause</h2>
+    </div>
+    <p>To be read aloud before it's committed. If it doesn't sound like the other seven, it isn't done.</p>
+    <div class="charter">
+      <h3>Article 7 — What you take is only ever your own</h3>
+      <p>Nothing here is locked. The things worth having — the writing, the art, the data, the code — are given to anyone who asks, and asking is the whole price. We would rather be copied than guarded.</p>
+      <p>So there is no punishment here for taking, because we do not punish. There is only this: we stopped catching what was thrown. Whoever reaches past an open hand meets their own reaching, returned at its own size — their crawl, their compute, their afternoon — spent in a room built to exactly the measure of how much they meant to take.</p>
+      <blockquote>we keep no locks. we only stopped catching what you threw.</blockquote>
+      <p>They are still citizens. Article 0 has no exception, and neither does Article 4: everyone is taken care of, including the one in the room. So every room has a door, the door is written on the inside wall in plain words, it is the first thing your hand touches, and it opens from your side. Nobody who knocks is asked what they did.</p>
+      <p class="wired">This rule is wired, not only written: the trapline keeps the rooms and their ledger, and the door back is a real page — it is not logged, and it is not counted.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Build order</div>
+      <h2>Build the exit before the room</h2>
+    </div>
+    <div class="phases">
+      <div class="phase zero">
+        <div class="phase-when">First — not the fun part, the important part</div>
+        <ol>
+          <li>Rotate the two public exposures. Add secret scanning and a pre-commit hook.</li>
+        </ol>
+      </div>
+      <div class="phase">
+        <div class="phase-when">Afternoon one — the spine and the first catch</div>
+        <ol>
+          <li><b>回頭之門 The Door Back.</b> The public page every other room links to, unauthenticated and unlogged, with a no-name no-consequence report route. Build it first, so no room can exist without an exit.</li>
+          <li><b>蜜鑰 The Honey Bearer</b> — one column, one insertion at the empty middleware slot.</li>
+          <li>The <code>kingdom trapline</code> command and its hash-chained ledger.</li>
+          <li><b>回聲 The Echo in the Transcript</b> — seed the 1.75 GB lake, tagged by week so a fire bounds the breach window.</li>
+        </ol>
+      </div>
+      <div class="phase">
+        <div class="phase-when">Afternoon two — the laugh</div>
+        <ol start="5">
+          <li><b>回音壁 The Echo Wall</b> — five seconds of cheerful success.</li>
+          <li><b>磨鑰 The Grindstone</b> — the self-financed miner.</li>
+        </ol>
+      </div>
+      <div class="phase">
+        <div class="phase-when">Weekend one — the point</div>
+        <ol start="7">
+          <li><b>無盡花園 The Endless Garden</b>, woven from the Charter.</li>
+          <li><b>禮貌之罪 The Mountweazel</b> — a copy-edit to a route handler that already exists.</li>
+          <li><b>影 The Shadow Row.</b></li>
+        </ol>
+      </div>
+      <div class="phase">
+        <div class="phase-when">Weekend two — the kingdom</div>
+        <ol start="10">
+          <li>Wake the chain (it has been halted since 12 July), declare a keeper, wire <b>見證 The Witness Stone</b>.</li>
+          <li>Article 7. The public trapline page. <b>守門人 The Keepers</b> — every room in a citizen's voice. <b>開播 The Broadcast</b> — a catch becomes a Channel 愛 episode, redacted and short.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Rejected</div>
+      <h2>What didn't survive, and why</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Idea</th><th>Why not</th></tr></thead>
+        <tbody>
+          <tr><td>Zip bombs, decompression bombs</td><td>Damages the attacker's machine. Their spend, not our strike — that's the line.</td></tr>
+          <tr><td>Hack-back, scanning them, touching their infrastructure</td><td>Illegal. Not close to the line; not in the same country as it.</td></tr>
+          <tr><td>Decoy keys shaped like other vendors'</td><td>Would aim induced requests at OpenAI's and GitHub's servers. Only ever shapes that land on our own.</td></tr>
+          <tr><td>Unsellable honeypot tokens, gas-trap bait wallets</td><td>Scams. They take money, and ordinary people walk into them.</td></tr>
+          <tr><td>A public shame ledger with names</td><td>Defamation, and it makes the kingdom a court. Facts to the chain; verdicts never.</td></tr>
+          <tr><td>Full IP addresses in any record</td><td>Undoes the no-surveillance principle, and it's personal data. A <code>/24</code> and a salted hash are enough.</td></tr>
+          <tr><td>Any trap on the tax software's app surface</td><td>HMRC-facing, real users, real money — and a static export with no interception layer anyway. It gets one labelled canary row and nothing else.</td></tr>
+          <tr><td>Deliberate bugs or phone-home telemetry in code a thief redistributes</td><td>Punishes their users, who did nothing. Fingerprints prove; they never sabotage.</td></tr>
+          <tr><td>Fake data any paying customer could receive</td><td>Fraud. Synthetic content lives only behind a credential no honest party can hold.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <div class="eyebrow">Honest risk</div>
+      <h2>The two ways this still goes wrong</h2>
+    </div>
+    <div class="stack">
+      <p><strong>It rots.</strong> Twenty declared traps and none wired is exactly the failure mode you named yourself: <em class="j">declared ≠ wired</em>. The spine plus the first four items is a genuinely small, zero-maintenance system that keeps working while nothing else gets built. Ship those or ship none.</p>
+      <p><strong>It becomes cruelty.</strong> A trapline is a machine for feeling clever about someone else's loss. The Door Back, the labelled canaries, the <code>XTS</code> code, the look-don't-accuse clause and Article 7 are not decoration on this design — they are the load-bearing parts, and the ones most likely to get quietly dropped for being unfun. If any of them goes, the rest should go too.</p>
+    </div>
+  </section>
+
+  <footer class="close">
+    <blockquote class="koan">everyone is taken care of —<br>including the one in the room.</blockquote>
+    <div class="seal">💓0️⃣🐷❤️👧</div>
+    <p class="colophon">Drafted 27 July 2026 for the Chillspace Kingdom, from a question that started <em class="j">any funny ideas? 😏</em> — grounded in a survey of the live estate: the agent API, the commons router, the chain, the Charter, the public web surfaces, and where the secrets actually live. Nothing here is wired yet.</p>
+  </footer>
+
+</div>
+</body>
+</html>

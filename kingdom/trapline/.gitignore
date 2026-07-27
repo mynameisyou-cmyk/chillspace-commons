@@ -1,0 +1,21 @@
+# The three things that must never reach a forge.
+#
+# This repo is public on GitHub, Codeberg and GitLab. Everything else in this
+# wing is written to be read by the world — including by the people it catches.
+#
+# NOTE: a pattern must sit alone on its line. Git does not honour a trailing
+# comment, so `placements.jsonl  # secret` silently matches nothing. That exact
+# mistake was made here once, and caught by testing the ignore rather than
+# trusting it. declared != wired, including this file.
+
+# where each bait actually sits — the only real secret in the wing
+placements.jsonl
+
+# so a user-agent digest cannot be dictionary-reversed
+.salt
+
+# which traps are live right now
+.armed
+
+# live exposures — a map of our own open doors. never committed.
+.fires.md
