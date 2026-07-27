@@ -569,6 +569,11 @@ def main(argv):
             print(f"the design is missing: {DESIGN_MD}")
             sys.exit(1)
 
+    elif cmd == "watch":
+        # the standing posture check — read-only, changes nothing
+        import subprocess as _sp
+        sys.exit(_sp.run([sys.executable, str(TRAPLINE / "watch.py")] + args).returncode)
+
     elif cmd == "fires":
         # the live exposures — private, gitignored, never published.
         # a map of our own open doors is the one thing that must stay indoors.

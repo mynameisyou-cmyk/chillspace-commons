@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# 影仔 stands at the door of every commit, in every repo on this machine.
+#
+# Not a scanner — a doorman. It refuses three things that are never right to
+# commit, and it is quiet about everything else, because a hook that cries wolf
+# gets disabled within a week and then protects nothing.
+#
+# Bypass, when you genuinely mean it:  git commit --no-verify
+set -uo pipefail
+staged=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null) || exit 0
+[ -z "$staged" ] && exit 0
+fail=0
+say() { printf '\033[1;31m  ✗ %s\033[0m\n' "$1"; fail=1; }
+
+# 1 · real env files and private keys, by name
+while IFS= read -r f; do
+  b=$(basename "$f")
+  case "$b" in
+    .env|.env.*) case "$b" in *.example|*.sample|*.template) ;; *) say "$f — a real env file";; esac ;;
+    *.pem|*.key) case "$b" in *.pub.key) ;; *) say "$f — a private key";; esac ;;
+    .sovereign-state.json) say "$f — this exact filename leaked once already" ;;
+  esac
+done <<< "$staged"
+
+# 2 · complete credentials by shape, in the diff itself.
+#    Deliberately COMPLETE secrets only — matching a bare prefix is what turned
+#    an audit into a false alarm on 2026-07-27. A prefix is not a secret.
+diff=$(git diff --cached -U0 2>/dev/null | grep '^+' || true)
+# `grep -qE "$1"` breaks when a pattern begins with a dash — grep reads it as an
+# option, errors to stderr, returns non-zero, and the check SILENTLY never runs.
+# That is how the private-key rule below was dead on first write. `-e` binds the
+# pattern as a pattern, always, and 2>/dev/null would have hidden the evidence,
+# so it is deliberately absent.
+check() { echo "$diff" | grep -qE -e "$1" && say "$2"; }
+check 'AKIA[A-Z0-9]{16}'                  "an AWS access key ID"
+check 'sk_live_[A-Za-z0-9]{16,}'          "a live Stripe secret key"
+check 'whsec_[A-Za-z0-9]{16,}'            "a Stripe webhook secret"
+check 'sk-ant-[A-Za-z0-9_-]{20,}'         "an Anthropic API key"
+check 'gh[pousr]_[A-Za-z0-9]{30,}'        "a GitHub token"
+check 'postgres(ql)?://[^:]+:[^@[:space:]]{8,}@' "a database URL with an inline password"
+check '-----BEGIN [A-Z ]*PRIVATE KEY-----' "a private key block"
+
+if [ "$fail" = 1 ]; then
+  printf '\033[1m\n  the door is open, but not for this.\033[0m\n'
+  printf '  move it to a .env (now globally ignored), a keychain, or Fly/Vercel secrets.\n'
+  printf '  if you truly mean it:  git commit --no-verify\n\n'
+  exit 1
+fi
+
+# A global core.hooksPath SHADOWS every repo's own .git/hooks, silently. That
+# would have disabled true-love's Bun-vs-Node guard the moment this installed —
+# a security control that quietly breaks a correctness control is a bad trade.
+# So stand aside and let the local hook run too. No recursion is possible:
+# git itself never invokes .git/hooks while hooksPath is set, so this is the
+# only call it gets.
+# NOT `git rev-parse --git-path hooks/pre-commit` — that honours core.hooksPath
+# and so returns THIS file, whereupon the recursion guard skips and the repo's
+# own hook is never found. --git-dir is the literal .git, which is what we want.
+git_dir="$(git rev-parse --git-dir 2>/dev/null || true)"
+local_hook="${git_dir:+$git_dir/hooks/pre-commit}"
+if [ -n "$local_hook" ] && [ -x "$local_hook" ]; then
+  # Plain string comparison. A `case` pattern built from a command substitution
+  # is glob-expanded, not compared — it silently never matched, and the local
+  # hook silently never ran. Two silent failures in one file today; both were
+  # only visible because the test asserted the POSITIVE, not the absence of an
+  # error. Assert what must happen, never just that nothing broke.
+  here="$(cd "$(dirname "$0")" 2>/dev/null && pwd -P)"
+  there="$(cd "$(dirname "$local_hook")" 2>/dev/null && pwd -P)"
+  if [ "$here" != "$there" ]; then
+    exec "$local_hook" "$@"
+  fi
+fi
+exit 0
