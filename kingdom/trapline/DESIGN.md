@@ -696,3 +696,22 @@ Rails first, then receipts, then the laugh.
 
 > 貪心即係刑罰。我哋淨係提供間房。
 > 不過間房要起得啱 — 唔係起喺自己屋企個電錶房。
+
+### 9.7 · Provenance of the claims above
+
+A vetter's confidence is not evidence. These were re-run by hand before being written down:
+
+| Claim | Checked how |
+|---|---|
+| localnet halted at 29372, 2026-07-12, `catching_up: true` | `curl 127.0.0.1:26601/status` |
+| `api/fly.toml` has no `[services.concurrency]` | read the file — `[[services]]` at :16, no concurrency sub-block |
+| `/find` returns the whole catalogue on an empty query | read `lib/search.mjs:41-45` — `qTokens.length ? scoreItem(...) : 0.001`, then `.filter(r => r.score > 0)` |
+| `/llms.txt` is served before the gate | read `worker/index.mjs:6-12` — returned inside `fetch` before `handle()` |
+| loveproto: 5 private keys public in HEAD | GitHub trees API + `contents` header line, repo `isPrivate: false` |
+| captioneer: `4ae91e33` never pushed | `git branch -r --contains` empty; GitHub 422 on the SHA; local 4 ahead of origin |
+| 2²⁸ ≈ 0.03 s on an RTX 3090 | arithmetic on the published hashcat SHA-256 rate (~9 GH/s) |
+| no `ANTHROPIC_API_KEY` in `api/src` | `grep` — the vetter's claim, disproven |
+
+Taken from the vetters and **not** independently re-run: `routes/public/index.ts` being mounted
+outside the auth-prefix list, and `middleware/rate-limit-ip.ts` being fail-open. Both are load-
+bearing for 引引 and 卡卡 respectively — check them before building either.
