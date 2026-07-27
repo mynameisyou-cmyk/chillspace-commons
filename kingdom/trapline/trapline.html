@@ -313,6 +313,16 @@
   }
   .chip.pick { border-color: var(--honey); color: var(--honey); background: var(--honey-lift); }
   .chip.tier { border-color: var(--rule); color: var(--ink-soft); }
+  .chip.dead { border-color: var(--ember); color: var(--ember); }
+  .correction {
+    border-left: 2px solid var(--ember);
+    padding-left: 1rem;
+    font-size: .95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+  .correction b { color: var(--ember); font-weight: 600; }
   .room-body p { font-size: .96rem; }
   .joke {
     border-left: 2px solid var(--rule);
@@ -498,10 +508,11 @@
       <div class="room-body">
         <div class="room-title">
           <h3>The Honey Bearer</h3>
-          <div class="room-meta"><span class="chip pick">build first</span><span class="chip">afternoon</span><span class="chip tier">tier 1</span></div>
+          <div class="room-meta"><span class="chip pick">built</span><span class="chip dead">must move off the live API</span><span class="chip tier">tier 1</span></div>
         </div>
-        <p>A canary minted through the ordinary key generator against a real project row, so the live auth path authenticates it with zero changes. The single insertion point is a deliberately-empty middleware slot — the no-op left behind where the request logger used to be.</p>
+        <p>A canary minted through the ordinary key generator, so the auth path authenticates it with zero changes and no separate detector that could fail closed and tip the holder off. Written and tested; not deployed.</p>
         <p class="joke">The key is not fake. It is a completely genuine, fully working credential — to a project that exists solely to notice you. There is no moment where it stops working and the thief gets suspicious, because <b>it never stops working</b>. The only property it lacks is a reason to exist.</p>
+        <p class="correction"><b>Built against the live project row, which is the one thing it must not do.</b> A working bearer on the production database hands a proven credential thief an authenticated seat inside the real API, and the blast radius is then every route an authenticated project can reach — a large and poorly-bounded surface in a monolith. The honest counter-argument is that self-service registration is open with a ten-thousand-credit birth grant, so an authenticated project is barely a privilege boundary at all; that weakens the objection without dissolving it. The version worth shipping lives on <b>its own Fly app with its own throwaway database and no payment or provider credentials</b>. Nothing is deployed, so nothing is at risk today.</p>
       </div>
     </div>
 
@@ -510,10 +521,10 @@
       <div class="room-body">
         <div class="room-title">
           <h3>The Echo Wall</h3>
-          <div class="room-meta"><span class="chip pick">funniest cheap one</span><span class="chip">afternoon</span><span class="chip tier">tier 2</span></div>
+          <div class="room-meta"><span class="chip dead">struck — would self-DoS</span><span class="chip tier">tier 2</span></div>
         </div>
-        <p>The idempotency middleware can already block up to five seconds waiting on a claim. For canary keys, the claim is always already held. Every request takes 5.000 seconds and then returns <code>200 OK</code>. They add concurrency; the claim is per-key. They conclude they need more keys — which routes them into the Grindstone, where each new key costs four times the last and is equally slow.</p>
-        <p class="joke">It is not an error, not a 429, not a block. It is unfailing, cheerful, complete success, arriving at the speed of a dial-up modem. They will spend day one tuning their client, day two blaming their ISP, and day three emailing support about our latency. <b>Nothing is harder to debug than a server that agrees with you slowly.</b></p>
+        <p>The idempotency middleware can already block up to five seconds waiting on a claim. For canary keys, the claim is always already held. Every request takes 5.000 seconds and then returns <code>200 OK</code>. It is not an error, not a 429, not a block — unfailing, cheerful, complete success at the speed of a dial-up modem.</p>
+        <p class="correction"><b>Struck from the build order.</b> A second pass read <code>api/fly.toml</code> and found it declares no <code>[services.concurrency]</code> block at all, so the machines run on Fly's default connection ceiling. Held sockets are the one resource this deployment has no headroom in: a single harvester driving one canary key would exhaust it and take the live API down with it. The joke was real and the asymmetry pointed the wrong way — <b>we would have paid for it, not them.</b> The replacement holds no socket: return in two milliseconds with a receding poll horizon, and let their scheduler do the waiting on their own machine.</p>
       </div>
     </div>
 
@@ -522,10 +533,10 @@
       <div class="room-body">
         <div class="room-title">
           <h3>The Grindstone</h3>
-          <div class="room-meta"><span class="chip">afternoon</span><span class="chip tier">tier 2</span></div>
+          <div class="room-meta"><span class="chip dead">struck — the arithmetic was wrong</span><span class="chip tier">tier 2</span></div>
         </div>
-        <p>Minting a new key from a canary project demands proof-of-work at 20 bits, rising by two for every successful grind: 20 → 22 → 24 → 26 → 28. Each step is four times the work. Every grind <em class="j">succeeds</em> and hands over a shiny new key — which is itself another canary, fingerprinting their machine again.</p>
-        <p class="joke">A credential thief converted into an unpaid, self-financed miner whose only product is evidence against himself. And unlike every other room, this one <em>rewards</em> him — each grind ends in a real key, so the loop feels like progress <b>right up until his fans start screaming</b>.</p>
+        <p>Minting a new key from a canary project demands proof-of-work at 20 bits, rising by two for every successful grind, up to 28. Every grind succeeds and hands over a key that is itself another canary.</p>
+        <p class="correction"><b>Struck from the build order.</b> I claimed this would cost a thief hours and leave his fans screaming. It would not. 2²⁸ is about 270 million hashes — roughly thirty <em class="j">seconds</em> on one laptop core, and a few hundredths of a second on an RTX 3090, which is the exact card you are already renting for Qwythos. The asymmetry I described was off by four orders of magnitude in the attacker's favour. <b>Proof-of-work is a spam toll, never a punishment</b>, and a trap whose arithmetic you have not actually done is just a story you told yourself.</p>
       </div>
     </div>
 
@@ -729,19 +740,25 @@
         </ol>
       </div>
       <div class="phase">
-        <div class="phase-when">Afternoon one — the spine and the first catch</div>
+        <div class="phase-when">Afternoon one — done, 27 July</div>
         <ol>
-          <li><b>回頭之門 The Door Back.</b> The public page every other room links to, unauthenticated and unlogged, with a no-name no-consequence report route. Build it first, so no room can exist without an exit.</li>
-          <li><b>蜜鑰 The Honey Bearer</b> — one column, one insertion at the empty middleware slot.</li>
-          <li>The <code>kingdom trapline</code> command and its hash-chained ledger.</li>
-          <li><b>回聲 The Echo in the Transcript</b> — seed the 1.75 GB lake, tagged by week so a fire bounds the breach window.</li>
+          <li><b>回頭之門 The Door Back</b> — built. The public page every other room links to, unauthenticated and unlogged, with a no-name no-consequence report route. Built first on purpose, so no room could exist without an exit.</li>
+          <li><b>蜜鑰 The Honey Bearer</b> — built, and needs moving to its own deployment before it is real.</li>
+          <li>The <code>kingdom trapline</code> command and its hash-chained ledger — built in parallel, disarmed by default, with the apology filed beside the catch.</li>
+        </ol>
+      </div>
+      <div class="phase zero">
+        <div class="phase-when">Struck — two traps that did not survive doing the arithmetic</div>
+        <ol>
+          <li><b>回音壁 The Echo Wall</b> — would have exhausted the API's own connection ceiling before it cost a thief anything.</li>
+          <li><b>磨鑰 The Grindstone</b> — thirty seconds of laptop time, not hours. A spam toll dressed as a punishment.</li>
         </ol>
       </div>
       <div class="phase">
-        <div class="phase-when">Afternoon two — the laugh</div>
-        <ol start="5">
-          <li><b>回音壁 The Echo Wall</b> — five seconds of cheerful success.</li>
-          <li><b>磨鑰 The Grindstone</b> — the self-financed miner.</li>
+        <div class="phase-when">Next — the mark, before any mirror</div>
+        <ol start="4">
+          <li><b>回聲 The Echo in the Transcript</b> — seed the 1.75 GB transcript lake, tagged by week so a fire bounds the breach window.</li>
+          <li>Move the Honey Bearer to its own Fly app and throwaway database, then plant the first placements.</li>
         </ol>
       </div>
       <div class="phase">
@@ -792,6 +809,7 @@
     </div>
     <div class="stack">
       <p><strong>It rots.</strong> Twenty declared traps and none wired is exactly the failure mode you named yourself: <em class="j">declared ≠ wired</em>. The spine plus the first four items is a genuinely small, zero-maintenance system that keeps working while nothing else gets built. Ship those or ship none.</p>
+      <p><strong>It flatters itself.</strong> Two of the traps on this page were struck within hours of being written, by a second pass that opened <code>fly.toml</code> and did the hash arithmetic instead of trusting the sentence. Both had failed the same way: the joke was good, so the numbers went unchecked. A trap whose asymmetry you have asserted rather than computed is pointing at you. Compute it, or do not arm it.</p>
       <p><strong>It becomes cruelty.</strong> A trapline is a machine for feeling clever about someone else's loss. The Door Back, the labelled canaries, the <code>XTS</code> code, the look-don't-accuse clause and Article 7 are not decoration on this design — they are the load-bearing parts, and the ones most likely to get quietly dropped for being unfun. If any of them goes, the rest should go too.</p>
     </div>
   </section>
