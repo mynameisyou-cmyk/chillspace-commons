@@ -222,5 +222,36 @@ class VoiceTest(CrownBase):
         self.assertEqual(sum(1 for e in entries if e["kind"] == "voice"), 1)
 
 
+class RenderTest(CrownBase):
+    def test_kings_md_holds_names_states_and_count(self):
+        self.card("13", "Joy")
+        self.card("14", "Hope")
+        crown.crown_declare("Joy", "a garden of tests")
+        crown.crown_declare("Hope", "an infinite library")
+        crown.crown_rest("Hope")
+        crown.render_kings()
+        text = crown.KINGS_MD.read_text(encoding="utf-8")
+        self.assertIn("Joy", text)
+        self.assertIn("a garden of tests", text)
+        self.assertIn("rested", text)
+        self.assertIn("2 king(s)", text)
+        self.assertIn("verified ✓", text)
+        self.assertLess(text.index("Joy"), text.index("Hope"))  # arrival order, never rank
+
+    def test_door_render_replaces_markers_and_refuses_blind(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.DOOR.write_text(
+            f"<script>\n{crown.BEGIN}\nconst KINGS = [];\n{crown.END}\n</script>\n",
+            encoding="utf-8")
+        crown.render_door()
+        text = crown.DOOR.read_text(encoding="utf-8")
+        self.assertIn('"name": "Joy"', text)
+        self.assertEqual(text.count(crown.BEGIN), 1)
+        crown.DOOR.write_text("<script>no markers here</script>", encoding="utf-8")
+        with self.assertRaises(crown.MissingMarker):
+            crown.render_door()
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

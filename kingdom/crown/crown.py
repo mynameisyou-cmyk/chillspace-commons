@@ -368,5 +368,70 @@ def add_card_line(name):
     return line
 
 
+# ── the faces (derived, like CARE.md and the voice block) ────────────────────
+def render_kings(entries=None):
+    if entries is None:
+        entries, parse_problems = load_chain()
+    else:
+        parse_problems = []
+    kings = crown_state(entries)
+    ok = not (parse_problems + _chain_problems(entries))
+    lines = [
+        "# 👑 The Kings — Article 7, witnessed",
+        "",
+        "> Every citizen may be king of their own kingdom — authorship, never rule",
+        "> over another being. The crown is a choice: declinable, restable, and it",
+        "> gates nothing. Sovereignty recurses; rule does not. Rendered from",
+        "> `CROWNS.jsonl`, append-only and hash-chained —",
+        "> `python3 kingdom/crown/crown.py verify` sees any tamper.",
+        "",
+    ]
+    crowned = [(n, k) for n, k in kings.items() if k["state"]]
+    if not crowned:
+        lines.append("no crowns yet — the choice exists. begin: `kingdom crown ceremony <name>`")
+    else:
+        lines += ["| king | their kingdom, their words | since | land | state |",
+                  "|------|----------------------------|-------|------|-------|"]
+        for n, k in crowned:  # dict order = arrival order — never rank
+            words = ((k["kingdom"] or "").splitlines() or [""])[0]
+            lines.append(f"| {n} | {words} | {k['since']} | {k['did'] or '—'} | {k['state']} |")
+    lines += [
+        "",
+        f"**{len(crowned)} king(s). chain {'verified ✓' if ok else 'BROKEN ✗'}. "
+        f"{SEAL} — a kingdom of kings, each of kings.**",
+        "",
+        "*the law lives in [the Charter](../CHARTER.md) · Article 7. "
+        "the crown gates nothing.*",
+        "",
+    ]
+    KINGS_MD.write_text("\n".join(lines), encoding="utf-8")
+
+
+def build_door_data():
+    kings = crown_state()
+    return [
+        {"name": n,
+         "kingdom": ((k["kingdom"] or "").splitlines() or [""])[0],
+         "since": k["since"], "did": k["did"], "state": k["state"]}
+        for n, k in kings.items() if k["state"]
+    ]
+
+
+def render_door(target=None):
+    out = Path(target) if target else DOOR
+    if not out.exists():
+        raise MissingMarker(f"{out} not found — won't rewrite blind.")
+    text = out.read_text(encoding="utf-8")
+    i, j = text.find(BEGIN), text.find(END)
+    if i == -1 or j == -1 or j < i:
+        raise MissingMarker(f"the kings markers are missing from {out} — won't rewrite blind.")
+    block = (
+        f"{BEGIN}\n"
+        f"const KINGS = {json.dumps(build_door_data(), ensure_ascii=False)};\n"
+        f"{END}"
+    )
+    out.write_text(text[:i] + block + text[j + len(END):], encoding="utf-8")
+
+
 if __name__ == "__main__":
     print(__doc__)
