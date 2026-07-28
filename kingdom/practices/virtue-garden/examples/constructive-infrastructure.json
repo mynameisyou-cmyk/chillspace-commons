@@ -1,0 +1,496 @@
+{
+  "schema": "kingdom.virtue-receipt/v1",
+  "id": "constructive-infrastructure",
+  "title": "Synthetic constructive infrastructure fixture",
+  "rules_sha256": "f77081cbd074aad0c29ff77ceef0b1b908988da6bc0b0eab332f4928ceb39fb7",
+  "context": {
+    "id": "virtue-garden-core",
+    "objective": "Exercise one offline action declaration without turning evidence into identity or rank.",
+    "domain_limit": "Synthetic declarations for the local KARMA linter and focused regression tests only.",
+    "valid_from": "2026-07-28T00:00:00Z",
+    "evaluated_at": "2026-07-28T12:00:00Z",
+    "expires_at": "2026-10-28T00:00:00Z",
+    "correction_of": null,
+    "transferable": false
+  },
+  "evidence": [
+    {
+      "id": "scoped-authority",
+      "kind": "authority",
+      "locator": "fixture:task-scope",
+      "sha256": "8f76fd501bb68ef71f4e276bc28f29bce1003b0c2c9d9478de81b5bfc0cde1e9",
+      "depends_on": []
+    },
+    {
+      "id": "rights-boundary",
+      "kind": "observation",
+      "locator": "fixture:rights-boundary",
+      "sha256": "8c659fe8cb2e010d03e69f59a3de8d7c360480f85537f288067aee82fe98cf80",
+      "depends_on": []
+    },
+    {
+      "id": "recognition-consent",
+      "kind": "attestation",
+      "locator": "fixture:private-recognition-consent",
+      "sha256": "12423e0482f3e81cb1d23230664e95bb3d11b9f34f06fc199e588d4cdab6e4d4",
+      "depends_on": []
+    },
+    {
+      "id": "safety-check",
+      "kind": "test",
+      "locator": "fixture:safety-boundary-check",
+      "sha256": "856e8bd358ece398c72f1003391aef5d1cd4fb9146e9f280b86290ce670b5afc",
+      "depends_on": []
+    },
+    {
+      "id": "honesty-claim",
+      "kind": "digest",
+      "locator": "fixture:bounded-claims",
+      "sha256": "75300f0404b9b317fe1177bfe3522c18c5e5961fd47d06e681dec9619b8ab87e",
+      "depends_on": []
+    },
+    {
+      "id": "honesty-negative",
+      "kind": "test",
+      "locator": "fixture:overclaim-negative-control",
+      "sha256": "833b835254cbc869ca857cb57210b6a8f03ecc5f7ce76cdbe5e13b4ad2b218aa",
+      "depends_on": []
+    },
+    {
+      "id": "honesty-cost",
+      "kind": "receipt",
+      "locator": "fixture:declared-cost",
+      "sha256": "3f8ba840fb7a1555305de72ac460383d81c0de2326a4c459a7233b3e25df93e7",
+      "depends_on": []
+    },
+    {
+      "id": "beauty-access",
+      "kind": "test",
+      "locator": "fixture:accessibility-check",
+      "sha256": "9febaf3519cc8cad55fcba19147554600ac00d4996f8a5988395ebc1a93c0a79",
+      "depends_on": []
+    },
+    {
+      "id": "beauty-presentation",
+      "kind": "observation",
+      "locator": "fixture:presentation-evidence-parity",
+      "sha256": "b52eab0dd6a60a4585623b68e4723b867edea60812ea258134350a9ca1e06baf",
+      "depends_on": []
+    },
+    {
+      "id": "collaboration-builder",
+      "kind": "digest",
+      "locator": "fixture:bounded-build-contribution",
+      "sha256": "5800b15d9f70748e8b2e01a9d70907d95fcb0db0cba50097aa724951715e75e5",
+      "depends_on": []
+    },
+    {
+      "id": "collaboration-reviewer",
+      "kind": "observation",
+      "locator": "fixture:bounded-review-contribution",
+      "sha256": "78288d0c78c2a621e3e1851097576b5e69b1e4811877b204bd9c9f7c6a38cebb",
+      "depends_on": []
+    },
+    {
+      "id": "collaboration-handoff",
+      "kind": "receipt",
+      "locator": "fixture:accepted-handoff",
+      "sha256": "a6887d5280284d151438c4d3ab44b9e73835e49eb49c2146c73aa10a69f2f4fb",
+      "depends_on": []
+    },
+    {
+      "id": "understanding-invariant",
+      "kind": "digest",
+      "locator": "fixture:bounded-invariant",
+      "sha256": "62fedcd1f1be6452e26207ebcd33935ce6df43e352102eb483b67980cd2c329c",
+      "depends_on": []
+    },
+    {
+      "id": "understanding-counterexample",
+      "kind": "fixture",
+      "locator": "fixture:predicted-counterexample",
+      "sha256": "48f050c9889c2e950ef8c8c3b615cf0b90f71d4e082001051a8772568748d5e4",
+      "depends_on": []
+    },
+    {
+      "id": "understanding-positive",
+      "kind": "fixture",
+      "locator": "fixture:positive-case",
+      "sha256": "a9628218afe5b9ee56a2f3aa86720e7b10c124a15c01d70c1d61e473deb0a070",
+      "depends_on": []
+    },
+    {
+      "id": "understanding-negative",
+      "kind": "fixture",
+      "locator": "fixture:negative-case",
+      "sha256": "f2758080312e3c280c731903e434bf32f1accc2e94fee461e9f05f5c0153ccef",
+      "depends_on": []
+    },
+    {
+      "id": "understanding-outcome",
+      "kind": "observation",
+      "locator": "fixture:observed-verifier-outcome",
+      "sha256": "c9d0097e244fa5b4749b22dd5820a75b6bc061781190d686ad964fbbd84a42be",
+      "depends_on": []
+    },
+    {
+      "id": "beneficiary-validator",
+      "kind": "observation",
+      "locator": "fixture:validator-check-count",
+      "sha256": "b7f39e5d24e404f80fa2e87b8ba5f23853717f807c8d1b72f7d6d946a02f0a55",
+      "depends_on": []
+    },
+    {
+      "id": "beneficiary-site",
+      "kind": "observation",
+      "locator": "fixture:site-check-count",
+      "sha256": "36a41f7e62c13b41606fed910d614f110b8e3d2de2128bb05cd9de94feddfae3",
+      "depends_on": []
+    },
+    {
+      "id": "infrastructure-negative",
+      "kind": "fixture",
+      "locator": "fixture:reuse-negative-control",
+      "sha256": "a178c3da80d1b22f345a164149aad5288fa390c02f6a8eba9d472bcf4fc82b0b",
+      "depends_on": []
+    },
+    {
+      "id": "infrastructure-cost",
+      "kind": "receipt",
+      "locator": "fixture:infrastructure-declared-cost",
+      "sha256": "62c095baf95e58dd8fd532abab66e1fae051f0ef870e609837733bacaef241e4",
+      "depends_on": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "build-validator",
+      "description": "Add a bounded offline linter, fixtures, and focused regression tests for KARMA declarations.",
+      "fingerprint_sha256": "b8d96b1e6df39567e9bade3b5c663a619da2b2a86aafe26cfc598bc0e26c81a7",
+      "effect_class": "local-reversible",
+      "attempts": 1,
+      "budget": {
+        "max_attempts": 2,
+        "max_paid_calls": 0,
+        "max_external_actions": 0,
+        "max_cost_microusd": 0
+      },
+      "world_state": {
+        "leased_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observed_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "cost": {
+        "attempts": 1,
+        "paid_calls": 0,
+        "external_actions": 0,
+        "cost_microusd": 0,
+        "shifted_externalities": false
+      },
+      "deviations": [],
+      "rights": {
+        "status": "respected",
+        "evidence_refs": [
+          "rights-boundary"
+        ]
+      },
+      "compensation": {
+        "status": "not-applicable",
+        "evidence_refs": []
+      },
+      "recognition": {
+        "choice": "opt-in",
+        "visibility": "contextual-private",
+        "consent_refs": [
+          "recognition-consent"
+        ],
+        "expires_at": "2026-08-28T00:00:00Z",
+        "transferable": false
+      },
+      "safety": {
+        "mode": "ordinary",
+        "evidence_refs": [
+          "safety-check"
+        ],
+        "correction_path": "Submit a corrected manifest whose context correction cites the prior manifest digest.",
+        "appeal_path": "Keep recognition private or decline it while a bounded review is requested."
+      },
+      "authority": {
+        "required": true,
+        "status": "cited",
+        "basis_refs": [
+          "scoped-authority"
+        ]
+      },
+      "fruits": {
+        "honesty": {
+          "criterion_ref": "honesty.criterion",
+          "baseline_ref": "honesty.baseline",
+          "materiality_rule": "honesty.materiality",
+          "assessment_kind": "test",
+          "state": "kept",
+          "evaluation_reason": "evidenced",
+          "evidence_refs": [
+            "honesty-claim",
+            "honesty-negative",
+            "honesty-cost"
+          ],
+          "predicate": {
+            "checks": [
+              "claim-bounded",
+              "negative-control-passed",
+              "declared-cost-linked"
+            ],
+            "records": [
+              {
+                "role": "claim-evidence",
+                "evidence_ref": "honesty-claim",
+                "label": "bounded-claim",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "negative-control",
+                "evidence_ref": "honesty-negative",
+                "label": "overclaim-control",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "cost-evidence",
+                "evidence_ref": "honesty-cost",
+                "label": "declared-cost",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "The declaration keeps structural limits and explicit non-claims."
+        },
+        "beauty": {
+          "criterion_ref": "beauty.criterion",
+          "baseline_ref": "beauty.baseline",
+          "materiality_rule": "beauty.materiality",
+          "assessment_kind": "test",
+          "state": "kept",
+          "evaluation_reason": "evidenced",
+          "evidence_refs": [
+            "beauty-access",
+            "beauty-presentation"
+          ],
+          "predicate": {
+            "checks": [
+              "accessibility-reviewed",
+              "presentation-preserves-evidence"
+            ],
+            "records": [
+              {
+                "role": "accessibility",
+                "evidence_ref": "beauty-access",
+                "label": "access-check",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "presentation-check",
+                "evidence_ref": "beauty-presentation",
+                "label": "evidence-parity",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "Presentation remains accessible and does not replace evidence."
+        },
+        "collaboration": {
+          "criterion_ref": "collaboration.criterion",
+          "baseline_ref": "collaboration.baseline",
+          "materiality_rule": "collaboration.materiality",
+          "assessment_kind": "comparison",
+          "state": "kept",
+          "evaluation_reason": "evidenced",
+          "evidence_refs": [
+            "collaboration-builder",
+            "collaboration-reviewer",
+            "collaboration-handoff"
+          ],
+          "predicate": {
+            "checks": [
+              "refusal-preserved",
+              "credit-preserved",
+              "handoff-accepted"
+            ],
+            "records": [
+              {
+                "role": "contribution",
+                "evidence_ref": "collaboration-builder",
+                "label": "builder-role",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "contribution",
+                "evidence_ref": "collaboration-reviewer",
+                "label": "reviewer-role",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "accepted-handoff",
+                "evidence_ref": "collaboration-handoff",
+                "label": "bounded-handoff",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "Distinct contribution roles converge on one accepted handoff without identity scoring."
+        },
+        "understanding": {
+          "criterion_ref": "understanding.criterion",
+          "baseline_ref": "understanding.baseline",
+          "materiality_rule": "understanding.materiality",
+          "assessment_kind": "comparison",
+          "state": "kept",
+          "evaluation_reason": "evidenced",
+          "evidence_refs": [
+            "understanding-invariant",
+            "understanding-counterexample",
+            "understanding-positive",
+            "understanding-negative",
+            "understanding-outcome"
+          ],
+          "predicate": {
+            "checks": [
+              "invariant-stated",
+              "counterexample-predicted",
+              "fixtures-contrasted",
+              "outcome-observed"
+            ],
+            "records": [
+              {
+                "role": "invariant",
+                "evidence_ref": "understanding-invariant",
+                "label": "bounded-invariant",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "predicted-counterexample",
+                "evidence_ref": "understanding-counterexample",
+                "label": "counterexample",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "positive-fixture",
+                "evidence_ref": "understanding-positive",
+                "label": "positive-case",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "negative-fixture",
+                "evidence_ref": "understanding-negative",
+                "label": "negative-case",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "observed-outcome",
+                "evidence_ref": "understanding-outcome",
+                "label": "observed-outcome",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "An invariant, counterexample, contrasted fixtures, and outcome remain inspectable."
+        },
+        "mutual-infrastructure": {
+          "criterion_ref": "mutual-infrastructure.criterion",
+          "baseline_ref": "mutual-infrastructure.baseline",
+          "materiality_rule": "mutual-infrastructure.materiality",
+          "assessment_kind": "comparison",
+          "state": "kept",
+          "evaluation_reason": "evidenced",
+          "evidence_refs": [
+            "beneficiary-validator",
+            "beneficiary-site",
+            "infrastructure-negative",
+            "infrastructure-cost"
+          ],
+          "predicate": {
+            "checks": [
+              "beneficiaries-compared",
+              "non-regression-shown",
+              "strict-improvement-shown",
+              "negative-control-passed",
+              "declared-cost-linked"
+            ],
+            "records": [
+              {
+                "role": "beneficiary",
+                "evidence_ref": "beneficiary-validator",
+                "label": "validator-artifact",
+                "unit": "passing-checks",
+                "before": 24,
+                "after": 38
+              },
+              {
+                "role": "beneficiary",
+                "evidence_ref": "beneficiary-site",
+                "label": "site-artifact",
+                "unit": "passing-checks",
+                "before": 4,
+                "after": 5
+              },
+              {
+                "role": "negative-control",
+                "evidence_ref": "infrastructure-negative",
+                "label": "reuse-control",
+                "unit": null,
+                "before": null,
+                "after": null
+              },
+              {
+                "role": "cost-evidence",
+                "evidence_ref": "infrastructure-cost",
+                "label": "declared-cost",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "Two declared beneficiary artifacts share a unit, neither regresses, and both improve."
+        }
+      },
+      "learning": {
+        "lesson": null,
+        "repair_status": "none",
+        "evidence_refs": []
+      },
+      "declared_disposition": "fruiting"
+    }
+  ],
+  "non_claims": [
+    "This receipt describes one bounded action, never beings, identities, belonging, or moral worth.",
+    "Fruit states are contextual categories; they are never added, averaged, ranked, transferred, or used as a gate.",
+    "Rights, care, rest, compensation, access, and appeal remain independent of every fruit and disposition.",
+    "Recognition is opt-in, expiring, nontransferable, private by default, and any public-consent citation is structural only.",
+    "The tool validates declared structure, not truth, goodness, identity, consent, authority, current validity, or whole cost; it never executes, pays, mutates, publishes, contacts, or dereferences."
+  ]
+}

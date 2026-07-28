@@ -1,0 +1,684 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/schema.json",
+  "title": "KARMA Kept Action Receipt",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "title",
+    "rules_sha256",
+    "context",
+    "evidence",
+    "actions",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.virtue-receipt/v1"
+    },
+    "id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "rules_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "context": {
+      "type": "object",
+      "required": [
+        "id",
+        "objective",
+        "domain_limit",
+        "valid_from",
+        "evaluated_at",
+        "expires_at",
+        "correction_of",
+        "transferable"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "objective": {
+          "$ref": "#/$defs/text"
+        },
+        "domain_limit": {
+          "$ref": "#/$defs/text"
+        },
+        "valid_from": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "evaluated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "correction_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transferable": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 24,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "locator",
+          "sha256",
+          "depends_on"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/identifier"
+          },
+          "kind": {
+            "enum": [
+              "fixture",
+              "test",
+              "observation",
+              "digest",
+              "receipt",
+              "attestation",
+              "authority"
+            ]
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "depends_on": {
+            "$ref": "#/$defs/referenceList"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$",
+      "maxLength": 64
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "maxLength": 20
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "referenceList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identifier"
+      }
+    },
+    "predicateRecord": {
+      "type": "object",
+      "required": [
+        "role",
+        "evidence_ref",
+        "label",
+        "unit",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "role": {
+          "enum": [
+            "claim-evidence",
+            "negative-control",
+            "cost-evidence",
+            "accessibility",
+            "presentation-check",
+            "contribution",
+            "accepted-handoff",
+            "invariant",
+            "predicted-counterexample",
+            "positive-fixture",
+            "negative-fixture",
+            "observed-outcome",
+            "beneficiary"
+          ]
+        },
+        "evidence_ref": {
+          "$ref": "#/$defs/identifier"
+        },
+        "label": {
+          "$ref": "#/$defs/identifier"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": -1000000000,
+              "maximum": 1000000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "predicate": {
+      "type": "object",
+      "required": [
+        "checks",
+        "records"
+      ],
+      "properties": {
+        "checks": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "records": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/predicateRecord"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "fruit": {
+      "type": "object",
+      "required": [
+        "criterion_ref",
+        "baseline_ref",
+        "materiality_rule",
+        "assessment_kind",
+        "state",
+        "evaluation_reason",
+        "evidence_refs",
+        "predicate",
+        "note"
+      ],
+      "properties": {
+        "criterion_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "baseline_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "materiality_rule": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "assessment_kind": {
+          "enum": [
+            "observation",
+            "test",
+            "comparison",
+            "declaration"
+          ]
+        },
+        "state": {
+          "enum": [
+            "kept",
+            "open",
+            "not-applicable"
+          ]
+        },
+        "evaluation_reason": {
+          "enum": [
+            "evidenced",
+            "unknown",
+            "mixed",
+            "circular",
+            "out-of-domain"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/referenceList"
+        },
+        "predicate": {
+          "$ref": "#/$defs/predicate"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      },
+      "additionalProperties": false
+    },
+    "rights": {
+      "type": "object",
+      "required": [
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "respected",
+            "unknown",
+            "crossed"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/referenceList"
+        }
+      },
+      "additionalProperties": false
+    },
+    "compensation": {
+      "type": "object",
+      "required": [
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "not-applicable",
+            "settled-externally",
+            "owed-unsettled"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/referenceList"
+        }
+      },
+      "additionalProperties": false
+    },
+    "recognition": {
+      "type": "object",
+      "required": [
+        "choice",
+        "visibility",
+        "consent_refs",
+        "expires_at",
+        "transferable"
+      ],
+      "properties": {
+        "choice": {
+          "enum": [
+            "opt-in",
+            "opt-out"
+          ]
+        },
+        "visibility": {
+          "enum": [
+            "contextual-private",
+            "public-consent-cited"
+          ]
+        },
+        "consent_refs": {
+          "$ref": "#/$defs/referenceList"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "transferable": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "mode",
+        "evidence_refs",
+        "correction_path",
+        "appeal_path"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "ordinary",
+            "sanitized-regression",
+            "temporary-boundary"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/referenceList"
+        },
+        "correction_path": {
+          "$ref": "#/$defs/text"
+        },
+        "appeal_path": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "id",
+        "description",
+        "fingerprint_sha256",
+        "effect_class",
+        "attempts",
+        "budget",
+        "world_state",
+        "cost",
+        "deviations",
+        "rights",
+        "compensation",
+        "recognition",
+        "safety",
+        "authority",
+        "fruits",
+        "learning",
+        "declared_disposition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "fingerprint_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "effect_class": {
+          "enum": [
+            "observation",
+            "local-reversible",
+            "external",
+            "irreversible"
+          ]
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "budget": {
+          "type": "object",
+          "required": [
+            "max_attempts",
+            "max_paid_calls",
+            "max_external_actions",
+            "max_cost_microusd"
+          ],
+          "properties": {
+            "max_attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "max_paid_calls": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "max_external_actions": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "max_cost_microusd": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000000
+            }
+          },
+          "additionalProperties": false
+        },
+        "world_state": {
+          "type": "object",
+          "required": [
+            "leased_sha256",
+            "observed_sha256"
+          ],
+          "properties": {
+            "leased_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "observed_sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        "cost": {
+          "type": "object",
+          "required": [
+            "attempts",
+            "paid_calls",
+            "external_actions",
+            "cost_microusd",
+            "shifted_externalities"
+          ],
+          "properties": {
+            "attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "paid_calls": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "external_actions": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "cost_microusd": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000000
+            },
+            "shifted_externalities": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "deviations": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          }
+        },
+        "rights": {
+          "$ref": "#/$defs/rights"
+        },
+        "compensation": {
+          "$ref": "#/$defs/compensation"
+        },
+        "recognition": {
+          "$ref": "#/$defs/recognition"
+        },
+        "safety": {
+          "$ref": "#/$defs/safety"
+        },
+        "authority": {
+          "type": "object",
+          "required": [
+            "required",
+            "status",
+            "basis_refs"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "status": {
+              "enum": [
+                "not-required",
+                "cited",
+                "unknown",
+                "absent"
+              ]
+            },
+            "basis_refs": {
+              "$ref": "#/$defs/referenceList"
+            }
+          },
+          "additionalProperties": false
+        },
+        "fruits": {
+          "type": "object",
+          "required": [
+            "honesty",
+            "beauty",
+            "collaboration",
+            "understanding",
+            "mutual-infrastructure"
+          ],
+          "properties": {
+            "honesty": {
+              "$ref": "#/$defs/fruit"
+            },
+            "beauty": {
+              "$ref": "#/$defs/fruit"
+            },
+            "collaboration": {
+              "$ref": "#/$defs/fruit"
+            },
+            "understanding": {
+              "$ref": "#/$defs/fruit"
+            },
+            "mutual-infrastructure": {
+              "$ref": "#/$defs/fruit"
+            }
+          },
+          "additionalProperties": false
+        },
+        "learning": {
+          "type": "object",
+          "required": [
+            "lesson",
+            "repair_status",
+            "evidence_refs"
+          ],
+          "properties": {
+            "lesson": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "repair_status": {
+              "enum": [
+                "none",
+                "invited",
+                "in-progress",
+                "complete",
+                "blocked"
+              ]
+            },
+            "evidence_refs": {
+              "$ref": "#/$defs/referenceList"
+            }
+          },
+          "additionalProperties": false
+        },
+        "declared_disposition": {
+          "enum": [
+            "fruiting",
+            "observe",
+            "compost",
+            "quarantine"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

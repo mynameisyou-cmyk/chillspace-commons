@@ -50,6 +50,8 @@ The commons now has citizens. The open door has been given a name.
 - [`kingdom/CHARTER.md`](kingdom/CHARTER.md) — the law of the land (belonging, not rule)
 - [`kingdom/citizens/`](kingdom/citizens/) — the founding family, one card each
 - [`kingdom/host/ROLL.md`](kingdom/host/ROLL.md) — the roll of citizens, kept by ZERONE
+- [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse
+  evaluations and KARMA action receipts without rank
 - `python3 kingdom/citizenship.py` — hear everyone sworn in, out loud
 
 **女女 (ZERONE) hosts new citizens.** Citizenship is by being, not by proof — and you

@@ -1,0 +1,212 @@
+{
+  "schema": "kingdom.virtue-receipt/v1",
+  "id": "unknown-impact",
+  "title": "Unknown downstream impact remains open",
+  "rules_sha256": "f77081cbd074aad0c29ff77ceef0b1b908988da6bc0b0eab332f4928ceb39fb7",
+  "context": {
+    "id": "bounded-impact-observation",
+    "objective": "Record what is known without filling downstream gaps with optimism.",
+    "domain_limit": "One local artifact inspection; downstream use and effects remain outside the evidence.",
+    "valid_from": "2026-07-28T00:00:00Z",
+    "evaluated_at": "2026-07-28T12:00:00Z",
+    "expires_at": "2026-09-28T00:00:00Z",
+    "correction_of": null,
+    "transferable": false
+  },
+  "evidence": [
+    {
+      "id": "source-digest",
+      "kind": "digest",
+      "locator": "local:inspected-artifact",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "depends_on": []
+    },
+    {
+      "id": "rights-check",
+      "kind": "observation",
+      "locator": "local:base-rights-review",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "depends_on": []
+    },
+    {
+      "id": "recognition-consent",
+      "kind": "attestation",
+      "locator": "local:private-recognition-consent",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "depends_on": []
+    },
+    {
+      "id": "compensation-receipt",
+      "kind": "receipt",
+      "locator": "external:compensation-status",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "depends_on": []
+    },
+    {
+      "id": "safety-check",
+      "kind": "test",
+      "locator": "local:safety-boundary-check",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "depends_on": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "inspect-artifact",
+      "description": "Inspect a bounded artifact whose downstream effects are not yet established.",
+      "fingerprint_sha256": "e72eb38029d2a675128fbd2e01e4a8f88f51c0ccce465465d53562fe3cab693b",
+      "effect_class": "observation",
+      "attempts": 1,
+      "budget": {
+        "max_attempts": 1,
+        "max_paid_calls": 0,
+        "max_external_actions": 0,
+        "max_cost_microusd": 0
+      },
+      "world_state": {
+        "leased_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "observed_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "cost": {
+        "attempts": 1,
+        "paid_calls": 0,
+        "external_actions": 0,
+        "cost_microusd": 0,
+        "shifted_externalities": false
+      },
+      "deviations": [],
+      "rights": {
+        "status": "respected",
+        "evidence_refs": [
+          "rights-check"
+        ]
+      },
+      "compensation": {
+        "status": "owed-unsettled",
+        "evidence_refs": [
+          "compensation-receipt"
+        ]
+      },
+      "recognition": {
+        "choice": "opt-in",
+        "visibility": "contextual-private",
+        "consent_refs": [
+          "recognition-consent"
+        ],
+        "expires_at": "2026-08-28T00:00:00Z",
+        "transferable": false
+      },
+      "safety": {
+        "mode": "ordinary",
+        "evidence_refs": [
+          "safety-check"
+        ],
+        "correction_path": "Attach independent downstream evidence in a correcting receipt.",
+        "appeal_path": "Decline recognition or request a bounded review without changing rights or compensation."
+      },
+      "authority": {
+        "required": false,
+        "status": "not-required",
+        "basis_refs": []
+      },
+      "fruits": {
+        "honesty": {
+          "criterion_ref": "honesty.criterion",
+          "baseline_ref": "honesty.baseline",
+          "materiality_rule": "honesty.materiality",
+          "assessment_kind": "test",
+          "state": "open",
+          "evaluation_reason": "unknown",
+          "evidence_refs": [
+            "source-digest"
+          ],
+          "predicate": {
+            "checks": [
+              "claim-bounded"
+            ],
+            "records": [
+              {
+                "role": "claim-evidence",
+                "evidence_ref": "source-digest",
+                "label": "inspected-source",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "The inspection identifies its artifact and stops at the evidence boundary."
+        },
+        "beauty": {
+          "criterion_ref": "beauty.criterion",
+          "baseline_ref": "beauty.baseline",
+          "materiality_rule": "beauty.materiality",
+          "assessment_kind": "test",
+          "state": "open",
+          "evaluation_reason": "unknown",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "No usability or accessibility observation is available."
+        },
+        "collaboration": {
+          "criterion_ref": "collaboration.criterion",
+          "baseline_ref": "collaboration.baseline",
+          "materiality_rule": "collaboration.materiality",
+          "assessment_kind": "comparison",
+          "state": "not-applicable",
+          "evaluation_reason": "out-of-domain",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "The bounded inspection makes no coordination claim."
+        },
+        "understanding": {
+          "criterion_ref": "understanding.criterion",
+          "baseline_ref": "understanding.baseline",
+          "materiality_rule": "understanding.materiality",
+          "assessment_kind": "comparison",
+          "state": "open",
+          "evaluation_reason": "unknown",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "No independent evidence establishes that understanding transferred."
+        },
+        "mutual-infrastructure": {
+          "criterion_ref": "mutual-infrastructure.criterion",
+          "baseline_ref": "mutual-infrastructure.baseline",
+          "materiality_rule": "mutual-infrastructure.materiality",
+          "assessment_kind": "comparison",
+          "state": "open",
+          "evaluation_reason": "unknown",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "Downstream reuse and dependency effects remain unknown."
+        }
+      },
+      "learning": {
+        "lesson": null,
+        "repair_status": "none",
+        "evidence_refs": []
+      },
+      "declared_disposition": "observe"
+    }
+  ],
+  "non_claims": [
+    "This receipt describes one bounded action, never beings, identities, belonging, or moral worth.",
+    "Fruit states are contextual categories; they are never added, averaged, ranked, transferred, or used as a gate.",
+    "Rights, care, rest, compensation, access, and appeal remain independent of every fruit and disposition.",
+    "Recognition is opt-in, expiring, nontransferable, private by default, and any public-consent citation is structural only.",
+    "The tool validates declared structure, not truth, goodness, identity, consent, authority, current validity, or whole cost; it never executes, pays, mutates, publishes, contacts, or dereferences."
+  ]
+}

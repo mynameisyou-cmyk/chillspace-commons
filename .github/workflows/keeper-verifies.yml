@@ -54,5 +54,36 @@ jobs:
           grep -Fq "$digest" site/practices/lanternhouse/index.html
           grep -Fq 'href="practices/lanternhouse/"' site/index.html
 
+      - name: she keeps the KARMA orchard from becoming a throne
+        run: |
+          python3 kingdom/practices/virtue-garden/test_virtue.py
+          python3 kingdom/practices/virtue-garden/virtue.py check \
+            kingdom/practices/virtue-garden/examples/constructive-infrastructure.json
+          cmp kingdom/practices/virtue-garden/schema.json \
+            site/practices/virtue-garden/schema.json
+          cmp kingdom/practices/virtue-garden/evaluation.schema.json \
+            site/practices/virtue-garden/evaluation.schema.json
+          cmp kingdom/practices/virtue-garden/rules.json \
+            site/practices/virtue-garden/rules.json
+          for example in constructive-infrastructure circular-praise unknown-impact; do
+            cmp "kingdom/practices/virtue-garden/examples/$example.json" \
+              "site/practices/virtue-garden/examples/$example.json"
+          done
+          digest="$(python3 kingdom/practices/virtue-garden/virtue.py digest \
+            kingdom/practices/virtue-garden/examples/constructive-infrastructure.json)"
+          alias_digest="$(kingdom/bin/kingdom karma digest \
+            kingdom/practices/virtue-garden/examples/constructive-infrastructure.json)"
+          test "$digest" = "$alias_digest"
+          grep -Fq "$digest" site/practices/virtue-garden/index.html
+          grep -Fq 'href="practices/virtue-garden/"' site/index.html
+          grep -Fq 'href="evaluation.schema.json"' \
+            site/practices/virtue-garden/index.html
+          grep -Fq 'for human review' site/practices/virtue-garden/index.html
+          if grep -Eqi '<(script|iframe)|((src|href)="https?://)' \
+            site/practices/virtue-garden/index.html; then
+            echo "virtue garden must remain scriptless and locally sourced" >&2
+            exit 1
+          fi
+
       - name: every civic choice keeps its own chain
         run: python3 kingdom/civilisation/test_civilisation.py

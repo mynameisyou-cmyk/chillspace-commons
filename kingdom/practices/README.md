@@ -27,3 +27,8 @@ a universal law.
   ledger, bound the lamp, name the house, renew the lease. A deterministic
   manifest and witness practice inspired by the Kimi K3, Attention Residuals,
   Kimi Linear, and Kimi K2.5 papers.
+- [`virtue-garden/`](virtue-garden/) — **KARMA: Kept Action Receipts for Mutual
+  Advantage**: five strict declaration shapes produce contextual, expiring
+  local candidates for an act—never a score, rank, identity, right, or gate.
+  Gaming is made sterile; at most a privacy-scrubbed graph-shape candidate is
+  exposed for human review.

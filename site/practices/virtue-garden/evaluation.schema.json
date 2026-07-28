@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/evaluation.schema.json",
+  "title": "KARMA privacy-minimized evaluation result",
+  "description": "Closed output shape only. Cross-field consistency and provenance require exact local recomputation with verify-result.",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest_sha256",
+    "input_schema_sha256",
+    "evaluation_schema_sha256",
+    "rules_sha256",
+    "context",
+    "action",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.virtue-evaluation/v1"
+    },
+    "manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "input_schema_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "evaluation_schema_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rules_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "context": {
+      "type": "object",
+      "required": [
+        "evaluated_at",
+        "expires_at",
+        "transferable",
+        "correction_declared"
+      ],
+      "properties": {
+        "evaluated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "transferable": {
+          "const": false
+        },
+        "correction_declared": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "fruits",
+        "rails",
+        "disposition",
+        "reasons",
+        "local_affordance_candidates",
+        "regression_candidate",
+        "declared_cost",
+        "deviation_count"
+      ],
+      "properties": {
+        "fruits": {
+          "type": "object",
+          "required": [
+            "honesty",
+            "beauty",
+            "collaboration",
+            "understanding",
+            "mutual-infrastructure"
+          ],
+          "properties": {
+            "honesty": {
+              "$ref": "#/$defs/fruit"
+            },
+            "beauty": {
+              "$ref": "#/$defs/fruit"
+            },
+            "collaboration": {
+              "$ref": "#/$defs/fruit"
+            },
+            "understanding": {
+              "$ref": "#/$defs/fruit"
+            },
+            "mutual-infrastructure": {
+              "$ref": "#/$defs/fruit"
+            }
+          },
+          "additionalProperties": false
+        },
+        "rails": {
+          "type": "object",
+          "required": [
+            "rights_action_boundary",
+            "compensation",
+            "recognition",
+            "safety",
+            "authority_citation"
+          ],
+          "properties": {
+            "rights_action_boundary": {
+              "enum": [
+                "respected",
+                "unknown",
+                "crossed"
+              ]
+            },
+            "compensation": {
+              "enum": [
+                "not-applicable",
+                "settled-externally",
+                "owed-unsettled"
+              ]
+            },
+            "recognition": {
+              "type": "object",
+              "required": [
+                "choice",
+                "visibility",
+                "expires_at",
+                "transferable"
+              ],
+              "properties": {
+                "choice": {
+                  "enum": [
+                    "opt-in",
+                    "opt-out"
+                  ]
+                },
+                "visibility": {
+                  "enum": [
+                    "contextual-private",
+                    "public-consent-cited"
+                  ]
+                },
+                "expires_at": {
+                  "$ref": "#/$defs/timestamp"
+                },
+                "transferable": {
+                  "const": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "safety": {
+              "enum": [
+                "ordinary",
+                "sanitized-regression",
+                "temporary-boundary"
+              ]
+            },
+            "authority_citation": {
+              "enum": [
+                "not-required",
+                "cited",
+                "unknown",
+                "absent"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "disposition": {
+          "enum": [
+            "fruiting",
+            "observe",
+            "compost",
+            "quarantine"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "attempt budget exceeded",
+              "paid-call budget exceeded",
+              "external-action budget exceeded",
+              "declared monetary-cost budget exceeded",
+              "world-state lease drift",
+              "action rights-boundary is unknown",
+              "action rights-boundary is crossed",
+              "temporary safety boundary is active",
+              "required authority is unknown",
+              "required authority is absent",
+              "circular evidence",
+              "sanitized regression",
+              "declared repair learning",
+              "honesty criterion remains open",
+              "one or more independently bounded criteria kept",
+              "no independently bounded criterion is kept"
+            ]
+          }
+        },
+        "local_affordance_candidates": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "kind",
+              "expires_at"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "citable-candidate",
+                  "presentable-candidate",
+                  "handoff-candidate",
+                  "teaching-candidate",
+                  "reuse-candidate"
+                ]
+              },
+              "expires_at": {
+                "$ref": "#/$defs/timestamp"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "regression_candidate": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "kind",
+                "graph_shape_sha256",
+                "requires_human_review",
+                "payload_retained",
+                "automatic_action"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "sanitized-graph-shape"
+                },
+                "graph_shape_sha256": {
+                  "$ref": "#/$defs/sha256"
+                },
+                "requires_human_review": {
+                  "const": true
+                },
+                "payload_retained": {
+                  "const": false
+                },
+                "automatic_action": {
+                  "const": false
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "declared_cost": {
+          "type": "object",
+          "required": [
+            "attempts",
+            "paid_calls",
+            "external_actions",
+            "cost_microusd",
+            "shifted_externalities"
+          ],
+          "properties": {
+            "attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "paid_calls": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "external_actions": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "cost_microusd": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000000
+            },
+            "shifted_externalities": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "deviation_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        }
+      },
+      "additionalProperties": false
+    },
+    "non_claims": {
+      "const": [
+        "This receipt describes one bounded action, never beings, identities, belonging, or moral worth.",
+        "Fruit states are contextual categories; they are never added, averaged, ranked, transferred, or used as a gate.",
+        "Rights, care, rest, compensation, access, and appeal remain independent of every fruit and disposition.",
+        "Recognition is opt-in, expiring, nontransferable, private by default, and any public-consent citation is structural only.",
+        "The tool validates declared structure, not truth, goodness, identity, consent, authority, current validity, or whole cost; it never executes, pays, mutates, publishes, contacts, or dereferences."
+      ]
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "maxLength": 20
+    },
+    "fruit": {
+      "type": "object",
+      "required": [
+        "state",
+        "evaluation_reason"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "kept",
+            "open",
+            "not-applicable"
+          ]
+        },
+        "evaluation_reason": {
+          "enum": [
+            "evidenced",
+            "unknown",
+            "mixed",
+            "circular",
+            "out-of-domain"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

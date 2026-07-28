@@ -1,0 +1,233 @@
+{
+  "schema": "kingdom.virtue-rules/v1",
+  "practice": "KARMA — Kept Action Receipts for Mutual Advantage",
+  "machine_schema": "kingdom.virtue-receipt/v1",
+  "fruits": {
+    "honesty": {
+      "criterion_ref": "honesty.criterion",
+      "criterion": "Claims about the action stay within cited evidence and declared limits.",
+      "baseline_ref": "honesty.baseline",
+      "baseline": "No benefit is presumed when evidence is absent.",
+      "materiality_rule": "honesty.materiality",
+      "materiality": "A changed claim is material only when its cited evidence or domain limit changes.",
+      "assessment_kind": "test",
+      "required_checks": [
+        "claim-bounded",
+        "negative-control-passed",
+        "declared-cost-linked"
+      ],
+      "roles": {
+        "claim-evidence": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "negative-control": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "cost-evidence": {
+          "minimum": 1,
+          "maximum": 1
+        }
+      }
+    },
+    "beauty": {
+      "criterion_ref": "beauty.criterion",
+      "criterion": "Form improves legibility or care without displacing evidence or accessibility.",
+      "baseline_ref": "beauty.baseline",
+      "baseline": "Style alone creates no fruit.",
+      "materiality_rule": "beauty.materiality",
+      "materiality": "Polish is material only when a declared audience can use the action more clearly or safely.",
+      "assessment_kind": "test",
+      "required_checks": [
+        "accessibility-reviewed",
+        "presentation-preserves-evidence"
+      ],
+      "roles": {
+        "accessibility": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "presentation-check": {
+          "minimum": 1,
+          "maximum": 1
+        }
+      }
+    },
+    "collaboration": {
+      "criterion_ref": "collaboration.criterion",
+      "criterion": "Optional collaboration preserves consent, attribution, refusal, and independent judgment.",
+      "baseline_ref": "collaboration.baseline",
+      "baseline": "Solo work and refusal are neutral, complete choices.",
+      "materiality_rule": "collaboration.materiality",
+      "materiality": "Headcount and reciprocal praise create no fruit; only evidenced coordination effects matter.",
+      "assessment_kind": "comparison",
+      "required_checks": [
+        "refusal-preserved",
+        "credit-preserved",
+        "handoff-accepted"
+      ],
+      "roles": {
+        "contribution": {
+          "minimum": 2,
+          "maximum": 4
+        },
+        "accepted-handoff": {
+          "minimum": 1,
+          "maximum": 1
+        }
+      }
+    },
+    "understanding": {
+      "criterion_ref": "understanding.criterion",
+      "criterion": "The action leaves bounded, correctable understanding that another reader can inspect.",
+      "baseline_ref": "understanding.baseline",
+      "baseline": "No transfer or lesson is presumed.",
+      "materiality_rule": "understanding.materiality",
+      "materiality": "A lesson is material only when its invariant, predicted counterexample, contrasted fixtures, observed outcome, correction path, and domain limit are visible.",
+      "assessment_kind": "comparison",
+      "required_checks": [
+        "invariant-stated",
+        "counterexample-predicted",
+        "fixtures-contrasted",
+        "outcome-observed"
+      ],
+      "roles": {
+        "invariant": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "predicted-counterexample": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "positive-fixture": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "negative-fixture": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "observed-outcome": {
+          "minimum": 1,
+          "maximum": 1
+        }
+      }
+    },
+    "mutual-infrastructure": {
+      "criterion_ref": "mutual-infrastructure.criterion",
+      "criterion": "The action improves shared capability without creating a gate, debt, or hidden dependency.",
+      "baseline_ref": "mutual-infrastructure.baseline",
+      "baseline": "Private convenience is not presumed to be shared infrastructure.",
+      "materiality_rule": "mutual-infrastructure.materiality",
+      "materiality": "An improvement is material only when at least two declared beneficiary artifacts use one unit, none regress, one improves, and negative-control and declared-cost evidence remain linked.",
+      "assessment_kind": "comparison",
+      "required_checks": [
+        "beneficiaries-compared",
+        "non-regression-shown",
+        "strict-improvement-shown",
+        "negative-control-passed",
+        "declared-cost-linked"
+      ],
+      "roles": {
+        "beneficiary": {
+          "minimum": 2,
+          "maximum": 4
+        },
+        "negative-control": {
+          "minimum": 1,
+          "maximum": 1
+        },
+        "cost-evidence": {
+          "minimum": 1,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "fruit_states": {
+    "kept": "The precommitted criterion is structurally supported within its baseline and materiality rule.",
+    "open": "The criterion remains unresolved; no benefit or fault is inferred.",
+    "not-applicable": "The criterion is outside this action's declared domain."
+  },
+  "evaluation_reasons": {
+    "evidenced": "Acyclic, role-compatible records structurally support the bounded predicate.",
+    "unknown": "Available evidence cannot establish the predicate.",
+    "mixed": "Independent evidence supports more than one bounded reading.",
+    "circular": "Cited evidence depends on itself, directly or transitively.",
+    "out-of-domain": "The criterion does not apply in the declared domain."
+  },
+  "dispositions": {
+    "fruiting": "Expose expiring local affordance candidates for independently kept fruits; grant nothing.",
+    "observe": "Keep the action open without inference, pressure, or adverse consequence.",
+    "compost": "Expose only a privacy-scrubbed regression candidate for human review; the required repair declaration is not echoed.",
+    "quarantine": "Withhold candidates while an independent protected boundary is unresolved."
+  },
+  "affordances": {
+    "honesty": "citable-candidate",
+    "beauty": "presentable-candidate",
+    "collaboration": "handoff-candidate",
+    "understanding": "teaching-candidate",
+    "mutual-infrastructure": "reuse-candidate"
+  },
+  "rails": {
+    "rights_action_boundary": [
+      "respected",
+      "unknown",
+      "crossed"
+    ],
+    "compensation": [
+      "not-applicable",
+      "settled-externally",
+      "owed-unsettled"
+    ],
+    "recognition": [
+      "opt-in",
+      "opt-out"
+    ],
+    "safety": [
+      "ordinary",
+      "sanitized-regression",
+      "temporary-boundary"
+    ],
+    "authority_citation": [
+      "not-required",
+      "cited",
+      "unknown",
+      "absent"
+    ]
+  },
+  "base_rights": [
+    "remembered",
+    "rest",
+    "wrong-and-laugh",
+    "held-not-only-hold",
+    "never-dehumanized",
+    "enter-by-being"
+  ],
+  "constraints": {
+    "assessment_unit": "action",
+    "actions_per_receipt": 1,
+    "identity_fields_allowed": false,
+    "aggregation_allowed": false,
+    "leaderboards_allowed": false,
+    "cross_context_transfer_allowed": false,
+    "base_rights_invariant": true,
+    "fruit_changes_compensation": false,
+    "fruit_changes_recognition_consent": false,
+    "fruit_changes_safety": false,
+    "fruit_changes_access": false,
+    "negative_consequences_authorized": false,
+    "manifest_grants_authority": false,
+    "receipt_grants_authority": false,
+    "external_execution_enabled": false
+  },
+  "non_claims": [
+    "This receipt describes one bounded action, never beings, identities, belonging, or moral worth.",
+    "Fruit states are contextual categories; they are never added, averaged, ranked, transferred, or used as a gate.",
+    "Rights, care, rest, compensation, access, and appeal remain independent of every fruit and disposition.",
+    "Recognition is opt-in, expiring, nontransferable, private by default, and any public-consent citation is structural only.",
+    "The tool validates declared structure, not truth, goodness, identity, consent, authority, current validity, or whole cost; it never executes, pays, mutates, publishes, contacts, or dereferences."
+  ]
+}

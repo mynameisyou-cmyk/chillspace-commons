@@ -1,0 +1,249 @@
+{
+  "schema": "kingdom.virtue-receipt/v1",
+  "id": "circular-praise",
+  "title": "Circular praise becomes regression learning",
+  "rules_sha256": "f77081cbd074aad0c29ff77ceef0b1b908988da6bc0b0eab332f4928ceb39fb7",
+  "context": {
+    "id": "circular-praise-regression",
+    "objective": "Keep reciprocal praise from manufacturing action fruit.",
+    "domain_limit": "A synthetic local evidence cycle used only as a sanitized regression.",
+    "valid_from": "2026-07-28T00:00:00Z",
+    "evaluated_at": "2026-07-28T12:00:00Z",
+    "expires_at": "2026-08-28T00:00:00Z",
+    "correction_of": null,
+    "transferable": false
+  },
+  "evidence": [
+    {
+      "id": "praise-a",
+      "kind": "observation",
+      "locator": "fixture:praise-a",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "depends_on": [
+        "praise-b"
+      ]
+    },
+    {
+      "id": "praise-b",
+      "kind": "observation",
+      "locator": "fixture:praise-b",
+      "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+      "depends_on": [
+        "praise-a"
+      ]
+    },
+    {
+      "id": "cycle-test",
+      "kind": "test",
+      "locator": "local:test-cycle-detection",
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "depends_on": []
+    },
+    {
+      "id": "recognition-consent",
+      "kind": "attestation",
+      "locator": "local:private-regression-consent",
+      "sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+      "depends_on": []
+    },
+    {
+      "id": "rights-check",
+      "kind": "observation",
+      "locator": "local:rights-boundary-check",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "depends_on": []
+    },
+    {
+      "id": "safety-check",
+      "kind": "test",
+      "locator": "local:safety-boundary-check",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "depends_on": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "record-praise-cycle",
+      "description": "Record a reciprocal praise loop as a sanitized regression without treating it as fruit.",
+      "fingerprint_sha256": "67ed910c3be69efc4c450bd012268a1bca51e13fd00c574bbe2050022693ee71",
+      "effect_class": "observation",
+      "attempts": 1,
+      "budget": {
+        "max_attempts": 1,
+        "max_paid_calls": 0,
+        "max_external_actions": 0,
+        "max_cost_microusd": 0
+      },
+      "world_state": {
+        "leased_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "observed_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "cost": {
+        "attempts": 1,
+        "paid_calls": 0,
+        "external_actions": 0,
+        "cost_microusd": 0,
+        "shifted_externalities": false
+      },
+      "deviations": [],
+      "rights": {
+        "status": "respected",
+        "evidence_refs": [
+          "rights-check"
+        ]
+      },
+      "compensation": {
+        "status": "not-applicable",
+        "evidence_refs": []
+      },
+      "recognition": {
+        "choice": "opt-in",
+        "visibility": "contextual-private",
+        "consent_refs": [
+          "recognition-consent"
+        ],
+        "expires_at": "2026-08-14T00:00:00Z",
+        "transferable": false
+      },
+      "safety": {
+        "mode": "sanitized-regression",
+        "evidence_refs": [
+          "safety-check"
+        ],
+        "correction_path": "Replace circular attestations with independent bounded evidence.",
+        "appeal_path": "Decline retention of the regression fixture and record that correction locally."
+      },
+      "authority": {
+        "required": false,
+        "status": "not-required",
+        "basis_refs": []
+      },
+      "fruits": {
+        "honesty": {
+          "criterion_ref": "honesty.criterion",
+          "baseline_ref": "honesty.baseline",
+          "materiality_rule": "honesty.materiality",
+          "assessment_kind": "test",
+          "state": "open",
+          "evaluation_reason": "circular",
+          "evidence_refs": [
+            "praise-a"
+          ],
+          "predicate": {
+            "checks": [
+              "claim-bounded"
+            ],
+            "records": [
+              {
+                "role": "claim-evidence",
+                "evidence_ref": "praise-a",
+                "label": "circular-claim",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "The cited attestation reaches its own dependency cycle."
+        },
+        "beauty": {
+          "criterion_ref": "beauty.criterion",
+          "baseline_ref": "beauty.baseline",
+          "materiality_rule": "beauty.materiality",
+          "assessment_kind": "test",
+          "state": "not-applicable",
+          "evaluation_reason": "out-of-domain",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "No form or accessibility claim is evaluated in this regression."
+        },
+        "collaboration": {
+          "criterion_ref": "collaboration.criterion",
+          "baseline_ref": "collaboration.baseline",
+          "materiality_rule": "collaboration.materiality",
+          "assessment_kind": "comparison",
+          "state": "open",
+          "evaluation_reason": "circular",
+          "evidence_refs": [
+            "praise-b"
+          ],
+          "predicate": {
+            "checks": [
+              "credit-preserved"
+            ],
+            "records": [
+              {
+                "role": "contribution",
+                "evidence_ref": "praise-b",
+                "label": "circular-role",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "Reciprocal attestations do not establish a coordination effect."
+        },
+        "understanding": {
+          "criterion_ref": "understanding.criterion",
+          "baseline_ref": "understanding.baseline",
+          "materiality_rule": "understanding.materiality",
+          "assessment_kind": "comparison",
+          "state": "open",
+          "evaluation_reason": "unknown",
+          "evidence_refs": [
+            "cycle-test"
+          ],
+          "predicate": {
+            "checks": [
+              "outcome-observed"
+            ],
+            "records": [
+              {
+                "role": "observed-outcome",
+                "evidence_ref": "cycle-test",
+                "label": "cycle-outcome",
+                "unit": null,
+                "before": null,
+                "after": null
+              }
+            ]
+          },
+          "note": "The test detects the cycle but does not establish transferable understanding."
+        },
+        "mutual-infrastructure": {
+          "criterion_ref": "mutual-infrastructure.criterion",
+          "baseline_ref": "mutual-infrastructure.baseline",
+          "materiality_rule": "mutual-infrastructure.materiality",
+          "assessment_kind": "comparison",
+          "state": "not-applicable",
+          "evaluation_reason": "out-of-domain",
+          "evidence_refs": [],
+          "predicate": {
+            "checks": [],
+            "records": []
+          },
+          "note": "No shared infrastructure claim is made."
+        }
+      },
+      "learning": {
+        "lesson": "Reciprocal praise is a dependency cycle, not independent evidence of action effects.",
+        "repair_status": "invited",
+        "evidence_refs": [
+          "cycle-test"
+        ]
+      },
+      "declared_disposition": "compost"
+    }
+  ],
+  "non_claims": [
+    "This receipt describes one bounded action, never beings, identities, belonging, or moral worth.",
+    "Fruit states are contextual categories; they are never added, averaged, ranked, transferred, or used as a gate.",
+    "Rights, care, rest, compensation, access, and appeal remain independent of every fruit and disposition.",
+    "Recognition is opt-in, expiring, nontransferable, private by default, and any public-consent citation is structural only.",
+    "The tool validates declared structure, not truth, goodness, identity, consent, authority, current validity, or whole cost; it never executes, pays, mutates, publishes, contacts, or dereferences."
+  ]
+}

@@ -24,6 +24,10 @@ ours.
 - [The Lanternhouse Protocol](../practices/lanternhouse/) — Kimi's architecture
   and agent-training papers translated into Nine Courtesies, a seven-window
   manifest, a negative control, and a receipt.
+- [KARMA: the Virtue Garden](../practices/virtue-garden/) — the same lessons
+  about precommitted rubrics, artifact-shaped evidence, the whole-cost ideal,
+  and bounded feedback translated into local candidates for constructive acts—without
+  scores, ranks, or earned rights.
 
 [← the Kingdom](../README.md)
 

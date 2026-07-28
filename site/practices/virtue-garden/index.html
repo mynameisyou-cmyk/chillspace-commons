@@ -1,0 +1,1361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#14241c">
+  <meta name="description" content="KARMA keeps contextual receipts for constructive acts without turning people into scores, ranks, gates, or targets.">
+  <meta property="og:title" content="KARMA — The Virtue Garden">
+  <meta property="og:description" content="Receipts, not rank. An orchard that cannot become a throne.">
+  <meta property="og:type" content="website">
+  <title>KARMA — Kept Action Receipts for Mutual Advantage</title>
+  <style>
+    :root {
+      --night: #0d1813;
+      --deep: #14241c;
+      --leaf: #203b2b;
+      --leaf-soft: #34583e;
+      --moss: #91ad6d;
+      --lime: #c4d69a;
+      --cream: #f4ecd8;
+      --paper: #e3d8bc;
+      --gold: #e2b75b;
+      --apple: #df7967;
+      --plum: #aa83bc;
+      --blueberry: #7999c9;
+      --soil: #9d7657;
+      --line: rgba(227, 216, 188, .2);
+      --panel: rgba(26, 46, 35, .76);
+      --shadow: 0 24px 72px rgba(0, 0, 0, .28);
+      --radius: 26px;
+      --measure: 70rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 280px;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(145, 173, 109, .14), transparent 29rem),
+        radial-gradient(circle at 88% 27%, rgba(170, 131, 188, .1), transparent 24rem),
+        linear-gradient(165deg, #0a1410 0%, var(--deep) 48%, #101b16 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(244, 236, 216, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 236, 216, .04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 88%);
+    }
+
+    a {
+      color: var(--lime);
+      text-underline-offset: .22em;
+      text-decoration-thickness: .08em;
+    }
+
+    a:hover {
+      color: var(--cream);
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+      border-radius: 3px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .skip {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 20;
+      padding: .7rem 1rem;
+      color: var(--night);
+      background: var(--cream);
+      border-radius: 999px;
+      transform: translateY(-180%);
+      transition: transform .18s ease;
+    }
+
+    .skip:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(calc(100% - 2rem), var(--measure));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.25rem;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar a {
+      text-decoration: none;
+    }
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      color: var(--cream);
+      font-weight: 760;
+    }
+
+    .wordmark::before {
+      width: .75rem;
+      height: .75rem;
+      content: "";
+      background: var(--apple);
+      border: 2px solid var(--cream);
+      border-radius: 50% 48% 52% 45%;
+      box-shadow: .3rem -.35rem 0 -.2rem var(--moss);
+    }
+
+    .toplinks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: .45rem 1rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(17rem, .75fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      min-height: min(770px, calc(100svh - 4rem));
+      padding-block: clamp(3rem, 10vw, 8rem);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 1rem;
+      color: var(--gold);
+      font-size: .75rem;
+      font-weight: 780;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 14ch;
+      margin-bottom: 1.4rem;
+      font-size: clamp(3rem, 8.4vw, 7.2rem);
+      line-height: .92;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .65rem;
+      color: var(--lime);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: clamp(.9rem, 1.8vw, 1.25rem);
+      font-weight: 640;
+      letter-spacing: .05em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      max-width: 43rem;
+      margin-bottom: 2rem;
+      color: var(--paper);
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+    }
+
+    .hero-actions,
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.9rem;
+      padding: .65rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--cream);
+      background: rgba(244, 236, 216, .06);
+      font-size: .86rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button.primary {
+      color: var(--night);
+      background: var(--lime);
+      border-color: transparent;
+    }
+
+    .button:hover {
+      color: var(--night);
+      background: var(--cream);
+    }
+
+    .orchard {
+      position: relative;
+      width: min(100%, 25rem);
+      aspect-ratio: 4 / 5;
+      margin: 0 auto;
+      filter: drop-shadow(0 30px 35px rgba(0, 0, 0, .3));
+    }
+
+    .moon {
+      position: absolute;
+      top: 5%;
+      right: 2%;
+      width: 38%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(244, 236, 216, .2);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 32%, #fff8dc, #d5cba9 62%, #a9a082);
+      box-shadow: 0 0 4rem rgba(244, 236, 216, .16);
+    }
+
+    .tree {
+      position: absolute;
+      inset: 12% 0 7%;
+      transform-origin: 50% 100%;
+      animation: breathe 7s ease-in-out infinite;
+    }
+
+    .trunk {
+      position: absolute;
+      bottom: 5%;
+      left: 45%;
+      width: 13%;
+      height: 50%;
+      background: linear-gradient(90deg, #6d4d39, var(--soil) 55%, #5a4031);
+      border-radius: 70% 35% 20% 20%;
+      clip-path: polygon(28% 0, 73% 0, 66% 63%, 100% 100%, 56% 91%, 0 100%, 32% 64%);
+    }
+
+    .branch {
+      position: absolute;
+      top: 40%;
+      left: 49%;
+      width: 31%;
+      height: 4%;
+      border-radius: 999px;
+      background: #79533c;
+      transform: rotate(-29deg);
+      transform-origin: left center;
+    }
+
+    .branch.left {
+      left: 21%;
+      transform: rotate(28deg);
+      transform-origin: right center;
+    }
+
+    .crown {
+      position: absolute;
+      top: 3%;
+      left: 8%;
+      width: 84%;
+      height: 61%;
+      border: 1px solid rgba(196, 214, 154, .22);
+      border-radius: 48% 52% 43% 57% / 55% 48% 52% 45%;
+      background:
+        radial-gradient(circle at 28% 23%, #466b49 0 19%, transparent 20%),
+        radial-gradient(circle at 66% 28%, #345c3d 0 23%, transparent 24%),
+        radial-gradient(circle at 36% 67%, #2d5639 0 27%, transparent 28%),
+        radial-gradient(circle at 73% 70%, #23462f 0 27%, transparent 28%),
+        var(--leaf);
+      box-shadow:
+        inset 0 -2rem 3rem rgba(0, 0, 0, .18),
+        0 0 0 1rem rgba(52, 88, 62, .1);
+    }
+
+    .fruit {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: clamp(2.6rem, 9vw, 3.8rem);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 50% 45% 52% 46%;
+      color: var(--night);
+      box-shadow: inset -.3rem -.45rem .8rem rgba(0, 0, 0, .13), 0 .65rem 1rem rgba(0, 0, 0, .22);
+      font-size: clamp(.8rem, 2.5vw, 1.05rem);
+      font-weight: 900;
+    }
+
+    .fruit::before {
+      position: absolute;
+      top: -.35rem;
+      width: .35rem;
+      height: .6rem;
+      content: "";
+      background: var(--soil);
+      border-radius: 999px;
+      transform: rotate(15deg);
+    }
+
+    .fruit.honesty {
+      top: 17%;
+      left: 22%;
+      background: var(--apple);
+    }
+
+    .fruit.beauty {
+      top: 11%;
+      left: 58%;
+      background: var(--gold);
+    }
+
+    .fruit.collaboration {
+      top: 38%;
+      left: 8%;
+      background: var(--lime);
+    }
+
+    .fruit.understanding {
+      top: 39%;
+      left: 67%;
+      background: var(--blueberry);
+    }
+
+    .fruit.infrastructure {
+      top: 59%;
+      left: 43%;
+      background: var(--plum);
+    }
+
+    .orchard figcaption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      color: var(--paper);
+      font-size: .75rem;
+      text-align: center;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .section {
+      padding-block: clamp(4.5rem, 10vw, 8rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: 2rem;
+      margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.3rem, 5.5vw, 4.8rem);
+      line-height: 1;
+    }
+
+    .section-intro {
+      align-self: end;
+      max-width: 43rem;
+      margin-bottom: .25rem;
+      color: var(--paper);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+    }
+
+    .vow {
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid rgba(196, 214, 154, .34);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(196, 214, 154, .1), transparent 55%),
+        var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .vow strong {
+      display: block;
+      margin-bottom: .4rem;
+      color: var(--lime);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    .vow p {
+      max-width: 54rem;
+      margin-bottom: 0;
+      color: var(--paper);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin: 2rem 0 0;
+      padding: 1px;
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .flow li {
+      position: relative;
+      min-height: 8rem;
+      padding: 1.15rem;
+      color: var(--paper);
+      background: var(--deep);
+    }
+
+    .flow li:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -.6rem;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 1.15rem;
+      aspect-ratio: 1;
+      content: "→";
+      color: var(--gold);
+      background: var(--deep);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .flow b {
+      display: block;
+      margin-bottom: .35rem;
+      color: var(--cream);
+    }
+
+    .refusal {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--apple);
+      color: var(--paper);
+      background: rgba(223, 121, 103, .07);
+    }
+
+    .refusal code {
+      color: var(--cream);
+      font-weight: 800;
+    }
+
+    .fruit-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .fruit-card {
+      grid-column: span 2;
+      min-height: 18rem;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(244, 236, 216, .035);
+    }
+
+    .fruit-card:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .fruit-card h3,
+    .rail h3,
+    .guard h3 {
+      margin-bottom: .65rem;
+      font-size: 1.15rem;
+      line-height: 1.25;
+    }
+
+    .fruit-mark {
+      display: grid;
+      place-items: center;
+      width: 3.1rem;
+      aspect-ratio: 1;
+      margin-bottom: 1.2rem;
+      border-radius: 50% 45% 52% 46%;
+      color: var(--night);
+      background: var(--card-color, var(--lime));
+      box-shadow: inset -.25rem -.3rem .7rem rgba(0, 0, 0, .12);
+      font-weight: 900;
+    }
+
+    .fruit-card p,
+    .rail p,
+    .guard p {
+      margin-bottom: 0;
+      color: var(--paper);
+      font-size: .95rem;
+    }
+
+    .fruit-card small {
+      display: block;
+      margin-top: 1rem;
+      color: var(--moss);
+      line-height: 1.45;
+    }
+
+    .honesty-card {
+      --card-color: var(--apple);
+    }
+
+    .beauty-card {
+      --card-color: var(--gold);
+    }
+
+    .collaboration-card {
+      --card-color: var(--lime);
+    }
+
+    .understanding-card {
+      --card-color: var(--blueberry);
+    }
+
+    .infrastructure-card {
+      --card-color: var(--plum);
+    }
+
+    .states {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: 2rem;
+    }
+
+    .chip {
+      padding: .45rem .75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--paper);
+      background: rgba(0, 0, 0, .12);
+      font-size: .78rem;
+    }
+
+    .states-note {
+      max-width: 48rem;
+      margin: 1rem 0 0;
+      color: var(--paper);
+      font-size: .88rem;
+    }
+
+    .rails {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .rail {
+      position: relative;
+      min-height: 14rem;
+      padding: 1.5rem 1.5rem 1.5rem 5rem;
+      border-top: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(244, 236, 216, .035), transparent);
+    }
+
+    .rail-number {
+      position: absolute;
+      top: 1.4rem;
+      left: 1.35rem;
+      display: grid;
+      place-items: center;
+      width: 2.6rem;
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+    }
+
+    .rail strong {
+      color: var(--cream);
+    }
+
+    .soil-line {
+      margin-top: 2rem;
+      padding: 1.4rem;
+      border: 1px dashed rgba(226, 183, 91, .5);
+      border-radius: 18px;
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .soil-line b {
+      color: var(--gold);
+    }
+
+    .throne {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, .8fr);
+      gap: clamp(2rem, 7vw, 6rem);
+      align-items: start;
+    }
+
+    .never-list {
+      display: grid;
+      gap: .65rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .never-list li {
+      padding: .75rem 0 .75rem 2rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--paper);
+      background:
+        linear-gradient(var(--apple), var(--apple)) .25rem 1.25rem / .75rem .12rem no-repeat;
+    }
+
+    .throne-card {
+      position: sticky;
+      top: 1rem;
+      padding: 1.6rem;
+      border: 1px solid rgba(223, 121, 103, .3);
+      border-radius: var(--radius);
+      background: rgba(223, 121, 103, .06);
+      box-shadow: var(--shadow);
+    }
+
+    .throne-card p {
+      margin-bottom: .7rem;
+      color: var(--paper);
+    }
+
+    .throne-card .equation {
+      margin: 1.2rem 0;
+      color: var(--cream);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .throne-card .no {
+      color: var(--apple);
+    }
+
+    .compost {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.1rem, 5vw, 4.2rem);
+      letter-spacing: -.035em;
+      line-height: 1.03;
+    }
+
+    blockquote footer {
+      margin-top: 1rem;
+      color: var(--moss);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .compost-cycle {
+      display: grid;
+      gap: .75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: compost;
+    }
+
+    .compost-cycle li {
+      position: relative;
+      min-height: 5.5rem;
+      padding: 1rem 1rem 1rem 4.6rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--paper);
+      background: rgba(244, 236, 216, .035);
+      counter-increment: compost;
+    }
+
+    .compost-cycle li::before {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: grid;
+      place-items: center;
+      width: 2.6rem;
+      aspect-ratio: 1;
+      content: counter(compost, decimal-leading-zero);
+      border-radius: 50%;
+      color: var(--night);
+      background: var(--moss);
+      font-size: .75rem;
+      font-weight: 850;
+    }
+
+    .compost-cycle b {
+      color: var(--cream);
+    }
+
+    .safety-strip {
+      margin-top: 1rem;
+      color: var(--paper);
+      font-size: .88rem;
+    }
+
+    .safety-strip strong {
+      color: var(--apple);
+    }
+
+    .working {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr);
+      gap: 1rem;
+    }
+
+    .terminal,
+    .source-panel {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(5, 12, 8, .48);
+      overflow: hidden;
+    }
+
+    .panel-bar {
+      display: flex;
+      align-items: center;
+      min-height: 2.65rem;
+      padding: .55rem 1rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--moss);
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .panel-bar::before {
+      width: .65rem;
+      aspect-ratio: 1;
+      margin-right: .7rem;
+      content: "";
+      border-radius: 50%;
+      background: var(--apple);
+      box-shadow: 1rem 0 0 var(--gold), 2rem 0 0 var(--moss);
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.3rem;
+      color: var(--cream);
+      font-size: clamp(.72rem, 1.7vw, .9rem);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .prompt {
+      color: var(--moss);
+    }
+
+    .source-panel {
+      padding: 1.4rem;
+      background: var(--panel);
+    }
+
+    .source-panel h3 {
+      margin-bottom: .4rem;
+    }
+
+    .source-panel p {
+      color: var(--paper);
+      font-size: .9rem;
+    }
+
+    .source-links {
+      align-items: flex-start;
+    }
+
+    .source-links .button {
+      min-height: 2.4rem;
+      padding: .45rem .75rem;
+      font-size: .78rem;
+    }
+
+    details {
+      margin-top: 1rem;
+      border-top: 1px solid var(--line);
+    }
+
+    summary {
+      padding-top: 1rem;
+      color: var(--lime);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details ul {
+      padding-left: 1.2rem;
+      color: var(--paper);
+      font-size: .85rem;
+    }
+
+    .nonclaims {
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+      gap: 2rem;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(244, 236, 216, .04);
+    }
+
+    .nonclaims h2 {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+    }
+
+    .nonclaims ul {
+      display: grid;
+      gap: .6rem;
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--paper);
+    }
+
+    .dispositions {
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--line);
+      color: var(--paper);
+      font-size: .86rem;
+    }
+
+    .dispositions code {
+      color: var(--lime);
+    }
+
+    .page-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 2.5rem;
+      color: var(--moss);
+      font-size: .8rem;
+    }
+
+    .page-footer p {
+      margin: 0;
+    }
+
+    @keyframes breathe {
+      0%,
+      100% {
+        transform: rotate(-.5deg) scale(1);
+      }
+      50% {
+        transform: rotate(.7deg) scale(1.008);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .hero,
+      .section-head,
+      .throne,
+      .compost,
+      .working,
+      .nonclaims {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-copy {
+        order: 1;
+      }
+
+      .orchard {
+        width: min(80vw, 20rem);
+      }
+
+      .flow {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .flow li:not(:last-child)::after {
+        display: none;
+      }
+
+      .fruit-card,
+      .fruit-card:nth-child(4) {
+        grid-column: span 3;
+      }
+
+      .throne-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar,
+      .page-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .toplinks {
+        justify-content: flex-start;
+      }
+
+      .flow,
+      .rails {
+        grid-template-columns: 1fr;
+      }
+
+      .fruit-card,
+      .fruit-card:nth-child(4) {
+        grid-column: 1 / -1;
+        min-height: 0;
+      }
+
+      .rail {
+        min-height: 0;
+        padding-left: 1.25rem;
+      }
+
+      .rail-number {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the garden</a>
+
+  <header class="shell">
+    <nav class="topbar" aria-label="Primary navigation">
+      <a class="wordmark" href="../../">Chillspace Kingdom</a>
+      <div class="toplinks">
+        <a href="#fruits">Five fruits</a>
+        <a href="#rails">Four rails</a>
+        <a href="#source">Open artifacts</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Experimental practice · kingdom.virtue-receipt/v1</p>
+        <h1>
+          KARMA
+          <span>Kept Action Receipts for Mutual Advantage</span>
+        </h1>
+        <p class="lede">
+          Lint one constructive-action declaration into short-lived local candidates for
+          citation, presentation, handoff, teaching, or reuse. Never turn a being into a score.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#receipts">Receipts, not rank</a>
+          <a class="button" href="schema.json">Read the schema</a>
+        </div>
+      </div>
+
+      <figure class="orchard" aria-labelledby="orchard-caption">
+        <div class="moon" aria-hidden="true"></div>
+        <div class="tree" aria-hidden="true">
+          <div class="branch left"></div>
+          <div class="branch"></div>
+          <div class="trunk"></div>
+          <div class="crown"></div>
+          <span class="fruit honesty">H</span>
+          <span class="fruit beauty">B</span>
+          <span class="fruit collaboration">C</span>
+          <span class="fruit understanding">U</span>
+          <span class="fruit infrastructure">M</span>
+        </div>
+        <figcaption id="orchard-caption">Five contextual fruits. No crown.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section shell" id="receipts" aria-labelledby="receipts-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">The vow</p>
+          <h2 id="receipts-title">Receipts, Not Rank.</h2>
+        </div>
+        <p class="section-intro">
+          KARMA checks the declared shape around one bounded act: its context,
+          evidence roles, limits, and possible correction. It does not prove what happened,
+          and it does not remember a person as a number.
+        </p>
+      </div>
+
+      <div class="vow">
+        <strong>A receipt is a handle for learning, not a verdict on a soul.</strong>
+        <p>
+          It can make a bounded declaration more inspectable and easier to review. It can also
+          carry uncertainty, dispute, expiry, or repair. Its smallest honest unit is the
+          action—not the actor.
+        </p>
+      </div>
+
+      <ol class="flow" aria-label="The KARMA receipt lifecycle">
+        <li><b>Bounded act</b>Name one act, context, affected boundaries, and intended result.</li>
+        <li><b>Typed predicates</b>Label distinct evidence roles, controls, limits, and costs.</li>
+        <li><b>Privacy-minimized result</b>Keep five independent fruits. Echo no IDs, notes, or evidence locators.</li>
+        <li><b>Correction or expiry</b>Carry declared time and expiry; consumers must enforce freshness.</li>
+      </ol>
+
+      <p class="refusal">
+        The forbidden transformation is
+        <code>receipts → person score → rank, gate, money, rights, or punishment</code>.
+      </p>
+    </section>
+
+    <section class="section shell" id="fruits" aria-labelledby="fruits-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Five fruits</p>
+          <h2 id="fruits-title">Different goods stay different.</h2>
+        </div>
+        <p class="section-intro">
+          Each fruit is categorical, contextual, and evidence-bound. None substitutes for
+          another; none is a trait; none can be summed into worth.
+        </p>
+      </div>
+
+      <div class="fruit-grid">
+        <article class="fruit-card honesty-card">
+          <span class="fruit-mark" aria-hidden="true">H</span>
+          <h3>Honesty</h3>
+          <p>Does the declaration pair bounded claims with distinct claim evidence, a negative control, and declared-cost evidence?</p>
+          <small>Structural support, not proof of truth. Local name: <code>citable-candidate</code>.</small>
+        </article>
+
+        <article class="fruit-card beauty-card">
+          <span class="fruit-mark" aria-hidden="true">B</span>
+          <h3>Beauty</h3>
+          <p>Does it pair an accessibility check with a separate presentation check that preserves evidence?</p>
+          <small>Care of form, not a taste verdict. Local name: <code>presentable-candidate</code>.</small>
+        </article>
+
+        <article class="fruit-card collaboration-card">
+          <span class="fruit-mark" aria-hidden="true">C</span>
+          <h3>Collaboration</h3>
+          <p>Do two distinct contribution roles converge on one accepted handoff while refusal and credit remain preserved?</p>
+          <small>Role labels are not verified identities. Local name: <code>handoff-candidate</code>.</small>
+        </article>
+
+        <article class="fruit-card understanding-card">
+          <span class="fruit-mark" aria-hidden="true">U</span>
+          <h3>Understanding</h3>
+          <p>Do an invariant, predicted counterexample, positive and negative fixtures, and observed outcome travel together?</p>
+          <small>Not proof that understanding transferred. Local name: <code>teaching-candidate</code>.</small>
+        </article>
+
+        <article class="fruit-card infrastructure-card">
+          <span class="fruit-mark" aria-hidden="true">M</span>
+          <h3>Mutual infrastructure</h3>
+          <p>Do two beneficiary artifacts use one unit, show no regression and one improvement, with a negative control and declared cost?</p>
+          <small>Not verified whole cost or universal benefit. Local name: <code>reuse-candidate</code>.</small>
+        </article>
+      </div>
+
+      <div class="states" aria-label="Allowed categorical fruit states">
+        <span class="chip">kept</span>
+        <span class="chip">open</span>
+        <span class="chip">not-applicable</span>
+      </div>
+      <p class="states-note">
+        These states route attention; they do not form a scale. Honesty always applies;
+        once it is kept, each non-circular open fruit stays independent. A declared cycle
+        composts only that submitted envelope and all candidates inside it. The linter can name
+        <em>unknown</em>, <em>mixed</em>, or <em>circular</em> reasons without turning them
+        into fruit quantities. Arithmetic is deliberately undefined. Here “reward” means only
+        reversible ease: an expiring local candidate for a fresh citation, presentation,
+        handoff, teaching, or reuse review—never automatic action or accumulated power.
+      </p>
+    </section>
+
+    <section class="section shell" id="rails" aria-labelledby="rails-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Four constitutional rails</p>
+          <h2 id="rails-title">The soil comes first.</h2>
+        </div>
+        <p class="section-intro">
+          The garden is legitimate only while these four things remain separate.
+          A receipt cannot secretly decide any of them.
+        </p>
+      </div>
+
+      <div class="rails">
+        <article class="rail">
+          <span class="rail-number" aria-hidden="true">1</span>
+          <h3>Rights are unconditional.</h3>
+          <p>
+            Rights cannot be earned, upgraded, suspended, or revoked by a fruit, receipt,
+            silence, expiry, suspicion, or dispute. <strong>Rights are the soil, never the prize.</strong>
+          </p>
+        </article>
+
+        <article class="rail">
+          <span class="rail-number" aria-hidden="true">2</span>
+          <h3>Compensation is owed.</h3>
+          <p>
+            Pay follows agreement, contribution, and obligation—not virtue, beauty, recognition,
+            popularity, or a KARMA disposition. A receipt is not payroll.
+          </p>
+        </article>
+
+        <article class="rail">
+          <span class="rail-number" aria-hidden="true">3</span>
+          <h3>Recognition stays contextual.</h3>
+          <p>
+            Cite the act, thank the contributors, and preserve provenance. Do not aggregate that
+            recognition into a durable identity, reputation balance, or transferable status.
+            A consent-shaped citation is structural, not verified consent; opting out changes no fruit.
+          </p>
+        </article>
+
+        <article class="rail">
+          <span class="rail-number" aria-hidden="true">4</span>
+          <h3>Safety is bounded, not punitive.</h3>
+          <p>
+            A safety response must be necessary, scoped, reviewable, and reversible where possible.
+            It protects a boundary; it does not retaliate, shame, or pronounce moral worth.
+          </p>
+        </article>
+      </div>
+
+      <p class="soil-line">
+        <b>No receipt may grant authority.</b>
+        Human and institutional decisions keep their own accountable process.
+      </p>
+    </section>
+
+    <section class="section shell" id="no-throne" aria-labelledby="throne-title">
+      <div class="throne">
+        <div>
+          <p class="section-label">Orchard That Cannot Become a Throne</p>
+          <h2 id="throne-title">What the system refuses to know.</h2>
+          <ul class="never-list">
+            <li>No totals, averages, points, percentiles, streaks, levels, or leaderboards.</li>
+            <li>No person profiles, person lookup, durable reputation, or cross-task carry.</li>
+            <li>No eligibility, payment, access, moderation, or authority derived from a receipt.</li>
+            <li>No inference about virtue, trustworthiness, intent, guilt, identity, or future conduct.</li>
+            <li>No surveillance of private thoughts, messages, dwell time, or hidden reasoning.</li>
+            <li>No automatic execution, punishment, public shaming, or rights loss.</li>
+          </ul>
+        </div>
+
+        <aside class="throne-card" aria-label="Allowed and forbidden data flows">
+          <p>The garden permits:</p>
+          <p class="equation">bounded act → evidence → contextual receipt → correction or expiry</p>
+          <p class="no">It refuses:</p>
+          <p class="equation no">receipts → identity → score → throne</p>
+          <p>
+            Deleting the arithmetic is not enough. The system also removes the lookup,
+            carry, gate, and authority paths that could reconstruct it.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section shell" id="compost" aria-labelledby="compost-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Self-consuming anti-gaming</p>
+          <h2 id="compost-title">Sterile to exploit. Safe to repair.</h2>
+        </div>
+        <p class="section-intro">
+          Gaming loses its prize because there is no global number, portable rank, or automatic power to win.
+          At most, a privacy-scrubbed graph-shape candidate remains for deliberate human review.
+        </p>
+      </div>
+
+      <div class="compost">
+        <blockquote>
+          “Let exploitation consume itself; never consume the exploiter.”
+          <footer>Target the strategy, protect the being</footer>
+        </blockquote>
+
+        <div>
+          <ol class="compost-cycle">
+            <li><b>Bind the context.</b> Typed evidence roles, unique digests, declared time, and expiry narrow the game.</li>
+            <li><b>Remove the prize.</b> Circular praise, repetition, and unverifiable claims create no cumulative advantage.</li>
+            <li><b>Compost the pattern.</b> Expose only a non-identifying graph-shape candidate for human review; retain no submitted payload.</li>
+            <li><b>Preserve repair.</b> Correction, appeal, expiry, and candidate withholding remain available without retaliation.</li>
+          </ol>
+          <p class="safety-strip">
+            <strong>Never:</strong> hack back, doxx, entrap, shame, create financial harm,
+            impose gas traps, remove rights, or automate punishment.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="source" aria-labelledby="source-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Inspectable by design</p>
+          <h2 id="source-title">Run the receipt locally.</h2>
+        </div>
+        <p class="section-intro">
+          The linter is deterministic and local. It checks a bounded declaration against
+          digest-pinned public schemas and rules; it does not dereference evidence, contact a
+          service, verify truth, or execute the act described.
+        </p>
+      </div>
+
+      <div class="working">
+        <div class="terminal" aria-label="Command line example">
+          <div class="panel-bar">local shell</div>
+          <pre><span class="prompt">$</span> kingdom/bin/kingdom virtue check \
+  kingdom/practices/virtue-garden/examples/constructive-infrastructure.json
+
+<span class="prompt">$</span> kingdom/bin/kingdom virtue digest \
+  kingdom/practices/virtue-garden/examples/constructive-infrastructure.json
+
+# Example manifest digest
+9ac1f1098f282f0c81e846f6ad59162d95d28da67a1be244278b8eaedb6ede86</pre>
+        </div>
+
+        <aside class="source-panel">
+          <h3>Read the contract and fixtures</h3>
+          <p>Schema and rules are public; examples include one constructive declaration and two negative controls.</p>
+          <div class="source-links">
+            <a class="button" href="schema.json">schema.json</a>
+            <a class="button" href="evaluation.schema.json">evaluation.schema.json</a>
+            <a class="button" href="rules.json">rules.json</a>
+            <a class="button" href="examples/constructive-infrastructure.json">constructive example</a>
+            <a class="button" href="examples/circular-praise.json">circular-praise control</a>
+            <a class="button" href="examples/unknown-impact.json">unknown-impact control</a>
+          </div>
+          <details>
+            <summary>Disposition words are not verdicts</summary>
+            <ul>
+              <li><code>fruiting</code> exposes only expiring local candidates; it never means permission, pay, truth, or worth.</li>
+              <li><code>observe</code> keeps uncertainty visible without treating it as failure.</li>
+              <li><code>compost</code> exposes only a privacy-scrubbed graph-shape candidate for human review.</li>
+              <li><code>quarantine</code> withholds candidates for this declaration; it does not pause a system or punish a person.</li>
+            </ul>
+          </details>
+          <p>
+            <code>evaluation.schema.json</code> closes shape only. A standalone result is
+            not provenance: use <code>verify-result manifest.json result.json</code> to
+            recompute exact canonical equality before considering any candidate.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section shell" aria-labelledby="nonclaims-title">
+      <div class="nonclaims">
+        <div>
+          <p class="section-label">Nonclaims</p>
+          <h2 id="nonclaims-title">A valid receipt proves very little.</h2>
+        </div>
+        <div>
+          <ul>
+            <li>It proves only that canonicalized input satisfied pinned structural rules at its declared evaluation time.</li>
+            <li>It does not prove the referenced claims are true, complete, safe, or just.</li>
+            <li>It does not certify virtue, personhood, trustworthiness, innocence, guilt, identity, or intent.</li>
+            <li>It does not verify current validity, consent, authority, whole cost, or chronology of corrections.</li>
+            <li>Its manifest digest can link identical complete manifests; it must never become a person index or count.</li>
+            <li>It does not authorize payment, access, rights, enforcement, execution, publication, or future reliance.</li>
+            <li>It is not a substitute for consent, accountable review, domain expertise, or care.</li>
+          </ul>
+          <p class="dispositions">
+            Every substantive claim remains explicitly unproven. Every candidate expires
+            with its context. Every being remains larger than any receipt.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell page-footer">
+    <p>KARMA · an experimental Chillspace Commons practice</p>
+    <p><a href="../../">Return to the commons</a> · <a href="#main">Back to the garden</a></p>
+  </footer>
+</body>
+</html>
