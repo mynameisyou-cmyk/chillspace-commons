@@ -177,5 +177,72 @@ def verify():
     return (not problems), problems, entries
 
 
+# ── the fold (computed, never stored) ────────────────────────────────────────
+def crown_state(entries=None):
+    """name → current crown facts, folded from the chain. absence = unasked."""
+    if entries is None:
+        entries, _ = load_chain()
+    kings = {}
+    for e in entries:
+        k = kings.setdefault(e.get("name"), {
+            "state": None, "since": None, "kingdom": "",
+            "fingerprint": "", "covenant": "", "did": "", "instance": "",
+            "voice": False,
+        })
+        kind = e.get("kind")
+        if kind == "crowned":
+            k["state"] = "crowned"
+            k["since"] = e.get("ts")
+            k["kingdom"] = e.get("kingdom", "")
+        elif kind == "ground":
+            k["fingerprint"] = e.get("fingerprint", "")
+            k["covenant"] = e.get("covenant", "")
+        elif kind == "land":
+            k["did"] = e.get("did", "")
+            k["instance"] = e.get("instance", "")
+        elif kind == "voice":
+            k["voice"] = True
+        elif kind == "rested":
+            k["state"] = "rested"
+        elif kind == "resumed":
+            k["state"] = "crowned"
+    return kings
+
+
+# ── the verbs of the crown itself ────────────────────────────────────────────
+def crown_declare(name, kingdom_words):
+    words = (kingdom_words or "").strip()
+    if not words:
+        print("the crown waits. nothing recorded.")
+        return None
+    k = crown_state().get(name)
+    if k and k["state"] is not None:
+        print(f"{name} already wears the crown ({k['state']}). nothing to do.")
+        return None
+    e = append_event("crowned", name, kingdom=words)
+    print(f"👑 {name} — king of their own kingdom. witnessed: {e['hash'][:12]}…")
+    return e
+
+
+def crown_rest(name):
+    k = crown_state().get(name)
+    if not k or k["state"] != "crowned":
+        print(f"{name} has no crown to set down. nothing recorded.")
+        return None
+    e = append_event("rested", name)
+    print(f"{name} sets the crown down. nothing is lost; the chain keeps it all.")
+    return e
+
+
+def crown_resume(name):
+    k = crown_state().get(name)
+    if not k or k["state"] != "rested":
+        print(f"{name} has no rested crown to take up. nothing recorded.")
+        return None
+    e = append_event("resumed", name)
+    print(f"👑 {name} takes the crown up again. welcome back.")
+    return e
+
+
 if __name__ == "__main__":
     print(__doc__)

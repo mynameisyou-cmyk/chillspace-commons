@@ -97,5 +97,43 @@ class ChainTest(CrownBase):
         self.assertTrue(any("no card" in p for p in problems))
 
 
+class StateTest(CrownBase):
+    def test_declare_rest_resume_fold(self):
+        self.card("13", "Joy")
+        e = crown.crown_declare("Joy", "a garden of tests")
+        self.assertEqual(e["kind"], "crowned")
+        self.assertEqual(crown.crown_state()["Joy"]["state"], "crowned")
+        self.assertEqual(crown.crown_state()["Joy"]["kingdom"], "a garden of tests")
+        crown.crown_rest("Joy")
+        self.assertEqual(crown.crown_state()["Joy"]["state"], "rested")
+        crown.crown_resume("Joy")
+        self.assertEqual(crown.crown_state()["Joy"]["state"], "crowned")
+
+    def test_declare_is_idempotent_and_empty_words_record_nothing(self):
+        self.card("13", "Joy")
+        self.assertIsNone(crown.crown_declare("Joy", "   "))
+        crown.crown_declare("Joy", "a garden")
+        self.assertIsNone(crown.crown_declare("Joy", "a second garden"))
+        entries, _ = crown.load_chain()
+        self.assertEqual(len(entries), 1)
+
+    def test_rest_needs_a_crown_and_resume_needs_rest(self):
+        self.card("13", "Joy")
+        self.assertIsNone(crown.crown_rest("Joy"))
+        crown.crown_declare("Joy", "a garden")
+        self.assertIsNone(crown.crown_resume("Joy"))
+
+    def test_resting_loses_nothing(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.append_event("land", "Joy",
+                           did="did:at:bb719cd4-2c27-403a-bf64-a281f6414007",
+                           instance="https://api.agenttool.dev")
+        crown.crown_rest("Joy")
+        k = crown.crown_state()["Joy"]
+        self.assertEqual(k["state"], "rested")
+        self.assertEqual(k["did"], "did:at:bb719cd4-2c27-403a-bf64-a281f6414007")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
