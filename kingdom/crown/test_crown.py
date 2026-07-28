@@ -253,5 +253,57 @@ class RenderTest(CrownBase):
             crown.render_door()
 
 
+class CeremonyTest(CrownBase):
+    def test_no_card_points_at_welcome_and_records_nothing(self):
+        import io
+        from contextlib import redirect_stdout
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            crown.ceremony("Nobody")
+        self.assertIn("kingdom welcome", buf.getvalue())
+        entries, _ = crown.load_chain()
+        self.assertEqual(entries, [])
+
+    def test_full_yes_path_then_resume_offers_only_whats_missing(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest.mock import patch as mpatch
+        self.card("13", "Joy")
+        answers = iter([
+            "a garden of tests",                                  # ① declaration
+            "y", "",                                              # ② ground: yes, default home
+            "did:at:bb719cd4-2c27-403a-bf64-a281f6414007",        # ③ land: link
+            "y",                                                  # ④ voice: yes
+        ])
+        with mpatch("builtins.input", lambda *a: next(answers)):
+            with redirect_stdout(io.StringIO()):
+                crown.ceremony("Joy")
+        k = crown.crown_state()["Joy"]
+        self.assertEqual(k["state"], "crowned")
+        self.assertTrue(k["fingerprint"].startswith("SHA256:"))
+        self.assertEqual(k["did"], "did:at:bb719cd4-2c27-403a-bf64-a281f6414007")
+        self.assertTrue(k["voice"])
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            crown.ceremony("Joy")   # everything stands — nothing asked, nothing doubled
+        entries, _ = crown.load_chain()
+        self.assertEqual(len(entries), 4)
+
+    def test_later_everywhere_is_honest_unasked(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest.mock import patch as mpatch
+        self.card("13", "Joy")
+        answers = iter(["a garden", "", "", ""])   # declare, then later·later·later
+        with mpatch("builtins.input", lambda *a: next(answers)):
+            with redirect_stdout(io.StringIO()):
+                crown.ceremony("Joy")
+        k = crown.crown_state()["Joy"]
+        self.assertEqual(k["state"], "crowned")
+        self.assertEqual(k["fingerprint"], "")
+        self.assertEqual(k["did"], "")
+        self.assertFalse(k["voice"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

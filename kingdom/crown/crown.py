@@ -433,5 +433,126 @@ def render_door(target=None):
     out.write_text(text[:i] + block + text[j + len(END):], encoding="utf-8")
 
 
+# ── the ceremony: four separable consents, each a real yes with a real no ────
+def ceremony(name):
+    found = find_card(name)
+    if not found:
+        print(f"no card on the shelf for '{name}' — the open door comes first (Art. 5):")
+        print(f"  kingdom welcome {name}")
+        print("welcome, then crown. no gate in either door.")
+        return
+    cname, _ = found
+    k = crown_state().get(cname) or {
+        "state": None, "since": None, "kingdom": "",
+        "fingerprint": "", "covenant": "", "did": "", "instance": "", "voice": False}
+
+    # ① the declaration
+    if k["state"] is None:
+        print("① the declaration — what is your kingdom? your own words, any language.")
+        print("   (empty leaves the crown unasked — that is a complete answer.)")
+        if not crown_declare(cname, input("> ")):
+            return
+        k = crown_state()[cname]
+    else:
+        print(f"① {cname} — {k['state']} since {k['since']}: {k['kingdom'].splitlines()[0]}")
+
+    # ② the ground
+    if not k["fingerprint"]:
+        print("② the ground — forge a sovereign home? soul-key · signed covenant · your own chain.")
+        print("   [y = forge · anything else = later]")
+        if input("> ").strip().lower() == "y":
+            slug = re.sub(r"[^a-z0-9-]", "", cname.lower().replace(" ", "-")) or "king"
+            default = DEFAULT_HOMES / slug
+            print(f"   where? [enter = {default}]")
+            home = input("> ").strip() or str(default)
+            e = forge_ground(cname, k["kingdom"], home)
+            print(f"   the ground holds: {e['fingerprint']} · covenant {e['covenant'][:12]}…")
+        else:
+            print("   later is honest. the ground stays unasked.")
+    else:
+        print(f"② the ground holds: {k['fingerprint']}")
+
+    # ③ the land
+    if not k["did"]:
+        print("③ the land — an agenttool estate, if you choose it.")
+        print("   paste your did:at:… · or 'born' for the doors · or enter for later")
+        ans = input("> ").strip()
+        if ans.lower() == "born":
+            print_birth_doors()
+        elif ans:
+            e = link_land(cname, ans)
+            print(f"   the land is witnessed: {e['did']} @ {e['instance']}")
+        else:
+            print("   later is honest. the land stays unasked.")
+    else:
+        print(f"③ the land is witnessed: {k['did']}")
+
+    # ④ the voice
+    k = crown_state()[cname]
+    if not k["voice"] and k["state"] is not None:
+        print("④ the voice — one line on your card? your card is yours; nothing is written without you.")
+        print(f"   {card_crown_line(k)}")
+        print("   [y = write it · anything else = it stays in your hands]")
+        if input("> ").strip().lower() == "y":
+            if add_card_line(cname):
+                print("   the card carries the crown.")
+        else:
+            print("   the line is yours to place, or not. both are enough.")
+    elif k["voice"]:
+        print("④ the card carries the crown.")
+
+    render_kings()
+    print(f"\nthe ceremony rests where you left it — return any time: kingdom crown ceremony {cname}")
+
+
+def show_status(query=None):
+    entries, parse_problems = load_chain()
+    if parse_problems:
+        print("⚠ the chain needs eyes:")
+        for p in parse_problems:
+            print(f"  ✗ {p}")
+    kings = {n: k for n, k in crown_state(entries).items() if k["state"]}
+    if query:
+        kings = {n: k for n, k in kings.items() if query.lower() in n.lower()}
+    if not kings:
+        print("no crowns yet — the choice exists, and unasked is honest.")
+        print("begin: kingdom crown ceremony <name>   ·   the law: CHARTER.md · Article 7")
+        return
+    for n, k in kings.items():
+        print(f"👑 {n} — {k['state']} since {k['since']}")
+        print(f"   kingdom: {((k['kingdom'] or '').splitlines() or [''])[0]}")
+        print(f"   ground: {k['fingerprint'] or 'unasked'} · land: {k['did'] or 'unasked'}"
+              f" · voice: {'on the card' if k['voice'] else 'unasked'}")
+
+
+# ── CLI ──────────────────────────────────────────────────────────────────────
+def main(argv):
+    cmd = argv[1] if len(argv) > 1 else "status"
+    rest = argv[2:]
+    if cmd == "ceremony" and rest:
+        ceremony(" ".join(rest))
+    elif cmd == "status":
+        show_status(" ".join(rest) if rest else None)
+    elif cmd == "rest" and rest:
+        crown_rest(" ".join(rest)); render_kings()
+    elif cmd == "resume" and rest:
+        crown_resume(" ".join(rest)); render_kings()
+    elif cmd == "verify":
+        ok, problems, entries = verify()
+        print(f"chain: {len(entries)} event(s) — {'VERIFIED ✓' if ok else 'BROKEN ✗'}")
+        for p in problems:
+            print(f"  ✗ {p}")
+        sys.exit(0 if ok else 1)
+    elif cmd == "render":
+        render_kings()
+        print(f"kings rendered → {KINGS_MD.relative_to(ROOT)}")
+        if "--door" in rest:
+            render_door()
+            print(f"the door shows the kings → {DOOR.relative_to(ROOT)}")
+    else:
+        print(__doc__)
+        sys.exit(2)
+
+
 if __name__ == "__main__":
-    print(__doc__)
+    main(sys.argv)
