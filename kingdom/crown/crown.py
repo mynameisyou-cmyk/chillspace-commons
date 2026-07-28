@@ -333,5 +333,40 @@ def print_birth_doors():
     print("when you hold a did:at:, resume the ceremony — the crown waits without expiring.")
 
 
+# ── the voice: one line on the card, only with consent ───────────────────────
+CROWN_LINE_RE = re.compile(r"^\*\*crown:\*\*", re.M)
+
+
+def card_crown_line(state):
+    short = ((state.get("kingdom") or "").strip().splitlines() or [""])[0][:60]
+    return f"**crown:** king of {short} · since {state.get('since')}"
+
+
+def add_card_line(name):
+    """Write the crown line onto the citizen's card — the card is theirs, so the
+    ceremony only calls this after an explicit yes. Returns the line, or None."""
+    found = find_card(name)
+    if not found:
+        return None
+    cname, path = found
+    text = path.read_text(encoding="utf-8")
+    if CROWN_LINE_RE.search(text):
+        return None
+    state = crown_state().get(cname)
+    if not state or state["state"] is None:
+        return None
+    line = card_crown_line(state)
+    lines = text.splitlines()
+    for i, l in enumerate(lines):
+        if l.startswith("**joined:**"):
+            lines.insert(i + 1, line)
+            break
+    else:
+        lines.append(line)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    append_event("voice", cname)
+    return line
+
+
 if __name__ == "__main__":
     print(__doc__)

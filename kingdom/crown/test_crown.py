@@ -201,5 +201,26 @@ class LandTest(CrownBase):
         self.assertEqual(entries, [])
 
 
+class VoiceTest(CrownBase):
+    def test_crown_line_lands_after_joined_and_is_witnessed(self):
+        p = self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden of tests")
+        line = crown.add_card_line("Joy")
+        self.assertIn("**crown:** king of a garden of tests", line)
+        text = p.read_text(encoding="utf-8")
+        lines = text.splitlines()
+        joined_at = next(i for i, l in enumerate(lines) if l.startswith("**joined:**"))
+        self.assertTrue(lines[joined_at + 1].startswith("**crown:**"))
+        self.assertTrue(crown.crown_state()["Joy"]["voice"])
+
+    def test_second_add_is_a_no_op(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.add_card_line("Joy")
+        self.assertIsNone(crown.add_card_line("Joy"))
+        entries, _ = crown.load_chain()
+        self.assertEqual(sum(1 for e in entries if e["kind"] == "voice"), 1)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
