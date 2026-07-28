@@ -305,5 +305,123 @@ class CeremonyTest(CrownBase):
         self.assertFalse(k["voice"])
 
 
+class FixTest(CrownBase):
+    """The whole-branch review's four findings — covered before they're fixed."""
+
+    def test_invalid_pasted_did_does_not_abort_the_ceremony(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest.mock import patch as mpatch
+        self.card("13", "Joy")
+        answers = iter([
+            "a garden of tests",     # ① declaration
+            "",                       # ② ground: later
+            "not-a-did-at-all",      # ③ land: an invalid pasted DID
+            "",                       # ④ voice: decline
+        ])
+        buf = io.StringIO()
+        with mpatch("builtins.input", lambda *a: next(answers)):
+            with redirect_stdout(buf):
+                crown.ceremony("Joy")   # must not traceback
+        out = buf.getvalue()
+        self.assertIn("✗", out)
+        self.assertIn("the land stays unasked", out)
+        self.assertIn("④ the voice", out)   # the ceremony kept going past the failure
+        k = crown.crown_state()["Joy"]
+        self.assertEqual(k["state"], "crowned")
+        self.assertEqual(k["did"], "")
+        entries, _ = crown.load_chain()
+        self.assertEqual(len(entries), 1)     # only the declaration — land never wrote
+        self.assertEqual(entries[0]["kind"], "crowned")
+
+    def test_broken_chain_during_declaration_still_continues_to_the_next_step(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest.mock import patch as mpatch
+        self.card("13", "Joy")
+        crown.CHAIN.write_text('{"seq": 0, broken\n', encoding="utf-8")
+        answers = iter(["a garden of tests", "", "", ""])
+        buf = io.StringIO()
+        with mpatch("builtins.input", lambda *a: next(answers)):
+            with redirect_stdout(buf):
+                crown.ceremony("Joy")   # must not traceback
+        out = buf.getvalue()
+        self.assertIn("✗", out)
+        self.assertIn("② the ground", out)   # continued past the failed declaration
+        self.assertEqual(crown.CHAIN.read_text(encoding="utf-8"), '{"seq": 0, broken\n')
+
+    def test_ceremony_status_line_survives_empty_kingdom_words(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest.mock import patch as mpatch
+        self.card("13", "Joy")
+        crown.append_event("crowned", "Joy", kingdom="")   # direct misuse: no words
+        answers = iter(["", "", ""])   # ②③④: later, later, decline
+        buf = io.StringIO()
+        with mpatch("builtins.input", lambda *a: next(answers)):
+            with redirect_stdout(buf):
+                crown.ceremony("Joy")   # must not IndexError
+        self.assertIn("① Joy — crowned since", buf.getvalue())
+
+    def test_crown_rest_canonicalizes_name_case(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        e = crown.crown_rest("joy")
+        self.assertIsNotNone(e)
+        self.assertEqual(e["name"], "Joy")
+        self.assertEqual(crown.crown_state()["Joy"]["state"], "rested")
+
+    def test_crown_resume_canonicalizes_name_case(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.crown_rest("Joy")
+        e = crown.crown_resume("joy")
+        self.assertIsNotNone(e)
+        self.assertEqual(e["name"], "Joy")
+        self.assertEqual(crown.crown_state()["Joy"]["state"], "crowned")
+
+    def test_rest_unknown_name_behavior_is_unchanged(self):
+        self.assertIsNone(crown.crown_rest("Nobody"))
+
+    def test_render_door_refuses_a_tampered_chain(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.DOOR.write_text(
+            f"<script>\n{crown.BEGIN}\nconst KINGS = [];\n{crown.END}\n</script>\n",
+            encoding="utf-8")
+        entries, _ = crown.load_chain()
+        entries[0]["kingdom"] = "a lie"
+        crown.save_chain(entries)
+        before = crown.DOOR.read_text(encoding="utf-8")
+        with self.assertRaises(crown.BrokenChain):
+            crown.render_door()
+        after = crown.DOOR.read_text(encoding="utf-8")
+        self.assertEqual(before, after)   # untouched — fail-closed, never a half-write
+
+    def test_main_render_door_exits_1_on_broken_chain_not_a_traceback(self):
+        import io
+        from contextlib import redirect_stdout
+        # main()'s render path prints paths relative to ROOT — point it at this
+        # test's own temp root (same root CHAIN/KINGS_MD/DOOR already live under)
+        # so that print doesn't ValueError on an unrelated pre-existing quirk.
+        saved_root = crown.ROOT
+        crown.ROOT = Path(self.temp.name)
+        self.addCleanup(lambda: setattr(crown, "ROOT", saved_root))
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        crown.DOOR.write_text(
+            f"<script>\n{crown.BEGIN}\nconst KINGS = [];\n{crown.END}\n</script>\n",
+            encoding="utf-8")
+        entries, _ = crown.load_chain()
+        entries[0]["kingdom"] = "a lie"
+        crown.save_chain(entries)
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            with self.assertRaises(SystemExit) as cm:
+                crown.main(["crown.py", "render", "--door"])
+        self.assertEqual(cm.exception.code, 1)
+        self.assertIn("✗", buf.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

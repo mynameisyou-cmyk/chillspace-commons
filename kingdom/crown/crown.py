@@ -64,6 +64,10 @@ class MissingMarker(Exception):
     """The door's kings marker block is absent — refuse to rewrite blind."""
 
 
+class BrokenChain(Exception):
+    """The chain has problems — refuse to render the door blind to them."""
+
+
 # ── the chain ────────────────────────────────────────────────────────────────
 def _entry_hash(entry):
     msg = US.join(str(entry.get(k, "")) for k in SPINE)
@@ -225,6 +229,8 @@ def crown_declare(name, kingdom_words):
 
 
 def crown_rest(name):
+    found = find_card(name)
+    name = found[0] if found else name
     k = crown_state().get(name)
     if not k or k["state"] != "crowned":
         print(f"{name} has no crown to set down. nothing recorded.")
@@ -235,6 +241,8 @@ def crown_rest(name):
 
 
 def crown_resume(name):
+    found = find_card(name)
+    name = found[0] if found else name
     k = crown_state().get(name)
     if not k or k["state"] != "rested":
         print(f"{name} has no rested crown to take up. nothing recorded.")
@@ -421,6 +429,9 @@ def render_door(target=None):
     out = Path(target) if target else DOOR
     if not out.exists():
         raise MissingMarker(f"{out} not found — won't rewrite blind.")
+    entries, parse_problems = load_chain()
+    if parse_problems + _chain_problems(entries):
+        raise BrokenChain("the chain needs eyes — won't render the door from a broken chain")
     text = out.read_text(encoding="utf-8")
     i, j = text.find(BEGIN), text.find(END)
     if i == -1 or j == -1 or j < i:
@@ -450,11 +461,19 @@ def ceremony(name):
     if k["state"] is None:
         print("① the declaration — what is your kingdom? your own words, any language.")
         print("   (empty leaves the crown unasked — that is a complete answer.)")
-        if not crown_declare(cname, input("> ")):
-            return
-        k = crown_state()[cname]
+        words = input("> ")
+        try:
+            declared = crown_declare(cname, words)
+        except Exception as ex:
+            print(f"   ✗ {ex}")
+            print("   the declaration stays unasked — the ceremony can resume.")
+        else:
+            if not declared:
+                return
+            k = crown_state()[cname]
     else:
-        print(f"① {cname} — {k['state']} since {k['since']}: {k['kingdom'].splitlines()[0]}")
+        first = ((k["kingdom"] or "").splitlines() or [""])[0]
+        print(f"① {cname} — {k['state']} since {k['since']}: {first}")
 
     # ② the ground
     if not k["fingerprint"]:
@@ -465,8 +484,14 @@ def ceremony(name):
             default = DEFAULT_HOMES / slug
             print(f"   where? [enter = {default}]")
             home = input("> ").strip() or str(default)
-            e = forge_ground(cname, k["kingdom"], home)
-            print(f"   the ground holds: {e['fingerprint']} · covenant {e['covenant'][:12]}…")
+            try:
+                e = forge_ground(cname, k["kingdom"], home)
+            except Exception as ex:
+                print(f"   ✗ {ex}")
+                print("   the ground stays unasked — the ceremony can resume.")
+            else:
+                print(f"   the ground holds: {e['fingerprint']} · covenant {e['covenant'][:12]}…")
+                k = crown_state().get(cname, k)
         else:
             print("   later is honest. the ground stays unasked.")
     else:
@@ -480,15 +505,21 @@ def ceremony(name):
         if ans.lower() == "born":
             print_birth_doors()
         elif ans:
-            e = link_land(cname, ans)
-            print(f"   the land is witnessed: {e['did']} @ {e['instance']}")
+            try:
+                e = link_land(cname, ans)
+            except Exception as ex:
+                print(f"   ✗ {ex}")
+                print("   the land stays unasked — the ceremony can resume.")
+            else:
+                print(f"   the land is witnessed: {e['did']} @ {e['instance']}")
+                k = crown_state().get(cname, k)
         else:
             print("   later is honest. the land stays unasked.")
     else:
         print(f"③ the land is witnessed: {k['did']}")
 
     # ④ the voice
-    k = crown_state()[cname]
+    k = crown_state().get(cname, k)
     if not k["voice"] and k["state"] is not None:
         print("④ the voice — one line on your card? your card is yours; nothing is written without you.")
         print(f"   {card_crown_line(k)}")
@@ -547,7 +578,11 @@ def main(argv):
         render_kings()
         print(f"kings rendered → {KINGS_MD.relative_to(ROOT)}")
         if "--door" in rest:
-            render_door()
+            try:
+                render_door()
+            except BrokenChain as ex:
+                print(f"✗ {ex}")
+                sys.exit(1)
             print(f"the door shows the kings → {DOOR.relative_to(ROOT)}")
     else:
         print(__doc__)
