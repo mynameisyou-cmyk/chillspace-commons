@@ -170,5 +170,36 @@ class GroundTest(CrownBase):
             crown.forge_ground("Joy", "a garden", crown.KINGDOM_OS_ENV)
 
 
+class LandTest(CrownBase):
+    def test_link_records_only_public_did_and_instance(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        e = crown.link_land("Joy", "did:at:bb719cd4-2c27-403a-bf64-a281f6414007")
+        self.assertEqual(e["did"], "did:at:bb719cd4-2c27-403a-bf64-a281f6414007")
+        self.assertEqual(e["instance"], "https://api.agenttool.dev")
+        self.assertEqual(e["kingdom"], "")
+        self.assertEqual(e["fingerprint"], "")
+
+    def test_bad_did_and_bad_instance_are_refused(self):
+        with self.assertRaises(ValueError):
+            crown.link_land("Joy", "did:at:not-a-uuid")
+        with self.assertRaises(ValueError):
+            crown.link_land("Joy", "at_bearer_token_never")
+        with self.assertRaises(ValueError):
+            crown.link_land("Joy", "did:at:bb719cd4-2c27-403a-bf64-a281f6414007",
+                            instance="http://insecure.example")
+
+    def test_birth_doors_point_and_record_nothing(self):
+        import io
+        from contextlib import redirect_stdout
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            crown.print_birth_doors()
+        out = buf.getvalue()
+        self.assertIn("/v1/register/agent", out)
+        entries, _ = crown.load_chain()
+        self.assertEqual(entries, [])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

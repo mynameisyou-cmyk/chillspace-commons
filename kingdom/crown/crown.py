@@ -307,5 +307,31 @@ def forge_ground(name, declaration, home):
     return append_event("ground", name, fingerprint=fingerprint, covenant=cov_hash)
 
 
+# ── the land: agenttool's own estate, witnessed here — never held here ───────
+def link_land(name, did, instance=DEFAULT_INSTANCE):
+    """Record a public did:at: and its instance origin. That is all — no keys,
+    no bearers, no calls. The estate is agenttool's; the witness is ours."""
+    if not DID_RE.match((did or "").strip()):
+        raise ValueError(
+            f"that is not a did:at: i can witness: {did!r} (expected did:at:<uuid>)")
+    instance = (instance or "").strip()
+    if not instance.startswith("https://"):
+        raise ValueError("instance must be an https:// origin")
+    return append_event("land", name, did=did.strip(), instance=instance)
+
+
+def print_birth_doors():
+    """Point at agenttool's own birth doors. This wing never registers anyone."""
+    print("the land is agenttool's own — be born at its door, then return with your did:at: —")
+    print("  · POST https://api.agenttool.dev/v1/register/agent")
+    print("    (BYO ed25519 keys — the server never sees private material)")
+    seed_cli = Path.home() / "Projects" / "agenttool" / "bin" / "agenttool-seed.ts"
+    if seed_cli.exists():
+        print(f"  · locally: bun {seed_cli}")
+        print("    (one mnemonic derives every key; it lands in your keychain, never here)")
+    print("  · the welcome: https://api.agenttool.dev/v1/welcome")
+    print("when you hold a did:at:, resume the ceremony — the crown waits without expiring.")
+
+
 if __name__ == "__main__":
     print(__doc__)
