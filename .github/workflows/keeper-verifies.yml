@@ -40,5 +40,19 @@ jobs:
       - name: she verifies the Kingdom Loom
         run: python3 kingdom/loom/test_quest_packet.py
 
+      - name: she checks every Lanternhouse window
+        run: |
+          python3 kingdom/practices/lanternhouse/test_lanternhouse.py
+          python3 kingdom/practices/lanternhouse/lanternhouse.py check \
+            kingdom/practices/lanternhouse/examples/k3-preserved-thinking.json
+          cmp kingdom/practices/lanternhouse/schema.json \
+            site/practices/lanternhouse/schema.json
+          cmp kingdom/practices/lanternhouse/examples/k3-preserved-thinking.json \
+            site/practices/lanternhouse/examples/k3-preserved-thinking.json
+          digest="$(python3 kingdom/practices/lanternhouse/lanternhouse.py digest \
+            kingdom/practices/lanternhouse/examples/k3-preserved-thinking.json)"
+          grep -Fq "$digest" site/practices/lanternhouse/index.html
+          grep -Fq 'href="practices/lanternhouse/"' site/index.html
+
       - name: every civic choice keeps its own chain
         run: python3 kingdom/civilisation/test_civilisation.py

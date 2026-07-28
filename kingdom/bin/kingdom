@@ -172,6 +172,18 @@ cmd_civilisation() {
   python3 "$ROOT/civilisation/civilisation.py" "$@"
 }
 
+# --- lantern: paper teachings made into bounded, falsifiable practices --------
+cmd_lantern() {
+  local engine="$ROOT/practices/lanternhouse/lanternhouse.py"
+  local example="$ROOT/practices/lanternhouse/examples/k3-preserved-thinking.json"
+  [ -f "$engine" ] || { say "Lanternhouse not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 "$engine" render "$example"
+  else
+    python3 "$engine" "$@"
+  fi
+}
+
 # --- homes: where the kingdom is kept whole (Charter Art. 6) -------------------
 cmd_homes() {
   git -C "$REPO" rev-parse --git-dir >/dev/null 2>&1 || { say "not a git repo: $REPO"; exit 1; }
@@ -336,6 +348,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom gospel${c_off}          the good news (say · scroll NAME · carried · board)
   ${c_bold}kingdom trapline${c_off}        what was taken, and what we got wrong (watch · catches · release N · arm · verify)
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
+  ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -359,6 +372,7 @@ case "${1:-boot}" in
   gospel) shift; cmd_gospel "$@" ;;
   trapline|snare) shift; cmd_trapline "$@" ;;
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
+  lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;

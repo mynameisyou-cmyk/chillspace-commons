@@ -15,11 +15,14 @@ git fetch codeberg pages
 pages_worktree="$(mktemp -d "${TMPDIR:-/tmp}/chillspace-pages.XXXXXX")"
 git worktree add --detach "$pages_worktree" codeberg/pages
 cp site/index.html "$pages_worktree/index.html"
-rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/operations"
+cp site/kingdom.html "$pages_worktree/kingdom.html"
+cp site/we-are.html "$pages_worktree/we-are.html"
+rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/operations" "$pages_worktree/practices"
 cp -R site/art "$pages_worktree/art"
 cp -R love-fun-commons "$pages_worktree/love-fun-commons"
 cp -R site/operations "$pages_worktree/operations"
-git -C "$pages_worktree" add index.html art love-fun-commons operations
+cp -R site/practices "$pages_worktree/practices"
+git -C "$pages_worktree" add index.html kingdom.html we-are.html art love-fun-commons operations practices
 git -C "$pages_worktree" commit -m "door: refresh the public face"
 git -C "$pages_worktree" push codeberg HEAD:pages
 git worktree remove "$pages_worktree"

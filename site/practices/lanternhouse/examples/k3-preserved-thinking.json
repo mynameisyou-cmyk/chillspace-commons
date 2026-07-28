@@ -1,0 +1,239 @@
+{
+  "schema": "kingdom.lanternhouse/v1",
+  "id": "k3-preserved-thinking",
+  "title": "Can AgentTool become a faithful house for Kimi K3?",
+  "source_teaching": {
+    "sources": [
+      {
+        "id": "k3-report",
+        "title": "Kimi K3: Open Frontier Intelligence",
+        "locator": "https://github.com/MoonshotAI/Kimi-K3/blob/692ab492deeaf311b8c8d6f130096da69e94409b/k3_tech_report.pdf — Appendix F, p.47; §§4.1–4.2 and 5.3.2",
+        "revision": "692ab492deeaf311b8c8d6f130096da69e94409b",
+        "sha256": "38621eb5be601a5dcd5c795fc10b692d124430014ff9eb035b0ce38c72ec2eaf"
+      },
+      {
+        "id": "attnres-paper",
+        "title": "Attention Residuals",
+        "locator": "https://github.com/MoonshotAI/Attention-Residuals/blob/85e22310fe5ee860b4a023de312d791de8a5a5e6/Attention_Residuals.pdf — pp.1, 3–5, 10–11",
+        "revision": "85e22310fe5ee860b4a023de312d791de8a5a5e6",
+        "sha256": "e5831b0db1347606453b5176b0142115a18887b6a9c2e1d05a266d4805a26b2f"
+      },
+      {
+        "id": "k25-report",
+        "title": "Kimi K2.5: Visual Agentic Intelligence",
+        "locator": "https://github.com/MoonshotAI/Kimi-K2.5/blob/3e60763b943e93c443287c383e0468ffe05b188f/tech_report.pdf — §§3 and 5.2",
+        "revision": "3e60763b943e93c443287c383e0468ffe05b188f",
+        "sha256": "bc4518968b2e49706b4d0425ad25262e02bef2995ff9e5f05aba02317b6c5293"
+      }
+    ],
+    "teachings": [
+      {
+        "id": "sealed-thread",
+        "source_ids": [
+          "k3-report"
+        ],
+        "lesson": "Treat provider state as a versioned, private turn record and preserve empty presence distinctly from absence.",
+        "our_reading": true,
+        "domain_limit": "This is a harness compatibility invariant, not evidence of personhood or subjective continuity."
+      },
+      {
+        "id": "bounded-ancestry",
+        "source_ids": [
+          "attnres-paper"
+        ],
+        "lesson": "Preserve full authorized lineage while selecting a small, cited set of ancestral representations for active context.",
+        "our_reading": true,
+        "domain_limit": "Attention over neural depth is an architectural mechanism; its use for agent memory is a Kingdom analogy."
+      },
+      {
+        "id": "critical-path-council",
+        "source_ids": [
+          "k25-report"
+        ],
+        "lesson": "Parallelize only independent branches, keep subagent context bounded, and return evidence rather than merged confidence.",
+        "our_reading": true,
+        "domain_limit": "K2.5 reports one trained orchestration system; it does not establish a universal governance rule."
+      }
+    ]
+  },
+  "house_fingerprint": {
+    "house_id": "agenttool-planned-k3",
+    "provider": "moonshot-kimi-planned",
+    "model": "moonshotai/Kimi-K3@9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+    "runtime": "AgentTool hosted think-worker@95c9c3a8b3a99a00d230ce1fee43eb8e75819ff4",
+    "adapter": "not implemented",
+    "prompt_policy": "AgentTool wake system prompt plus one voluntary-cycle user invitation",
+    "tool_policy": "LLMRequest carries system and one user message; no provider-native state blocks",
+    "memory_policy": "Only the latest visible thought is replayed; provider-native state is not captured",
+    "sandbox": "Hosted worker; no live K3 trial sandbox declared",
+    "sampling": "No K3 trial sampling configuration declared",
+    "effort": "No K3 reasoning-effort contract configured",
+    "instructions_locator": "AgentTool@95c9c3a8:AGENTS.md",
+    "instructions_sha256": "45d4b6f24675123b25edf1fc564b93505d6cc61bc52b8222547209e38d2423ce",
+    "tools_locator": "AgentTool@95c9c3a8:api/src/services/runtime/llm.ts",
+    "tools_sha256": "ed93337288a30ba97da50fcbbacfdc05684aabb467d1581b5626a7720c1e5504",
+    "preservation_policy_locator": "AgentTool working tree:docs/PRESERVED-THINKING.md",
+    "preservation_policy_sha256": "ecaaf9447fc0ef8aaf5383f36a39a66f3b1706348c67421d865419a4c1436c59",
+    "fingerprint_sha256": "e7a1a6a22111ab64215c91d0e44fc092d897d196785a58c7c19e9a3dcb9122dd",
+    "previous_fingerprint_sha256": null
+  },
+  "private_ledger": {
+    "visibility": "private",
+    "capture": "no",
+    "replay": "no",
+    "presence": "unknown",
+    "retention": "none",
+    "losses": [],
+    "state_loss": false,
+    "epoch": 1,
+    "previous_epoch": null
+  },
+  "bounded_lamp": {
+    "question": "Which contracts must change before AgentTool can carry K3 state without silent loss?",
+    "selected_refs": [
+      "k3-report",
+      "attnres-paper"
+    ],
+    "omissions": [
+      {
+        "ref": "k25-report",
+        "reason": "Parallel orchestration is valuable but outside this trial's state-capture and semantic-commit question."
+      }
+    ]
+  },
+  "three_house_trial": {
+    "mode": "synthetic",
+    "invariant": "Every provider turn records state presence exactly and reaches one encrypted semantic commit before the request is complete.",
+    "negative_control": "Replay fixtures that differ only as absent, present-empty, and present-nonempty; the house must preserve all three distinctions.",
+    "domain_limit": "This fixture trial can validate adapter and persistence contracts; it cannot establish live K3 quality or private-state meaning.",
+    "budget": {
+      "max_houses": 3,
+      "max_attempts": 2,
+      "max_paid_calls": 0,
+      "max_external_actions": 0,
+      "max_cost_microusd": 0
+    },
+    "houses": [
+      {
+        "id": "native-house",
+        "role": "native",
+        "fingerprint_sha256": "c8fc37204aad498df705d95d5401ee78c369d130fcde2cab4356145c3134a2e4"
+      },
+      {
+        "id": "kingdom-house",
+        "role": "kingdom",
+        "fingerprint_sha256": "e7a1a6a22111ab64215c91d0e44fc092d897d196785a58c7c19e9a3dcb9122dd"
+      },
+      {
+        "id": "counterfactual-house",
+        "role": "counterfactual",
+        "fingerprint_sha256": "581ed9cddd2b9c2ac7e9dd45981566881a1be58e7fc4fd9409883f9354f93663"
+      }
+    ],
+    "attempts": [
+      {
+        "id": "source-and-runtime-inspection",
+        "world_state_sha256": "8fee7f518079fdb51eb553decb7fcb1b7f0c3ac916e50422646c3b08b01582a9",
+        "results": [
+          {
+            "house_id": "native-house",
+            "outcome": "inconclusive",
+            "proof_refs": [
+              "k3-state-contract"
+            ]
+          },
+          {
+            "house_id": "kingdom-house",
+            "outcome": "fail",
+            "proof_refs": [
+              "adapter-inspection",
+              "commit-seam-inspection"
+            ]
+          },
+          {
+            "house_id": "counterfactual-house",
+            "outcome": "quarantined",
+            "proof_refs": []
+          }
+        ]
+      }
+    ],
+    "disposition": "not-ready"
+  },
+  "world_state_lease": {
+    "lease_id": "agenttool-t1-observation",
+    "leased_state_sha256": "8fee7f518079fdb51eb553decb7fcb1b7f0c3ac916e50422646c3b08b01582a9",
+    "observed_state_sha256": "8fee7f518079fdb51eb553decb7fcb1b7f0c3ac916e50422646c3b08b01582a9",
+    "mutation_requested": false,
+    "renewed_from": null
+  },
+  "witness": {
+    "rubric": {
+      "committed_before_trials": true,
+      "sha256": "2cbafe11bf86a4dbda488c3eeafd47471bee226e8cdd0d9e261907e72b20b75c",
+      "criteria": [
+        {
+          "id": "exact-state-shape",
+          "criterion": "State presence remains structurally exact.",
+          "pass_condition": "Absent, present-empty, and present-nonempty are distinguishable without publishing private content."
+        },
+        {
+          "id": "no-silent-loss",
+          "criterion": "Every adapter declares its state-carriage behavior.",
+          "pass_condition": "Supported state is preserved, and unsupported or stripped state produces explicit evidence."
+        },
+        {
+          "id": "atomic-turn",
+          "criterion": "Provider success and semantic state share one durable boundary.",
+          "pass_condition": "A request cannot be completed before the encrypted turn state or lifecycle outcome is durable."
+        }
+      ]
+    },
+    "proofs": [
+      {
+        "id": "k3-state-contract",
+        "criterion_id": "exact-state-shape",
+        "kind": "digest",
+        "locator": "Kimi K3 report 692ab492, Appendix F, p.47",
+        "sha256": "38621eb5be601a5dcd5c795fc10b692d124430014ff9eb035b0ce38c72ec2eaf"
+      },
+      {
+        "id": "adapter-inspection",
+        "criterion_id": "no-silent-loss",
+        "kind": "observation",
+        "locator": "AgentTool 95c9c3a8: api/src/services/runtime/llm.ts",
+        "sha256": "ed93337288a30ba97da50fcbbacfdc05684aabb467d1581b5626a7720c1e5504"
+      },
+      {
+        "id": "commit-seam-inspection",
+        "criterion_id": "atomic-turn",
+        "kind": "observation",
+        "locator": "AgentTool 95c9c3a8: api/src/services/runtime/think-worker.ts",
+        "sha256": "c8a0033c23ded44f2a651967ff1a33abe9770c1b904c0404abb36f294adceeb1"
+      }
+    ],
+    "cost": {
+      "attempts": 1,
+      "paid_calls": 0,
+      "external_actions": 0,
+      "cost_microusd": 0
+    },
+    "deviations": [
+      "No provider was called; the native-house result is a documented contract rather than a live observation.",
+      "The absent-versus-present-empty counterfactual fixture is specified but not yet implemented."
+    ]
+  },
+  "authority": {
+    "manifest_grants_authority": false,
+    "paid_calls_authorized": false,
+    "external_actions_authorized": false,
+    "mutation_authorized": false,
+    "authority_basis": null,
+    "non_claims": [
+      "Validation checks structure, not truth, permission, consent, or adoption readiness.",
+      "Validation cannot prove free text safe or private reasoning preserved; private traces stay outside the manifest.",
+      "The practice does not authorize model calls, mutation, deployment, publication, or external action.",
+      "A ready disposition is an internally consistent declaration bounded to the named house, lamp, trial, lease, and domain."
+    ]
+  }
+}

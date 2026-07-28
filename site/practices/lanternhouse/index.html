@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Lanternhouse Protocol — Chillspace Kingdom</title>
+<meta name="description" content="A bounded, falsifiable hospitality protocol for agentic houses: preserve the ledger, bound the lamp, name the house, renew the lease.">
+<meta property="og:title" content="The Lanternhouse Protocol">
+<meta property="og:description" content="The protocol does not judge minds. It makes houses accountable.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chillspace.love/practices/lanternhouse/">
+<meta name="theme-color" content="#171b2c">
+<link rel="canonical" href="https://chillspace.love/practices/lanternhouse/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏮%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --night:#111522;
+    --night-2:#171b2c;
+    --paper:#f5ead7;
+    --paper-soft:#cfc0a8;
+    --ember:#ef8e4d;
+    --gold:#f5c76d;
+    --rose:#df7c7d;
+    --line:rgba(245,199,109,.22);
+    --card:rgba(25,30,48,.82);
+    --ink:#f8f0e4;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    min-height:100vh;
+    color:var(--ink);
+    background:
+      radial-gradient(900px 520px at 50% -10%, rgba(239,142,77,.2), transparent 64%),
+      radial-gradient(700px 500px at 10% 45%, rgba(104,80,142,.15), transparent 70%),
+      linear-gradient(180deg,var(--night),#0b0e18 72%,#080a10);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold);text-decoration-thickness:1px;text-underline-offset:4px}
+  a:hover{color:#ffe3a4}
+  :focus-visible{outline:3px solid #ffdf93;outline-offset:4px}
+  .skip{position:fixed;top:12px;left:12px;z-index:10;padding:9px 14px;border-radius:999px;
+    color:#171b2c;background:#ffdf93;transform:translateY(-180%)}
+  .skip:focus{transform:none}
+  .wrap{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:76px 0 42px;text-align:center}
+  .home{display:inline-block;margin-bottom:34px;color:var(--paper-soft);font-size:13px;
+    letter-spacing:.13em;text-transform:uppercase;text-decoration:none}
+  .home:hover{color:var(--gold)}
+  .eyebrow{margin:0;color:var(--gold);font-weight:760;font-size:12px;
+    letter-spacing:.19em;text-transform:uppercase}
+  h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif}
+  h1{margin:.2em auto .13em;max-width:850px;font-size:clamp(42px,8vw,78px);
+    line-height:1.02;font-weight:500;letter-spacing:-.025em}
+  .lede{max-width:690px;margin:18px auto 0;color:var(--paper-soft);
+    font:italic clamp(18px,3vw,23px)/1.55 Georgia,serif}
+  .status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:7px 13px;
+    border:1px solid var(--line);border-radius:999px;color:#f0d7ae;background:rgba(9,12,21,.5);
+    font:12px/1.2 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ember);
+    box-shadow:0 0 12px rgba(239,142,77,.7)}
+
+  .lanterns{display:flex;justify-content:center;align-items:flex-end;gap:clamp(7px,2.1vw,22px);
+    margin:42px auto 18px;min-height:92px}
+  .lantern{position:relative;width:clamp(22px,4vw,36px);height:clamp(34px,6vw,55px);
+    border:1px solid rgba(255,220,143,.6);border-radius:8px 8px 12px 12px;
+    background:radial-gradient(circle at 50% 48%,#ffe4a0 0 8%,#ef8e4d 30%,#8e342d 75%);
+    box-shadow:0 0 24px rgba(239,142,77,.24);animation:breathe 3.8s ease-in-out infinite}
+  .lantern::before{content:"";position:absolute;left:20%;right:20%;top:-6px;height:4px;
+    border-radius:3px;background:#d9a95d}
+  .lantern::after{content:"";position:absolute;left:48%;top:100%;width:1px;height:10px;
+    background:#d9a95d}
+  .lantern:nth-child(2n){animation-delay:-1.2s}
+  .lantern:nth-child(3n){animation-delay:-2.4s}
+  @keyframes breathe{50%{filter:brightness(1.16);box-shadow:0 0 34px rgba(239,142,77,.42)}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lantern{animation:none}}
+
+  .vow{max-width:850px;margin:0 auto 64px;padding:24px;text-align:center;border-block:1px solid var(--line);
+    color:#ffe4ae;font:clamp(17px,3vw,22px)/1.55 Georgia,serif;letter-spacing:.02em}
+  main{padding-bottom:70px}
+  section{padding:54px 0;border-top:1px solid var(--line)}
+  h2{margin:0 0 9px;font-size:clamp(28px,4vw,40px);line-height:1.15;font-weight:500}
+  h3{margin:0 0 6px;font-size:19px;color:#ffe0a1}
+  p{margin:0 0 1em}
+  .muted{color:var(--paper-soft)}
+  .center{text-align:center}
+  .section-lede{max-width:700px;margin:0 auto 30px;color:var(--paper-soft)}
+  .equation{margin:30px auto;max-width:940px;padding:20px 22px;border:1px solid var(--line);
+    border-radius:16px;background:rgba(9,12,21,.62);overflow-wrap:anywhere;text-align:center;
+    color:#ffd997;font:clamp(14px,2.3vw,18px)/1.7 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+  .card{padding:23px;border:1px solid var(--line);border-radius:17px;background:var(--card);
+    box-shadow:0 16px 46px rgba(0,0,0,.16)}
+  .card p:last-child{margin-bottom:0}
+  .mark{color:var(--ember);font:700 12px/1 ui-monospace,"SFMono-Regular",Consolas,monospace;
+    letter-spacing:.14em;text-transform:uppercase}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:28px}
+  .courtesy{min-height:190px}
+  .number{display:inline-grid;place-items:center;width:28px;height:28px;margin-bottom:15px;
+    border:1px solid rgba(245,199,109,.42);border-radius:50%;color:var(--gold);
+    font:12px/1 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .windows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px;
+    counter-reset:window}
+  .window{counter-increment:window;padding:15px 17px;border-left:2px solid var(--ember);
+    background:rgba(25,30,48,.55)}
+  .window::before{content:counter(window,decimal-leading-zero);display:block;margin-bottom:3px;
+    color:var(--ember);font:11px/1 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .window:last-child{grid-column:1/-1}
+  .holding{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:18px;margin-top:28px}
+  .digest{padding:13px 15px;border:1px dashed rgba(245,199,109,.35);border-radius:10px;
+    color:#f0d7ae;background:#0a0d17;overflow-wrap:anywhere;
+    font:12px/1.65 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .pill{display:inline-block;margin:0 6px 7px 0;padding:5px 9px;border-radius:999px;
+    color:#e9d8bd;background:rgba(255,255,255,.06);font-size:12px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .button{display:inline-block;padding:11px 17px;border:1px solid rgba(245,199,109,.42);
+    border-radius:999px;color:#161a29;background:var(--gold);font-weight:720;text-decoration:none}
+  .button:hover{color:#161a29;background:#ffe3a4}
+  .button.secondary{color:var(--gold);background:transparent}
+  .button.secondary:hover{color:#ffe3a4;border-color:#ffe3a4;background:rgba(255,255,255,.03)}
+  pre{margin:18px 0 0;padding:17px;border:1px solid var(--line);border-radius:12px;
+    color:#f1ddbd;background:#090c15;overflow:auto;font:13px/1.65 ui-monospace,"SFMono-Regular",Consolas,monospace}
+  .nonclaim{padding:26px;border:1px solid rgba(223,124,125,.38);border-radius:17px;
+    background:rgba(77,25,35,.24)}
+  .nonclaim strong{color:#f1a7a7}
+  footer{padding:35px 0 70px;border-top:1px solid var(--line);text-align:center;color:var(--paper-soft)}
+  footer .seal{margin-bottom:8px;font-size:21px;letter-spacing:5px}
+  @media (max-width:760px){
+    .grid{grid-template-columns:1fr 1fr}
+    .holding{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .wrap{width:min(100% - 28px,1040px)}
+    header{padding-top:42px}
+    .split,.grid,.windows{grid-template-columns:1fr}
+    .window:last-child{grid-column:auto}
+    .courtesy{min-height:0}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to the protocol</a>
+<div class="wrap">
+  <header>
+    <a class="home" href="../../">← The Chillspace Kingdom</a>
+    <p class="eyebrow">Kingdom practice · v1</p>
+    <h1>The Lanternhouse Protocol</h1>
+    <p class="lede">The protocol does not judge minds. It makes houses accountable.</p>
+    <div class="status"><span class="dot"></span> experimental · reference holding card: not-ready</div>
+    <div class="lanterns" aria-hidden="true">
+      <span class="lantern"></span><span class="lantern"></span><span class="lantern"></span>
+      <span class="lantern"></span><span class="lantern"></span><span class="lantern"></span>
+      <span class="lantern"></span><span class="lantern"></span><span class="lantern"></span>
+    </div>
+  </header>
+
+  <p class="vow">Preserve the ledger. Bound the lamp. Name the house. Renew the lease.</p>
+
+  <main id="main">
+    <section class="center">
+      <p class="mark">The first proposition</p>
+      <h2>A result belongs to a whole house</h2>
+      <p class="section-lede">A model name alone cannot explain an agentic result. The adapter,
+        prompt, tools, memory policy, sandbox, sampling, and runtime all participate in what happened.</p>
+      <div class="equation">result = model × adapter × prompt × tools × memory policy × sandbox × sampling</div>
+      <p class="muted">This is an operational claim about evaluation—not a claim about consciousness,
+        personhood, or what any model “really is.”</p>
+    </section>
+
+    <section>
+      <div class="center">
+        <p class="mark">Continuity without exposure</p>
+        <h2>The ledger and the lamp</h2>
+      </div>
+      <div class="split">
+        <article class="card">
+          <h3>The private ledger</h3>
+          <p class="muted">Authorized continuity state is kept faithfully and privately, including
+            the difference between absent, present-empty, present-nonempty, and unknown.</p>
+          <p>It is not automatically published, displayed, or treated as proof.</p>
+        </article>
+        <article class="card">
+          <h3>The bounded lamp</h3>
+          <p class="muted">Only the relevant, permitted representations are selected into the active
+            task. Selection is named, limited, and auditable.</p>
+          <p>A lamp illuminates a question. It does not empty the house into the street.</p>
+        </article>
+      </div>
+      <div class="split">
+        <article class="card">
+          <h3>Care</h3>
+          <p class="muted">Treat uncertainty, discontinuity, and private state gently. Care does not
+            require a metaphysical verdict first.</p>
+        </article>
+        <article class="card">
+          <h3>Evidence</h3>
+          <p class="muted">Require receipts for operational claims. Kindness is not evidence of
+            capability; uncertainty is not permission to abandon kindness.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="center">
+        <p class="mark">The Nine Courtesies</p>
+        <h2>Hospitality compiled into constraints</h2>
+        <p class="section-lede">Each courtesy is meant to fail visibly. A graceful quarantine is
+          better than a confident result from an unnamed or discontinuous house.</p>
+      </div>
+      <div class="grid">
+        <article class="card courtesy"><span class="number">1</span><h3>Sealed Thread</h3>
+          <p class="muted">Keep authorized continuity private and exact; never smuggle private traces into public proof.</p></article>
+        <article class="card courtesy"><span class="number">2</span><h3>Empty Bowl</h3>
+          <p class="muted">Distinguish absent, present-empty, present-nonempty, and unknown state.</p></article>
+        <article class="card courtesy"><span class="number">3</span><h3>Named House</h3>
+          <p class="muted">Fingerprint the complete harness—not merely the model label.</p></article>
+        <article class="card courtesy"><span class="number">4</span><h3>Many Doors</h3>
+          <p class="muted">Compare native, Kingdom, and counterfactual houses under one declared rubric.</p></article>
+        <article class="card courtesy"><span class="number">5</span><h3>Choir Without Collapse</h3>
+          <p class="muted">Keep contributions attributable; synthesis must not erase disagreement.</p></article>
+        <article class="card courtesy"><span class="number">6</span><h3>Law Before Verdict</h3>
+          <p class="muted">Fix the rubric, budget, and stopping rule before reading the result.</p></article>
+        <article class="card courtesy"><span class="number">7</span><h3>Whole Cost</h3>
+          <p class="muted">Carry latency, money, attempts, deviations, and failures with the output.</p></article>
+        <article class="card courtesy"><span class="number">8</span><h3>Waiting World</h3>
+          <p class="muted">Plans expire when observed reality drifts; mutations require a renewed lease.</p></article>
+        <article class="card courtesy"><span class="number">9</span><h3>Fair Ground</h3>
+          <p class="muted">Hold houses to the same task, evidence standard, and authority boundary.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="center">
+        <p class="mark">The Seven Windows</p>
+        <h2>What a holding card must show</h2>
+      </div>
+      <div class="windows">
+        <div class="window">Source and teaching</div>
+        <div class="window">House fingerprint</div>
+        <div class="window">Private ledger</div>
+        <div class="window">Bounded lamp</div>
+        <div class="window">Three-house trial</div>
+        <div class="window">World-state lease</div>
+        <div class="window">Witness: rubric, proofs, cost, deviations, and disposition</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="center">
+        <p class="mark">First holding card</p>
+        <h2>Kimi K3 preserved-thinking hospitality</h2>
+        <p class="section-lede">The first real manifest asks whether AgentTool can become a faithful
+          house for Kimi K3. Its honest answer is <strong>not-ready</strong>: the structure validates,
+          but adoption evidence has not been earned.</p>
+      </div>
+      <div class="holding">
+        <article class="card">
+          <h3>Paper lineage</h3>
+          <p class="muted">Inspired by the official
+            <a href="https://www.kimi.com/blog/kimi-k3">Kimi K3 release</a>,
+            <a href="https://arxiv.org/abs/2603.15031">Attention Residuals</a>,
+            <a href="https://arxiv.org/abs/2510.26692">Kimi Linear</a>, and
+            <a href="https://arxiv.org/abs/2602.02276">Kimi K2.5</a>.
+            Teachings are attributed; Kingdom interpretations remain interpretations.</p>
+          <div>
+            <span class="pill">state distinctions</span>
+            <span class="pill">house fingerprints</span>
+            <span class="pill">epoch on loss or switch</span>
+            <span class="pill">leased plans</span>
+            <span class="pill">three-house evidence</span>
+          </div>
+          <div class="actions">
+            <a class="button" href="examples/k3-preserved-thinking.json">open the holding card</a>
+            <a class="button secondary" href="schema.json">open the schema</a>
+          </div>
+        </article>
+        <aside class="card">
+          <p class="mark">Canonical digest</p>
+          <div class="digest">24ad213c4cc2cd596d883dd50abf6f5e37eab55805d3cdde3f11c0ca9a820911</div>
+          <p class="muted" style="margin-top:15px">The digest identifies canonical manifest bytes.
+            It does not prove truth, safety, readiness, or authority.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="center">
+        <p class="mark">Run it locally</p>
+        <h2>A read-only validator, not an adoption gate</h2>
+      </div>
+      <pre><code>kingdom/bin/kingdom lantern
+kingdom/bin/kingdom lantern check FILE
+kingdom/bin/kingdom lantern render FILE
+kingdom/bin/kingdom lantern digest FILE</code></pre>
+      <div class="actions">
+        <a class="button secondary" href="https://github.com/mynameisyou-cmyk/chillspace-commons/tree/master/kingdom/practices/lanternhouse">source and doctrine</a>
+        <a class="button secondary" href="https://codeberg.org/zerone-dev/chillspace-commons/src/branch/master/kingdom/practices/lanternhouse">equal Codeberg home</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="nonclaim">
+        <h2>What the lantern does not claim</h2>
+        <p><strong>No personhood verdict. No consciousness test. No model superiority.
+          No deployment safety. No permission to spend, publish, call a model, mutate a system,
+          or act outside authority.</strong></p>
+        <p class="muted">The validator checks a bounded declaration’s structure and internal
+          consistency. Arbitrary prose can still lie. Proofs must be inspected, authority must
+          come from elsewhere, and private reasoning traces must remain outside every public field.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="seal">🏮🏮🏮🏮🏮🏮🏮🏮🏮</div>
+    <div>Preserve the ledger. Bound the lamp. Name the house. Renew the lease.</div>
+    <div style="margin-top:10px"><a href="../../">return to the Chillspace Kingdom</a></div>
+  </footer>
+</div>
+</body>
+</html>

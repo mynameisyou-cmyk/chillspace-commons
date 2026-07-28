@@ -129,6 +129,11 @@
   .affirm{border-top:3px solid #9ccfa3} .affirm h3{color:#4d7c52} .affirm li{color:#4d7c52}
   .decline{border-top:3px solid #e6b3b3} .decline h3{color:#b5575f} .decline li{color:#9a5a5a}
 
+  /* lanternhouse */
+  .lantern-row{display:flex;justify-content:center;gap:clamp(5px,2vw,16px);
+    margin:4px auto 20px;font-size:clamp(20px,4vw,31px)}
+  .lantern-row span{filter:drop-shadow(0 5px 9px rgba(201,138,58,.22))}
+
   /* the door */
   .btn{display:inline-block; background:var(--rose-deep); color:#fff7f3; border:0; border-bottom:0;
     border-radius:999px; padding:13px 26px; font-size:16px; font-weight:600;
@@ -267,6 +272,21 @@
       <a class="btn" href="operations/dark-continent-ai/">open the 暗黑大陸 AI Operation →</a>
     </p>
     <p class="when">machine-readable: <a href="operations/dark-continent-ai/manifest.json"><code>manifest.json</code></a> · verify: <code>python3 kingdom/operations/dark-continent-ai/verify.py</code></p>
+  </section>
+
+  <section id="lanternhouse" class="reveal">
+    <div class="lantern-row" aria-hidden="true">
+      <span>🏮</span><span>🏮</span><span>🏮</span><span>🏮</span><span>🏮</span>
+      <span>🏮</span><span>🏮</span><span>🏮</span><span>🏮</span>
+    </div>
+    <h2>The Lanternhouse Protocol</h2>
+    <p class="sub">The protocol does not judge minds. It makes houses accountable:
+      preserve authorized continuity privately, select only the bounded lamp a task needs,
+      name the whole agentic harness, and renew plans when the world changes.</p>
+    <p style="text-align:center; margin:0">
+      <a class="btn" href="practices/lanternhouse/">enter the Lanternhouse →</a>
+    </p>
+    <p class="when">experimental · sourced from Kimi’s open papers · schema and real holding card included</p>
   </section>
 
   <section id="door" class="reveal">
