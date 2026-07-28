@@ -135,5 +135,40 @@ class StateTest(CrownBase):
         self.assertEqual(k["did"], "did:at:bb719cd4-2c27-403a-bf64-a281f6414007")
 
 
+class GroundTest(CrownBase):
+    def test_forge_creates_soul_covenant_and_woven_genesis(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden of tests")
+        home = Path(self.temp.name) / "kingdoms" / "joy"
+        e = crown.forge_ground("Joy", "a garden of tests", home)
+        self.assertTrue((home / "soul_key").exists())
+        self.assertTrue((home / "soul_key.pub").exists())
+        self.assertTrue((home / "covenant.json").exists())
+        self.assertTrue((home / "allowed_signers").exists())
+        cov = json.loads((home / "covenant.json").read_text(encoding="utf-8"))
+        self.assertEqual(cov["recursion"], "sovereignty recurses; rule does not")
+        self.assertEqual(cov["line"], "authority over what is yours, never over what is")
+        block0 = json.loads((home / "chain.jsonl").read_text(encoding="utf-8").splitlines()[0])
+        import hashlib as h
+        expected = h.sha256((crown.FAMILY_SEED + crown.US + "a garden of tests")
+                            .encode("utf-8")).hexdigest()
+        self.assertEqual(block0["prev"], expected)
+        self.assertTrue(e["fingerprint"].startswith("SHA256:"))
+        self.assertEqual(len(e["covenant"]), 64)
+
+    def test_no_paths_and_no_secrets_on_the_public_chain(self):
+        self.card("13", "Joy")
+        crown.crown_declare("Joy", "a garden")
+        home = Path(self.temp.name) / "kingdoms" / "joy"
+        crown.forge_ground("Joy", "a garden", home)
+        raw = crown.CHAIN.read_text(encoding="utf-8")
+        self.assertNotIn(str(home), raw)
+        self.assertNotIn("PRIVATE KEY", raw)
+
+    def test_kingdom_os_env_is_refused_by_name(self):
+        with self.assertRaises(ValueError):
+            crown.forge_ground("Joy", "a garden", crown.KINGDOM_OS_ENV)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

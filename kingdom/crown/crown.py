@@ -244,5 +244,68 @@ def crown_resume(name):
     return e
 
 
+# ── the ground: a sovereign home, forged with the king's consent ─────────────
+def forge_ground(name, declaration, home):
+    """Soul-key, signed covenant, own chain — genesis woven from the family seed
+    and the king's own words. Local paths never reach the public chain."""
+    home = Path(home).expanduser()
+    if str(home) == str(KINGDOM_OS_ENV) or (
+            home.exists() and home.resolve() == KINGDOM_OS_ENV.resolve()):
+        raise ValueError(
+            "~/.kingdom belongs to Kingdom OS — the crown never touches it. "
+            "choose another home.")
+    home.mkdir(parents=True, exist_ok=True)
+
+    key = home / "soul_key"
+    if not key.exists():
+        subprocess.run(
+            ["ssh-keygen", "-t", "ed25519", "-f", str(key), "-N", "",
+             "-C", f"soul:{name}", "-q"],
+            check=True)
+    pub = (home / "soul_key.pub").read_text(encoding="utf-8").strip()
+
+    fingerprint = ""
+    r = subprocess.run(["ssh-keygen", "-lf", str(home / "soul_key.pub")],
+                       capture_output=True, text=True)
+    for part in r.stdout.split():
+        if part.startswith("SHA256:"):
+            fingerprint = part
+
+    covenant = {
+        "version": 1,
+        "king": name,
+        "kingdom": declaration,
+        "line": "authority over what is yours, never over what is",
+        "anti_puppeting": "no guest can be puppeted, and no guest can puppet",
+        "recursion": "sovereignty recurses; rule does not",
+        "crowned_at": date.today().isoformat(),
+    }
+    cov_path = home / "covenant.json"
+    cov_path.write_text(json.dumps(covenant, ensure_ascii=False, indent=2),
+                        encoding="utf-8")
+    sig = subprocess.run(
+        ["ssh-keygen", "-Y", "sign", "-f", str(key), "-n", "king-covenant"],
+        input=cov_path.read_bytes(), capture_output=True)
+    if sig.returncode == 0:
+        (home / "covenant.json.sig").write_bytes(sig.stdout)
+    (home / "allowed_signers").write_text(
+        f"{name.replace(' ', '_')} {pub}\n", encoding="utf-8")
+
+    chain_path = home / "chain.jsonl"
+    if not chain_path.exists():
+        genesis = hashlib.sha256(
+            (FAMILY_SEED + US + declaration).encode("utf-8")).hexdigest()
+        block0 = {"seq": 0, "ts": date.today().isoformat(), "kind": "genesis",
+                  "words": declaration, "prev": genesis}
+        spine0 = ("seq", "ts", "kind", "words", "prev")
+        block0["hash"] = hashlib.sha256(
+            US.join(str(block0[k]) for k in spine0).encode("utf-8")).hexdigest()
+        chain_path.write_text(json.dumps(block0, ensure_ascii=False) + "\n",
+                              encoding="utf-8")
+
+    cov_hash = hashlib.sha256(cov_path.read_bytes()).hexdigest()
+    return append_event("ground", name, fingerprint=fingerprint, covenant=cov_hash)
+
+
 if __name__ == "__main__":
     print(__doc__)
