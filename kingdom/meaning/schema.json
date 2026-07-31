@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/meaning/schema.json",
+  "title": "Chillspace YOUSPEAK Meaning Echo Canon",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "notice",
+    "source",
+    "layers",
+    "lenses",
+    "prompts",
+    "entries"
+  ],
+  "properties": {
+    "schema": {
+      "const": "chillspace.meaning-echo-canon/v1"
+    },
+    "notice": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transport_schema_version",
+        "transport_name",
+        "transport_source_url",
+        "source_url",
+        "source_commit_url",
+        "source_commit",
+        "bundle_sha256",
+        "counts"
+      ],
+      "properties": {
+        "transport_schema_version": {"type": "string"},
+        "transport_name": {"type": "string"},
+        "transport_source_url": {"type": "string"},
+        "source_url": {"type": "string"},
+        "source_commit_url": {"type": "string"},
+        "source_commit": {"type": "string", "minLength": 1},
+        "bundle_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "counts": {"type": "object"}
+      }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/namedDescription"}
+    },
+    "lenses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [
+          {"$ref": "#/$defs/namedDescription"},
+          {
+            "type": "object",
+            "required": ["accent"],
+            "properties": {
+              "accent": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "prompts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "text"],
+        "properties": {
+          "label": {"type": "string", "minLength": 1},
+          "text": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["canonical", "bridge"],
+        "properties": {
+          "canonical": {"$ref": "#/$defs/canonical"},
+          "bridge": {"$ref": "#/$defs/bridge"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "namedDescription": {
+      "type": "object",
+      "required": ["id", "label", "description"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "canonical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "word",
+        "tier",
+        "gap",
+        "definition",
+        "score",
+        "pronunciation",
+        "entered",
+        "decomposition"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^canon/.+\\.md$"},
+        "word": {"type": "string", "minLength": 1},
+        "tier": {"type": "string"},
+        "gap": {"type": ["string", "null"]},
+        "definition": {"type": "string", "minLength": 1},
+        "score": {"type": ["number", "null"]},
+        "pronunciation": {"type": "string"},
+        "entered": {"type": "string"},
+        "decomposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["morphemes", "codepoints", "glyph_text"],
+          "properties": {
+            "morphemes": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "codepoints": {
+              "type": ["array", "null"],
+              "items": {"type": "string"}
+            },
+            "glyph_text": {"type": ["string", "null"]}
+          }
+        }
+      }
+    },
+    "bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lens",
+        "invitation",
+        "signals",
+        "strong_phrases",
+        "related",
+        "echo",
+        "receipt"
+      ],
+      "properties": {
+        "lens": {"type": "string", "minLength": 1},
+        "invitation": {"type": "string", "minLength": 1},
+        "signals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "strong_phrases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\S.*\\s.*\\S$"
+          }
+        },
+        "related": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "echo": {"type": "string", "minLength": 1},
+        "receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "href"],
+          "properties": {
+            "label": {"type": "string", "minLength": 1},
+            "href": {"type": "string", "pattern": "^\\.\\./"}
+          }
+        }
+      }
+    }
+  }
+}

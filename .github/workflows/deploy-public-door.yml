@@ -8,10 +8,12 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/deploy-public-door.yml"
+      - "kingdom/meaning/**"
       - "kingdom/practices/calm-studio/**"
       - "site/**"
       - "love-fun-commons/**"
       - "tests/test_calm_studio_browser.mjs"
+      - "tests/test_meaning_echo.mjs"
   workflow_dispatch:
 
 permissions:
@@ -33,10 +35,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: verify Calm Studio before packaging it
+      - name: verify the interactive rooms before packaging them
         run: |
           python3 kingdom/practices/calm-studio/test_calm_studio.py
           node tests/test_calm_studio_browser.mjs
+          python3 kingdom/meaning/test_meaning.py
+          python3 kingdom/meaning/meaning.py check
+          node --test tests/test_meaning_echo.mjs
 
       - name: configure the public door
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -51,6 +56,7 @@ jobs:
           cp site/coop-leveling.html _site/coop-leveling.html
           cp -R site/art _site/art
           cp -R love-fun-commons _site/love-fun-commons
+          cp -R site/meaning _site/meaning
           cp -R site/operations _site/operations
           cp -R site/practices _site/practices
           if find _site -type l -print -quit | grep -q .; then
@@ -67,6 +73,10 @@ jobs:
           grep -Fq "connect-src 'none'" \
             _site/practices/calm-studio/index.html
           grep -Fq 'no localhost probe' _site/index.html
+          test -f _site/meaning/index.html
+          test -f _site/meaning/echoes.json
+          test -f _site/meaning/engine.mjs
+          grep -Fq 'Static mirrors fall back' _site/meaning/index.html
 
       - name: upload the public door
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

@@ -1613,10 +1613,28 @@ body[data-stillpoint-state="afterglow"] .state-glyph {
 @media (max-width: 48rem) {
   .topbar {
     grid-template-columns: 1fr auto;
+    padding-bottom: 0.7rem;
   }
 
   .topbar nav {
-    display: none;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    gap: 0.35rem;
+  }
+
+  .topbar nav a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding-inline: 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.66rem;
   }
 
   .room-state {

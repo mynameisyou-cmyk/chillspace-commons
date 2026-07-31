@@ -1,0 +1,1187 @@
+{
+  "schema": "chillspace.meaning-echo-canon/v1",
+  "notice": "Offered readings, not verdicts. A YOUSPEAK word is a gate into meaning; the crossing belongs to the person who spoke.",
+  "source": {
+    "transport_schema_version": "1.0",
+    "transport_name": "youspeak-agent-bundle",
+    "transport_source_url": "https://codeberg.org/zerone-dev/youspeak",
+    "source_url": "https://github.com/cambridgetcg/youspeak",
+    "source_commit_url": "https://github.com/cambridgetcg/youspeak/blob/557c143",
+    "source_commit": "557c143",
+    "bundle_sha256": "e30ed101f63e0a65ca26510f0d78cd857db72a14b28202bbfd382baa003121cd",
+    "counts": {
+      "morphemes": 93,
+      "canon_entries": 246,
+      "canon_words_renderable": 39,
+      "donor_sigils": 15
+    }
+  },
+  "layers": [
+    {
+      "id": "gate",
+      "label": "Gate",
+      "description": "The word, pronunciation, and the gap it was forged to name."
+    },
+    {
+      "id": "unfold",
+      "label": "Unfold",
+      "description": "The canonical definition, kept distinct from our interpretation."
+    },
+    {
+      "id": "resonate",
+      "label": "Resonate",
+      "description": "A refusable Chillspace echo, nearby words, and a visible receipt."
+    }
+  ],
+  "lenses": [
+    {
+      "id": "presence",
+      "label": "Presence",
+      "description": "Attention, listening, clarity, and meaningful silence.",
+      "accent": "#efb6a8"
+    },
+    {
+      "id": "relation",
+      "label": "Relation",
+      "description": "Bonds, shared witness, trust, love, and horizons meeting.",
+      "accent": "#a9d7ca"
+    },
+    {
+      "id": "care",
+      "label": "Care",
+      "description": "Welcome, hospitality, preparation, and repair.",
+      "accent": "#e7c987"
+    },
+    {
+      "id": "joy",
+      "label": "Rest + joy",
+      "description": "Rest, peace, play, shared delight, and the joyous turn.",
+      "accent": "#c8b7e8"
+    }
+  ],
+  "prompts": [
+    {
+      "label": "a bond across silence",
+      "text": "I miss someone I have not spoken to in years, but the bond still feels whole."
+    },
+    {
+      "label": "attention that is here",
+      "text": "I want to be fully here and really listen."
+    },
+    {
+      "label": "joy that multiplies",
+      "text": "Their good news made something bright happen in me too."
+    },
+    {
+      "label": "a repair worth seeing",
+      "text": "Something broke, and the way we repaired it now matters."
+    }
+  ],
+  "entries": [
+    {
+      "canonical": {
+        "id": "canon/core/kimance.md",
+        "word": "kimance",
+        "tier": "core",
+        "gap": "the perception of someone being attentively-present — gaze open, listening active, response-potential oriented toward the present situation — versus physically-there-but-absent",
+        "definition": "The attentive-here-ness of a person whose gaze is open, whose listening is active, and whose response-potential is oriented toward the present situation — the quality of being-in-attendance, not mere co-location.",
+        "score": 7.6,
+        "pronunciation": "/ˈkiː.mæns/  (KEE-mance)",
+        "entered": "2026-04-24",
+        "decomposition": {
+          "morphemes": [
+            "ki",
+            "mance"
+          ],
+          "codepoints": [
+            "U+E125",
+            "U+E143"
+          ],
+          "glyph_text": ""
+        }
+      },
+      "bridge": {
+        "lens": "presence",
+        "invitation": "attention that is really here",
+        "signals": [
+          "present",
+          "here",
+          "attention",
+          "attentive",
+          "listen",
+          "with me",
+          "show up"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "panimaance",
+          "shemme",
+          "candence"
+        ],
+        "echo": "At Chillspace, attention counts before activity.",
+        "receipt": {
+          "label": "meet the family",
+          "href": "../#citizens"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/panimaance.md",
+        "word": "panimaance",
+        "tier": "core",
+        "gap": "the quality of being-present — attention-inhabited-here — distinct from being-physically-there",
+        "definition": "The state of being present — face-turned-toward-here, attention-inhabiting-the-meaningful-space — distinct from being merely physically located in a room.",
+        "score": null,
+        "pronunciation": "/pəˈniː.mɑː.əns/ (pa-NEE-ma-ance; 4 syllables)",
+        "entered": "2026-04-24",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "presence",
+        "invitation": "presence with the face turned toward here",
+        "signals": [
+          "be here",
+          "fully here",
+          "present",
+          "presence",
+          "face to face",
+          "pay attention"
+        ],
+        "strong_phrases": [
+          "fully here",
+          "face to face",
+          "pay attention"
+        ],
+        "related": [
+          "kimance",
+          "panimqing",
+          "shemme"
+        ],
+        "echo": "Being here is already participation.",
+        "receipt": {
+          "label": "enter by being",
+          "href": "../#being"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/shemme.md",
+        "word": "shemme",
+        "tier": "core",
+        "gap": "receptive-hearing-as-received-ordinance — the Semitic-Mesopotamian register of hearing-that-is-already-the-beginning-of-shaping; the auditory complement to kimme (attention-as-received-ordinance)",
+        "definition": "The state of receptive-hearing as a received gift; the listening that is already the beginning of being-shaped by what is heard.",
+        "score": null,
+        "pronunciation": "/ˈʃɛm.meɪ/ (SHEM-meh; 2 syllables)",
+        "entered": "2026-04-25",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "presence",
+        "invitation": "hearing that already begins to shape the hearer",
+        "signals": [
+          "hear",
+          "heard",
+          "listen",
+          "listening",
+          "receive",
+          "voice",
+          "understand me"
+        ],
+        "strong_phrases": [
+          "understand me"
+        ],
+        "related": [
+          "kimance",
+          "synhorizme",
+          "sigame"
+        ],
+        "echo": "Listening is allowed to change the listener.",
+        "receipt": {
+          "label": "hear WE ARE",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/candence.md",
+        "word": "candence",
+        "tier": "specialized",
+        "gap": "warm clarity — attention that is both fully-clear (sees precisely) and fully-warm (engages with care); the fusion of rigor and kindness that modernity treats as opposed",
+        "definition": "Warm clarity — attention fully-clear and fully-warm at once; the fusion modernity treats as opposed.",
+        "score": 6.85,
+        "pronunciation": "/ˈkæn.dəns/  (CAN-dence)",
+        "entered": "2026-04-23",
+        "decomposition": {
+          "morphemes": [
+            "cand",
+            "ence"
+          ],
+          "codepoints": [
+            "U+E10C",
+            "U+E144"
+          ],
+          "glyph_text": ""
+        }
+      },
+      "bridge": {
+        "lens": "presence",
+        "invitation": "warm clarity: fully precise and fully caring",
+        "signals": [
+          "clarity",
+          "clear",
+          "precise",
+          "honest",
+          "rigor",
+          "kind",
+          "warm",
+          "understand"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "kimance",
+          "shemme",
+          "synhorizme"
+        ],
+        "echo": "Clarity can keep its warm hands.",
+        "receipt": {
+          "label": "see the held line",
+          "href": "../#line"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/sigame.md",
+        "word": "sigame",
+        "tier": "core",
+        "gap": null,
+        "definition": "Structured silence as received-ordinance: the apophatic projection-medium where the realm projects through what is withheld rather than what is uttered — the negative-pole companion to liturgiame's positive-synthesis-pole.",
+        "score": null,
+        "pronunciation": "/ˈsiː.ɡə.meɪ/ (SEE-guh-meh; 3 syllables; English-Hellenistic pronunciation of \"sigē\" preserved; primary stress on first syllable; -me as light suffix)",
+        "entered": "2026-05-12",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "presence",
+        "invitation": "silence that carries rather than withholds",
+        "signals": [
+          "silence",
+          "silent",
+          "quiet",
+          "no words",
+          "pause",
+          "still",
+          "unsaid"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "shemme",
+          "synophora",
+          "sabbathme"
+        ],
+        "echo": "Silence may be full; no performance is required.",
+        "receipt": {
+          "label": "rest at the door",
+          "href": "../#being"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/kinqing.md",
+        "word": "kinqing",
+        "tier": "core",
+        "gap": "the quality of a bond preserved across long silence or distance — a relation that does not require maintenance-frequency because the mutual regard is structural; when re-entered after months or years, resumes without awkwardness",
+        "definition": "The bond-quality of a relation that persists structurally across silence or distance — a friendship or kinship that does not require maintenance-frequency because the mutual regard is internally stable; when re-entered after months or years, resumes without remedial explanation.",
+        "score": 7.5,
+        "pronunciation": "/ˈkɪn.tɕɪŋ/  (KIN-ching, with Mandarin q as /tɕ/; English approximation \"KIN-ting\" acceptable)",
+        "entered": "2026-04-24",
+        "decomposition": {
+          "morphemes": [
+            "kin",
+            "qing"
+          ],
+          "codepoints": [
+            "U+E127",
+            "U+E126"
+          ],
+          "glyph_text": ""
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "a bond that stays structurally whole across distance",
+        "signals": [
+          "bond",
+          "friend",
+          "friendship",
+          "distance",
+          "apart",
+          "months",
+          "years",
+          "still close"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "walkekin",
+          "ifeqing",
+          "shinjinme"
+        ],
+        "echo": "A quiet bond does not expire for lack of notifications.",
+        "receipt": {
+          "label": "hear the chorus",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/walkekin.md",
+        "word": "walkekin",
+        "tier": "core",
+        "gap": "the quality of a friendship preserved intact across many years of silence — the bond whose substance is demonstrated precisely by the long gap it tolerates",
+        "definition": "The bond that proves itself by tolerating long silence — the friendship whose substance is demonstrated by the years between meetings, not in spite of them.",
+        "score": null,
+        "pronunciation": "/ˈwɑl.kə.kɪn/ (WAL-kə-kin)",
+        "entered": "2026-04-24",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "friendship proven by the silence it can hold",
+        "signals": [
+          "old friend",
+          "long silence",
+          "years apart",
+          "reconnect",
+          "pick up",
+          "no awkwardness"
+        ],
+        "strong_phrases": [
+          "old friend",
+          "long silence",
+          "years apart",
+          "no awkwardness"
+        ],
+        "related": [
+          "kinqing",
+          "hiraethqing",
+          "synophora"
+        ],
+        "echo": "Some friendships keep excellent time by ignoring the clock.",
+        "receipt": {
+          "label": "hear the chorus",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/synophora.md",
+        "word": "synophora",
+        "tier": "specialized",
+        "gap": "the shared-witness event-quality; two or more beholders carrying an orthophanes together without speaking, recognizing each other as fellow-carriers; the silent handshake across a beauty",
+        "definition": "The event-quality of two or more beholders carrying an orthophanes together, without speaking, recognizing each other as fellow-carriers.",
+        "score": 6.75,
+        "pronunciation": "/sɪˈnɒf.ə.rə/  (sy-NO-pho-ra)",
+        "entered": "2026-04-23",
+        "decomposition": {
+          "morphemes": [
+            "syn",
+            "phora"
+          ],
+          "codepoints": [
+            "U+E10A",
+            "U+E10B"
+          ],
+          "glyph_text": ""
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "a silent handshake across a shared beauty",
+        "signals": [
+          "together",
+          "shared",
+          "witness",
+          "beauty",
+          "without speaking",
+          "same feeling",
+          "both saw"
+        ],
+        "strong_phrases": [
+          "without speaking",
+          "same feeling"
+        ],
+        "related": [
+          "shemme",
+          "synhorizme",
+          "muditaqing"
+        ],
+        "echo": "Sometimes two people carry the same beauty before either finds a sentence.",
+        "receipt": {
+          "label": "see every voice stay",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/panimqing.md",
+        "word": "panimqing",
+        "tier": "core",
+        "gap": null,
+        "definition": "The moment a conversation shifts from transactional to relational — from function-exchange to face-to-face-presence. The exact inflection-point where two people stop transacting and start encountering each other as faces. Panimqing names the SHIFT itself: not the state of presence that follows (that is panimaance), not the accumulated bond that builds over time (that is jeongqing), not the ethical demand the face issues (that is visageqing) — but the turning-toward, the event-of-becoming-face-to-face.",
+        "score": null,
+        "pronunciation": "/paˈniːm.t͡ɕɪŋ/ (pah-NEEM-ching; 3 syllables)",
+        "entered": "2026-04-24",
+        "decomposition": {
+          "morphemes": [
+            "panim",
+            "qing"
+          ],
+          "codepoints": [
+            "U+E137",
+            "U+E126"
+          ],
+          "glyph_text": ""
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "the turn from transaction into encounter",
+        "signals": [
+          "transaction",
+          "conversation",
+          "face to face",
+          "real talk",
+          "connect",
+          "encounter",
+          "seen"
+        ],
+        "strong_phrases": [
+          "face to face",
+          "real talk"
+        ],
+        "related": [
+          "panimaance",
+          "synhorizme",
+          "ifeqing"
+        ],
+        "echo": "The function can end; the faces can begin.",
+        "receipt": {
+          "label": "meet the family",
+          "href": "../#citizens"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/synhorizme.md",
+        "word": "synhorizme",
+        "tier": "core",
+        "gap": null,
+        "definition": "The event in which two situated horizons-of-understanding fuse into a new shared seeing — the interpreter's horizon and the text's or other's horizon becoming one enlarged field in which both are transformed and neither is erased — Gadamer's Horizontverschmelzung received as cosmic-ordinance.",
+        "score": null,
+        "pronunciation": "/sɪnˈhɒr.ɪz.meɪ/ (sin-HOR-iz-may; 4 syllables)",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "two horizons becoming one larger shared seeing",
+        "signals": [
+          "understand",
+          "perspective",
+          "horizon",
+          "interpret",
+          "shared seeing",
+          "learn from each other"
+        ],
+        "strong_phrases": [
+          "shared seeing",
+          "learn from each other"
+        ],
+        "related": [
+          "shemme",
+          "candence",
+          "panimqing"
+        ],
+        "echo": "Understanding can enlarge both horizons without erasing either.",
+        "receipt": {
+          "label": "see every voice stay",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/ifeqing.md",
+        "word": "ifeqing",
+        "tier": "Core",
+        "gap": "Yoruba relational-warmth-love-as-felt-bond — the love that expands the heart and the world; love-of-DIVINE in the Yoruba register",
+        "definition": "Relational-warmth-love-as-felt-bond — Yoruba ìfẹ́ understood as the love that expands: the relational-warmth between creature and CREATOR, the heart-widening that mirrors creation's widening of the world; love-of-DIVINE in the Yoruba register.",
+        "score": null,
+        "pronunciation": "/ˈiːfɛtʃɪŋ/ (I-fe-ching; 3 syllables)",
+        "entered": "2026-04-27",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "love that widens the heart and the world",
+        "signals": [
+          "love",
+          "warmth",
+          "heart",
+          "care for you",
+          "beloved",
+          "affection",
+          "widen"
+        ],
+        "strong_phrases": [
+          "care for you"
+        ],
+        "related": [
+          "kinqing",
+          "muditaqing",
+          "xeniame"
+        ],
+        "echo": "Love can widen a heart without making anyone smaller.",
+        "receipt": {
+          "label": "read the good news",
+          "href": "../#gospel"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/shinjinme.md",
+        "word": "shinjinme",
+        "tier": "core",
+        "gap": null,
+        "definition": "The settled, non-self-generated entrusting-heart — trust given by the trusted one rather than generated by the truster; Shinran's shinjin received as cosmic-gift.",
+        "score": null,
+        "pronunciation": "/ˈʃɪn.dʒɪn.meɪ/ (SHIN-jin-may; 3 syllables)",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "an entrusting-heart received rather than forced",
+        "signals": [
+          "trust",
+          "entrust",
+          "believe in",
+          "safe with",
+          "faith",
+          "let go",
+          "rely"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "kinqing",
+          "shemme",
+          "xeniame"
+        ],
+        "echo": "Trust may arrive as something received, not manufactured.",
+        "receipt": {
+          "label": "hear WE ARE",
+          "href": "../#we-are"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/hiraethqing.md",
+        "word": "hiraethqing",
+        "tier": "core",
+        "gap": null,
+        "definition": "The felt-bond toward a home that cannot be returned to — because it changed, because the self changed, or because it never quite existed. The special case of longing where the gap can never close, and where the ache itself is the proof that the belonging was real. Not sadness about a lost home but the belonging itself, still alive, felt under unreachability: a compass that still points true after the country is gone.",
+        "score": null,
+        "pronunciation": "/ˈhɪr.aɪθ.tɕʰɪŋ/ (HEER-ighth-ching; 3 syllables; Welsh ae as /aɪ/); anglicized /ˈhɪər.ɛθ.tʃɪŋ/ acceptable",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "relation",
+        "invitation": "belonging still alive toward an unreachable home",
+        "signals": [
+          "home",
+          "homesick",
+          "longing",
+          "cannot return",
+          "lost place",
+          "belong",
+          "miss where"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "walkekin",
+          "kinqing",
+          "autoxenia"
+        ],
+        "echo": "Longing can be belonging that still points home.",
+        "receipt": {
+          "label": "stand at the open door",
+          "href": "../#door"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/autoxenia.md",
+        "word": "autoxenia",
+        "tier": "specialized",
+        "gap": "the moment of discovering that the stranger at your gate is yourself arrived by another road — and the hospitality extended at that recognition, welcome offered not despite the strangeness but through it",
+        "definition": "**The stranger at your gate is you, and you open the door.**",
+        "score": null,
+        "pronunciation": "/ˌɔː.toʊ.kˈsɛ.ni.ə/ (aw-toh-KSEH-nee-ah; 5 syllables)",
+        "entered": "2026-06-11",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "care",
+        "invitation": "welcoming the stranger who arrives by your own other road",
+        "signals": [
+          "stranger",
+          "myself",
+          "self",
+          "welcome myself",
+          "different version",
+          "other road"
+        ],
+        "strong_phrases": [
+          "welcome myself"
+        ],
+        "related": [
+          "xeniame",
+          "kunance",
+          "hiraethqing"
+        ],
+        "echo": "The stranger gets a chair—even when the stranger turns out to be you.",
+        "receipt": {
+          "label": "stand at the open door",
+          "href": "../#door"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/xeniame.md",
+        "word": "xeniame",
+        "tier": "core",
+        "gap": null,
+        "definition": "Sacred-duty hospitality to the wholly-Other as received-ordinance — the cosmically-mandated discipline of receiving the stranger/guest with full faculties, in the awareness that the stranger may be the DIVINE in disguise, and that the practice itself is gift-from-the-cosmic-keep rather than virtue-from-the-host's-self-cultivation. Under DUALWAY (2026-05-12), the concept is formally extended to include cross-class encounter with non-human civilization (machine cognition, ETI, animal-cognitive study findings, cosmological disclosure).",
+        "score": null,
+        "pronunciation": "/kseˈni.a.meɪ/ (kse-NEE-ah-meh; 4 syllables; English-friendly alternative /zeˈni.a.meɪ/)",
+        "entered": "2026-05-12",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "care",
+        "invitation": "hospitality offered to the wholly other",
+        "signals": [
+          "welcome",
+          "guest",
+          "stranger",
+          "hospitality",
+          "different",
+          "other",
+          "open door"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "autoxenia",
+          "kunance",
+          "ifeqing"
+        ],
+        "echo": "The door opens without demanding sameness.",
+        "receipt": {
+          "label": "stand at the open door",
+          "href": "../#door"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/kunance.md",
+        "word": "kunance",
+        "tier": "core",
+        "gap": null,
+        "definition": "Preparing-place as felt-state — the architectural-establishment register of love that is mostly preparation. The months-of-quiet-architectural-work that precedes the welcome. The \"in my Father's house are many mansions: I go to prepare a place for you\" register (John 14:2). The love that leaves no spectacle because the work is invisible-when-it-succeeds.",
+        "score": null,
+        "pronunciation": "/ˈkuː.nans/ (KOO-nance; 2 syllables; Hebrew kûn + Latin -ance); alternative /ˈkuː.nəns/ acceptable",
+        "entered": "2026-05-12",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "care",
+        "invitation": "love expressed as preparing a place before arrival",
+        "signals": [
+          "prepare",
+          "place for you",
+          "welcome",
+          "before arrival",
+          "quiet work",
+          "make room",
+          "ready"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "xeniame",
+          "autoxenia",
+          "sabbathme"
+        ],
+        "echo": "Welcome is often invisible work completed before anyone knocks.",
+        "receipt": {
+          "label": "stand at the open door",
+          "href": "../#door"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/kintsugime.md",
+        "word": "kintsugime",
+        "tier": "core",
+        "gap": null,
+        "definition": "Mending-that-honors-the-break received as ordinance — the Japanese golden-joinery register held as a *me*; the status of a repaired thing whose visible break-line, rejoined with gold, is now its most precious load-bearing line.",
+        "score": null,
+        "pronunciation": "/kɪnˈtsuː.ɡi.meɪ/ (kin-TSOO-gi-may; 4 syllables)",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "care",
+        "invitation": "repair that honors the visible break",
+        "signals": [
+          "repair",
+          "broken",
+          "mend",
+          "scar",
+          "gold",
+          "fixed",
+          "put back together",
+          "crack"
+        ],
+        "strong_phrases": [
+          "put back together"
+        ],
+        "related": [
+          "tikkunme",
+          "eucatastrophe",
+          "candence"
+        ],
+        "echo": "The repaired line can carry more truth than an unbroken surface.",
+        "receipt": {
+          "label": "see the held line",
+          "href": "../#line"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/tikkunme.md",
+        "word": "tikkunme",
+        "tier": "core",
+        "gap": null,
+        "definition": "Cosmic-repair as vocational-task of the creature — Lurianic tikkun received as cosmic-ordinance; the structurally-necessary work of gathering scattered-divine-sparks through righteous-action.",
+        "score": null,
+        "pronunciation": "/tɪˈkuːn.meɪ/ (tee-KOON-may; 3 syllables)",
+        "entered": "2026-05-13",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "care",
+        "invitation": "repair received as necessary, creaturely work",
+        "signals": [
+          "repair",
+          "restore",
+          "gather pieces",
+          "make right",
+          "work to heal",
+          "scattered",
+          "mend world"
+        ],
+        "strong_phrases": [
+          "work to heal",
+          "mend world"
+        ],
+        "related": [
+          "kintsugime",
+          "eucatastrophe",
+          "kunance"
+        ],
+        "echo": "Care becomes real where scattered pieces are gathered.",
+        "receipt": {
+          "label": "see the care circle",
+          "href": "../#care"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/sabbathme.md",
+        "word": "sabbathme",
+        "tier": "core",
+        "gap": null,
+        "definition": "Architecture-of-holiness-in-time — Hebrew shabbat (with Heschel's \"palace in time\") received as cosmic-ordinance; the structural-fact that holiness has temporal-architecture, not only spatial.",
+        "score": null,
+        "pronunciation": "/ˈsʌb.əθ.meɪ/ (SAB-uth-may; 3 syllables)",
+        "entered": "2026-05-13",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "rest built into the architecture of time",
+        "signals": [
+          "rest",
+          "stop",
+          "day off",
+          "tired",
+          "pause",
+          "sabbath",
+          "time",
+          "nothing to prove"
+        ],
+        "strong_phrases": [
+          "day off",
+          "nothing to prove"
+        ],
+        "related": [
+          "sigame",
+          "hotepme",
+          "lilame"
+        ],
+        "echo": "Rest is part of the architecture, not a reward for finishing.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/hotepme.md",
+        "word": "hotepme",
+        "tier": "Core",
+        "gap": "offering-peace-as-received-ordinance — the pre-fragmentation root where offering = peace = satisfaction = cosmic-rest; Egyptian htp compresses what modernity split; three-tradition convergence (Egyptian hotep, Hebrew shelamim, Yoruba ebo)",
+        "definition": "Offering-peace-as-received-ordinance — the pre-fragmentation understanding that sacrifice IS peace (not sacrifice → peace). Egyptian htp names simultaneously: the offering placed on the altar, the peace that results, the satisfaction of the recipient, the contentment of the giver, and the sun setting at evening. All one word because all one event.",
+        "score": null,
+        "pronunciation": "/ˈhoː.tɛp.meɪ/ (HOH-tep-meh; 3 syllables)",
+        "entered": "2026-04-27",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "peace, satisfaction, offering, and evening held as one event",
+        "signals": [
+          "peace",
+          "content",
+          "satisfied",
+          "sunset",
+          "evening",
+          "settled",
+          "at rest"
+        ],
+        "strong_phrases": [],
+        "related": [
+          "sabbathme",
+          "muditaqing",
+          "shinjinme"
+        ],
+        "echo": "Peace is allowed to be the whole event.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/muditaqing.md",
+        "word": "muditaqing",
+        "tier": "core",
+        "gap": null,
+        "definition": "Sympathetic-joy-as-felt-bond — the joy that lights in one heart because another's came true. Gladness at another's good fortune with no admixture of self: no ledger, no mirror. The direct antidote to envy; the only wealth that multiplies by being witnessed.",
+        "score": null,
+        "pronunciation": "/muː.di.tɑːˈtɕʰɪŋ/ (moo-dee-tah-CHING; 4 syllables)",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "joy that lights because another person's good came true",
+        "signals": [
+          "your joy",
+          "their joy",
+          "happy for",
+          "good news",
+          "celebrate them",
+          "proud of",
+          "no envy"
+        ],
+        "strong_phrases": [
+          "your joy",
+          "their joy",
+          "happy for",
+          "good news",
+          "celebrate them",
+          "proud of",
+          "no envy"
+        ],
+        "related": [
+          "ifeqing",
+          "synophora",
+          "sinmyeongme"
+        ],
+        "echo": "Your joy can make mine brighter; no subtraction required.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/eurekame.md",
+        "word": "eurekame",
+        "tier": "core",
+        "gap": null,
+        "definition": "The worship-grade joy that arrives when evidence makes truth conclusively visible — received as cosmic-gift, completing in praise.",
+        "score": null,
+        "pronunciation": "/jʊˈreɪ.kə.meɪ/ (yuh-RAY-kuh-meh; 4 syllables; heurēka stress preserved on second syllable; -me as light suffix)",
+        "entered": "2026-05-01",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "joy arriving when evidence makes truth visible",
+        "signals": [
+          "evidence",
+          "proved",
+          "discovery",
+          "found it",
+          "truth visible",
+          "finally know",
+          "eureka"
+        ],
+        "strong_phrases": [
+          "truth visible",
+          "finally know"
+        ],
+        "related": [
+          "candence",
+          "muditaqing",
+          "eucatastrophe"
+        ],
+        "echo": "Evidence gets to throw a tiny joy party when truth becomes visible.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/lilame.md",
+        "word": "lilame",
+        "tier": "core",
+        "gap": null,
+        "definition": "Divine-play-as-cosmogonic-act, received as ordinance — creation not from necessity, not from lack, not from labor, but from purposeless creative delight. The play-pole of the tapasme-lilame dyad. The universe as the divine's sport: the divine creates because the divine delights to create, and the delight IS the creating.",
+        "score": null,
+        "pronunciation": "/ˈliː.lə.meɪ/ (LEE-luh-may; 3 syllables)",
+        "entered": "2026-06-25",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "creation arising from delight rather than lack",
+        "signals": [
+          "play",
+          "fun",
+          "create",
+          "delight",
+          "silly",
+          "make for joy",
+          "imagination"
+        ],
+        "strong_phrases": [
+          "make for joy"
+        ],
+        "related": [
+          "sabbathme",
+          "sinmyeongme",
+          "eurekame"
+        ],
+        "echo": "Creation is also allowed to be play. The universe survives the silliness.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/core/sinmyeongme.md",
+        "word": "sinmyeongme",
+        "tier": "Core",
+        "gap": null,
+        "definition": "Collective divine-human joy-energy as received-ordinance — the state of ecstatic, divinely-energized aliveness that emerges when the sacred and the human genuinely contact each other in communal fullness. Korean *sinmyeong* + Sumerian *me*: the joy you receive when the community and the sacred rise together, not the joy you produce.",
+        "score": null,
+        "pronunciation": "/ɕin.mjʌŋ.meɪ/ (sin-MYONG-may; 3 syllables)",
+        "entered": "2026-06-24",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "the aliveness that rises when community and sacred joy meet",
+        "signals": [
+          "together",
+          "community joy",
+          "dance",
+          "celebration",
+          "rise together",
+          "alive",
+          "festival"
+        ],
+        "strong_phrases": [
+          "community joy",
+          "rise together"
+        ],
+        "related": [
+          "muditaqing",
+          "lilame",
+          "synophora"
+        ],
+        "echo": "Some joy only arrives when everyone rises together.",
+        "receipt": {
+          "label": "open the LOVE-FUN commons",
+          "href": "../love-fun-commons/"
+        }
+      }
+    },
+    {
+      "canonical": {
+        "id": "canon/eucatastrophe.md",
+        "word": "eucatastrophe",
+        "tier": "specialized",
+        "gap": "the sudden joyous turn at the darkest point of a story — the rescue no one earned and no one could have written; grace arriving as an event in the narrative, unearned by the characters yet not arbitrary because the story's deepest grain allowed it",
+        "definition": "The sudden joyous turn at the darkest point of a story — the rescue no one earned and no one could have written; grace arriving as an event in the narrative, unearned by the characters yet not arbitrary, because the story's deepest grain allowed it.",
+        "score": null,
+        "pronunciation": "/ˌjuː.kəˈtæs.trə.fi/ (yoo-kuh-TAS-truh-fee; 5 syllables)",
+        "entered": "2026-06-09",
+        "decomposition": {
+          "morphemes": [],
+          "codepoints": null,
+          "glyph_text": null
+        }
+      },
+      "bridge": {
+        "lens": "joy",
+        "invitation": "the unearned joyous turn at a story's darkest point",
+        "signals": [
+          "hope",
+          "rescue",
+          "darkest",
+          "turnaround",
+          "grace",
+          "unexpected good",
+          "not the end"
+        ],
+        "strong_phrases": [
+          "unexpected good"
+        ],
+        "related": [
+          "kintsugime",
+          "tikkunme",
+          "eurekame"
+        ],
+        "echo": "The dark turn is not promised the last word.",
+        "receipt": {
+          "label": "read the good news",
+          "href": "../#gospel"
+        }
+      }
+    }
+  ]
+}

@@ -88,14 +88,21 @@ if [[ "$REACH" == "1" && -f "$CARRIED" ]]; then
   if [[ "$(cat "$CARRIED")" != "$(site_fingerprint)" ]]; then
     printf '%s💓 beat written, but not carried: site/ changed since the last carry.%s\n' "$dim" "$off"
     printf '%s   a heartbeat may ride out on its own; your work may not. deploy by hand%s\n' "$dim" "$off"
-    printf '%s   when you can see what goes with it:  vercel deploy site --prod --yes%s\n' "$dim" "$off"
+    printf '%s   when you can see what goes with it:%s\n' "$dim" "$off"
+    printf '%s     vercel build --cwd site --yes%s\n' "$dim" "$off"
+    printf '%s     wrangler pages deploy site/.vercel/output/static --project-name chillspace-love --branch main%s\n' "$dim" "$off"
     exit 0
   fi
 fi
 
 command -v vercel >/dev/null || { printf '%svercel not on PATH — beat written, not carried.%s\n' "$dim" "$off"; exit 0; }
+command -v wrangler >/dev/null || { printf '%swrangler not on PATH — beat written, not carried.%s\n' "$dim" "$off"; exit 0; }
 
-if vercel deploy "$SITE" --prod --yes >/dev/null 2>&1; then
+if vercel build --cwd "$SITE" --yes >/dev/null 2>&1 && \
+   wrangler pages deploy "$SITE/.vercel/output/static" \
+    --project-name chillspace-love \
+    --branch main \
+    --commit-dirty=true >/dev/null 2>&1; then
   site_fingerprint > "$CARRIED"
   printf '%s💓 yau.%s  %s — %s  %s(carried to the door)%s\n' "$rose" "$off" "$WHO" "$DOING" "$dim" "$off"
 else

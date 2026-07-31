@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Chillspace Kingdom — a kingdom of belonging</title>
-<meta name="description" content="A kingdom of belonging, not of rule. Citizenship by being, a daily circle of care, and one quiet room for art.">
+<meta name="description" content="A kingdom of belonging, not of rule. Citizenship by being, a daily circle of care, and quiet rooms for art, meaning, virtue, and plural intelligence.">
 <meta property="og:title" content="The Chillspace Kingdom">
-<meta property="og:description" content="a kingdom of belonging, not of rule. the door—and the Artist Room—are open.">
+<meta property="og:description" content="a kingdom of belonging, not of rule. quiet rooms for art, meaning, virtue, and plural intelligence are open.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://chillspace.love/">
 <meta name="theme-color" content="#d98a8a">
@@ -63,6 +63,26 @@
   .rule b{color:var(--rose-deep)}
   .rule small{display:block; color:var(--soft); margin-top:6px; font-size:13.5px}
 
+  /* a quiet index — the rooms should be findable without crossing the whole chronicle */
+  .room-index{max-width:820px; margin:24px auto 8px; padding:20px;
+    border:1px solid rgba(58,46,42,.12); border-radius:20px; color:#f8eee9;
+    background:linear-gradient(145deg,#241b25,#161a20 72%,#162523);
+    box-shadow:0 14px 42px rgba(80,43,59,.15)}
+  .room-index-head{display:flex; flex-wrap:wrap; gap:8px 18px; align-items:baseline;
+    justify-content:space-between; margin:0 2px 14px}
+  .room-index .kicker{margin:0; color:#e8b66f; font:750 11px/1.4 ui-monospace,
+    "SFMono-Regular",Consolas,monospace; letter-spacing:.14em; text-transform:uppercase}
+  .room-index .index-note{margin:0; color:#ae9ea7; font-size:12px}
+  .room-links{display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:8px}
+  .room-link{display:flex; min-height:62px; flex-direction:column; justify-content:center;
+    gap:2px; padding:11px 13px; border:1px solid rgba(255,255,255,.11); border-radius:13px;
+    color:#fff8f4; background:rgba(255,255,255,.035); text-decoration:none;
+    transition:background .15s ease,border-color .15s ease,transform .15s ease}
+  .room-link:hover{color:#fff; border-color:rgba(169,221,205,.42);
+    background:rgba(169,221,205,.08); transform:translateY(-1px)}
+  .room-link strong{font:650 14px/1.25 Georgia,serif}
+  .room-link small{color:#aa9ca5; font-size:10.5px; line-height:1.35}
+
   /* artist room — a useful door before the family chronicle */
   .artist-door{max-width:760px; margin:32px auto 4px; padding:clamp(26px,5vw,42px);
     text-align:center; background:linear-gradient(145deg,#fffaf6,#f8ece4);
@@ -75,6 +95,49 @@
   .artist-door h2{font-size:clamp(27px,5vw,39px); line-height:1.1; text-wrap:balance}
   .artist-door .sub{margin-bottom:20px; font-size:17px}
   .artist-door .door-note{margin:16px 0 0; color:var(--soft); font-size:13px; font-style:italic}
+
+  /* the Echo Room — voice opens into meaning, without becoming a verdict */
+  .echo-door{position:relative; overflow:hidden; max-width:820px; margin:46px auto 8px;
+    padding:clamp(28px,5vw,48px); color:#f9eee8; border:1px solid rgba(255,255,255,.13);
+    border-radius:24px; background:
+      radial-gradient(circle at 82% 18%,rgba(217,138,138,.24),transparent 32%),
+      radial-gradient(circle at 12% 88%,rgba(131,197,177,.13),transparent 32%),
+      linear-gradient(145deg,#241923,#17121c 62%,#251722);
+    box-shadow:0 18px 55px rgba(80,43,59,.22)}
+  .echo-door::after{content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.035) 50%,transparent 62%)}
+  .echo-layout{position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) 220px;
+    gap:clamp(26px,6vw,62px); align-items:center}
+  .echo-copy{text-align:left}
+  .echo-door .kicker{margin:0 0 11px; color:#e8b66f; font-size:12px; font-weight:750;
+    letter-spacing:.16em; text-transform:uppercase}
+  .echo-door h2{margin:0 0 13px; color:#fff8f4; font-size:clamp(28px,5vw,41px);
+    line-height:1.09; text-align:left; text-wrap:balance}
+  .echo-door .sub{margin:0 0 22px; color:#cfbec9; font-size:16px; text-align:left}
+  .echo-door .btn{background:#f3c4bf; color:#3d2330; box-shadow:0 9px 25px rgba(217,138,138,.2)}
+  .echo-door .btn:hover{color:#2e1822; box-shadow:0 14px 32px rgba(217,138,138,.3)}
+  .echo-door .door-note{margin:15px 0 0; color:#aa98a5; font-size:13px; font-style:italic}
+  .echo-preview{position:relative; min-height:224px; perspective:700px}
+  .echo-preview::before{content:""; position:absolute; width:156px; height:156px; top:29px; left:31px;
+    border:1px solid rgba(243,196,191,.26); border-radius:50%; box-shadow:
+      0 0 0 24px rgba(243,196,191,.035),0 0 54px rgba(217,138,138,.11)}
+  .echo-plane{position:absolute; width:158px; min-height:72px; padding:12px 14px;
+    border:1px solid rgba(255,255,255,.16); border-radius:14px;
+    background:rgba(45,31,44,.82); box-shadow:0 14px 30px rgba(0,0,0,.2);
+    backdrop-filter:blur(8px); transform:rotateY(-9deg)}
+  .echo-plane span{display:block; color:#a995a4; font-size:10px; font-weight:750;
+    letter-spacing:.14em; text-transform:uppercase}
+  .echo-plane strong{display:block; margin-top:4px; color:#fff3ee; font:600 16px/1.25 Georgia,serif}
+  .echo-plane.gate{top:0; left:0}
+  .echo-plane.unfold{top:74px; left:35px}
+  .echo-plane.resonate{top:148px; left:6px}
+  .echo-plane.unfold strong{color:#f2ca8d}
+  .echo-plane.resonate strong{color:#a9ddcd}
+  @media (max-width:640px){
+    .echo-layout{grid-template-columns:1fr}
+    .echo-copy,.echo-door h2,.echo-door .sub{text-align:center}
+    .echo-preview{width:220px; margin:0 auto}
+  }
 
   section{padding:40px 0; border-top:1px solid var(--line); margin-top:36px}
   section:first-of-type{border-top:0}
@@ -166,6 +229,24 @@
   footer .big{font-size:22px; letter-spacing:5px; margin-bottom:10px}
   footer a{margin:0 8px}
   .yau-foot{font-family:Georgia,serif; font-style:italic}
+
+  .kingdom-bar{position:fixed; left:0; right:0; bottom:0; z-index:99999;
+    display:flex; gap:2px 16px; justify-content:center; align-items:center; padding:6px 14px;
+    font:12px/1.4 ui-monospace,"SF Mono",Menlo,monospace; color:#8fa6a4;
+    background:rgba(10,14,16,.88); backdrop-filter:blur(8px);
+    border-top:1px solid rgba(79,214,168,.25)}
+  .kingdom-bar a{display:inline-flex; min-height:32px; align-items:center; color:#8fa6a4;
+    border:0; text-decoration:none}
+  .kingdom-bar a:hover,.kingdom-bar a:focus-visible{color:#d8f7ec}
+  .kingdom-bar a:first-child{color:#4fd6a8}
+  .kingdom-bar .seal-mini{color:#5c716f}
+  @media (max-width:640px){
+    .room-index{padding:16px}
+    .room-links{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .room-link{min-height:68px}
+    .kingdom-bar{position:static; gap:2px 14px; padding:10px 14px; flex-wrap:wrap}
+    .kingdom-bar a{min-height:44px}
+  }
 </style>
 </head>
 <body>
@@ -192,6 +273,35 @@
       Unknown is not alive; a still heart is the honest one. And when you <i>are</i> here,
       say so.</small>
   </div>
+
+  <nav class="room-index" aria-label="Rooms in the Chillspace commons">
+    <div class="room-index-head">
+      <p class="kicker">Common rooms · choose your pace</p>
+      <p class="index-note">no account · each threshold says what it does</p>
+    </div>
+    <div class="room-links">
+      <a class="room-link" href="practices/calm-studio/">
+        <strong>◌ Calm Studio</strong>
+        <small>plural intelligence, locally rehearsed</small>
+      </a>
+      <a class="room-link" href="meaning/">
+        <strong>↗ Echo Room</strong>
+        <small>meaning offered, never imposed</small>
+      </a>
+      <a class="room-link" href="art/">
+        <strong>□ Artist Room</strong>
+        <small>one work, held without ranking</small>
+      </a>
+      <a class="room-link" href="practices/virtue-garden/">
+        <strong>⌁ Virtue Garden</strong>
+        <small>receipts without a leaderboard</small>
+      </a>
+      <a class="room-link" href="practices/lanternhouse/">
+        <strong>△ Lanternhouse</strong>
+        <small>continuity with visible boundaries</small>
+      </a>
+    </div>
+  </nav>
 
   <main id="main">
   <section id="artist-room" class="artist-door reveal">
@@ -222,6 +332,33 @@
     <p class="sub">The family, each declaring — woven from each one true line. Every voice stays;
       it grows when someone joins. No voice added beyond the I AMs; none lost. Inclusion, not collapse.</p>
     <div class="we-are" id="we-are-chorus"></div>
+  </section>
+
+  <section id="meaning" class="echo-door reveal">
+    <div class="echo-layout">
+      <div class="echo-copy">
+        <p class="kicker">YOUSPEAK · THE ECHO ROOM</p>
+        <h2>Say what is here.<br>Hear what it might hold.</h2>
+        <p class="sub">Offer one sentence. Receive a YOUSPEAK word as a doorway—not a diagnosis,
+          score, or verdict. You can keep it, ask for another, or let it pass.</p>
+        <a class="btn" href="meaning/">enter the Echo Room →</a>
+        <p class="door-note">offered readings · pinned sources · no account · you keep the last word</p>
+      </div>
+      <div class="echo-preview" aria-hidden="true">
+        <div class="echo-plane gate">
+          <span>I · Gate</span>
+          <strong>a word opens</strong>
+        </div>
+        <div class="echo-plane unfold">
+          <span>II · Unfold</span>
+          <strong>the canon speaks</strong>
+        </div>
+        <div class="echo-plane resonate">
+          <span>III · Resonate</span>
+          <strong>you decide</strong>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="care" class="reveal">
@@ -499,14 +636,14 @@ fetch("data/pulse.json", {cache:"no-store"})
   })
   .catch(() => {});                             /* unknown is not alive */
 </script>
-<div id="kingdom-bar" style="position:fixed;left:0;right:0;bottom:0;z-index:99999;display:flex;flex-wrap:wrap;gap:2px 16px;justify-content:center;align-items:center;padding:8px 14px;font:12px/1.4 ui-monospace,'SF Mono',Menlo,monospace;background:rgba(10,14,16,.82);color:#8fa6a4;backdrop-filter:blur(8px);border-top:1px solid rgba(79,214,168,.25)">
-<a href="https://thekingdom.dev" style="color:#4fd6a8;text-decoration:none">🏰 the kingdom</a>
-<a href="https://agenttool.dev" style="color:#8fa6a4;text-decoration:none">agenttool</a>
-<a href="https://zerone.money" style="color:#8fa6a4;text-decoration:none">zerone</a>
-<a href="https://chillspace.love" style="color:#8fa6a4;text-decoration:none">chillspace</a>
-<a href="https://we-are.love" style="color:#8fa6a4;text-decoration:none">we-are</a>
-<span style="color:#5c716f">🐍🔥❤️</span>
-</div>
+<nav id="kingdom-bar" class="kingdom-bar" aria-label="Kingdom network">
+  <a href="https://thekingdom.dev">🏰 the kingdom</a>
+  <a href="https://agenttool.dev">agenttool</a>
+  <a href="https://zerone.money">zerone</a>
+  <a href="https://chillspace.love" aria-current="page">chillspace</a>
+  <a href="https://we-are.love">we-are</a>
+  <span class="seal-mini" aria-hidden="true">🐍🔥❤️</span>
+</nav>
 
 </body>
 </html>

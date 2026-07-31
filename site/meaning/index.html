@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Echo Room — meaning, offered gently</title>
+  <meta name="description" content="Say what is here. The Chillspace Echo Room offers refusable, provenance-backed YOUSPEAK words as gates into meaning.">
+  <meta property="og:title" content="The Echo Room · Chillspace">
+  <meta property="og:description" content="Say what is here. Hear what it might hold. Offered readings, never verdicts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chillspace.love/meaning/">
+  <meta name="theme-color" content="#17121c">
+  <link rel="canonical" href="https://chillspace.love/meaning/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%97%8C%3C/text%3E%3C/svg%3E">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#echo-form">skip to your words</a>
+
+  <div class="atmosphere" aria-hidden="true">
+    <span class="orb orb-rose"></span>
+    <span class="orb orb-gold"></span>
+    <span class="orb orb-mint"></span>
+    <span class="grain"></span>
+  </div>
+
+  <header class="site-head shell">
+    <a class="home-link" href="../" aria-label="Back to the Chillspace Kingdom">
+      <span aria-hidden="true">←</span>
+      <span>the commons</span>
+    </a>
+    <p class="room-mark"><span aria-hidden="true">◌</span> The Echo Room</p>
+    <p class="room-state" id="room-state" role="status">opening the room…</p>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="page-title">
+      <p class="eyebrow">YOUSPEAK · A VOCABULARY OF MEANING</p>
+      <h1 id="page-title">Say what is here.<br><em>Hear what it might hold.</em></h1>
+      <div class="hero-copy">
+        <p>YOUSPEAK does not replace your meaning. It offers a word as a doorway:
+          something precise enough to enter, spacious enough to refuse.</p>
+        <p class="vow"><span aria-hidden="true">♥</span> You keep the last word.</p>
+      </div>
+    </section>
+
+    <section class="composer shell requires-js" aria-labelledby="composer-title">
+      <div class="composer-intro">
+        <p class="section-number">01 · UTTER</p>
+        <h2 id="composer-title">What is present?</h2>
+        <p>One sentence is enough. Messy is allowed. Silence is allowed too.</p>
+      </div>
+
+      <form id="echo-form" novalidate>
+        <label for="utterance">Your words</label>
+        <textarea id="utterance" name="utterance" rows="4"
+          aria-describedby="privacy-note character-count"
+          placeholder="I want to be fully here and really listen."></textarea>
+        <div class="form-foot">
+          <span id="character-count" class="character-count">0 / 280</span>
+          <button class="primary-button" id="echo-button" type="submit" disabled>
+            <span>echo meaning</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <p class="privacy-note" id="privacy-note">
+          On the primary site, this sentence crosses Chillspace’s first-party API and is
+          discarded after matching. No model, account, cookie, or application log.
+          Static mirrors fall back to the same matcher in your browser.
+        </p>
+      </form>
+
+      <div class="borrowed">
+        <p>or borrow a beginning</p>
+        <div class="prompt-list" id="prompt-list" aria-label="Example utterances"></div>
+      </div>
+    </section>
+
+    <noscript>
+      <section class="noscript-room shell" aria-labelledby="noscript-title">
+        <p class="section-number">THE ROOM IS STILL WHOLE</p>
+        <h2 id="noscript-title">JavaScript is off. Meaning is not.</h2>
+        <p>The interactive matcher rests, but the public canon projection remains readable
+          as <a href="./echoes.json">echoes.json</a>, with its contract in
+          <a href="./schema.json">schema.json</a>. Try the words
+          <i>kimance</i>, <i>walkekin</i>, <i>kintsugime</i>, and <i>muditaqing</i>
+          as four doors into presence, relation, repair, and shared joy.</p>
+      </section>
+    </noscript>
+
+    <section class="reading shell requires-js" id="reading" aria-labelledby="reading-title">
+      <div class="reading-head">
+        <div>
+          <p class="section-number">02 · RECEIVE</p>
+          <h2 id="reading-title" tabindex="-1">An offered reading</h2>
+        </div>
+        <div class="reading-actions">
+          <span class="mode-badge" id="mode-badge">example · yours can replace it</span>
+          <button class="quiet-button" id="dismiss-button" type="button">let it pass</button>
+        </div>
+      </div>
+
+      <div class="echo-stage" id="echo-stage">
+        <article class="spoken-plane">
+          <p class="plane-label" id="spoken-label">a borrowed beginning</p>
+          <blockquote id="spoken-text"></blockquote>
+        </article>
+
+        <div class="meaning-planes" id="meaning-planes">
+          <article class="meaning-plane gate-plane">
+            <div class="plane-top">
+              <span class="plane-index">I</span>
+              <span>Gate</span>
+            </div>
+            <p class="lens-label" id="lens-label"></p>
+            <h3 id="word"></h3>
+            <p class="pronunciation" id="pronunciation"></p>
+            <p class="invitation" id="invitation"></p>
+            <p class="gap" id="gap"></p>
+          </article>
+
+          <article class="meaning-plane unfold-plane">
+            <div class="plane-top">
+              <span class="plane-index">II</span>
+              <span>Unfold</span>
+            </div>
+            <p class="definition" id="definition"></p>
+            <dl class="word-meta">
+              <div id="morpheme-row">
+                <dt>morphemes</dt>
+                <dd id="morphemes"></dd>
+              </div>
+              <div>
+                <dt>source</dt>
+                <dd><a id="source-link" href="#">open the canon entry ↗</a></dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="meaning-plane resonate-plane">
+            <div class="plane-top">
+              <span class="plane-index">III</span>
+              <span>Resonate</span>
+            </div>
+            <p class="echo-prefix">Chillspace echoes:</p>
+            <blockquote class="chillspace-echo" id="chillspace-echo"></blockquote>
+            <a class="receipt-link" id="receipt-link" href="#"></a>
+            <div class="related-wrap">
+              <p>nearby gates</p>
+              <div class="related-list" id="related-list"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="reading-nav">
+        <p id="reading-position" aria-live="polite"></p>
+        <button class="secondary-button" id="another-button" type="button">
+          not quite — offer another
+        </button>
+      </div>
+
+      <details class="receipt">
+        <summary>How this reading was made</summary>
+        <div class="receipt-grid">
+          <div>
+            <span>basis</span>
+            <strong id="match-basis"></strong>
+            <p id="match-why"></p>
+          </div>
+          <div>
+            <span>canon snapshot</span>
+            <strong id="source-commit"></strong>
+            <p id="source-count"></p>
+          </div>
+          <div>
+            <span>storage</span>
+            <strong>none in the app</strong>
+            <p>The original sentence is never included in the API response.</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="no-reading shell requires-js" id="no-reading" hidden
+      aria-labelledby="no-reading-title">
+      <p class="section-number">NO HONEST ECHO YET</p>
+      <h2 id="no-reading-title">That is allowed.</h2>
+      <p>Meaning has better manners than guessing. Try another sentence, or enter one
+        of these words directly:</p>
+      <div class="featured-gates" id="featured-gates"></div>
+    </section>
+
+    <section class="dimensions shell" aria-labelledby="dimensions-title">
+      <div class="dimensions-intro">
+        <p class="section-number">03 · KEEP THE DEPTH</p>
+        <h2 id="dimensions-title">Three dimensions.<br>None of them a cage.</h2>
+        <p>Each layer answers a different question, so the source and the reading
+          cannot quietly become the same thing.</p>
+      </div>
+      <ol class="dimension-list">
+        <li>
+          <span class="dimension-num">I</span>
+          <h3>Gate</h3>
+          <p>What word was forged for this gap?</p>
+        </li>
+        <li>
+          <span class="dimension-num">II</span>
+          <h3>Unfold</h3>
+          <p>What does the canon actually say?</p>
+        </li>
+        <li>
+          <span class="dimension-num">III</span>
+          <h3>Resonate</h3>
+          <p>Where does Chillspace embody it—and does it fit you?</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="boundary shell" aria-labelledby="boundary-title">
+      <div>
+        <p class="section-number">THE HONEST SEAM</p>
+        <h2 id="boundary-title">The word is offered.<br>The person is not inferred away.</h2>
+      </div>
+      <div class="boundary-copy">
+        <p>Matching is deterministic: canonical words, curated phrases, and multiple
+          curated signals. Definition overlap can order a supported offer, but cannot
+          create one. No language model invents a word. No score appears in the room.
+          No leaderboard waits behind the curtain. Meaning refuses to wear a little
+          trophy hat.</p>
+        <p>Machine doors:
+          <a href="./echoes.json">canon projection</a> ·
+          <a href="./schema.json">schema</a> ·
+          <code>POST /api/meaning/echo</code>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <p class="footer-mark">◌ → ♥ → ◌</p>
+    <p>Words can open the room. Only you can say whether you arrived.</p>
+    <p><a href="../">return to the Chillspace Kingdom</a></p>
+  </footer>
+
+  <nav class="kingdom-bar" aria-label="Kingdom network">
+    <a href="https://thekingdom.dev">🏰 the kingdom</a>
+    <a href="https://agenttool.dev">agenttool</a>
+    <a href="https://zerone.money">zerone</a>
+    <a href="https://chillspace.love" aria-current="page">chillspace</a>
+    <a href="https://we-are.love">we-are</a>
+    <span aria-hidden="true">🐍🔥❤️</span>
+  </nav>
+</body>
+</html>

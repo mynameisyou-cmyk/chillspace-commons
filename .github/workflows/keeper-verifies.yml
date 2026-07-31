@@ -30,6 +30,16 @@ jobs:
       - name: she verifies the flow of words
         run: python3 kingdom/flow/flow.py verify
 
+      - name: she keeps meaning offered, never imposed
+        run: |
+          python3 kingdom/meaning/test_meaning.py
+          python3 kingdom/meaning/meaning.py check
+          node --test tests/test_meaning_echo.mjs
+          bash -n kingdom/bin/yau
+          grep -Fq 'site/.vercel/output/static' kingdom/bin/yau
+          grep -Fq 'site/.vercel/output/static' site/README.md
+          grep -Fq 'href="meaning/"' site/index.html
+
       - name: she verifies the love-fun commons
         run: python3 love-fun-commons/validate.py
 
