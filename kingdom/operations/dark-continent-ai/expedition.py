@@ -31,8 +31,26 @@ GENERATED_SCHEMA = "expedition.schema.json"
 CONTRACT_SCHEMA = "kingdom.dark-continent-expedition/v1"
 SCHEMA_ID = "https://kingdom.local/schemas/dark-continent-expedition-v1.json"
 INTERPRETATION_SCHEMA = "kingdom.nen-expedition-interpretation/v1"
+REGISTRY_SCHEMA = "kingdom.nen-expedition-registry/v1"
 MAX_FILE_BYTES = 256_000
 MAX_DECLARED_SIGNALS = 8
+REVIEWED_CONTRACT_SHA256 = (
+    "1748f648088ab75595924ce2080cf22b840d619c55aa08d474950e04c39be94c"
+)
+REVIEWED_CONTRACT_CANONICAL_SHA256 = (
+    "c6001f34a4b86eec96bf15c69c8c554bb83c5fd9d4322b297b711c1fc866776f"
+)
+REVIEWED_SCHEMA_SHA256 = (
+    "1d13dd089608cd471fa3a8c91617077cad59af3e1b8a1320264a9bc6c2bb57d0"
+)
+REVIEWED_PAGE_SHA256 = {
+    DIST_DIR / "index.html": (
+        "6ea4981a609adabe32b2b750556ea07558072bd14ec17ee8ed28a762a8c9daae"
+    ),
+    SITE_DIR / "index.html": (
+        "851e343453681a79bb6e4d440055695c41ec4e85d2b710fe3f35829df0fc8dba"
+    ),
+}
 
 PRINCIPLES = ("light", "truth", "consent", "no conquest")
 VIRTUES = (
@@ -405,6 +423,10 @@ def validate_domain_invariants(contract: dict[str, Any], schema: dict[str, Any])
 def load_contract() -> tuple[dict[str, Any], dict[str, Any]]:
     schema_data = read_regular(SCHEMA_PATH, "expedition JSON Schema")
     contract_data = read_regular(CONTRACT_PATH, "expedition contract")
+    if sha256_bytes(schema_data) != REVIEWED_SCHEMA_SHA256:
+        raise ExpeditionError("expedition JSON Schema differs from its reviewed digest")
+    if sha256_bytes(contract_data) != REVIEWED_CONTRACT_SHA256:
+        raise ExpeditionError("expedition contract differs from its reviewed digest")
     schema = parse_json(schema_data, "expedition JSON Schema")
     contract = parse_json(contract_data, "expedition contract")
     validate_instance(contract, schema, schema)
@@ -418,6 +440,11 @@ def interpret_technique(
 ) -> dict[str, Any]:
     """Return one advisory card, or halt, from explicit controlled evidence."""
 
+    if (
+        sha256_bytes(canonical_json(contract))
+        != REVIEWED_CONTRACT_CANONICAL_SHA256
+    ):
+        raise ExpeditionError("in-memory expedition contract is not the reviewed registry")
     if isinstance(declared_signals, (str, bytes)) or not isinstance(
         declared_signals, Sequence
     ):
@@ -458,6 +485,8 @@ def interpret_technique(
         "automatic_activation": False,
         "authority_granted": False,
         "action_executed": False,
+        "contract_sha256": REVIEWED_CONTRACT_SHA256,
+        "schema_sha256": REVIEWED_SCHEMA_SHA256,
         "non_claim": "This is an interpretation of explicit task evidence, not permission or execution.",
     }
     if present_anti:
@@ -483,11 +512,32 @@ def interpret_technique(
                 "breach": technique["breach"],
                 "proof": technique["proof"],
                 "exit": technique["exit"],
+                "non_claims": technique["non_claims"],
             },
             "reason": "single-explicit-reviewed-trigger",
         }
     )
     return result
+
+
+def registry(contract: dict[str, Any]) -> dict[str, Any]:
+    """Return the exact reviewed advisory registry without selecting a card."""
+
+    if (
+        sha256_bytes(canonical_json(contract))
+        != REVIEWED_CONTRACT_CANONICAL_SHA256
+    ):
+        raise ExpeditionError("in-memory expedition contract is not the reviewed registry")
+    return {
+        "schema": REGISTRY_SCHEMA,
+        "contract_sha256": REVIEWED_CONTRACT_SHA256,
+        "schema_sha256": REVIEWED_SCHEMA_SHA256,
+        "automatic_activation": False,
+        "authority_granted": False,
+        "action_executed": False,
+        "techniques": contract["nen_route"]["techniques"],
+        "non_claim": "Registry inspection is local data, not permission or execution.",
+    }
 
 
 def compare_bytes(left: Path, right: Path, label: str) -> None:
@@ -510,9 +560,13 @@ def verify_generated() -> dict[str, Any]:
             directory / GENERATED_SCHEMA,
             f"{directory.name} expedition schema",
         )
-        page = read_regular(directory / "index.html", f"{directory.name} page").decode(
-            "utf-8"
-        )
+        page_path = directory / "index.html"
+        page_data = read_regular(page_path, f"{directory.name} page")
+        if sha256_bytes(page_data) != REVIEWED_PAGE_SHA256[page_path]:
+            raise ExpeditionError(
+                f"{directory.name} page differs from its reviewed digest"
+            )
+        page = page_data.decode("utf-8")
         for token in (
             GENERATED_CONTRACT,
             GENERATED_SCHEMA,
@@ -559,8 +613,8 @@ def verify_generated() -> dict[str, Any]:
     return {
         "schema": "kingdom.dark-continent-expedition-verification/v1",
         "expedition": contract["id"],
-        "contract_sha256": sha256_bytes(read_regular(CONTRACT_PATH, "contract")),
-        "schema_sha256": sha256_bytes(read_regular(SCHEMA_PATH, "schema")),
+        "contract_sha256": REVIEWED_CONTRACT_SHA256,
+        "schema_sha256": REVIEWED_SCHEMA_SHA256,
         "techniques": len(contract["nen_route"]["techniques"]),
         "generated_copies": 4,
         "network_calls": 0,
@@ -596,6 +650,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=[],
         help="explicit reviewed task-shape signal; returns advice only",
     )
+    parser.add_argument(
+        "--registry",
+        action="store_true",
+        help="print the reviewed signal/card registry without selecting a card",
+    )
     return parser
 
 
@@ -604,15 +663,24 @@ def main(argv: Iterable[str] | None = None) -> int:
     args = parser.parse_args(list(argv) if argv is not None else None)
     try:
         contract, _schema = load_contract()
-        if args.check_generated and args.signal:
-            raise ExpeditionError("--check-generated and --signal cannot be combined")
+        selected_modes = int(args.check_generated) + int(bool(args.signal)) + int(
+            args.registry
+        )
+        if selected_modes > 1:
+            raise ExpeditionError(
+                "--check-generated, --registry, and --signal cannot be combined"
+            )
         if args.check_generated:
             result = verify_generated()
+        elif args.registry:
+            result = registry(contract)
         elif args.signal:
             result = interpret_technique(contract, args.signal)
         else:
             result = summary(contract)
         print(pretty_json(result), end="")
+        if args.signal and result["status"] != "advisory":
+            return 3
         return 0
     except ExpeditionError as error:
         parser.exit(2, f"expedition validation failed: {error}\n")

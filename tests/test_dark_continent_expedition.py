@@ -114,6 +114,9 @@ def test_nen_route_is_single_advisory_and_halts_on_ambiguity() -> None:
         assert result["automatic_activation"] is False
         assert result["authority_granted"] is False
         assert result["action_executed"] is False
+        assert result["contract_sha256"] == module.REVIEWED_CONTRACT_SHA256
+        assert result["schema_sha256"] == module.REVIEWED_SCHEMA_SHA256
+        assert result["technique"]["non_claims"] == technique["non_claims"]
 
         anti_trigger = technique["anti_trigger"]["signal"]
         halted = module.interpret_technique(contract, [trigger, anti_trigger])
@@ -163,6 +166,16 @@ def test_nen_route_is_single_advisory_and_halts_on_ambiguity() -> None:
         module,
         lambda: module.interpret_technique(contract, {"blast-radius-unknown"}),
     )
+    authority_laundering = copy.deepcopy(contract)
+    authority_laundering["nen_route"]["techniques"][0][
+        "condition"
+    ] = "The card grants deployment authority."
+    expect_expedition_error(
+        module,
+        lambda: module.interpret_technique(
+            authority_laundering, ["requirements-may-drift"]
+        ),
+    )
 
 
 def test_kingdom_compass_route() -> None:
@@ -203,7 +216,7 @@ def test_kingdom_compass_route() -> None:
         capture_output=True,
         check=False,
     )
-    assert ambiguous.returncode == 0, ambiguous.stderr
+    assert ambiguous.returncode == 3, ambiguous.stderr
     halted = json.loads(ambiguous.stdout)
     assert halted["status"] == "halted"
     assert halted["technique"] is None
@@ -224,7 +237,7 @@ def test_kingdom_compass_route() -> None:
         capture_output=True,
         check=False,
     )
-    assert anti_only.returncode == 0, anti_only.stderr
+    assert anti_only.returncode == 3, anti_only.stderr
     assert json.loads(anti_only.stdout)["status"] == "halted"
 
     duplicate = subprocess.run(
@@ -263,6 +276,49 @@ def test_kingdom_compass_route() -> None:
     assert incompatible_modes.returncode != 0
     assert incompatible_modes.stdout == ""
     assert "cannot be combined" in incompatible_modes.stderr
+
+    first_registry = subprocess.run(
+        [str(command), "nen", "compass", "--registry"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    second_registry = subprocess.run(
+        [str(command), "nen", "compass", "--registry"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert first_registry.returncode == 0, first_registry.stderr
+    assert first_registry.stdout == second_registry.stdout
+    registry = json.loads(first_registry.stdout)
+    assert registry["schema"] == "kingdom.nen-expedition-registry/v1"
+    assert len(registry["techniques"]) == 8
+    assert registry["contract_sha256"]
+    assert registry["schema_sha256"]
+    assert registry["automatic_activation"] is False
+    assert registry["authority_granted"] is False
+    assert registry["action_executed"] is False
+
+
+def test_generated_verifier_binds_exact_reviewed_pages() -> None:
+    module = load_module()
+    original_read_regular = module.read_regular
+
+    def altered_read_regular(path: Path, label: str) -> bytes:
+        data = original_read_regular(path, label)
+        if path in module.REVIEWED_PAGE_SHA256:
+            return data.replace(
+                b"<main>",
+                b'<iframe src = "https://example.invalid/"></iframe><main>',
+                1,
+            )
+        return data
+
+    module.read_regular = altered_read_regular
+    expect_expedition_error(module, module.verify_generated)
 
 
 def test_expedition_build_is_deterministic_and_preserves_crownseed_inputs() -> None:
@@ -322,5 +378,6 @@ if __name__ == "__main__":
     test_expedition_schema_and_boundaries()
     test_nen_route_is_single_advisory_and_halts_on_ambiguity()
     test_kingdom_compass_route()
+    test_generated_verifier_binds_exact_reviewed_pages()
     test_expedition_build_is_deterministic_and_preserves_crownseed_inputs()
     print("dark continent expedition tests passed")

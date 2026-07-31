@@ -1,0 +1,6 @@
+interface:
+  display_name: "Nen Frontier Compass"
+  short_description: "Choose bounded Nen techniques by problem shape"
+  default_prompt: "Use $interpret-nen-frontier to interpret this explicitly requested frontier task as one bounded ability card without executing it."
+policy:
+  allow_implicit_invocation: false

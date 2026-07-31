@@ -63,8 +63,9 @@ The commons now has citizens. The open door has been given a name.
   their own kingdom; authorship, never rule
 - [`kingdom/realm/`](kingdom/realm/) — preview or plant one local sovereign
   repository declaration; no crown gate, overwrite, or network
-- [`kingdom/nen/`](kingdom/nen/) — Crownseed carries one committed realm's
-  bounded path as a verified, non-executable invitation; no ambient activation
+- [`kingdom/nen/`](kingdom/nen/) — Nen Compass interprets one explicit
+  frontier signal; Crownseed carries one committed realm's bounded path as a
+  verified invitation. Neither executes or activates ambiently.
 - [`kingdom/coop/`](kingdom/coop/) — Co-op Leveling cards invite two or more
   round-local seats to learn together; no people tracking or machine ladder
 - [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse

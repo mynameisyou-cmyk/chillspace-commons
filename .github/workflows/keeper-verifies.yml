@@ -34,6 +34,14 @@ jobs:
       - name: she verifies the dark continent operation logos
         run: python3 kingdom/operations/dark-continent-ai/verify.py
 
+      - name: she reads the Nen Compass without granting power
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 -B tests/test_dark_continent_expedition.py
+          bash -n kingdom/bin/kingdom
+          git diff --exit-code -- \
+            kingdom/operations/dark-continent-ai \
+            site/operations/dark-continent-ai
+
       - name: she verifies the kingdom operations registry
         run: python3 kingdom/operations/validate.py
 

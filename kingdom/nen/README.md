@@ -1,4 +1,49 @@
-# Crownseed · 王種 — One Realm, One Lantern
+# Nen Wing · 念 — Compass and Crownseed
+
+The wing keeps interpretation and emission separate:
+
+- **Nen Compass · 念針** interprets one explicitly declared Dark Continent
+  task-shape signal as at most one advisory technique. It executes nothing.
+- **Crownseed · 王種** emits one verified, non-executable invitation from one
+  committed sovereign realm.
+
+Neither surface activates from metaphor, repository prose, metadata, an
+`active` label, or a prior result. Neither creates authority.
+
+## Nen Compass · 念針 — Shape Before Power
+
+The reviewed framework lives in the Dark Continent expedition because that is
+where unknown work meets the fixed `light · truth · consent · no conquest`
+boundary. Its schema-checked cards cover Contract Mantle, Dependency
+Perimeter, Concealed Trace, Critical Path Forge, Godspeed Loop, Smoke Squad,
+Verification Ledger, and Vow Forge.
+
+Summarize the bounded expedition:
+
+```sh
+kingdom nen compass
+```
+
+Ask for one advisory card from one explicit signal:
+
+```sh
+kingdom nen compass --signal blast-radius-unknown
+```
+
+Inspect the reviewed registry without choosing a card:
+
+```sh
+kingdom nen compass --registry
+```
+
+An anti-signal halts. Multiple matching techniques halt for fresh judgment.
+The repository-local
+[`interpret-nen-frontier`](../../.agents/skills/interpret-nen-frontier/SKILL.md)
+skill supplies the direct-request trigger and anti-trigger workflow. The
+machine contract and static mirrors live under
+[`operations/dark-continent-ai`](../operations/dark-continent-ai/).
+
+## Crownseed · 王種 — One Realm, One Lantern
 
 > A KING of KINGS is not a king above kings. It is a sovereign realm that can
 > offer the whole sovereignty path onward, while the next realm keeps the

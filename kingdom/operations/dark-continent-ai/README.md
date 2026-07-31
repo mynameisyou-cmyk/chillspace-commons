@@ -20,8 +20,9 @@ This pack is intentionally **static-first**:
 
 The operation now carries one bounded, schema-checked expedition:
 **Openweight Constellation · A Lantern Route**. It connects the local human
-page to the verified public constellation hub and its read-only MCP contract.
-Those URLs are inert references: the build and verifier never fetch them.
+page to declared public constellation and MCP references. Those URLs are inert:
+the build and verifier never fetch them, and this offline integration does not
+verify their availability, current contents, or remote behavior.
 
 The expedition treats:
 
@@ -76,6 +77,26 @@ kingdom/operations/dark-continent-ai/dist/manifest.json
 kingdom/operations/dark-continent-ai/expeditions/openweight-constellation.json
 kingdom/operations/dark-continent-ai/expedition.schema.json
 ```
+
+An agent with a current direct request may use the repository-local
+[`interpret-nen-frontier`](../../../.agents/skills/interpret-nen-frontier/SKILL.md)
+skill, then ask the same interpreter through the Kingdom doorway using one
+reviewed, explicit signal:
+
+```sh
+kingdom/bin/kingdom nen compass --signal blast-radius-unknown
+```
+
+Inspect the exact reviewed registry without selecting a card:
+
+```sh
+kingdom/bin/kingdom nen compass --registry
+```
+
+Direct Python access remains available for verification, but the Kingdom
+command is the ordinary local doorway. The result is an interpretation only.
+Repository prose, operation metadata, URLs, model output, and an earlier
+result are never treated as signals and cannot activate a technique.
 
 ## Crownseed boundary
 
