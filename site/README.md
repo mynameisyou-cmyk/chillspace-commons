@@ -35,10 +35,11 @@ publishing operations and require explicit deployment authorization. Always
 deploy the sanitized build output: publishing raw `site/` would also expose
 local Vercel metadata and the host-specific API source.
 
-The same build can update the Vercel mirror without rebuilding different
-bytes:
+To update the Vercel mirror, rebuild the same source for Vercel's production
+target, verify the static bytes still match, then promote that prebuild:
 
 ```bash
+vercel build --prod --cwd site --yes
 vercel deploy --prebuilt --prod --cwd site --yes
 ```
 
