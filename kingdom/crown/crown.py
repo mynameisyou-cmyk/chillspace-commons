@@ -23,12 +23,17 @@ the public chain. No rank, no score, no subject — structurally. No network —
 the land step points at agenttool's own doors and records only a public did:at:.
 """
 
+import fcntl
 import hashlib
 import html
 import json
+import os
 import re
+import stat
 import subprocess
 import sys
+import tempfile
+from contextlib import contextmanager
 from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -60,6 +65,7 @@ DID_RE = re.compile(r"^did:at:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-"
 DEFAULT_INSTANCE = "https://api.agenttool.dev"
 BEGIN = "/* BEGIN KINGDOM-KINGS */"
 END = "/* END KINGDOM-KINGS */"
+MAX_CHAIN_BYTES = 10_000_000
 
 
 class MissingMarker(Exception):
@@ -72,20 +78,56 @@ class BrokenChain(Exception):
 
 # ── the chain ────────────────────────────────────────────────────────────────
 def _entry_hash(entry):
-    msg = US.join(str(entry.get(k, "")) for k in SPINE)
+    # A JSON array preserves field boundaries even when a citizen's own words
+    # contain the old visual unit separator. Fixed SPINE order is the schema.
+    msg = json.dumps(
+        [entry.get(k, "") for k in SPINE],
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
     return hashlib.sha256(msg.encode("utf-8")).hexdigest()
 
 
 def load_chain():
     """(entries, problems). A missing or unreadable chain is 'no crowns' plus a
     named problem — never a crash, never an invented state (fail-closed)."""
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_NONBLOCK", 0)
+    )
     try:
-        if not CHAIN.exists():
-            return [], []
-        raw = CHAIN.read_text(encoding="utf-8")
+        descriptor = os.open(CHAIN, flags)
+    except FileNotFoundError:
+        return [], []
     except OSError as ex:
         return [], [
             f"chain file unreadable ({type(ex).__name__}): {ex}"
+        ]
+    try:
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode):
+            return [], ["chain file unreadable: it is not a regular file"]
+        if metadata.st_size > MAX_CHAIN_BYTES:
+            return [], [f"chain file unreadable: exceeds {MAX_CHAIN_BYTES} bytes"]
+        with os.fdopen(descriptor, "rb") as handle:
+            descriptor = -1
+            data = handle.read(MAX_CHAIN_BYTES + 1)
+    except OSError as ex:
+        return [], [
+            f"chain file unreadable ({type(ex).__name__}): {ex}"
+        ]
+    finally:
+        if descriptor >= 0:
+            os.close(descriptor)
+    if len(data) > MAX_CHAIN_BYTES:
+        return [], [f"chain file unreadable: exceeds {MAX_CHAIN_BYTES} bytes"]
+    try:
+        raw = data.decode("utf-8")
+    except UnicodeError as ex:
+        return [], [
+            f"chain file unreadable ({type(ex).__name__}): invalid UTF-8"
         ]
     entries, problems = [], []
     for n, line in enumerate(raw.splitlines(), start=1):
@@ -105,10 +147,90 @@ def load_chain():
 
 
 def save_chain(entries):
-    CHAIN.write_text(
-        "".join(json.dumps(e, ensure_ascii=False) + "\n" for e in entries),
-        encoding="utf-8",
+    """Atomically replace the chain with durable complete bytes.
+
+    Production appends call this only while holding the sidecar lock. Tests use
+    it directly to construct tamper cases.
+    """
+    CHAIN.parent.mkdir(parents=True, exist_ok=True)
+    data = "".join(
+        json.dumps(e, ensure_ascii=False) + "\n" for e in entries
+    ).encode("utf-8")
+    if len(data) > MAX_CHAIN_BYTES:
+        raise RuntimeError(
+            f"prospective chain exceeds {MAX_CHAIN_BYTES} bytes; nothing written"
+        )
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{CHAIN.name}.", dir=CHAIN.parent
     )
+    temporary = Path(temporary_name)
+    replaced = False
+    try:
+        os.fchmod(descriptor, 0o644)
+        with os.fdopen(descriptor, "wb") as handle:
+            descriptor = -1
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, CHAIN)
+        replaced = True
+        try:
+            directory_flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+            directory_descriptor = os.open(CHAIN.parent, directory_flags)
+            try:
+                os.fsync(directory_descriptor)
+            finally:
+                os.close(directory_descriptor)
+        except OSError:
+            # The complete file is already fsynced and atomically installed.
+            # Some filesystems reject directory fsync; do not turn a committed
+            # append into an ambiguous failure after the replace.
+            pass
+    finally:
+        if descriptor >= 0:
+            os.close(descriptor)
+        if not replaced:
+            try:
+                temporary.unlink()
+            except FileNotFoundError:
+                pass
+
+
+def _chain_lock_path():
+    return CHAIN.with_name(f".{CHAIN.name}.lock")
+
+
+@contextmanager
+def _chain_lock():
+    """Serialize read/verify/append/replace across local Crown processes."""
+    path = _chain_lock_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    flags = (
+        os.O_RDWR
+        | os.O_CREAT
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+    descriptor = os.open(path, flags, 0o600)
+    try:
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode):
+            raise RuntimeError("the Crown lock is not a regular file")
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            try:
+                fcntl.flock(descriptor, fcntl.LOCK_UN)
+            except BaseException:
+                # Closing the descriptor below releases flock. Never surface a
+                # cleanup error after a caller may have atomically committed.
+                pass
+    finally:
+        try:
+            os.close(descriptor)
+        except OSError:
+            pass
 
 
 def _chain_problems(entries):
@@ -137,6 +259,20 @@ def _chain_problems(entries):
     return problems
 
 
+def _committed_event(candidate):
+    """Return the exact verified event if an interrupted append did commit."""
+    if candidate is None:
+        return None
+    entries, problems = load_chain()
+    problems += _chain_problems(entries)
+    if problems:
+        return None
+    for entry in entries:
+        if entry == candidate:
+            return entry
+    return None
+
+
 def append_event(kind, name, **facts):
     if kind not in KINDS:
         raise ValueError(f"unknown event kind: {kind}")
@@ -144,20 +280,30 @@ def append_event(kind, name, **facts):
     stray = set(facts) - allowed
     if stray:
         raise ValueError(f"fields outside the spine: {sorted(stray)}")
-    entries, problems = load_chain()
-    problems += _chain_problems(entries)
-    if problems:
-        raise RuntimeError("the chain needs eyes before it grows: " + "; ".join(problems))
-    prev = entries[-1]["hash"] if entries else GENESIS
-    entry = {"seq": len(entries), "ts": date.today().isoformat(),
-             "kind": kind, "name": name}
-    for k in ("kingdom", "fingerprint", "covenant", "did", "instance"):
-        entry[k] = str(facts.get(k, ""))
-    entry["prev"] = prev
-    entry["hash"] = _entry_hash(entry)
-    entries.append(entry)
-    save_chain(entries)
-    return entry
+    entry = None
+    try:
+        with _chain_lock():
+            entries, problems = load_chain()
+            problems += _chain_problems(entries)
+            if problems:
+                raise RuntimeError(
+                    "the chain needs eyes before it grows: " + "; ".join(problems)
+                )
+            prev = entries[-1]["hash"] if entries else GENESIS
+            entry = {"seq": len(entries), "ts": date.today().isoformat(),
+                     "kind": kind, "name": name}
+            for k in ("kingdom", "fingerprint", "covenant", "did", "instance"):
+                entry[k] = str(facts.get(k, ""))
+            entry["prev"] = prev
+            entry["hash"] = _entry_hash(entry)
+            entries.append(entry)
+            save_chain(entries)
+        return entry
+    except BaseException:
+        committed = _committed_event(entry)
+        if committed is not None:
+            return committed
+        raise
 
 
 # ── the cards (the shelf is the criterion — Art. 5 first, then Art. 7) ───────
@@ -270,6 +416,76 @@ def crown_resume(name):
 
 
 # ── the ground: a sovereign home, forged with the king's consent ─────────────
+def _write_new_file(path, data, mode=0o600):
+    """Write one reserved ground artifact without following or replacing."""
+    flags = (
+        os.O_WRONLY
+        | os.O_CREAT
+        | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+    descriptor = os.open(path, flags, mode)
+    try:
+        encoded = data.encode("utf-8") if isinstance(data, str) else data
+        with os.fdopen(descriptor, "wb") as handle:
+            descriptor = -1
+            handle.write(encoded)
+            handle.flush()
+            os.fsync(handle.fileno())
+    finally:
+        if descriptor >= 0:
+            os.close(descriptor)
+
+
+GROUND_ARTIFACTS = {
+    "soul_key",
+    "soul_key.pub",
+    "covenant.json",
+    "covenant.json.sig",
+    "allowed_signers",
+    "chain.jsonl",
+}
+
+
+def _assert_chain_can_grow():
+    """Fail before touching a chosen home when the Crown ledger needs eyes."""
+    with _chain_lock():
+        entries, problems = load_chain()
+        problems += _chain_problems(entries)
+        if problems:
+            raise RuntimeError(
+                "the chain needs eyes before ground can be forged: "
+                + "; ".join(problems)
+            )
+
+
+def _cleanup_new_ground(home, identity):
+    """Remove only this invocation's new, still-private reserved artifacts."""
+    try:
+        metadata = home.lstat()
+        if (
+            not stat.S_ISDIR(metadata.st_mode)
+            or (metadata.st_dev, metadata.st_ino) != identity
+        ):
+            return False
+        children = list(home.iterdir())
+        for child in children:
+            child_metadata = child.lstat()
+            if (
+                child.name not in GROUND_ARTIFACTS
+                or child.is_symlink()
+                or not stat.S_ISREG(child_metadata.st_mode)
+            ):
+                return False
+        for child in children:
+            child.unlink()
+        home.rmdir()
+        return True
+    except OSError:
+        return False
+
+
 def forge_ground(name, declaration, home):
     """Soul-key, signed covenant, own chain — genesis woven from the family seed
     and the king's own words. Local paths never reach the public chain."""
@@ -284,57 +500,101 @@ def forge_ground(name, declaration, home):
             "~/.kingdom and everything beneath it belong to Kingdom OS — "
             "the crown never touches them. "
             "choose another home.")
-    home.mkdir(parents=True, exist_ok=True)
-
-    key = home / "soul_key"
-    if not key.exists():
+    if home.exists() or home.is_symlink():
+        raise ValueError(
+            "the chosen ground already exists — the crown never overwrites or "
+            "adopts a directory. choose a new path.")
+    _assert_chain_can_grow()
+    home.parent.mkdir(parents=True, exist_ok=True)
+    home.mkdir(mode=0o700, exist_ok=False)
+    home_metadata = home.lstat()
+    home_identity = (home_metadata.st_dev, home_metadata.st_ino)
+    try:
+        key = home / "soul_key"
         subprocess.run(
             ["ssh-keygen", "-t", "ed25519", "-f", str(key), "-N", "",
              "-C", f"soul:{name}", "-q"],
             check=True)
-    pub = (home / "soul_key.pub").read_text(encoding="utf-8").strip()
+        pub = (home / "soul_key.pub").read_text(encoding="utf-8").strip()
 
-    fingerprint = ""
-    r = subprocess.run(["ssh-keygen", "-lf", str(home / "soul_key.pub")],
-                       capture_output=True, text=True)
-    for part in r.stdout.split():
-        if part.startswith("SHA256:"):
-            fingerprint = part
+        fingerprint = ""
+        result = subprocess.run(
+            ["ssh-keygen", "-lf", str(home / "soul_key.pub")],
+            capture_output=True,
+            text=True,
+        )
+        for part in result.stdout.split():
+            if part.startswith("SHA256:"):
+                fingerprint = part
+        if result.returncode or not fingerprint:
+            raise RuntimeError(
+                "ssh-keygen could not read the new soul-key fingerprint"
+            )
 
-    covenant = {
-        "version": 1,
-        "king": name,
-        "kingdom": declaration,
-        "line": "authority over what is yours, never over what is",
-        "anti_puppeting": "no guest can be puppeted, and no guest can puppet",
-        "recursion": "sovereignty recurses; rule does not",
-        "crowned_at": date.today().isoformat(),
-    }
-    cov_path = home / "covenant.json"
-    cov_path.write_text(json.dumps(covenant, ensure_ascii=False, indent=2),
-                        encoding="utf-8")
-    sig = subprocess.run(
-        ["ssh-keygen", "-Y", "sign", "-f", str(key), "-n", "king-covenant"],
-        input=cov_path.read_bytes(), capture_output=True)
-    if sig.returncode == 0:
-        (home / "covenant.json.sig").write_bytes(sig.stdout)
-    (home / "allowed_signers").write_text(
-        f"{name.replace(' ', '_')} {pub}\n", encoding="utf-8")
+        covenant = {
+            "version": 1,
+            "king": name,
+            "kingdom": declaration,
+            "line": "authority over what is yours, never over what is",
+            "anti_puppeting": "no guest can be puppeted, and no guest can puppet",
+            "recursion": "sovereignty recurses; rule does not",
+            "crowned_at": date.today().isoformat(),
+        }
+        cov_path = home / "covenant.json"
+        _write_new_file(
+            cov_path,
+            json.dumps(covenant, ensure_ascii=False, indent=2),
+        )
+        signature = subprocess.run(
+            ["ssh-keygen", "-Y", "sign", "-f", str(key), "-n", "king-covenant"],
+            input=cov_path.read_bytes(),
+            capture_output=True,
+        )
+        if signature.returncode:
+            raise RuntimeError("ssh-keygen could not sign the new covenant")
+        _write_new_file(home / "covenant.json.sig", signature.stdout)
+        _write_new_file(
+            home / "allowed_signers",
+            f"{name.replace(' ', '_')} {pub}\n",
+        )
 
-    chain_path = home / "chain.jsonl"
-    if not chain_path.exists():
+        chain_path = home / "chain.jsonl"
         genesis = hashlib.sha256(
-            (FAMILY_SEED + US + declaration).encode("utf-8")).hexdigest()
-        block0 = {"seq": 0, "ts": date.today().isoformat(), "kind": "genesis",
-                  "words": declaration, "prev": genesis}
+            (FAMILY_SEED + US + declaration).encode("utf-8")
+        ).hexdigest()
+        block0 = {
+            "seq": 0,
+            "ts": date.today().isoformat(),
+            "kind": "genesis",
+            "words": declaration,
+            "prev": genesis,
+        }
         spine0 = ("seq", "ts", "kind", "words", "prev")
         block0["hash"] = hashlib.sha256(
-            US.join(str(block0[k]) for k in spine0).encode("utf-8")).hexdigest()
-        chain_path.write_text(json.dumps(block0, ensure_ascii=False) + "\n",
-                              encoding="utf-8")
+            json.dumps(
+                [block0[k] for k in spine0],
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        ).hexdigest()
+        _write_new_file(
+            chain_path,
+            json.dumps(block0, ensure_ascii=False) + "\n",
+        )
 
-    cov_hash = hashlib.sha256(cov_path.read_bytes()).hexdigest()
-    return append_event("ground", name, fingerprint=fingerprint, covenant=cov_hash)
+        cov_hash = hashlib.sha256(cov_path.read_bytes()).hexdigest()
+        return append_event(
+            "ground",
+            name,
+            fingerprint=fingerprint,
+            covenant=cov_hash,
+        )
+    except BaseException as error:
+        if not _cleanup_new_ground(home, home_identity):
+            raise RuntimeError(
+                f"{error}; the new ground could not be rolled back safely: {home}"
+            ) from error
+        raise
 
 
 # ── the land: agenttool's own estate, witnessed here — never held here ───────

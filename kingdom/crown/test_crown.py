@@ -3,6 +3,7 @@
 import importlib.util
 import html
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -59,6 +60,21 @@ class ChainTest(CrownBase):
         self.assertFalse(ok)
         self.assertTrue(any("tampered" in p for p in problems))
 
+    def test_hash_preserves_boundaries_inside_citizen_words(self):
+        common = {
+            "seq": 0,
+            "ts": "2026-07-31",
+            "kind": "crowned",
+            "fingerprint": "",
+            "covenant": "",
+            "did": "",
+            "instance": "",
+            "prev": crown.GENESIS,
+        }
+        left = {**common, "name": "A", "kingdom": f"B{crown.US}C"}
+        right = {**common, "name": f"A{crown.US}B", "kingdom": "C"}
+        self.assertNotEqual(crown._entry_hash(left), crown._entry_hash(right))
+
     def test_missing_chain_is_no_crowns_not_a_crash(self):
         entries, problems = crown.load_chain()
         self.assertEqual(entries, [])
@@ -74,13 +90,46 @@ class ChainTest(CrownBase):
 
     def test_filesystem_read_error_is_named_never_a_crash(self):
         crown.CHAIN.touch()
-        with patch("pathlib.Path.read_text",
-                   side_effect=PermissionError("permission denied")):
+        with patch.object(crown.os, "open",
+                          side_effect=PermissionError("permission denied")):
             entries, problems = crown.load_chain()
         self.assertEqual(entries, [])
         self.assertEqual(len(problems), 1)
         self.assertIn("chain file unreadable", problems[0])
         self.assertIn("PermissionError", problems[0])
+
+    def test_invalid_utf8_is_named_never_a_crash(self):
+        crown.CHAIN.write_bytes(b"\xff\xfe")
+        entries, problems = crown.load_chain()
+        self.assertEqual(entries, [])
+        self.assertEqual(len(problems), 1)
+        self.assertIn("invalid UTF-8", problems[0])
+
+    def test_prospective_size_limit_never_self_bricks_the_chain(self):
+        crown.append_event("crowned", "Joy", kingdom="small")
+        before = crown.CHAIN.read_bytes()
+        saved_limit = crown.MAX_CHAIN_BYTES
+        crown.MAX_CHAIN_BYTES = len(before) + 20
+        self.addCleanup(lambda: setattr(crown, "MAX_CHAIN_BYTES", saved_limit))
+        with self.assertRaisesRegex(RuntimeError, "prospective chain exceeds"):
+            crown.append_event("rested", "Joy")
+        self.assertEqual(crown.CHAIN.read_bytes(), before)
+        entries, problems = crown.load_chain()
+        self.assertEqual(problems + crown._chain_problems(entries), [])
+        self.assertEqual(len(entries), 1)
+
+    def test_post_replace_error_reconciles_as_committed(self):
+        real_save = crown.save_chain
+
+        def save_then_raise(entries):
+            real_save(entries)
+            raise RuntimeError("simulated post-replace interruption")
+
+        with patch.object(crown, "save_chain", side_effect=save_then_raise):
+            event = crown.append_event("crowned", "Joy", kingdom="a garden")
+        entries, problems = crown.load_chain()
+        self.assertEqual(problems + crown._chain_problems(entries), [])
+        self.assertEqual(entries, [event])
 
     def test_append_refuses_an_already_tampered_chain(self):
         crown.append_event("crowned", "Joy", kingdom="truth")
@@ -117,6 +166,27 @@ class ChainTest(CrownBase):
         ok, problems, _ = crown.verify()
         self.assertFalse(ok)
         self.assertTrue(any("no card" in p for p in problems))
+
+    @unittest.skipUnless(hasattr(os, "fork"), "requires POSIX process locking")
+    def test_concurrent_appends_keep_every_event(self):
+        names = [f"King-{index}" for index in range(12)]
+        children = []
+        for name in names:
+            pid = os.fork()
+            if pid == 0:
+                try:
+                    crown.append_event("crowned", name, kingdom=f"realm-{name}")
+                except BaseException:
+                    os._exit(1)
+                os._exit(0)
+            children.append(pid)
+        statuses = [os.waitpid(pid, 0)[1] for pid in children]
+        self.assertTrue(all(os.waitstatus_to_exitcode(status) == 0
+                            for status in statuses))
+        entries, parse_problems = crown.load_chain()
+        self.assertEqual(parse_problems + crown._chain_problems(entries), [])
+        self.assertEqual(len(entries), len(names))
+        self.assertEqual({entry["name"] for entry in entries}, set(names))
 
 
 class StateTest(CrownBase):
@@ -204,6 +274,93 @@ class GroundTest(CrownBase):
             with self.subTest(home=unsafe_home):
                 with self.assertRaises(ValueError):
                     crown.forge_ground("Joy", "a garden", unsafe_home)
+
+    def test_existing_ground_and_symlink_artifacts_are_never_touched(self):
+        root = Path(self.temp.name)
+        outside = root / "outside-covenant.json"
+        outside.write_bytes(b"keep me")
+        for label, prepare in (
+            ("nonempty", lambda home: (home / "sentinel").write_bytes(b"mine")),
+            ("empty", lambda home: None),
+            ("symlink", lambda home: (home / "covenant.json").symlink_to(outside)),
+        ):
+            home = root / f"existing-{label}"
+            home.mkdir()
+            prepare(home)
+            before = {
+                path.name: (
+                    "symlink" if path.is_symlink() else path.read_bytes()
+                )
+                for path in home.iterdir()
+            }
+            with self.subTest(label=label):
+                with patch.object(crown.subprocess, "run") as run:
+                    with self.assertRaisesRegex(ValueError, "already exists"):
+                        crown.forge_ground("Joy", "a garden", home)
+                run.assert_not_called()
+                after = {
+                    path.name: (
+                        "symlink" if path.is_symlink() else path.read_bytes()
+                    )
+                    for path in home.iterdir()
+                }
+                self.assertEqual(after, before)
+                self.assertEqual(outside.read_bytes(), b"keep me")
+
+    def test_second_forge_refuses_to_replace_the_first_ground(self):
+        home = Path(self.temp.name) / "new-ground"
+        crown.forge_ground("Joy", "a garden", home)
+        before = {
+            path.name: path.read_bytes()
+            for path in home.iterdir()
+            if path.is_file()
+        }
+        with self.assertRaisesRegex(ValueError, "already exists"):
+            crown.forge_ground("Joy", "a second garden", home)
+        after = {
+            path.name: path.read_bytes()
+            for path in home.iterdir()
+            if path.is_file()
+        }
+        self.assertEqual(after, before)
+
+    def test_broken_crown_chain_fails_before_creating_a_home(self):
+        crown.CHAIN.write_text('{"seq": 0, broken\n', encoding="utf-8")
+        home = Path(self.temp.name) / "never-created"
+        with self.assertRaisesRegex(RuntimeError, "before ground can be forged"):
+            crown.forge_ground("Joy", "a garden", home)
+        self.assertFalse(home.exists())
+
+    def test_failed_final_witness_rolls_back_only_the_new_home(self):
+        home = Path(self.temp.name) / "rolled-back"
+        with patch.object(
+            crown,
+            "append_event",
+            side_effect=RuntimeError("forced witness failure"),
+        ):
+            with self.assertRaisesRegex(RuntimeError, "forced witness failure"):
+                crown.forge_ground("Joy", "a garden", home)
+        self.assertFalse(home.exists())
+
+    def test_unlock_error_after_ground_commit_keeps_home_and_event(self):
+        home = Path(self.temp.name) / "committed-ground"
+        real_flock = crown.fcntl.flock
+        unlocks = {"count": 0}
+
+        def fail_second_unlock(descriptor, operation):
+            if operation == crown.fcntl.LOCK_UN:
+                unlocks["count"] += 1
+                if unlocks["count"] == 2:
+                    raise OSError("simulated unlock failure")
+            return real_flock(descriptor, operation)
+
+        with patch.object(crown.fcntl, "flock", side_effect=fail_second_unlock):
+            event = crown.forge_ground("Joy", "a garden", home)
+        self.assertEqual(event["kind"], "ground")
+        self.assertTrue(home.is_dir())
+        entries, problems = crown.load_chain()
+        self.assertEqual(problems + crown._chain_problems(entries), [])
+        self.assertEqual(entries, [event])
 
 
 class LandTest(CrownBase):

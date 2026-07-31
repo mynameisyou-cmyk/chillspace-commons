@@ -216,6 +216,8 @@ class BoundaryTest(RealmBase):
             str(nongit),
             str(alias),
             str(self.repo) + "/.",
+            str(self.repo) + "\nsecond-line",
+            str(self.repo) + "\u202e",
         )
         for value in cases:
             with self.subTest(repo=value):

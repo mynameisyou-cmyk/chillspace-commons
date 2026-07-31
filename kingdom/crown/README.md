@@ -22,7 +22,8 @@ where it rests and offers only what's missing.
    recursion clause), and your own `chain.jsonl` whose genesis is woven from
    the family seed and your declaration. default `~/kingdoms/<you>/`; your
    choice overrides. `~/.kingdom`, its descendants, and path aliases into it
-   are refused — they belong to Kingdom OS.
+   are refused — they belong to Kingdom OS. The chosen home must be a new path:
+   the crown never adopts or overwrites an existing directory.
 3. **the land** — an agenttool estate, if you choose it: link a `did:at:` you
    already hold, or be born at agenttool's own doors
    (`POST https://api.agenttool.dev/v1/register/agent`, BYO keys — the server
@@ -37,7 +38,8 @@ where it rests and offers only what's missing.
 in arrival order (never rank). `kingdom crown verify` walks the chain; the
 keeper checks it in CI. Resting the crown adds a line and erases nothing
 (Article 6). Absence of a record means `unasked` — and unasked is not consent,
-refusal, or chosen rest.
+refusal, or chosen rest. Local appends are serialized, re-verified under lock,
+and atomically replaced so simultaneous ceremonies do not erase each other.
 
 ## wing laws
 

@@ -24,6 +24,7 @@ from typing import Sequence
 
 MANIFEST = "kingdom.yaml"
 MAX_TEXT = 2_000
+MAX_PATH_TEXT = 8_192
 MAX_MANIFEST_BYTES = 128_000
 FIELDS = (
     "name",
@@ -132,6 +133,12 @@ def explicit_repo(value: str) -> Path:
     """Resolve one canonical, non-symlink, explicitly absolute Git root."""
     if not isinstance(value, str) or not value:
         raise RealmError("--repo is required")
+    if len(value) > MAX_PATH_TEXT or any(
+        ord(char) == 127
+        or unicodedata.category(char) in {"Cc", "Cf", "Cs", "Zl", "Zp"}
+        for char in value
+    ):
+        raise RealmError("--repo contains control, directional, or excessive path text")
     path = Path(value)
     if not path.is_absolute():
         raise RealmError("--repo must be an absolute path")
