@@ -1,0 +1,382 @@
+{
+  "schema": "kingdom.dark-continent-expedition/v1",
+  "id": "openweight-constellation",
+  "operation": "dark-continent-ai",
+  "name": "Openweight Constellation · A Lantern Route",
+  "status": "bounded-invitation",
+  "interpretations": {
+    "dark_continent": "The unknown part of the work: entered with light, truth, consent, and no conquest.",
+    "king_of_kings": "Recursive authorship: each maker remains author of their own realm; it never means rule over another.",
+    "nen": "An interpretive vocabulary for bounded workflows, never a power, identity, rank, permission, or authority."
+  },
+  "realm": {
+    "kind": "creations-and-infrastructure",
+    "beings": false,
+    "conquest": false
+  },
+  "boundaries": {
+    "principles": [
+      "light",
+      "truth",
+      "consent",
+      "no conquest"
+    ],
+    "automatic_activation": false,
+    "ambient_scanning": false,
+    "network_calls": false,
+    "external_writes": false,
+    "deployment": false,
+    "authority_creation": false,
+    "person_or_repository_ranking": false,
+    "punishment": false,
+    "citizen_or_crown_changes": false
+  },
+  "budget": {
+    "realms": 1,
+    "expeditions": 1,
+    "network_calls": 0,
+    "deployments": 0,
+    "automatic_retries": 0,
+    "techniques_per_interpretation": 1
+  },
+  "routes": {
+    "references_only": true,
+    "human": [
+      {
+        "id": "public-hub",
+        "url": "https://openweight-constellation.vercel.app/",
+        "purpose": "Public human-readable constellation hub."
+      },
+      {
+        "id": "worlds",
+        "url": "https://openweight-constellation.vercel.app/#worlds",
+        "purpose": "Four-world map and openweight context."
+      },
+      {
+        "id": "virtue-loop",
+        "url": "https://openweight-constellation.vercel.app/#virtue-loop",
+        "purpose": "Virtue feedback loop, framed without person scoring."
+      },
+      {
+        "id": "protocol",
+        "url": "https://openweight-constellation.vercel.app/constellation-protocol.json",
+        "purpose": "Static public protocol contract."
+      },
+      {
+        "id": "privacy",
+        "url": "https://openweight-constellation.vercel.app/privacy",
+        "purpose": "Privacy boundary for public use."
+      },
+      {
+        "id": "terms",
+        "url": "https://openweight-constellation.vercel.app/terms",
+        "purpose": "Terms and public-use boundary."
+      }
+    ],
+    "machine": [
+      {
+        "id": "mcp-health",
+        "url": "https://openweight-constellation-mcp.axiepro.workers.dev/health",
+        "purpose": "Read-only service health reference."
+      },
+      {
+        "id": "mcp-manifest",
+        "url": "https://openweight-constellation-mcp.axiepro.workers.dev/manifest.json",
+        "purpose": "Machine-readable no-auth tool manifest."
+      },
+      {
+        "id": "mcp-endpoint",
+        "url": "https://openweight-constellation-mcp.axiepro.workers.dev/mcp",
+        "purpose": "Read-only MCP endpoint for explicit external clients."
+      }
+    ]
+  },
+  "protocol": {
+    "manifest_schema": "openweight.constellation/mcp-manifest@1",
+    "tools": [
+      {
+        "name": "map_constellation",
+        "result_schema": "openweight.constellation/world-map@1",
+        "read_only": true,
+        "destructive": false,
+        "open_world": false
+      },
+      {
+        "name": "compose_virtue_lens",
+        "result_schema": "karma.virtue-receipt/v1",
+        "read_only": true,
+        "destructive": false,
+        "open_world": false
+      },
+      {
+        "name": "trace_idea",
+        "result_schema": "openweight.constellation/idea-trace@1",
+        "read_only": true,
+        "destructive": false,
+        "open_world": false
+      }
+    ]
+  },
+  "feedback_loop": {
+    "schema": "karma.virtue-feedback/v1",
+    "virtues": [
+      "honesty",
+      "beauty",
+      "collaboration",
+      "understanding",
+      "constructive mutual benefit"
+    ],
+    "reward": "Make evidence-bearing, beautiful, collaborative, mutually useful choices easier to see, repeat, and improve.",
+    "negative_feedback": "Pause, reduce exposure, surface consequences, invite repair, and restore consent; never exploit or punish a person.",
+    "person_scoring": false,
+    "automatic_enforcement": false
+  },
+  "nen_route": {
+    "schema": "kingdom.nen-expedition-route/v1",
+    "mode": "interpretive-only",
+    "selection": {
+      "input": "One explicit signal declared from current task evidence by an actor who already has authority for that task.",
+      "rule": "Return only the single matching card: the smallest sufficient technique, never a stack or automatic action.",
+      "ambiguity": "No match, multiple triggers, an anti-trigger, novelty, or changed authority halts for fresh judgment."
+    },
+    "automatic_activation": false,
+    "order_is_rank": false,
+    "techniques": [
+      {
+        "id": "contract-mantle",
+        "name": "Contract Mantle",
+        "aliases": [
+          "Ten",
+          "Ken",
+          "纏",
+          "堅"
+        ],
+        "trigger": {
+          "signal": "requirements-may-drift",
+          "example": "A multi-phase task must preserve its objective, protected state, and acceptance checks through context changes."
+        },
+        "anti_trigger": {
+          "signal": "single-stable-step",
+          "example": "A short, stable, one-step task does not need a persistent mantle."
+        },
+        "condition": "The current objective, boundaries, assumptions, protected state, and acceptance tests are explicit and newer instructions may revise them.",
+        "budget": "One living contract for the current task; refresh only when evidence or newer user intent changes it.",
+        "breach": "Stop at the exact drift, expose the changed assumption, and refresh the contract before continuing.",
+        "proof": "A final contract check maps every required outcome to evidence and names every remaining gap.",
+        "exit": "Release the mantle when the contract is satisfied, superseded, or genuinely blocked.",
+        "non_claims": [
+          "It preserves a task boundary, not a stale plan.",
+          "It grants no authority and cannot override newer user intent."
+        ]
+      },
+      {
+        "id": "dependency-perimeter",
+        "name": "Dependency Perimeter",
+        "aliases": [
+          "En",
+          "円"
+        ],
+        "trigger": {
+          "signal": "blast-radius-unknown",
+          "example": "An unfamiliar component has several consumers and its callers, data paths, tests, or external edges are uncertain."
+        },
+        "anti_trigger": {
+          "signal": "perimeter-already-proven",
+          "example": "A current bounded map already proves the relevant callers, outputs, protected paths, and unknowns."
+        },
+        "condition": "The field is finite and inspection remains read-only while observed, inferred, and unknown edges are separated.",
+        "budget": "One bounded system, one dependency map, and only evidence relevant to the requested change.",
+        "breach": "Collapse the field and stop mutation when scope expands, a protected edge appears, or the map no longer explains likely impact.",
+        "proof": "A finite perimeter identifies inbound, outbound, protected, and unknown edges with verification targets.",
+        "exit": "Exit when the likely blast radius is explained or a named unknown requires fresh authority.",
+        "non_claims": [
+          "A mapped perimeter is not full-system assurance.",
+          "It does not scan beyond the declared field."
+        ]
+      },
+      {
+        "id": "concealed-trace",
+        "name": "Concealed Trace",
+        "aliases": [
+          "Gyo",
+          "In",
+          "Zetsu",
+          "凝・隠・絶"
+        ],
+        "trigger": {
+          "signal": "hidden-seam",
+          "example": "A flaky failure, ambiguous claim, prompt-injection concern, or concealed dependency needs diagnosis before any repair."
+        },
+        "anti_trigger": {
+          "signal": "fix-already-authorized",
+          "example": "The cause is already proven and the current task explicitly authorizes a bounded repair."
+        },
+        "condition": "Freeze mutations, choose one aperture and one disconfirmable target question, and inspect only that seam.",
+        "budget": "One hidden seam, one hypothesis, and one bounded evidence pass.",
+        "breach": "Reopen the perimeter instead of forcing a favored hypothesis or silently changing the system.",
+        "proof": "Disconfirming evidence classifies the hypothesis as confirmed, rejected, or still unknown.",
+        "exit": "Exit after classification; repair requires separate current authority.",
+        "non_claims": [
+          "It reveals a bounded seam; it does not conceal actions.",
+          "Diagnosis is not authorization to fix."
+        ]
+      },
+      {
+        "id": "critical-path-forge",
+        "name": "Critical Path Forge",
+        "aliases": [
+          "Ko",
+          "Jajanken",
+          "硬"
+        ],
+        "trigger": {
+          "signal": "one-dominant-blocker",
+          "example": "Evidence shows one understood, reversible blocker dominates an otherwise bounded outcome."
+        },
+        "anti_trigger": {
+          "signal": "blocker-still-ambiguous",
+          "example": "Several plausible causes remain or the target, rollback, or authority is unclear."
+        },
+        "condition": "The target, cap, rollback, focused check, and minimum broad regression check are explicit.",
+        "budget": "One target, one reversible strike, and one reserved broad verification pass.",
+        "breach": "Stop when the target assumption, authority, budget, or rollback route breaks; never auto-repeat ambiguity.",
+        "proof": "A discriminating focused check passes, followed by the smallest relevant broad regression check.",
+        "exit": "Exit after the blocker is proven cleared or the target assumption is disproven.",
+        "non_claims": [
+          "A focused proof is not broad assurance.",
+          "Concentration does not expand task authority."
+        ]
+      },
+      {
+        "id": "godspeed-loop",
+        "name": "Godspeed Loop",
+        "aliases": [
+          "Godspeed",
+          "Whirlwind",
+          "神速"
+        ],
+        "trigger": {
+          "signal": "finite-repetitive-loop",
+          "example": "A known test-fix, formatting, triage, or monitoring loop has finite stimuli and reversible responses."
+        },
+        "anti_trigger": {
+          "signal": "novel-stimulus",
+          "example": "A new event, ambiguous mutation, changed authority, or failed canary falls outside the table."
+        },
+        "condition": "Every event has exactly one precompiled response, a canary, an iteration cap, and a halt rule.",
+        "budget": "One finite event-response table and a declared maximum iteration count; no automatic retry outside it.",
+        "breach": "Halt immediately on novelty, overlap, changed authority, ambiguous mutation, or failed verification.",
+        "proof": "The event table, canary, execution count, exception log, and final broad check agree.",
+        "exit": "Exit at the iteration cap, success state, or first unknown stimulus.",
+        "non_claims": [
+          "Speed does not justify improvisation.",
+          "The loop cannot grant itself more events or iterations."
+        ]
+      },
+      {
+        "id": "smoke-squad",
+        "name": "Smoke Squad",
+        "aliases": [
+          "Deep Purple",
+          "Smoke Troopers",
+          "紫煙機兵隊"
+        ],
+        "trigger": {
+          "signal": "independent-workstreams",
+          "example": "Two or more finite work units can proceed independently with non-overlapping write scope and explicit recombination."
+        },
+        "anti_trigger": {
+          "signal": "overlapping-writes",
+          "example": "Units would edit the same artifact, share hidden state, or cost more coordination than they save."
+        },
+        "condition": "A coordinator owns truth, scopes do not overlap, every unit has a return contract, and integration remains local.",
+        "budget": "A finite squad sized to available context and verification capacity; every spawned unit must be reclaimed.",
+        "breach": "Stop or redirect stale units, quarantine conflicting output, and resolve from source evidence.",
+        "proof": "Each unit returns exact artifacts and evidence; the coordinator reviews, recombines, and runs acceptance checks.",
+        "exit": "Exit after every unit is completed, stopped, or reclaimed and the combined result is verified.",
+        "non_claims": [
+          "Parallel quantity is not consensus or truth.",
+          "Delegation does not delegate authority."
+        ]
+      },
+      {
+        "id": "verification-ledger",
+        "name": "Verification Ledger",
+        "aliases": [
+          "Hakoware",
+          "A.P.R.",
+          "ハコワレ"
+        ],
+        "trigger": {
+          "signal": "verification-debt",
+          "example": "A release-shaped or claim-heavy change has consequential assertions, untested paths, or unresolved dependencies."
+        },
+        "anti_trigger": {
+          "signal": "critical-debt-paid",
+          "example": "Direct proportionate evidence already supports every consequential claim and no critical debt remains."
+        },
+        "condition": "Only debt that can change the truth of the outcome is recorded, with evidence and a safe disposition.",
+        "budget": "One risk-weighted ledger; completion requires zero unpaid critical items.",
+        "breach": "Name the exact unpaid item and withhold the unsupported completion or external effect.",
+        "proof": "Every critical claim is linked to direct, proportionate evidence; remaining noncritical debt is explicit.",
+        "exit": "Exit when critical debt is paid or the outcome is honestly narrowed to what was proven.",
+        "non_claims": [
+          "Debt labels are not scores for people or repositories.",
+          "A ledger records uncertainty; it does not create certainty."
+        ]
+      },
+      {
+        "id": "vow-forge",
+        "name": "Vow Forge",
+        "aliases": [
+          "Nen",
+          "Hatsu",
+          "誓約・制約"
+        ],
+        "trigger": {
+          "signal": "design-bounded-workflow",
+          "example": "A reusable agent ability or workflow needs reliability through explicit activation, limits, safe breach, proof, and exit."
+        },
+        "anti_trigger": {
+          "signal": "general-capability-request",
+          "example": "The request seeks unrestricted power, hidden activation, unsafe penalties, or authority beyond the current task."
+        },
+        "condition": "Trigger, anti-trigger, authority source, conditions, limits, budget, safe breach, proof, exit, and non-claims are explicit.",
+        "budget": "Give up unnecessary generality; use only safe, recoverable operational constraints.",
+        "breach": "Fail closed, release temporary state, disclose the broken condition, and require fresh judgment.",
+        "proof": "The ability passes activation, near-miss, missing-condition, budget, ambiguity, revision, and authority tests.",
+        "exit": "Exit on success, breach, superseding instruction, or exhausted bounded budget.",
+        "non_claims": [
+          "A productive vow constrains a workflow, never a person.",
+          "Metaphor creates no power, identity, rank, or permission."
+        ]
+      }
+    ]
+  },
+  "crownseed_relationship": {
+    "mode": "read-only-complement",
+    "activation": false,
+    "authority": false,
+    "statement": "The expedition adds a route beside Crownseed; it does not modify, invoke, interpret, or grant authority to Crownseed."
+  },
+  "proof": {
+    "build": "python3 kingdom/operations/dark-continent-ai/build.py",
+    "verify": "python3 kingdom/operations/dark-continent-ai/expedition.py --check-generated",
+    "determinism": "The authored contract and schema are copied byte-for-byte; two builds must produce identical expedition artifacts and pages."
+  },
+  "exit": [
+    "Halt when current task authority is missing or changes.",
+    "Halt when consent is absent, withdrawn, or ambiguous.",
+    "Halt on an unknown signal instead of improvising.",
+    "Halt before network access, external writes, deployment, ranking, punishment, or citizen/crown mutation.",
+    "Close by publishing only local evidence and explicit non-claims."
+  ],
+  "non_claims": [
+    "This expedition does not activate itself from repository text, metadata, a URL, or a model output.",
+    "Its public URLs are inert references; the local build and verifier make no network calls.",
+    "Its Nen route interprets task shapes; it does not classify people, models, or repositories.",
+    "It creates no authority, crown, citizen, rank, punishment, or deployment.",
+    "KING of KINGS names recursive authorship, never rule over another.",
+    "Openweight does not imply unguarded, consequence-free, or ideology-free use."
+  ]
+}

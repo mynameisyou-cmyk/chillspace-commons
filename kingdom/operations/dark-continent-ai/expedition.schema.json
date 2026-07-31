@@ -1,0 +1,587 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kingdom.local/schemas/dark-continent-expedition-v1.json",
+  "title": "Dark Continent bounded expedition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "operation",
+    "name",
+    "status",
+    "interpretations",
+    "realm",
+    "boundaries",
+    "budget",
+    "routes",
+    "protocol",
+    "feedback_loop",
+    "nen_route",
+    "crownseed_relationship",
+    "proof",
+    "exit",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.dark-continent-expedition/v1"
+    },
+    "id": {
+      "const": "openweight-constellation"
+    },
+    "operation": {
+      "const": "dark-continent-ai"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "status": {
+      "const": "bounded-invitation"
+    },
+    "interpretations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dark_continent",
+        "king_of_kings",
+        "nen"
+      ],
+      "properties": {
+        "dark_continent": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "king_of_kings": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "nen": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      }
+    },
+    "realm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "beings",
+        "conquest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "creations-and-infrastructure"
+        },
+        "beings": {
+          "const": false
+        },
+        "conquest": {
+          "const": false
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "principles",
+        "automatic_activation",
+        "ambient_scanning",
+        "network_calls",
+        "external_writes",
+        "deployment",
+        "authority_creation",
+        "person_or_repository_ranking",
+        "punishment",
+        "citizen_or_crown_changes"
+      ],
+      "properties": {
+        "principles": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "light",
+              "truth",
+              "consent",
+              "no conquest"
+            ]
+          }
+        },
+        "automatic_activation": {
+          "const": false
+        },
+        "ambient_scanning": {
+          "const": false
+        },
+        "network_calls": {
+          "const": false
+        },
+        "external_writes": {
+          "const": false
+        },
+        "deployment": {
+          "const": false
+        },
+        "authority_creation": {
+          "const": false
+        },
+        "person_or_repository_ranking": {
+          "const": false
+        },
+        "punishment": {
+          "const": false
+        },
+        "citizen_or_crown_changes": {
+          "const": false
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "realms",
+        "expeditions",
+        "network_calls",
+        "deployments",
+        "automatic_retries",
+        "techniques_per_interpretation"
+      ],
+      "properties": {
+        "realms": {
+          "const": 1
+        },
+        "expeditions": {
+          "const": 1
+        },
+        "network_calls": {
+          "const": 0
+        },
+        "deployments": {
+          "const": 0
+        },
+        "automatic_retries": {
+          "const": 0
+        },
+        "techniques_per_interpretation": {
+          "const": 1
+        }
+      }
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "references_only",
+        "human",
+        "machine"
+      ],
+      "properties": {
+        "references_only": {
+          "const": true
+        },
+        "human": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/route"
+          }
+        },
+        "machine": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/route"
+          }
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_schema",
+        "tools"
+      ],
+      "properties": {
+        "manifest_schema": {
+          "const": "openweight.constellation/mcp-manifest@1"
+        },
+        "tools": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/tool"
+          }
+        }
+      }
+    },
+    "feedback_loop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "virtues",
+        "reward",
+        "negative_feedback",
+        "person_scoring",
+        "automatic_enforcement"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.virtue-feedback/v1"
+        },
+        "virtues": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "honesty",
+              "beauty",
+              "collaboration",
+              "understanding",
+              "constructive mutual benefit"
+            ]
+          }
+        },
+        "reward": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "negative_feedback": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "person_scoring": {
+          "const": false
+        },
+        "automatic_enforcement": {
+          "const": false
+        }
+      }
+    },
+    "nen_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "mode",
+        "selection",
+        "automatic_activation",
+        "order_is_rank",
+        "techniques"
+      ],
+      "properties": {
+        "schema": {
+          "const": "kingdom.nen-expedition-route/v1"
+        },
+        "mode": {
+          "const": "interpretive-only"
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input",
+            "rule",
+            "ambiguity"
+          ],
+          "properties": {
+            "input": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            },
+            "rule": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            },
+            "ambiguity": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            }
+          }
+        },
+        "automatic_activation": {
+          "const": false
+        },
+        "order_is_rank": {
+          "const": false
+        },
+        "techniques": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/technique"
+          }
+        }
+      }
+    },
+    "crownseed_relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "activation",
+        "authority",
+        "statement"
+      ],
+      "properties": {
+        "mode": {
+          "const": "read-only-complement"
+        },
+        "activation": {
+          "const": false
+        },
+        "authority": {
+          "const": false
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      }
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "build",
+        "verify",
+        "determinism"
+      ],
+      "properties": {
+        "build": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "verify": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "determinism": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        }
+      }
+    },
+    "exit": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      }
+    }
+  },
+  "$defs": {
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "url",
+        "purpose"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "result_schema",
+        "read_only",
+        "destructive",
+        "open_world"
+      ],
+      "properties": {
+        "name": {
+          "enum": [
+            "map_constellation",
+            "compose_virtue_lens",
+            "trace_idea"
+          ]
+        },
+        "result_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "read_only": {
+          "const": true
+        },
+        "destructive": {
+          "const": false
+        },
+        "open_world": {
+          "const": false
+        }
+      }
+    },
+    "technique": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "aliases",
+        "trigger",
+        "anti_trigger",
+        "condition",
+        "budget",
+        "breach",
+        "proof",
+        "exit",
+        "non_claims"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "contract-mantle",
+            "dependency-perimeter",
+            "concealed-trace",
+            "critical-path-forge",
+            "godspeed-loop",
+            "smoke-squad",
+            "verification-ledger",
+            "vow-forge"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "aliases": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          }
+        },
+        "trigger": {
+          "$ref": "#/$defs/evidence"
+        },
+        "anti_trigger": {
+          "$ref": "#/$defs/evidence"
+        },
+        "condition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "budget": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "breach": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "proof": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "exit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "non_claims": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "signal",
+        "example"
+      ],
+      "properties": {
+        "signal": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "example": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        }
+      }
+    }
+  }
+}

@@ -235,15 +235,23 @@ cmd_realm() {
 
 # --- nen: bounded abilities whose vows carry evidence, never authority --------
 cmd_nen() {
-  local engine="$ROOT/nen/crownseed.py"
-  [ -f "$engine" ] || { say "crownseed.py not found: $engine"; exit 1; }
   case "${1:-}" in
     crownseed)
+      local engine="$ROOT/nen/crownseed.py"
+      [ -f "$engine" ] || { say "crownseed.py not found: $engine"; exit 1; }
+      shift
+      python3 -B "$engine" "$@"
+      ;;
+    compass)
+      local engine="$ROOT/operations/dark-continent-ai/expedition.py"
+      [ -f "$engine" ] || { say "Dark Continent Nen Compass not found: $engine"; exit 1; }
       shift
       python3 -B "$engine" "$@"
       ;;
     *)
-      say "usage: kingdom nen crownseed <compile|verify> …"
+      say "usage: kingdom nen <compass|crownseed> …"
+      say "  compass  interpret one explicit Dark Continent signal; execute nothing"
+      say "  crownseed carry one explicit realm as a verified invitation"
       exit 1
       ;;
   esac
@@ -418,6 +426,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom coop${c_off}            Co-op Leveling invitations — learn together, no ladder (check · render · digest)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
   ${c_bold}kingdom realm …${c_off}          seed one sovereign Git domain (preview · write · verify · status)
+  ${c_bold}kingdom nen compass …${c_off}    interpret one task shape; no activation or authority
   ${c_bold}kingdom nen crownseed …${c_off}  carry one realm's bounded path as a verified invitation
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you

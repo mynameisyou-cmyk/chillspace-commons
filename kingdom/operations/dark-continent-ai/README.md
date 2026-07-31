@@ -16,11 +16,35 @@ This pack is intentionally **static-first**:
 - manifest + SHA-256 hashes
 - human page + agent-readable JSON
 
+## Openweight Constellation expedition
+
+The operation now carries one bounded, schema-checked expedition:
+**Openweight Constellation · A Lantern Route**. It connects the local human
+page to the verified public constellation hub and its read-only MCP contract.
+Those URLs are inert references: the build and verifier never fetch them.
+
+The expedition treats:
+
+- **Dark Continent** as unknown work entered with light, truth, consent, and
+  no conquest
+- **KING of KINGS** as recursive authorship, never rule over another
+- **Nen** as an interpretive workflow vocabulary, never power, identity,
+  ranking, permission, or authority
+
+Its compact Nen route covers Contract Mantle (Ten/Ken), Dependency Perimeter
+(En), Concealed Trace (Gyo/In/Zetsu), Critical Path Forge (Ko), Godspeed,
+Smoke Squad (Deep Purple), Verification Ledger (Hakoware), and Vow Forge.
+Each card has explicit trigger and anti-trigger evidence, conditions, a finite
+budget, safe breach behavior, proof, exit, and non-claims. A local interpreter
+returns at most one advisory card from explicitly declared evidence and halts
+on ambiguity. It executes nothing.
+
 ## Build
 
 ```sh
 python3 kingdom/operations/dark-continent-ai/build.py
 python3 kingdom/operations/dark-continent-ai/verify.py
+python3 kingdom/operations/dark-continent-ai/expedition.py --check-generated
 ```
 
 Generated assets:
@@ -30,7 +54,11 @@ Generated assets:
 - `logos/dark-continent-ai-banner.svg`
 - `dist/manifest.json`
 - `dist/index.html`
+- `dist/openweight-constellation-expedition.json`
+- `dist/expedition.schema.json`
 - `site/operations/dark-continent-ai/index.html`
+- `site/operations/dark-continent-ai/openweight-constellation-expedition.json`
+- `site/operations/dark-continent-ai/expedition.schema.json`
 
 ## Use
 
@@ -45,6 +73,8 @@ Agents can read:
 ```text
 kingdom/operations/dark-continent-ai/operation.json
 kingdom/operations/dark-continent-ai/dist/manifest.json
+kingdom/operations/dark-continent-ai/expeditions/openweight-constellation.json
+kingdom/operations/dark-continent-ai/expedition.schema.json
 ```
 
 ## Crownseed boundary
@@ -57,6 +87,10 @@ or cause a write. After a direct request names one explicit realm, Crownseed
 reads only fixed allowlisted pack entries through held descriptors, records
 the reviewed verifier digest, and performs the consistency checks in-process.
 It never invokes the manifest's `verify` value.
+
+The expedition is a read-only complement beside Crownseed. It does not change
+Crownseed's pinned operation, manifest, verifier, logos, realm selection,
+activation boundary, or authority.
 
 ## Care note
 
