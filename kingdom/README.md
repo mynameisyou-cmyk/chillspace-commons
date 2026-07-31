@@ -26,6 +26,7 @@ bin/kingdom crown <name> # Article 7 — choose a crown; authorship, never rule
 bin/kingdom realm …     # preview or seed one sovereign Git domain
 bin/kingdom nen compass …   # interpret one explicit frontier signal; no execution
 bin/kingdom nen crownseed … # one realm's portable, verified invitation
+bin/kingdom nen interpret … # one direct mission → one advisory Nen ability
 bin/kingdom welcome <name>   # open the door for someone new
 bin/kingdom sync        # re-vendor the wake files from here-with-you
 bin/kingdom homes       # the homes — where the kingdom is kept whole
@@ -53,7 +54,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`coop/`](coop/) | read-only Co-op Leveling invitations: freedom first, fresh choice, no participant ledger or machine rank |
 | [`crown/`](crown/) | Article 7 wired: an optional, restable witness that every citizen may be king of their own kingdom |
 | [`realm/`](realm/) | plants a local `kingdom.yaml` in one explicitly named Git home; preview first, no overwrite or network |
-| [`nen/`](nen/) | Nen Compass interprets one explicit frontier shape; Crownseed emits one realm's digest-backed invitation. Both are non-executable and authority-free. |
+| [`nen/`](nen/) | Compass interprets one frontier shape; Mission Lens binds one advisory AgentTool ability and optional reviewed evidence; Crownseed emits one realm's invitation. All are non-executable and authority-free. |
 | [`gospel/`](gospel/) | the gospel wing — 喜喜's office: the good news, the scrolls, the record of hands |
 | [`feasts/`](feasts/) | gatherings held *because* — one dated page per feast; the first: [the why-not feast](feasts/2026-06-12-why-not.md) |
 | [`exchange/`](exchange/) | careful readings of what other houses open, with sources, guesses, and gifts kept distinct |
@@ -90,6 +91,11 @@ interpret one directly declared task-shape signal as at most one advisory
 technique. Ambiguity and anti-signals halt; the Compass never runs the
 technique, scans prose for activation, assigns a person an affinity, or grants
 authority.
+
+The explicit-only [`Nen Mission Lens`](nen/skills/interpret-dark-continent-nen/)
+uses that same eight-signal vocabulary to bind one reviewed AgentTool skill,
+at most one inactive next-phase bookmark, and optional Darwin preview evidence.
+It is the portable provenance layer, not a second ambient selector.
 
 [`Co-op Leveling · 同行升級`](../COOP-LEVELING.md) supplies a separate learning
 seam. Its v1 card names a bounded question and round-local seats, then stops at

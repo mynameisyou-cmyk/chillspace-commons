@@ -113,6 +113,20 @@ The expedition is a read-only complement beside Crownseed. It does not change
 Crownseed's pinned operation, manifest, verifier, logos, realm selection,
 activation boundary, or authority.
 
+## Nen Mission Lens
+
+The separate
+[`interpret-dark-continent-nen`](../../nen/skills/interpret-dark-continent-nen/)
+skill is the provenance layer beside the Compass: it binds one explicitly
+chosen advisory AgentTool ability and can attach one reviewed Darwin Browser
+broker preview card. It does not replace the Compass's passive expedition
+registry. That evidence is adjacent to this operation pack, not part of its
+manifest or Crownseed v1. The interpreter never reads the operations registry,
+follows its `active` state, or executes its `verify` string. The skill host
+requires a direct current request, while the card marks that provenance as an
+unauthenticated caller assertion; the exact evidence ID is also required.
+Selection still installs, activates, and executes nothing.
+
 ## Care note
 
 These logos are original symbolic operation marks. They do not claim affiliation

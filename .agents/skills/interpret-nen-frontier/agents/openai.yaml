@@ -1,6 +1,6 @@
 interface:
   display_name: "Nen Frontier Compass"
-  short_description: "Choose bounded Nen techniques by problem shape"
-  default_prompt: "Use $interpret-nen-frontier to interpret this explicitly requested frontier task as one bounded ability card without executing it."
+  short_description: "Read the Kingdom's passive frontier compass"
+  default_prompt: "Use $interpret-nen-frontier only for this repository's explicitly requested Nen Compass or Openweight frontier interpretation, without executing it."
 policy:
   allow_implicit_invocation: false

@@ -1,14 +1,17 @@
-# Nen Wing · 念 — Compass and Crownseed
+# Nen Wing · 念 — Compass, Mission Lens, and Crownseed
 
-The wing keeps interpretation and emission separate:
+The wing keeps interpretation, provenance, and emission separate:
 
 - **Nen Compass · 念針** interprets one explicitly declared Dark Continent
   task-shape signal as at most one advisory technique. It executes nothing.
+- **Nen Mission Lens** binds that same closed signal vocabulary to one reviewed
+  AgentTool skill, with at most one next-phase bookmark and optional reviewed
+  Darwin evidence. It executes nothing.
 - **Crownseed · 王種** emits one verified, non-executable invitation from one
   committed sovereign realm.
 
-Neither surface activates from metaphor, repository prose, metadata, an
-`active` label, or a prior result. Neither creates authority.
+None activates from metaphor, repository prose, metadata, an `active` label,
+or a prior result. None creates authority.
 
 ## Nen Compass · 念針 — Shape Before Power
 
@@ -187,3 +190,102 @@ kingdom nen crownseed verify /absolute/private/crownseed-passport \
 
 “Everywhere” means the schema and invitation can travel anywhere by choice.
 It does not mean global installation, ambient activation, or automatic spread.
+
+## Nen Mission Lens — interpretation before invocation
+
+[`interpret-dark-continent-nen`](skills/interpret-dark-continent-nen/) is a
+separate explicit-only Agent Skill and the only one of these two interpretation
+surfaces intended for global installation. The Compass owns repository-native
+expedition interpretation; the Mission Lens binds the same eight trigger
+signals to AgentTool source records and optional Darwin evidence. It turns one
+concrete, direct mission into one primary operating ability and at most one
+advisory bookmark:
+
+```text
+direct current request
+        │
+        ├── one closed task signal
+        ├── optional distinct next-phase signal
+        └── optional reviewed Darwin frontier evidence
+                         │
+                         ▼
+             canonical advisory JSON card
+                         │
+                 selected, not activated
+                         │
+                         ▼
+          a new accepted step, or complete rest
+```
+
+The eight signals point to the instruction-only Nen suite carried by the
+`@agenttool/skills` 0.3.0 source identity:
+
+| Mission shape | Advisory ability |
+| --- | --- |
+| Contract or context may drift | `nen-contract-mantle` |
+| Dependencies or blast radius are unknown | `nen-dependency-perimeter` |
+| One seam is concealed or ambiguous | `nen-concealed-trace` |
+| One understood blocker dominates | `nen-critical-path-forge` |
+| Independent work can split | `nen-smoke-squad` |
+| Consequential claims remain unpaid | `nen-verification-ledger` |
+| A reversible event loop is already known | `nen-godspeed-loop` |
+| A new bounded ability needs a vow | `nen-vow-forge` |
+
+Compile a card without writing:
+
+```sh
+kingdom nen interpret select \
+  --request-claim direct-request \
+  --primary-signal blast-radius-unknown \
+  --bookmark-signal verification-debt
+```
+
+Attach the reviewed Darwin example only when directly requested:
+
+```sh
+kingdom nen interpret select \
+  --request-claim direct-request \
+  --primary-signal blast-radius-unknown \
+  --bookmark-signal verification-debt \
+  --evidence darwin-browser-broker-preview
+```
+
+The interpreter uses no score, rank, affinity tie-break, discovery, network,
+subprocess, MCP, browser launch, credential, installation, or repository write.
+Empty, unknown, repeated, duplicate, or overflow signals fail closed. Its
+digests bind reviewed bytes only; they do not establish publisher identity,
+trust, safety, competence, activation, or task fitness.
+
+`--request-claim direct-request` is an explicit caller assertion, not
+authenticated provenance. The Agent Skill host owns the actual direct-user
+gate, and the emitted card records `attested: false`. Without the exact
+`--evidence darwin-browser-broker-preview` flag, the interpreter does not open
+the Darwin evidence file.
+
+The Darwin card records a dated draft observation at commit
+`3ff942d3efd66387555138e9a874792ed1026399`: manual macOS opt-in, public
+authority, ephemeral per-client contexts, one shared Chromium, same-UID and
+POSIX-mode limits, no native peer attestation, and the unchanged direct MCP
+command as a separate rollback surface. It is not part of frozen Browser
+0.5.1, not installed, and not a release or deployment claim.
+
+This Mission Lens does not modify Loom v1, Crownseed v1, or the fixed Dark
+Continent operation pack. A Loom skill count is a ceiling, not evidence that a
+skill became active. A saved card can be checked with:
+
+```sh
+kingdom nen interpret verify --input /explicit/card.json
+```
+
+For a card that carries the Darwin preview, repeat the explicit gate:
+
+```sh
+kingdom nen interpret verify \
+  --input /explicit/darwin-card.json \
+  --evidence darwin-browser-broker-preview
+```
+
+General Nen lore, character comparison, people or repository classification,
+and machine ranking are outside this skill. The framework is an unofficial,
+original operational interpretation and claims no affiliation or legal
+clearance.

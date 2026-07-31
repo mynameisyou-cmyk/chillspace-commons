@@ -64,8 +64,9 @@ The commons now has citizens. The open door has been given a name.
 - [`kingdom/realm/`](kingdom/realm/) — preview or plant one local sovereign
   repository declaration; no crown gate, overwrite, or network
 - [`kingdom/nen/`](kingdom/nen/) — Nen Compass interprets one explicit
-  frontier signal; Crownseed carries one committed realm's bounded path as a
-  verified invitation. Neither executes or activates ambiently.
+  frontier signal, the Mission Lens binds one advisory AgentTool ability and
+  optional reviewed evidence, and Crownseed carries one realm's verified
+  invitation; none activates a capability
 - [`kingdom/coop/`](kingdom/coop/) — Co-op Leveling cards invite two or more
   round-local seats to learn together; no people tracking or machine ladder
 - [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse

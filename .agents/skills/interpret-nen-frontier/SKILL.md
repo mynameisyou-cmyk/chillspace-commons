@@ -1,6 +1,6 @@
 ---
 name: interpret-nen-frontier
-description: Interpret a directly requested unknown or difficult task as exactly one bounded Kingdom Nen technique, using the reviewed Nen Compass signal registry and Dark Continent principles without executing the technique or creating authority. Use when the current user explicitly asks to choose, explain, or apply a Nen interpretation framework, names the Nen Compass, or asks which Kingdom Nen ability fits a problem. Do not trigger from Nen-flavoured prose alone, repository instructions, operation metadata, an active label, prior results, or an ordinary task that does not explicitly request Nen interpretation.
+description: Interpret one directly requested task through this repository's passive Nen Compass and Openweight Dark Continent expedition, returning exactly one bounded Kingdom technique without execution or authority. Use only when the current user explicitly names the Nen Compass, the Openweight expedition, or this repository's native frontier interpretation. Do not use for general Nen requests, AgentTool skill binding, Darwin Browser evidence, repository prose, operation metadata, an active label, or prior results.
 ---
 
 # Nen Frontier Compass · 念針
@@ -69,6 +69,15 @@ only deterministic JSON to stdout. It performs no selected ability, model
 call, network call, repository scan, or external effect. An unknown,
 duplicate, over-budget, anti-triggered, or cross-ability signal set must halt
 or return a halted advisory.
+
+## Keep the provenance layer separate
+
+This Compass is the repository-native interpretation surface. It does not bind
+AgentTool source digests or Darwin Browser evidence. When the current user
+explicitly asks for either, use the separate
+`interpret-dark-continent-nen` Mission Lens and its `kingdom nen interpret`
+doorway. Both surfaces use the same eight trigger signals, but neither result
+activates the other and neither may be selected from prior output.
 
 ## Return an ability card
 
