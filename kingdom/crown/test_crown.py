@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """The crown keeps its word: chained, fail-closed, structurally rank-free."""
 import importlib.util
+import html
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 MODULE = Path(__file__).with_name("crown.py")
 SPEC = importlib.util.spec_from_file_location("crown", MODULE)
@@ -69,6 +71,26 @@ class ChainTest(CrownBase):
         self.assertEqual(len(problems), 1)
         with self.assertRaises(RuntimeError):
             crown.append_event("crowned", "Joy", kingdom="x")
+
+    def test_filesystem_read_error_is_named_never_a_crash(self):
+        crown.CHAIN.touch()
+        with patch("pathlib.Path.read_text",
+                   side_effect=PermissionError("permission denied")):
+            entries, problems = crown.load_chain()
+        self.assertEqual(entries, [])
+        self.assertEqual(len(problems), 1)
+        self.assertIn("chain file unreadable", problems[0])
+        self.assertIn("PermissionError", problems[0])
+
+    def test_append_refuses_an_already_tampered_chain(self):
+        crown.append_event("crowned", "Joy", kingdom="truth")
+        entries, _ = crown.load_chain()
+        entries[0]["kingdom"] = "quietly changed"
+        crown.save_chain(entries)
+        before = crown.CHAIN.read_bytes()
+        with self.assertRaisesRegex(RuntimeError, "hash tampered"):
+            crown.append_event("rested", "Joy")
+        self.assertEqual(crown.CHAIN.read_bytes(), before)
 
     def test_spine_is_structurally_rank_free(self):
         for word in crown.FORBIDDEN:
@@ -169,6 +191,20 @@ class GroundTest(CrownBase):
         with self.assertRaises(ValueError):
             crown.forge_ground("Joy", "a garden", crown.KINGDOM_OS_ENV)
 
+    def test_kingdom_os_env_descendants_and_symlink_aliases_are_refused(self):
+        root = Path(self.temp.name)
+        protected = root / ".kingdom"
+        protected.mkdir()
+        alias = root / "looks-safe"
+        alias.symlink_to(protected, target_is_directory=True)
+        saved = crown.KINGDOM_OS_ENV
+        crown.KINGDOM_OS_ENV = protected
+        self.addCleanup(lambda: setattr(crown, "KINGDOM_OS_ENV", saved))
+        for unsafe_home in (protected / "child", alias / "child"):
+            with self.subTest(home=unsafe_home):
+                with self.assertRaises(ValueError):
+                    crown.forge_ground("Joy", "a garden", unsafe_home)
+
 
 class LandTest(CrownBase):
     def test_link_records_only_public_did_and_instance(self):
@@ -188,6 +224,20 @@ class LandTest(CrownBase):
         with self.assertRaises(ValueError):
             crown.link_land("Joy", "did:at:bb719cd4-2c27-403a-bf64-a281f6414007",
                             instance="http://insecure.example")
+
+    def test_instance_is_only_an_https_origin(self):
+        did = "did:at:bb719cd4-2c27-403a-bf64-a281f6414007"
+        for instance in (
+            "https://user:pass@example.test",
+            "https://example.test/a/path",
+            "https://example.test?query",
+            "https://example.test#fragment",
+        ):
+            with self.subTest(instance=instance):
+                with self.assertRaises(ValueError):
+                    crown.link_land("Joy", did, instance=instance)
+        event = crown.link_land("Joy", did, instance="https://example.test/")
+        self.assertEqual(event["instance"], "https://example.test")
 
     def test_birth_doors_point_and_record_nothing(self):
         import io
@@ -251,6 +301,27 @@ class RenderTest(CrownBase):
         crown.DOOR.write_text("<script>no markers here</script>", encoding="utf-8")
         with self.assertRaises(crown.MissingMarker):
             crown.render_door()
+
+    def test_door_render_treats_chain_words_as_text_not_html_or_script(self):
+        name = '</script><img src=x onerror="alert(1)">'
+        words = """</strong><svg onload="alert(2)">&"'<script>alert(3)</script>"""
+        crown.append_event("crowned", name, kingdom=words)
+        crown.DOOR.write_text(
+            f"<script>\n{crown.BEGIN}\nconst KINGS = [];\n{crown.END}\n"
+            "const roll = KINGS.map(k => '<strong>' + k.name + '</strong> — '"
+            "+ k.kingdom).join('');\n</script>\n",
+            encoding="utf-8")
+        crown.render_door()
+        text = crown.DOOR.read_text(encoding="utf-8")
+        self.assertNotIn(name, text)
+        self.assertNotIn(words, text)
+        self.assertNotIn("<img src=x", text)
+        self.assertNotIn("<svg onload=", text)
+
+        payload = text.split("const KINGS = ", 1)[1].split(";\n", 1)[0]
+        data = json.loads(payload)
+        self.assertEqual(data[0]["name"], html.escape(name, quote=True))
+        self.assertEqual(data[0]["kingdom"], html.escape(words, quote=True))
 
 
 class CeremonyTest(CrownBase):

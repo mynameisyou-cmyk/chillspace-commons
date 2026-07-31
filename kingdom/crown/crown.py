@@ -24,12 +24,14 @@ the land step points at agenttool's own doors and records only a public did:at:.
 """
 
 import hashlib
+import html
 import json
 import re
 import subprocess
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlsplit
 
 HERE = Path(__file__).resolve().parent           # kingdom/crown/
 KINGDOM = HERE.parent                            # kingdom/
@@ -77,17 +79,28 @@ def _entry_hash(entry):
 def load_chain():
     """(entries, problems). A missing or unreadable chain is 'no crowns' plus a
     named problem — never a crash, never an invented state (fail-closed)."""
-    if not CHAIN.exists():
-        return [], []
+    try:
+        if not CHAIN.exists():
+            return [], []
+        raw = CHAIN.read_text(encoding="utf-8")
+    except OSError as ex:
+        return [], [
+            f"chain file unreadable ({type(ex).__name__}): {ex}"
+        ]
     entries, problems = [], []
-    for n, line in enumerate(CHAIN.read_text(encoding="utf-8").splitlines()):
+    for n, line in enumerate(raw.splitlines(), start=1):
         line = line.strip()
         if not line:
             continue
         try:
-            entries.append(json.loads(line))
+            entry = json.loads(line)
         except ValueError:
             problems.append(f"line {n}: unreadable — the chain needs eyes")
+            continue
+        if not isinstance(entry, dict):
+            problems.append(f"line {n}: entry is not an object — the chain needs eyes")
+            continue
+        entries.append(entry)
     return entries, problems
 
 
@@ -102,6 +115,9 @@ def _chain_problems(entries):
     problems, prev = [], GENESIS
     for i, e in enumerate(entries):
         who = e.get("name", "?")
+        missing = (set(SPINE) | {"hash"}) - set(e)
+        for k in sorted(missing):
+            problems.append(f"entry {i} ({who}): missing spine field: '{k}'")
         if e.get("seq") != i:
             problems.append(f"entry {i} ({who}): seq is {e.get('seq')}, expected {i}")
         if e.get("kind") not in KINDS:
@@ -129,6 +145,7 @@ def append_event(kind, name, **facts):
     if stray:
         raise ValueError(f"fields outside the spine: {sorted(stray)}")
     entries, problems = load_chain()
+    problems += _chain_problems(entries)
     if problems:
         raise RuntimeError("the chain needs eyes before it grows: " + "; ".join(problems))
     prev = entries[-1]["hash"] if entries else GENESIS
@@ -257,10 +274,15 @@ def forge_ground(name, declaration, home):
     """Soul-key, signed covenant, own chain — genesis woven from the family seed
     and the king's own words. Local paths never reach the public chain."""
     home = Path(home).expanduser()
-    if str(home) == str(KINGDOM_OS_ENV) or (
-            home.exists() and home.resolve() == KINGDOM_OS_ENV.resolve()):
+    try:
+        resolved_home = home.resolve(strict=False)
+        protected_home = KINGDOM_OS_ENV.expanduser().resolve(strict=False)
+    except OSError as ex:
+        raise ValueError(f"cannot safely resolve the chosen home: {ex}") from ex
+    if resolved_home == protected_home or protected_home in resolved_home.parents:
         raise ValueError(
-            "~/.kingdom belongs to Kingdom OS — the crown never touches it. "
+            "~/.kingdom and everything beneath it belong to Kingdom OS — "
+            "the crown never touches them. "
             "choose another home.")
     home.mkdir(parents=True, exist_ok=True)
 
@@ -323,9 +345,26 @@ def link_land(name, did, instance=DEFAULT_INSTANCE):
         raise ValueError(
             f"that is not a did:at: i can witness: {did!r} (expected did:at:<uuid>)")
     instance = (instance or "").strip()
-    if not instance.startswith("https://"):
-        raise ValueError("instance must be an https:// origin")
-    return append_event("land", name, did=did.strip(), instance=instance)
+    try:
+        parsed = urlsplit(instance)
+        parsed.port  # force validation of malformed ports
+    except ValueError as ex:
+        raise ValueError("instance must be a valid https:// origin") from ex
+    origin = f"https://{parsed.netloc}"
+    if (
+        parsed.scheme != "https"
+        or not parsed.hostname
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.path not in {"", "/"}
+        or parsed.query
+        or parsed.fragment
+        or instance not in {origin, origin + "/"}
+    ):
+        raise ValueError(
+            "instance must be an https:// origin with no credentials, path, "
+            "query, or fragment")
+    return append_event("land", name, did=did.strip(), instance=origin)
 
 
 def print_birth_doors():
@@ -425,6 +464,34 @@ def build_door_data():
     ]
 
 
+def _door_data_for_html():
+    """Escape every chain-sourced string before the site's innerHTML renderer.
+
+    The public page's surrounding renderer predates this wing and concatenates
+    these values into markup. Character-reference escaping keeps declarations
+    as text even when a chain entry contains markup-looking words.
+    """
+    return [
+        {
+            key: html.escape(value, quote=True) if isinstance(value, str) else value
+            for key, value in king.items()
+        }
+        for king in build_door_data()
+    ]
+
+
+def _inline_json(value):
+    """JSON safe inside a raw-text <script> element."""
+    return (
+        json.dumps(value, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+        .replace("\u2028", "\\u2028")
+        .replace("\u2029", "\\u2029")
+    )
+
+
 def render_door(target=None):
     out = Path(target) if target else DOOR
     if not out.exists():
@@ -438,7 +505,7 @@ def render_door(target=None):
         raise MissingMarker(f"the kings markers are missing from {out} — won't rewrite blind.")
     block = (
         f"{BEGIN}\n"
-        f"const KINGS = {json.dumps(build_door_data(), ensure_ascii=False)};\n"
+        f"const KINGS = {_inline_json(_door_data_for_html())};\n"
         f"{END}"
     )
     out.write_text(text[:i] + block + text[j + len(END):], encoding="utf-8")
