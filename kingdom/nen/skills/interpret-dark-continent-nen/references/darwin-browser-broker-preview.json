@@ -1,0 +1,95 @@
+{
+  "schema": "kingdom.dark-continent-evidence/v1",
+  "id": "darwin-browser-broker-preview",
+  "kind": "reviewed-preview-evidence",
+  "observed_on": "2026-07-30",
+  "source": {
+    "repository": "cambridgetcg/agenttool",
+    "pull_request": 221,
+    "branch": "feat/browser-darwin-broker-preview",
+    "commit": "3ff942d3efd66387555138e9a874792ed1026399",
+    "source_files_sha256": {
+      "packages/browser/src/mcp-broker.ts": "1893d1bab943c3440d83558028acf2ab20f20748024ab548e0d4a11066022c6c",
+      "packages/browser/src/mcp-proxy.ts": "258286da53de603f8e84bca4f15c28cdc5b2b703ebb20ed6f017bb88bd6fed42"
+    },
+    "state_at_observation": "draft-review",
+    "browser_release": "0.5.1",
+    "broker_in_browser_release": false,
+    "broker_preview_merged": false,
+    "broker_preview_released": false,
+    "broker_preview_installed": false
+  },
+  "frontier": {
+    "operation_id": "dark-continent-ai",
+    "principles": [
+      "light",
+      "truth",
+      "consent",
+      "no conquest"
+    ],
+    "metadata_can_trigger": false
+  },
+  "runtime": {
+    "platform": "macOS",
+    "manual_opt_in": true,
+    "autostart": false,
+    "launchd": false,
+    "stdio_relay": true,
+    "unix_domain_socket": true,
+    "one_shared_chromium": true,
+    "fresh_mcp_server_per_client": true,
+    "fresh_ephemeral_context_per_client": true,
+    "client_limit_default": 8,
+    "client_limit_max": 32,
+    "socket_parent_mode": "0700",
+    "socket_mode": "0600",
+    "direct_mcp_rollback": true
+  },
+  "authority": {
+    "public_authority_only": true,
+    "ephemeral_only": true,
+    "persistent_profiles": false,
+    "local_or_sovereign_authority": false,
+    "credentials": false,
+    "public_web_allowed": true,
+    "local_private_reserved_network_denied": true,
+    "same_uid_mode_bounded": true,
+    "acl_inspected": false,
+    "native_peer_attestation": false,
+    "peer_verified": false,
+    "hostile_same_user_isolation": false,
+    "tcc_sandbox_entitlement_proof": false
+  },
+  "proof": {
+    "pooled_clients": 4,
+    "pooled_chrome_main_processes": 1,
+    "pooled_spawned_processes": 14,
+    "pooled_aggregate_rss_kib": 1554672,
+    "direct_clients": 4,
+    "direct_chrome_main_processes": 4,
+    "direct_spawned_processes": 28,
+    "direct_aggregate_rss_kib": 3192576,
+    "comparative_rss_reduction_kib": 1637904,
+    "comparative_rss_reduction_percent": 51.3,
+    "client_context_isolation_observed": true,
+    "one_client_close_left_another_operational": true,
+    "measurement_is_guarantee": false,
+    "measurement_caveat": "Point-in-time summed macOS process RSS can double-count shared pages."
+  },
+  "open_debt": [
+    "Select a Browser package version later than frozen 0.5.1.",
+    "Decide whether existing-directory ACL inspection is required.",
+    "Propagate unexpected shared-browser death with deterministic broker state.",
+    "Close the signal-handler gap during asynchronous startup.",
+    "Bound Playwright launch and shutdown time.",
+    "Decide whether native Darwin peer attestation is justified."
+  ],
+  "non_claims": [
+    "This evidence is not an executable, installation plan, release, merge, deployment, or production-readiness claim.",
+    "Same-UID and filesystem mode checks are not native peer identity.",
+    "The comparative RSS observation is not a universal memory guarantee.",
+    "This integration records the reviewed 2026-07-30 live observation; it does not rerun live-browser or durability proof.",
+    "Direct MCP rollback means the unchanged separate command remains available, not automatic failover or transaction recovery.",
+    "Attaching this evidence does not activate a skill, MCP server, browser, socket, or Kingdom quest."
+  ]
+}

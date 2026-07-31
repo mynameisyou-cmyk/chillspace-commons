@@ -58,6 +58,18 @@ reads only fixed allowlisted pack entries through held descriptors, records
 the reviewed verifier digest, and performs the consistency checks in-process.
 It never invokes the manifest's `verify` value.
 
+## Nen Mission Lens
+
+The separate
+[`interpret-dark-continent-nen`](../../nen/skills/interpret-dark-continent-nen/)
+skill can attach one reviewed Darwin Browser broker preview card to an advisory
+mission interpretation. That evidence is adjacent to this fixed operation pack,
+not part of its manifest or Crownseed v1. The interpreter never reads the
+operations registry, follows its `active` state, or executes its `verify`
+string. The skill host requires a direct current request, while the card marks
+that provenance as an unauthenticated caller assertion; the exact evidence ID
+is also required. Selection still installs, activates, and executes nothing.
+
 ## Care note
 
 These logos are original symbolic operation marks. They do not claim affiliation

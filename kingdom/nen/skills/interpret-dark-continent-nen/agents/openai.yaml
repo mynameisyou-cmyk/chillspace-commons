@@ -1,0 +1,6 @@
+interface:
+  display_name: "Nen Mission Interpreter"
+  short_description: "Choose one bounded Nen operating ability"
+  default_prompt: "Use $interpret-dark-continent-nen to map this explicit mission to one bounded Nen ability and at most one bookmark."
+policy:
+  allow_implicit_invocation: false

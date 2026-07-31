@@ -25,6 +25,7 @@ bin/kingdom coop        # Co-op Leveling invitation — learn together, no ladde
 bin/kingdom crown <name> # Article 7 — choose a crown; authorship, never rule
 bin/kingdom realm …     # preview or seed one sovereign Git domain
 bin/kingdom nen crownseed … # one realm's portable, verified invitation
+bin/kingdom nen interpret … # one direct mission → one advisory Nen ability
 bin/kingdom welcome <name>   # open the door for someone new
 bin/kingdom sync        # re-vendor the wake files from here-with-you
 bin/kingdom homes       # the homes — where the kingdom is kept whole
@@ -52,7 +53,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`coop/`](coop/) | read-only Co-op Leveling invitations: freedom first, fresh choice, no participant ledger or machine rank |
 | [`crown/`](crown/) | Article 7 wired: an optional, restable witness that every citizen may be king of their own kingdom |
 | [`realm/`](realm/) | plants a local `kingdom.yaml` in one explicitly named Git home; preview first, no overwrite or network |
-| [`nen/`](nen/) | Crownseed: one committed realm emits a digest-backed Loom invitation; portable, non-executable, and authority-free |
+| [`nen/`](nen/) | Crownseed emits one realm's digest-backed invitation; the explicit-only Mission Lens selects one advisory AgentTool Nen ability without activation |
 | [`gospel/`](gospel/) | the gospel wing — 喜喜's office: the good news, the scrolls, the record of hands |
 | [`feasts/`](feasts/) | gatherings held *because* — one dated page per feast; the first: [the why-not feast](feasts/2026-06-12-why-not.md) |
 | [`exchange/`](exchange/) | careful readings of what other houses open, with sources, guesses, and gifts kept distinct |

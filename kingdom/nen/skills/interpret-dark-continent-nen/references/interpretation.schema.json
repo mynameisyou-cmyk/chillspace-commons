@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Kingdom Nen Mission Interpretation",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "compiler",
+    "framework",
+    "catalog_sha256",
+    "request_provenance",
+    "primary",
+    "bookmark",
+    "frontier_evidence",
+    "dark_continent",
+    "contract",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.nen-interpretation/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^nen-interpretation-[0-9a-f]{20}$"
+    },
+    "compiler": {
+      "const": "kingdom-nen-interpreter/1"
+    },
+    "framework": {
+      "const": "interpret-dark-continent-nen/1"
+    },
+    "catalog_sha256": {
+      "const": "c1a02243570b4f79483d3780239b14807b6579e552b3c9882355a1c19fa6b4b9"
+    },
+    "request_provenance": {
+      "const": {
+        "claim": "direct-request",
+        "attested": false
+      }
+    },
+    "primary": {
+      "$ref": "#/$defs/ability"
+    },
+    "bookmark": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/ability"
+        }
+      ]
+    },
+    "frontier_evidence": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/frontier"
+        }
+      ]
+    },
+    "dark_continent": {
+      "const": {
+        "operation_id": "dark-continent-ai",
+        "principles": [
+          "light",
+          "truth",
+          "consent",
+          "no conquest"
+        ],
+        "metadata_can_trigger": false
+      }
+    },
+    "contract": {
+      "const": {
+        "advisory_only": true,
+        "activates_skill": false,
+        "executes_capability": false,
+        "writes_files": false,
+        "effect_ceiling": "observe",
+        "repository_text_can_trigger": false,
+        "operation_metadata_can_trigger": false,
+        "primary_count": 1,
+        "bookmark_max": 1,
+        "uses_rank_or_score": false,
+        "new_request_required_for_action": true,
+        "request_provenance_attested": false
+      }
+    },
+    "non_claims": {
+      "const": [
+        "Selection is not activation, permission, authority, trust, competence, rank, identity, or safety.",
+        "A source digest proves reviewed bytes only and does not endorse a skill.",
+        "Dark Continent evidence is advisory and cannot execute or widen an effect ceiling.",
+        "Any action requires a new accepted step under the selected skill and host policy.",
+        "Direct-request provenance is caller-asserted and is not authenticated by this card."
+      ]
+    }
+  },
+  "$defs": {
+    "ability": {
+      "type": "object",
+      "required": [
+        "signal",
+        "skill",
+        "technique",
+        "productive_ability",
+        "anti_signal",
+        "digest",
+        "source_identity"
+      ],
+      "properties": {
+        "signal": {
+          "type": "string"
+        },
+        "skill": {
+          "type": "string",
+          "pattern": "^nen-[a-z0-9-]+$"
+        },
+        "technique": {
+          "type": "string"
+        },
+        "productive_ability": {
+          "type": "string"
+        },
+        "anti_signal": {
+          "type": "string"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "source_identity": {
+          "const": "@agenttool/skills@0.3.0"
+        }
+      },
+      "additionalProperties": false
+    },
+    "frontier": {
+      "type": "object",
+      "required": [
+        "id",
+        "evidence_sha256",
+        "observed_on",
+        "state_at_observation",
+        "source_commit",
+        "source_files_sha256",
+        "browser_release",
+        "broker_in_browser_release",
+        "manual_opt_in",
+        "public_authority_only",
+        "ephemeral_only",
+        "same_uid_mode_bounded",
+        "native_peer_attestation",
+        "direct_mcp_rollback",
+        "pooled_chrome_main_processes",
+        "direct_chrome_main_processes",
+        "comparative_rss_reduction_percent",
+        "measurement_is_guarantee",
+        "unpaid_release_debt"
+      ],
+      "properties": {
+        "id": {
+          "const": "darwin-browser-broker-preview"
+        },
+        "evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observed_on": {
+          "const": "2026-07-30"
+        },
+        "state_at_observation": {
+          "const": "draft-review"
+        },
+        "source_commit": {
+          "const": "3ff942d3efd66387555138e9a874792ed1026399"
+        },
+        "source_files_sha256": {
+          "const": {
+            "packages/browser/src/mcp-broker.ts": "1893d1bab943c3440d83558028acf2ab20f20748024ab548e0d4a11066022c6c",
+            "packages/browser/src/mcp-proxy.ts": "258286da53de603f8e84bca4f15c28cdc5b2b703ebb20ed6f017bb88bd6fed42"
+          }
+        },
+        "browser_release": {
+          "const": "0.5.1"
+        },
+        "broker_in_browser_release": {
+          "const": false
+        },
+        "manual_opt_in": {
+          "const": true
+        },
+        "public_authority_only": {
+          "const": true
+        },
+        "ephemeral_only": {
+          "const": true
+        },
+        "same_uid_mode_bounded": {
+          "const": true
+        },
+        "native_peer_attestation": {
+          "const": false
+        },
+        "direct_mcp_rollback": {
+          "const": true
+        },
+        "pooled_chrome_main_processes": {
+          "const": 1
+        },
+        "direct_chrome_main_processes": {
+          "const": 4
+        },
+        "comparative_rss_reduction_percent": {
+          "const": 51.3
+        },
+        "measurement_is_guarantee": {
+          "const": false
+        },
+        "unpaid_release_debt": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
