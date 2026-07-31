@@ -97,3 +97,6 @@ jobs:
 
       - name: every realm begins by its own hand
         run: python3 kingdom/realm/test_realm.py
+
+      - name: every Crownseed carries a path, never a throne
+        run: python3 kingdom/nen/test_crownseed.py

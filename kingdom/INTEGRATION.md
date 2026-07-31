@@ -10,6 +10,7 @@
 citizen
 ├── chooses ───────> Crown witness
 ├── plants ────────> local realm ──bounded invitation──> Loom
+│                              └──Crownseed passport──> another realm chooses
 └── offers / needs─> Civilisation commons (introduction)
 
 none grants authority to the next
@@ -19,8 +20,32 @@ none grants authority to the next
 - Realm Seed writes one local manifest only after an explicit `--write`.
 - Civilisation matches exact tags; it never dispatches work.
 - Loom carries a bounded quest; the recipient still accepts or refuses it.
+- Crownseed binds one committed realm, one Loom quest, and the fixed Dark
+  Continent care boundary. It is portable evidence, never executable code.
 - `dependsOn` describes a technical relation, never fealty. No realm inherits
   authority through a dependency, adoption, discovery result, or parent story.
+
+## The recursive path
+
+**Sovereignty recurses; rule does not.** A KING of KINGS is therefore not a
+higher rank. It is a realm able to offer the same complete sovereignty path
+onward without reducing the next realm's choice:
+
+```text
+committed Realm Seed
+        │ direct request, one explicit root
+        ▼
+ Crownseed · 王種
+        │ schema + hashes + Loom invitation; no runner
+        ▼
+ receiving realm ── accepts / refuses / rests
+```
+
+Dark Continent operation data supplies the words `light · truth · consent · no
+conquest`; it supplies no trigger. Crownseed never scans for realms, interprets
+prompt-visible logos as instructions, copies itself, invokes an agent, or
+executes the quest. “Everywhere” means the invitation can travel by choice,
+not that the system installs or propagates itself.
 
 ## Citizens and domains
 

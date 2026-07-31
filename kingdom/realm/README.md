@@ -34,8 +34,12 @@ kingdom realm verify --repo /absolute/existing/git-root
 The repository must already exist, be the canonical root of a local Git
 worktree, and be named explicitly by absolute path. Realm Seed never scans,
 initializes Git, commits, reads a remote, fetches, publishes, or calls a
-network. `--write` atomically creates one missing root `kingdom.yaml`; an
-existing manifest is never replaced.
+network. `--write` exclusively creates one missing root `kingdom.yaml`; an
+existing manifest is never replaced. The exact final name is reserved with an
+exclusive create and kept at mode `000` while its held file descriptor is
+written, synced, and byte-checked. Only then is it published at mode `0644`.
+An interrupted incomplete reservation remains as an unreadable quarantine for
+inspection; Realm Seed never removes a pathname or retries it automatically.
 
 The generated source contract is:
 
@@ -83,3 +87,9 @@ Kingdom index, which contains machine paths and filesystem evidence.
 
 The Kingdom of Kings is the meeting commons among sovereign realms, never a
 sovereign above them.
+
+When a committed realm wants to carry this path into one bounded unknown
+mission, [`Crownseed · 王種`](../nen/) can forge a portable Loom-backed
+passport. Crownseed does not modify the realm, execute the mission, or turn a
+manifest into authority. The next realm still accepts or refuses by its own
+hand.

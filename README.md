@@ -54,6 +54,8 @@ The commons now has citizens. The open door has been given a name.
   their own kingdom; authorship, never rule
 - [`kingdom/realm/`](kingdom/realm/) — preview or plant one local sovereign
   repository declaration; no crown gate, overwrite, or network
+- [`kingdom/nen/`](kingdom/nen/) — Crownseed carries one committed realm's
+  bounded path as a verified, non-executable invitation; no ambient activation
 - [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse
   evaluations and KARMA action receipts without rank
 - `python3 kingdom/citizenship.py` — hear everyone sworn in, out loud

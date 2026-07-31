@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.ai-love.cc/schemas/kingdom.crownseed.v1.json",
+  "title": "Crownseed · 王種 Passport",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "generated_at",
+    "compiler",
+    "name",
+    "realm",
+    "quest",
+    "frontier",
+    "sovereignty",
+    "unknowns",
+    "contract",
+    "budget",
+    "breach",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": { "const": "kingdom.crownseed/v1" },
+    "id": { "type": "string", "pattern": "^crownseed-[0-9a-f]{20}$" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "compiler": { "const": "kingdom-crownseed/1" },
+    "name": { "const": "Crownseed · 王種 — One Realm, One Lantern" },
+    "realm": {
+      "type": "object",
+      "required": [
+        "name",
+        "domain",
+        "manifest",
+        "manifest_sha256",
+        "manifest_bytes",
+        "tracked_at_head",
+        "declaration_is_self_claim"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "domain": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "manifest": { "const": "kingdom.yaml" },
+        "manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "manifest_bytes": { "type": "integer", "minimum": 1, "maximum": 128000 },
+        "tracked_at_head": { "const": true },
+        "declaration_is_self_claim": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "quest": {
+      "type": "object",
+      "required": [
+        "schema",
+        "id",
+        "packet_sha256",
+        "archive_sha256",
+        "effect_ceiling",
+        "repository_bound",
+        "requires_separate_acceptance"
+      ],
+      "properties": {
+        "schema": { "const": "kingdom.quest/v1" },
+        "id": { "type": "string", "pattern": "^quest-[0-9a-f]{20}$" },
+        "packet_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "archive_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "effect_ceiling": {
+          "enum": ["observe", "local-draft", "repository-change"]
+        },
+        "repository_bound": { "const": true },
+        "requires_separate_acceptance": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "frontier": {
+      "type": "object",
+      "required": [
+        "operation_id",
+        "operation_sha256",
+        "manifest_sha256",
+        "verifier_sha256",
+        "principles",
+        "metadata_can_trigger"
+      ],
+      "properties": {
+        "operation_id": { "const": "dark-continent-ai" },
+        "operation_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "verifier_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "principles": {
+          "const": ["light", "truth", "consent", "no conquest"]
+        },
+        "metadata_can_trigger": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "sovereignty": {
+      "const": {
+        "line": "authority over what is yours, never over what is",
+        "authority_scope": "own-domain-only",
+        "crown_required": false,
+        "citizenship_granted": false,
+        "rights_earned": false,
+        "care_is_circular": true,
+        "sovereignty_recurses": true,
+        "rule_recurses": false
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": { "type": "string", "minLength": 1, "maxLength": 2000 }
+    },
+    "contract": {
+      "const": {
+        "packet_requires_separate_acceptance": true,
+        "executes_quest": false,
+        "creates_authority": false,
+        "network_effects": false,
+        "operation_metadata_can_trigger": false,
+        "repository_text_can_trigger": false
+      }
+    },
+    "budget": {
+      "const": {
+        "realms": 1,
+        "quests": 1,
+        "frontier_operations": 1,
+        "unknowns_max": 8,
+        "artifact_bytes_max": 7340032,
+        "automatic_retries": 0,
+        "network_calls": 0,
+        "external_messages": 0,
+        "deployments": 0,
+        "paid_calls": 0
+      }
+    },
+    "breach": {
+      "const": {
+        "state": "quarantined",
+        "action": "stop without retry; clear only held staging members; retain an empty private marker rather than remove a raced name",
+        "downstream_effects": false
+      }
+    },
+    "non_claims": {
+      "const": [
+        "This passport is not a Crown, citizenship, identity, ownership, rank, or continuing consent.",
+        "It is not permission, authority, trust, competence, or proof of safety.",
+        "It is not federation, a realm link, execution, completion, merge readiness, or deploy readiness.",
+        "Digests prove byte equality only; a Realm Seed remains a self-declaration.",
+        "Dark Continent verification proves bounded artifact consistency, not operational safety.",
+        "A Loom effect ceiling is a ceiling, never a grant."
+      ]
+    }
+  },
+  "additionalProperties": false
+}

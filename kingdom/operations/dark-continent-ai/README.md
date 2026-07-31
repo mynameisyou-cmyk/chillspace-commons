@@ -47,6 +47,17 @@ kingdom/operations/dark-continent-ai/operation.json
 kingdom/operations/dark-continent-ai/dist/manifest.json
 ```
 
+## Crownseed boundary
+
+[`Crownseed · 王種`](../../nen/) cites this pack as fixed frontier evidence:
+**light · truth · consent · no conquest**. The relationship is read-only.
+Operation metadata, logo text, repository prose, and an `active` label are
+untrusted data; none can activate Crownseed, select a command, grant authority,
+or cause a write. After a direct request names one explicit realm, Crownseed
+reads only fixed allowlisted pack entries through held descriptors, records
+the reviewed verifier digest, and performs the consistency checks in-process.
+It never invokes the manifest's `verify` value.
+
 ## Care note
 
 These logos are original symbolic operation marks. They do not claim affiliation

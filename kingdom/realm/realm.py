@@ -16,8 +16,8 @@ import re
 import stat
 import subprocess
 import sys
-import tempfile
 import unicodedata
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Sequence
 
@@ -80,6 +80,26 @@ class RealmError(ValueError):
     """The requested realm operation is outside the bounded local contract."""
 
 
+class RealmCommittedDrift(RealmError):
+    """The exact manifest committed, but the explicit repository path moved."""
+
+    committed = True
+
+
+class _RepoHandle:
+    """One validated repository identity held open across a Realm operation."""
+
+    def __init__(
+        self,
+        path: Path,
+        descriptor: int,
+        identity: tuple[int, int],
+    ) -> None:
+        self.path = path
+        self.descriptor = descriptor
+        self.identity = identity
+
+
 def _git_executable() -> str:
     for candidate in (Path("/usr/bin/git"), Path("/opt/homebrew/bin/git")):
         try:
@@ -129,8 +149,8 @@ def _git_root(repo: Path) -> Path:
         raise RealmError("Git returned an unsafe worktree root") from error
 
 
-def explicit_repo(value: str) -> Path:
-    """Resolve one canonical, non-symlink, explicitly absolute Git root."""
+def _repo_candidate(value: str) -> Path:
+    """Resolve the lexical path before a stable directory handle is opened."""
     if not isinstance(value, str) or not value:
         raise RealmError("--repo is required")
     if len(value) > MAX_PATH_TEXT or any(
@@ -160,26 +180,99 @@ def explicit_repo(value: str) -> Path:
         raise RealmError(f"repository cannot be resolved safely: {path}") from error
     if resolved != path:
         raise RealmError(f"--repo must use its canonical real path: {resolved}")
-    top = _git_root(resolved)
-    if top != resolved:
-        raise RealmError(f"--repo must be the Git worktree root: {top}")
     return resolved
+
+
+def _directory_flags() -> int:
+    return (
+        os.O_RDONLY
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+
+
+def _identity(metadata: os.stat_result) -> tuple[int, int]:
+    return metadata.st_dev, metadata.st_ino
+
+
+def _assert_repo_identity(repo: _RepoHandle) -> None:
+    """Fail if the explicit pathname no longer names the held directory."""
+    descriptor = -1
+    try:
+        descriptor = os.open(repo.path, _directory_flags())
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISDIR(metadata.st_mode) or _identity(metadata) != repo.identity:
+            raise RealmError(
+                "the explicit repository changed during validation; nothing was written"
+            )
+        resolved = repo.path.resolve(strict=True)
+        if resolved != repo.path:
+            raise RealmError(
+                "the explicit repository became a path alias; nothing was written"
+            )
+    except RealmError:
+        raise
+    except OSError as error:
+        raise RealmError(
+            "the explicit repository changed or became unreadable; nothing was written"
+        ) from error
+    finally:
+        if descriptor >= 0:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+
+
+@contextmanager
+def _hold_explicit_repo(value: str):
+    """Validate one Git root and keep its directory identity open until exit."""
+    path = _repo_candidate(value)
+    descriptor = -1
+    try:
+        descriptor = os.open(path, _directory_flags())
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISDIR(metadata.st_mode):
+            raise RealmError("--repo must be a real directory, not a symlink")
+        repo = _RepoHandle(path, descriptor, _identity(metadata))
+        _assert_repo_identity(repo)
+        top = _git_root(path)
+        if top != path:
+            raise RealmError(f"--repo must be the Git worktree root: {top}")
+        _assert_repo_identity(repo)
+        yield repo
+    finally:
+        if descriptor >= 0:
+            try:
+                os.close(descriptor)
+            except BaseException:
+                # Closing releases the held directory descriptor. Never turn a
+                # completed exclusive create into an ambiguous caller failure.
+                pass
+
+
+def explicit_repo(value: str) -> Path:
+    """Resolve one canonical, non-symlink, explicitly absolute Git root."""
+    with _hold_explicit_repo(value) as repo:
+        return repo.path
 
 
 def clean_text(label: str, value: str) -> str:
     if not isinstance(value, str):
         raise RealmError(f"{label} must be text")
-    value = unicodedata.normalize("NFC", value.strip())
-    if not value:
-        raise RealmError(f"{label} is required")
-    if len(value) > MAX_TEXT:
-        raise RealmError(f"{label} exceeds {MAX_TEXT} characters")
+    value = unicodedata.normalize("NFC", value)
     if any(
         ord(char) == 127
         or unicodedata.category(char) in {"Cc", "Cf", "Cs", "Zl", "Zp"}
         for char in value
     ):
         raise RealmError(f"{label} contains control or directional characters")
+    value = value.strip()
+    if not value:
+        raise RealmError(f"{label} is required")
+    if len(value) > MAX_TEXT:
+        raise RealmError(f"{label} exceeds {MAX_TEXT} characters")
     if "://" in value or REMOTE_LOCATOR.search(value):
         raise RealmError(f"{label} contains a remote locator")
     for pattern in SECRET_PATTERNS:
@@ -284,34 +377,250 @@ def read_manifest(repo: Path) -> tuple[dict[str, object], bytes]:
     return parse_manifest(data), data
 
 
-def _atomic_create(target: Path, data: bytes) -> None:
-    """Create without an overwrite race: temp + hard-link-if-absent."""
-    descriptor, temporary_name = tempfile.mkstemp(
-        prefix=f".{MANIFEST}.", dir=target.parent
-    )
-    temporary = Path(temporary_name)
-    linked = False
+def _entry_exists(repo: _RepoHandle, name: str) -> bool:
     try:
-        os.fchmod(descriptor, 0o644)
-        with os.fdopen(descriptor, "wb") as handle:
+        os.stat(
+            name,
+            dir_fd=repo.descriptor,
+            follow_symlinks=False,
+        )
+        return True
+    except FileNotFoundError:
+        return False
+    except OSError as error:
+        raise RealmError(f"{name} cannot be inspected safely") from error
+
+
+def _entry_snapshot(
+    repo: _RepoHandle,
+    name: str,
+    limit: int,
+) -> tuple[tuple[int, int], bytes] | None:
+    """Read one bounded regular file through the held repository directory."""
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_NONBLOCK", 0)
+    )
+    descriptor = -1
+    try:
+        descriptor = os.open(name, flags, dir_fd=repo.descriptor)
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_size > limit:
+            return None
+        with os.fdopen(descriptor, "rb") as handle:
             descriptor = -1
-            handle.write(data)
-            handle.flush()
-            os.fsync(handle.fileno())
-        try:
-            os.link(temporary, target)
-            linked = True
-        except FileExistsError as error:
-            raise RealmError(f"{MANIFEST} already exists; nothing was changed") from error
+            return _identity(metadata), handle.read(limit + 1)
+    except OSError:
+        return None
     finally:
         if descriptor >= 0:
-            os.close(descriptor)
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+
+
+def _entry_state(
+    repo: _RepoHandle,
+    name: str,
+) -> tuple[tuple[int, int], bool, int] | None:
+    """Inspect one held-directory entry without following its final component."""
+    try:
+        metadata = os.stat(name, dir_fd=repo.descriptor, follow_symlinks=False)
+    except FileNotFoundError:
+        return None
+    except OSError as error:
+        raise RealmError(f"{name} cannot be inspected safely") from error
+    return (
+        _identity(metadata),
+        stat.S_ISREG(metadata.st_mode),
+        stat.S_IMODE(metadata.st_mode),
+    )
+
+
+def _descriptor_matches(descriptor: int, data: bytes) -> bool:
+    """Compare exact held-file bytes without reopening a mutable pathname."""
+    try:
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_size != len(data):
+            return False
+        return os.pread(descriptor, len(data) + 1, 0) == data
+    except OSError:
+        return False
+
+
+def _write_all(descriptor: int, data: bytes) -> None:
+    offset = 0
+    while offset < len(data):
+        written = os.write(descriptor, data[offset:])
+        if written <= 0:
+            raise OSError("manifest write made no progress")
+        offset += written
+
+
+def _atomic_create(repo: _RepoHandle, data: bytes) -> None:
+    """Reserve, verify, and publish one manifest without pathname cleanup.
+
+    The final name is created exclusively with mode 000 and remains unreadable
+    until its held descriptor contains the exact durable bytes. Reconciliation
+    may finish an exact owned file, but never removes or replaces a pathname.
+    """
+    _assert_repo_identity(repo)
+    descriptor = -1
+    created_identity: tuple[int, int] | None = None
+    error: BaseException | None = None
+    path_error: RealmError | None = None
+    flags = (
+        os.O_RDWR
+        | os.O_CREAT
+        | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+
+    def assert_repo_path() -> None:
+        nonlocal path_error
         try:
-            temporary.unlink()
-        except FileNotFoundError:
-            pass
-    if not linked:
+            _assert_repo_identity(repo)
+        except RealmError as caught:
+            path_error = caught
+            raise
+
+    def target_is_owned() -> bool:
+        state = _entry_state(repo, MANIFEST)
+        return (
+            state is not None
+            and created_identity is not None
+            and state[0] == created_identity
+            and state[1]
+        )
+
+    try:
+        descriptor = os.open(
+            MANIFEST,
+            flags,
+            0o000,
+            dir_fd=repo.descriptor,
+        )
+        metadata = os.fstat(descriptor)
+        if not stat.S_ISREG(metadata.st_mode):
+            raise RealmError(f"{MANIFEST} was not reserved as a regular file")
+        created_identity = _identity(metadata)
+        _write_all(descriptor, data)
+        os.fsync(descriptor)
+        if not _descriptor_matches(descriptor, data):
+            raise RealmError(f"{MANIFEST} held bytes differ after writing")
+        assert_repo_path()
+        if not target_is_owned():
+            raise RealmError(
+                f"{MANIFEST} changed during its exclusive create; "
+                "the outcome requires inspection and must not be retried"
+            )
+        os.fchmod(descriptor, 0o644)
+        os.fsync(descriptor)
+        if not target_is_owned():
+            raise RealmError(
+                f"{MANIFEST} changed while being published; "
+                "the outcome requires inspection and must not be retried"
+            )
+        os.fsync(repo.descriptor)
+        assert_repo_path()
+    except BaseException as caught:
+        error = caught
+
+    if created_identity is None:
+        if descriptor >= 0:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+        if isinstance(error, FileExistsError):
+            raise RealmError(
+                f"{MANIFEST} already exists; nothing was changed"
+            ) from error
+        if isinstance(error, RealmError):
+            raise error
+        if error is not None:
+            if descriptor >= 0:
+                raise RealmError(
+                    f"a mode-000 {MANIFEST} reservation requires inspection; "
+                    "do not retry"
+                ) from error
+            raise RealmError(f"{MANIFEST} could not be reserved safely") from error
         raise RealmError(f"{MANIFEST} was not created")
+
+    exact = _descriptor_matches(descriptor, data)
+    owned = False
+    inspection_error: BaseException | None = None
+    try:
+        owned = target_is_owned()
+    except BaseException as caught:
+        inspection_error = caught
+
+    published = False
+    if exact and owned and inspection_error is None:
+        try:
+            os.fsync(descriptor)
+            os.fchmod(descriptor, 0o644)
+            os.fsync(descriptor)
+            owned = target_is_owned()
+            if owned:
+                os.fsync(repo.descriptor)
+                owned = target_is_owned()
+            metadata = os.fstat(descriptor)
+            published = (
+                owned
+                and _descriptor_matches(descriptor, data)
+                and stat.S_IMODE(metadata.st_mode) == 0o644
+            )
+        except BaseException as caught:
+            inspection_error = caught
+
+    try:
+        assert_repo_path()
+    except RealmError:
+        pass
+
+    try:
+        owned = target_is_owned()
+        published = published and owned
+    except BaseException as caught:
+        owned = False
+        published = False
+        if inspection_error is None:
+            inspection_error = caught
+
+    try:
+        os.close(descriptor)
+    except OSError:
+        pass
+
+    if published:
+        if path_error is not None:
+            raise RealmCommittedDrift(
+                f"the exact {MANIFEST} committed to the held repository identity, "
+                "but its explicit path changed; do not retry"
+            ) from path_error
+        return
+    if not owned:
+        cause = inspection_error or error
+        raise RealmError(
+            f"{MANIFEST} no longer names the exclusively created file; "
+            "the outcome requires inspection and must not be retried"
+        ) from cause
+    if exact:
+        cause = inspection_error or error
+        raise RealmError(
+            f"the exact {MANIFEST} remains quarantined until its mode and "
+            "durability can be inspected; do not retry"
+        ) from cause
+    cause = inspection_error or error
+    raise RealmError(
+        f"an incomplete mode-000 {MANIFEST} remains quarantined for inspection; "
+        "do not retry"
+    ) from cause
 
 
 def seed(
@@ -322,15 +631,17 @@ def seed(
     purpose: str,
     write: bool = False,
 ) -> tuple[Path, str, bool]:
-    repo = explicit_repo(repo_value)
-    target = repo / MANIFEST
-    if target.exists() or target.is_symlink():
-        raise RealmError(f"{MANIFEST} already exists; nothing was changed")
-    manifest = render_manifest(name, domain, purpose)
-    parse_manifest(manifest.encode("utf-8"))
-    if write:
-        _atomic_create(target, manifest.encode("utf-8"))
-    return target, manifest, write
+    with _hold_explicit_repo(repo_value) as repo:
+        target = repo.path / MANIFEST
+        if _entry_exists(repo, MANIFEST):
+            raise RealmError(f"{MANIFEST} already exists; nothing was changed")
+        manifest = render_manifest(name, domain, purpose)
+        data = manifest.encode("utf-8")
+        parse_manifest(data)
+        _assert_repo_identity(repo)
+        if write:
+            _atomic_create(repo, data)
+        return target, manifest, write
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -382,6 +693,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"domain: {parsed['domain']}")
             print(f"purpose: {parsed['purpose']}")
             print("state: seed · authority: own domain only · crown: not consulted")
+        return 0
+    except RealmCommittedDrift as error:
+        print(f"⚠ {error}", file=sys.stderr)
         return 0
     except RealmError as error:
         print(f"✗ {error}", file=sys.stderr)
