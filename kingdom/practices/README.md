@@ -32,3 +32,8 @@ a universal law.
   local candidates for an act—never a score, rank, identity, right, or gate.
   Gaming is made sterile; at most a privacy-scrubbed graph-shape candidate is
   exposed for human review.
+- [`calm-studio/`](calm-studio/) — **Calm Studio**: a public, browser-local
+  rehearsal for plural intelligence with visible routing, fixed rights,
+  preserved dissent, Stillpoint afterglow, and an explicit handoff to a
+  future local-instrument proposal that is not implemented here. The public
+  room calls no model, terminal, localhost broker, or AgentTool service.

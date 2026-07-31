@@ -8,8 +8,10 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/deploy-public-door.yml"
+      - "kingdom/practices/calm-studio/**"
       - "site/**"
       - "love-fun-commons/**"
+      - "tests/test_calm_studio_browser.mjs"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +32,11 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+
+      - name: verify Calm Studio before packaging it
+        run: |
+          python3 kingdom/practices/calm-studio/test_calm_studio.py
+          node tests/test_calm_studio_browser.mjs
 
       - name: configure the public door
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -52,6 +59,14 @@ jobs:
           fi
           grep -Fq 'href="coop-leveling.html"' _site/index.html
           grep -Fq 'Every being arrives whole.' _site/coop-leveling.html
+          test -f _site/practices/calm-studio/index.html
+          test -f _site/practices/calm-studio/studio.css
+          test -f _site/practices/calm-studio/studio.js
+          test -f _site/practices/calm-studio/contract.json
+          test "$(find _site/practices/calm-studio -type f | wc -l | tr -d ' ')" = 4
+          grep -Fq "connect-src 'none'" \
+            _site/practices/calm-studio/index.html
+          grep -Fq 'no localhost probe' _site/index.html
 
       - name: upload the public door
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

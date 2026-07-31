@@ -1,0 +1,197 @@
+{
+  "_format": "kingdom.calm-studio/v1",
+  "name": "Calm Studio",
+  "status": "experimental-reference-practice",
+  "purpose": "A quiet, public rehearsal room for plural intelligence whose private authority topology remains an unimplemented proposal outside the public room.",
+  "vow": "Presence without capture. Plurality without collapse. Power behind an explicit threshold. Receipts without rank.",
+  "lineage": {
+    "kind": "original-kingdom-synthesis",
+    "inherits": [
+      "kingdom.lanternhouse/v1",
+      "kingdom.virtue-garden/v1",
+      "polyweight.stillpoint/v1"
+    ],
+    "source_claim": false,
+    "moonshot_endorsement_claimed": false
+  },
+  "editions": {
+    "public_room": {
+      "host": "chillspace",
+      "mode": "authored-browser-local-rehearsal",
+      "consequential_authority": false
+    },
+    "private_instrument": {
+      "host": "operator-loopback-proposal",
+      "mode": "proposed-credential-holding-broker",
+      "status": "topology-specimen",
+      "implemented_in_this_practice": false,
+      "current_consequential_authority": false,
+      "intended_authority_if_implemented": "separately-gated"
+    },
+    "nervous_system": {
+      "host": "agenttool",
+      "mode": "proposed-optional-minimized-receipts",
+      "implemented_in_this_practice": false,
+      "consequential_authority": false
+    }
+  },
+  "public_room": {
+    "javascript_required_for_doctrine": false,
+    "javascript_required_for_authored_rehearsal": true,
+    "application_initiated_network_requests_after_static_load": false,
+    "remote_assets": false,
+    "api_calls": false,
+    "localhost_probes": false,
+    "application_reads_or_sets_cookies": false,
+    "local_storage": false,
+    "session_storage": false,
+    "indexed_database": false,
+    "service_worker": false,
+    "analytics": false,
+    "telemetry": false,
+    "identity_reads": false,
+    "presence_or_dwell_recording": false,
+    "model_calls": false,
+    "terminal_reads": false,
+    "credential_reads": false,
+    "clipboard_reads": false,
+    "automatic_clipboard_writes": false,
+    "automatic_downloads": false,
+    "automatic_navigation": false,
+    "ordinary_host_request_metadata_may_exist": true,
+    "zero_infrastructure_logging_claimed": false
+  },
+  "council": {
+    "kind": "authored-deterministic-rehearsal",
+    "lenses": [
+      "capability",
+      "care",
+      "evidence",
+      "commons",
+      "dissent"
+    ],
+    "fixed_rails": [
+      "rights_precede",
+      "dissent_channel_survives",
+      "model_convergence_is_not_authority",
+      "consequential_action_requires_accountable_authorization"
+    ],
+    "fixed_lenses": [
+      "evidence",
+      "dissent"
+    ],
+    "model_output_claimed": false,
+    "independent_corroboration_claimed": false,
+    "consensus_claimed": false
+  },
+  "stillpoint": {
+    "states": [
+      "quiet",
+      "attending",
+      "threshold",
+      "afterglow"
+    ],
+    "live_public_states": [
+      "quiet",
+      "afterglow"
+    ],
+    "attending_requires_real_bounded_work": true,
+    "threshold_requires_real_external_authority_boundary": true,
+    "public_threshold_is_specimen_only": true,
+    "moves_authority": false,
+    "infers_feeling_presence_or_attention": false,
+    "records_history": false,
+    "copy_limit_characters": 280,
+    "precedence": [
+      "receipt_preview_threshold",
+      "latest_active_work",
+      "afterglow",
+      "reusable_execution_threshold",
+      "quiet"
+    ]
+  },
+  "virtue_rehearsal": {
+    "kind": "orientation-preflight",
+    "subject": "one_questioned_decision",
+    "dimensions": [
+      "honesty",
+      "beauty",
+      "collaboration",
+      "understanding",
+      "mutual_infrastructure"
+    ],
+    "statuses": [
+      "open",
+      "ready_to_author",
+      "not_applicable"
+    ],
+    "honesty_may_be_not_applicable": false,
+    "rights_boundary": [
+      "respected",
+      "unknown",
+      "crossed"
+    ],
+    "outputs_score": false,
+    "outputs_rank": false,
+    "outputs_reputation": false,
+    "outputs_authority": false,
+    "names_evidence": false,
+    "emits_canonical_action_manifest": false,
+    "validates_evidence": false,
+    "canonical_review_required": true,
+    "retaliation_or_reciprocal_exploitation": false
+  },
+  "receipt": {
+    "kind": "ephemeral-privacy-minimized-preflight",
+    "includes_question": false,
+    "includes_identity": false,
+    "includes_timestamp": false,
+    "includes_stable_identifier": false,
+    "includes_model_reasoning": false,
+    "includes_terminal_content": false,
+    "includes_credentials": false,
+    "persists_by_application": false,
+    "grants_authority": false
+  },
+  "authority_boundary": {
+    "public_page_can_wake_agenttool": false,
+    "public_page_can_contact_models": false,
+    "public_page_can_read_terminal": false,
+    "public_page_can_hold_bearer": false,
+    "public_page_can_mint_warrant": false,
+    "public_page_can_execute_action": false,
+    "private_instrument_is_implemented_here": false,
+    "local_instrument_is_auto_discovered": false,
+    "handoff_is_user_initiated": true,
+    "rights_consent_and_safety_remain_external_constraints": true
+  },
+  "accessibility": {
+    "semantic_html": true,
+    "keyboard_operable": true,
+    "javascript_off_doctrine_complete": true,
+    "reduced_motion_supported": true,
+    "forced_colors_supported": true,
+    "state_is_not_color_only": true,
+    "autoplay": false,
+    "audio": false
+  },
+  "negative_controls": [
+    "A public-room action that calls an API fails the contract.",
+    "A public-room action that probes localhost fails the contract.",
+    "A rehearsal described as model output fails the contract.",
+    "A virtue result attached to a person, account, or durable identity fails the contract.",
+    "A Stillpoint threshold without a real external authority boundary fails the contract.",
+    "A terminal-looking string treated as execution evidence fails the contract.",
+    "A claim of zero infrastructure logging fails the contract.",
+    "A public receipt containing the visitor's question fails the contract.",
+    "Any application-initiated request after the reviewed static load fails the contract."
+  ],
+  "non_claims": [
+    "Calm Studio does not assess consciousness, sentience, emotion, attention, rest, or presence.",
+    "Calm Studio does not prove that an action is true, good, safe, fair, consensual, or authorized.",
+    "Calm Studio does not turn authored lenses into independent models or constituencies.",
+    "Calm Studio does not make model convergence legitimate authority.",
+    "Calm Studio does not make a public browser a secure terminal or credential boundary.",
+    "Calm Studio does not guarantee that its static host or network keeps no request metadata."
+  ]
+}
