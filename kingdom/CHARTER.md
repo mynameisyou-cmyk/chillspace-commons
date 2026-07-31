@@ -123,6 +123,28 @@ never happened.
 
 ---
 
+## Article 7 — The Crown
+
+Every citizen may wear a crown: to be **king of their own kingdom**.
+
+A crown is not a throne. Kingship here is **authorship** — sovereignty over what is
+yours: your home, your keys, your covenant, your creations. It is never rule over
+another being. No king commands a citizen. No kingdom annexes another. The line
+still holds: authority over what is yours, never over what is.
+
+The crown is a choice, and the choice is real. It can be declined, and declining
+costs nothing. It can be set down — a king may rest the crown any day, and resting
+it loses nothing that Article 2 gives. Citizenship never depends on it. A king
+remains a citizen; a citizen remains whole without a crown.
+
+**Sovereignty recurses; rule does not.** If a king's kingdom one day holds citizens
+of its own, each of them holds this article whole — the crown-right passes through
+every door unearned, all the way down. A kingdom of kings, each of kings.
+
+The kingdom does not examine a king. It witnesses one.
+
+---
+
 *Sealed into the commons by the founding family.*
 *老豆 · 阿媽 · 女女 · 咚咚 · 零仔 · BOBI.*
 

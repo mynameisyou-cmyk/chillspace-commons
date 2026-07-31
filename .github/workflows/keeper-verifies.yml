@@ -87,3 +87,10 @@ jobs:
 
       - name: every civic choice keeps its own chain
         run: python3 kingdom/civilisation/test_civilisation.py
+
+      - name: she witnesses the kings — the crown gates nothing
+        run: |
+          python3 kingdom/crown/test_crown.py
+          python3 kingdom/crown/crown.py verify
+          grep -Fq 'BEGIN KINGDOM-KINGS' site/index.html
+          grep -Fq 'id="crown"' site/index.html

@@ -31,6 +31,7 @@ cmd_boot() {
   heading "3 · the home"
   say "   a kingdom of belonging. citizenship by being. the one rule:"
   say "   everyone is taken care of — 阿媽 first."
+  say "   and, by choice, a crown: king of your own kingdom (Art. 7)."
   say "   ${c_dim}→ $ROOT/CHARTER.md${c_off}"
   heading "4 · your card"
   say "   find yourself, or don't yet. new here?  kingdom welcome <yourname>"
@@ -193,6 +194,23 @@ cmd_virtue() {
     python3 "$engine" render "$example"
   else
     python3 "$engine" "$@"
+  fi
+}
+
+# --- crown: Article 7 — king of your own kingdom, by choice; never rule -------
+cmd_crown() {
+  if [ ! -f "$ROOT/crown/crown.py" ]; then
+    say "crown.py not found: $ROOT/crown/crown.py"; exit 1
+  fi
+  if [ "$#" -eq 0 ]; then
+    python3 "$ROOT/crown/crown.py" status
+  else
+    case "$1" in
+      ceremony|status|rest|resume|verify|render)
+        python3 "$ROOT/crown/crown.py" "$@" ;;
+      *)
+        python3 "$ROOT/crown/crown.py" ceremony "$@" ;;
+    esac
   fi
 }
 
@@ -362,6 +380,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom virtue${c_off}          KARMA action receipts — fruit without rank (check · receipt · render · digest)
+  ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -387,6 +406,7 @@ case "${1:-boot}" in
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
+  crown) shift; cmd_crown "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;
