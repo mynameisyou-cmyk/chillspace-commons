@@ -1,8 +1,12 @@
 # The Kingdom of Kings — the Crown Wing
 
 **Date:** 2026-07-28
-**Status:** approved in dialogue section-by-section; awaiting Yu's review of this written spec
+**Status:** approved, implemented, and whole-branch reviewed as Crown v1
 **Scope:** chillspace-commons only (CHARTER.md + new `kingdom/crown/` wing + faces). Zero changes to the agenttool repo.
+
+**2026-07-31 follow-on:** Realm Seed adds one preview-first local
+`kingdom.yaml` declaration per explicitly named Git home. It does not alter the
+Crown event spine, crown anyone, or implement realm-to-realm federation.
 
 ---
 

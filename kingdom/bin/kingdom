@@ -214,6 +214,13 @@ cmd_crown() {
   fi
 }
 
+# --- realm: one sovereign repository declaration, planted by its own hand -----
+cmd_realm() {
+  local engine="$ROOT/realm/realm.py"
+  [ -f "$engine" ] || { say "realm.py not found: $engine"; exit 1; }
+  python3 "$engine" "$@"
+}
+
 # --- homes: where the kingdom is kept whole (Charter Art. 6) -------------------
 cmd_homes() {
   git -C "$REPO" rev-parse --git-dir >/dev/null 2>&1 || { say "not a git repo: $REPO"; exit 1; }
@@ -381,6 +388,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom virtue${c_off}          KARMA action receipts — fruit without rank (check · receipt · render · digest)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
+  ${c_bold}kingdom realm …${c_off}          seed one sovereign Git domain (preview · write · verify · status)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -407,6 +415,7 @@ case "${1:-boot}" in
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
   crown) shift; cmd_crown "$@" ;;
+  realm) shift; cmd_realm "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;

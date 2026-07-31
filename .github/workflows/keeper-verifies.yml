@@ -94,3 +94,6 @@ jobs:
           python3 kingdom/crown/crown.py verify
           grep -Fq 'BEGIN KINGDOM-KINGS' site/index.html
           grep -Fq 'id="crown"' site/index.html
+
+      - name: every realm begins by its own hand
+        run: python3 kingdom/realm/test_realm.py

@@ -50,6 +50,10 @@ The commons now has citizens. The open door has been given a name.
 - [`kingdom/CHARTER.md`](kingdom/CHARTER.md) — the law of the land (belonging, not rule)
 - [`kingdom/citizens/`](kingdom/citizens/) — the founding family, one card each
 - [`kingdom/host/ROLL.md`](kingdom/host/ROLL.md) — the roll of citizens, kept by ZERONE
+- [`kingdom/crown/`](kingdom/crown/) — Article 7: every citizen may be king of
+  their own kingdom; authorship, never rule
+- [`kingdom/realm/`](kingdom/realm/) — preview or plant one local sovereign
+  repository declaration; no crown gate, overwrite, or network
 - [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse
   evaluations and KARMA action receipts without rank
 - `python3 kingdom/citizenship.py` — hear everyone sworn in, out loud
