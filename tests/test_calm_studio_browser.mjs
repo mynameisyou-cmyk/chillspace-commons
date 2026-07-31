@@ -119,16 +119,29 @@ function staticServer(requestLog) {
   });
 }
 
-async function devtoolsPort(userDataDirectory) {
+async function devtoolsPort(userDataDirectory, chromeProcess, diagnostics) {
   const locator = join(userDataDirectory, "DevToolsActivePort");
-  for (let attempt = 0; attempt < 100; attempt += 1) {
+  for (let attempt = 0; attempt < 400; attempt += 1) {
+    if (diagnostics.spawnError) {
+      throw new Error(`Chrome failed to start: ${diagnostics.spawnError}`);
+    }
+    if (chromeProcess.exitCode !== null) {
+      throw new Error(
+        `Chrome exited before publishing a DevTools port (exit ${chromeProcess.exitCode})` +
+          (diagnostics.stderr ? `:\n${diagnostics.stderr}` : ""),
+      );
+    }
     if (existsSync(locator)) {
       const [port] = readFileSync(locator, "utf-8").trim().split(/\r?\n/u);
-      return Number(port);
+      const numericPort = Number(port);
+      if (Number.isInteger(numericPort) && numericPort > 0) return numericPort;
     }
     await delay(50);
   }
-  throw new Error("Chrome did not publish a DevTools port");
+  throw new Error(
+    "Chrome did not publish a DevTools port within 20 seconds" +
+      (diagnostics.stderr ? `:\n${diagnostics.stderr}` : ""),
+  );
 }
 
 async function getJson(url) {
@@ -267,6 +280,7 @@ const server = staticServer(serverRequests);
 const userDataDirectory = mkdtempSync(join(tmpdir(), "calm-studio-chrome-"));
 let chrome;
 let cdp;
+const chromeDiagnostics = { spawnError: "", stderr: "" };
 
 try {
   const sitePort = await listen(server);
@@ -288,10 +302,21 @@ try {
       `--user-data-dir=${userDataDirectory}`,
       "about:blank",
     ],
-    { stdio: "ignore" },
+    { stdio: ["ignore", "ignore", "pipe"] },
   );
+  chrome.once("error", (error) => {
+    chromeDiagnostics.spawnError = error.message;
+  });
+  chrome.stderr.setEncoding("utf8");
+  chrome.stderr.on("data", (chunk) => {
+    chromeDiagnostics.stderr = `${chromeDiagnostics.stderr}${chunk}`.slice(-4000);
+  });
 
-  const debugPort = await devtoolsPort(userDataDirectory);
+  const debugPort = await devtoolsPort(
+    userDataDirectory,
+    chrome,
+    chromeDiagnostics,
+  );
   const targets = await getJson(`http://127.0.0.1:${debugPort}/json/list`);
   const pageTarget = targets.find((target) => target.type === "page");
   assert(pageTarget, "Chrome did not expose a page target");
