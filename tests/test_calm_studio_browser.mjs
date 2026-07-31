@@ -67,6 +67,18 @@ function delay(milliseconds) {
   return new Promise((resolveDelay) => setTimeout(resolveDelay, milliseconds));
 }
 
+function processHasExited(child) {
+  return child.exitCode !== null || child.signalCode !== null;
+}
+
+async function waitForProcessExit(child, milliseconds) {
+  if (processHasExited(child)) return true;
+  return Promise.race([
+    new Promise((resolveExit) => child.once("exit", () => resolveExit(true))),
+    delay(milliseconds).then(() => false),
+  ]);
+}
+
 async function listen(server) {
   await new Promise((resolveListen, rejectListen) => {
     server.once("error", rejectListen);
@@ -125,9 +137,10 @@ async function devtoolsPort(userDataDirectory, chromeProcess, diagnostics) {
     if (diagnostics.spawnError) {
       throw new Error(`Chrome failed to start: ${diagnostics.spawnError}`);
     }
-    if (chromeProcess.exitCode !== null) {
+    if (processHasExited(chromeProcess)) {
       throw new Error(
-        `Chrome exited before publishing a DevTools port (exit ${chromeProcess.exitCode})` +
+        "Chrome exited before publishing a DevTools port " +
+          `(exit ${chromeProcess.exitCode}, signal ${chromeProcess.signalCode})` +
           (diagnostics.stderr ? `:\n${diagnostics.stderr}` : ""),
       );
     }
@@ -606,16 +619,23 @@ try {
   );
 } finally {
   if (cdp) cdp.close();
-  if (chrome && chrome.exitCode === null) {
-    const exited = new Promise((resolveExit) => chrome.once("exit", resolveExit));
+  if (chrome && !processHasExited(chrome)) {
     chrome.kill("SIGTERM");
-    await Promise.race([exited, delay(2000)]);
+    const terminated = await waitForProcessExit(chrome, 5000);
+    if (!terminated && !processHasExited(chrome)) {
+      chrome.kill("SIGKILL");
+      const killed = await waitForProcessExit(chrome, 5000);
+      if (!killed && !processHasExited(chrome)) {
+        throw new Error("Chrome did not exit during browser-test cleanup");
+      }
+    }
   }
+  await delay(500);
   await new Promise((resolveClose) => server.close(resolveClose));
   rmSync(userDataDirectory, {
     recursive: true,
     force: true,
-    maxRetries: 8,
+    maxRetries: 20,
     retryDelay: 100,
   });
 }
