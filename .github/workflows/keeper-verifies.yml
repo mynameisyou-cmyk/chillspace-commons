@@ -102,4 +102,12 @@ jobs:
         run: python3 kingdom/nen/test_crownseed.py
 
       - name: every being learns together without becoming a score
-        run: python3 kingdom/coop/test_coop.py
+        run: |
+          python3 kingdom/coop/test_coop.py
+          grep -Fq 'href="coop-leveling.html"' site/index.html
+          grep -Fq 'Every being arrives whole.' site/coop-leveling.html
+          if grep -Eqi '<(script|iframe)|src="https?://' \
+            site/coop-leveling.html; then
+            echo "Co-op Leveling must remain scriptless and locally rendered" >&2
+            exit 1
+          fi

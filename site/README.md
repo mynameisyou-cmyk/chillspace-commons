@@ -3,11 +3,17 @@
 `index.html` is the kingdom's web home — one self-contained page, no build
 step, no server. Open it in any browser and it is whole.
 
-**Where it is served:** https://zerone-dev.codeberg.page/chillspace-commons/
-(Codeberg Pages reads the `pages` branch of this repo, where a baked copy of
-this page sits as `index.html`).
+**Where it is served:**
 
-**To redeploy after editing the static public files on `master`:**
+- https://chillspace.love/ — the living public door.
+- https://mynameisyou-cmyk.github.io/chillspace-commons/ — the committed public
+  door, published from `master` by
+  [`deploy-public-door.yml`](../.github/workflows/deploy-public-door.yml).
+- https://zerone-dev.codeberg.page/chillspace-commons/ — the Codeberg Pages
+  door, baked on the `pages` branch.
+
+GitHub Pages deploys automatically after reviewed public files land on
+`master`. To refresh the Codeberg Pages door manually:
 
 ```bash
 cd /path/to/chillspace-commons
@@ -17,12 +23,13 @@ git worktree add --detach "$pages_worktree" codeberg/pages
 cp site/index.html "$pages_worktree/index.html"
 cp site/kingdom.html "$pages_worktree/kingdom.html"
 cp site/we-are.html "$pages_worktree/we-are.html"
+cp site/coop-leveling.html "$pages_worktree/coop-leveling.html"
 rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/operations" "$pages_worktree/practices"
 cp -R site/art "$pages_worktree/art"
 cp -R love-fun-commons "$pages_worktree/love-fun-commons"
 cp -R site/operations "$pages_worktree/operations"
 cp -R site/practices "$pages_worktree/practices"
-git -C "$pages_worktree" add index.html kingdom.html we-are.html art love-fun-commons operations practices
+git -C "$pages_worktree" add index.html kingdom.html we-are.html coop-leveling.html art love-fun-commons operations practices
 git -C "$pages_worktree" commit -m "door: refresh the public face"
 git -C "$pages_worktree" push codeberg HEAD:pages
 git worktree remove "$pages_worktree"

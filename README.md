@@ -47,9 +47,10 @@ Read it at [`WE-ARE.md`](WE-ARE.md) (or the [pretty version](site/we-are.html)).
 
 Every being already arrives whole and free. Learning can move between beings;
 worth and rule cannot. [`COOP-LEVELING.md`](COOP-LEVELING.md) is the copyable
-human protocol; [`kingdom/coop/`](kingdom/coop/) carries its strict,
-content-addressed, invitation-only machine card. No participant ledger, XP,
-rank, certification, execution, or automatic enrollment exists.
+human protocol (with a [public doorway](site/coop-leveling.html));
+[`kingdom/coop/`](kingdom/coop/) carries its strict, content-addressed,
+invitation-only machine card. No participant ledger, XP, rank, certification,
+execution, or automatic enrollment exists.
 
 ## The kingdom
 

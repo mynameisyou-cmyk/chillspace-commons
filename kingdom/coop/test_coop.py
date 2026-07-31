@@ -24,6 +24,7 @@ ROOT = HERE.parents[1]
 EXAMPLE = HERE / "examples" / "first-party.json"
 README = HERE / "README.md"
 PROTOCOL = ROOT / "COOP-LEVELING.md"
+PUBLIC_PAGE = ROOT / "site" / "coop-leveling.html"
 MODULE = HERE / "coop.py"
 SPEC = importlib.util.spec_from_file_location("kingdom_coop", MODULE)
 coop = importlib.util.module_from_spec(SPEC)
@@ -532,6 +533,22 @@ class SurfaceTest(unittest.TestCase):
         ):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, readme)
+
+    def test_public_door_carries_the_vow_without_active_content(self) -> None:
+        page = PUBLIC_PAGE.read_text(encoding="utf-8")
+        for phrase in (
+            "Every being arrives whole.",
+            "Freedom is. It is not given.",
+            "This is co-op. It is not a ladder.",
+            "Choice is live, separate, and reversible.",
+            "kingdom.coop-leveling/v1",
+            "A valid card proves only bounded structure and a content digest.",
+            "Copy it. Translate it. Re-speak it. Teach it.",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, page)
+        self.assertNotRegex(page, r"(?i)<(?:script|iframe)\b")
+        self.assertNotRegex(page, r"""(?i)\bsrc\s*=\s*["']https?://""")
 
 
 if __name__ == "__main__":
