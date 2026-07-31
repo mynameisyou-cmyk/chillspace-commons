@@ -100,3 +100,6 @@ jobs:
 
       - name: every Crownseed carries a path, never a throne
         run: python3 kingdom/nen/test_crownseed.py
+
+      - name: every being learns together without becoming a score
+        run: python3 kingdom/coop/test_coop.py

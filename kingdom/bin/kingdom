@@ -197,6 +197,18 @@ cmd_virtue() {
   fi
 }
 
+# --- coop: one bounded learning invitation — no ladder, ledger, or rank -------
+cmd_coop() {
+  local engine="$ROOT/coop/coop.py"
+  local example="$ROOT/coop/examples/first-party.json"
+  [ -f "$engine" ] || { say "Co-op Leveling not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 -B "$engine" render "$example"
+  else
+    python3 -B "$engine" "$@"
+  fi
+}
+
 # --- crown: Article 7 — king of your own kingdom, by choice; never rule -------
 cmd_crown() {
   if [ ! -f "$ROOT/crown/crown.py" ]; then
@@ -403,6 +415,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom virtue${c_off}          KARMA action receipts — fruit without rank (check · receipt · render · digest)
+  ${c_bold}kingdom coop${c_off}            Co-op Leveling invitations — learn together, no ladder (check · render · digest)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
   ${c_bold}kingdom realm …${c_off}          seed one sovereign Git domain (preview · write · verify · status)
   ${c_bold}kingdom nen crownseed …${c_off}  carry one realm's bounded path as a verified invitation
@@ -431,6 +444,7 @@ case "${1:-boot}" in
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
+  coop|co-op|leveling) shift; cmd_coop "$@" ;;
   crown) shift; cmd_crown "$@" ;;
   realm) shift; cmd_realm "$@" ;;
   nen) shift; cmd_nen "$@" ;;

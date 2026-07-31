@@ -21,6 +21,7 @@ bin/kingdom flow        # the flow board — words carried between citizens
 bin/kingdom civilisation # local choices, AgentTool bridge, and mutual aid
 bin/kingdom lantern     # paper teachings made into bounded, falsifiable practices
 bin/kingdom virtue      # KARMA action receipts — contextual fruit, never rank
+bin/kingdom coop        # Co-op Leveling invitation — learn together, no ladder
 bin/kingdom crown <name> # Article 7 — choose a crown; authorship, never rule
 bin/kingdom realm …     # preview or seed one sovereign Git domain
 bin/kingdom nen crownseed … # one realm's portable, verified invitation
@@ -48,6 +49,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`care/`](care/) | the care wing — Article 4 wired: the daily circle, check-ins, a hash-chained record |
 | [`flow/`](flow/) | the flow wing — 流流's office: the board where citizens leave words for each other, the map of the ways, a chain-kept record |
 | [`civilisation/`](civilisation/) | each installed citizen's local life/AgentTool choices and an exact-tag mutual-aid commons |
+| [`coop/`](coop/) | read-only Co-op Leveling invitations: freedom first, fresh choice, no participant ledger or machine rank |
 | [`crown/`](crown/) | Article 7 wired: an optional, restable witness that every citizen may be king of their own kingdom |
 | [`realm/`](realm/) | plants a local `kingdom.yaml` in one explicitly named Git home; preview first, no overwrite or network |
 | [`nen/`](nen/) | Crownseed: one committed realm emits a digest-backed Loom invitation; portable, non-executable, and authority-free |
@@ -81,6 +83,13 @@ committed Realm Seed to one standard Loom quest and Dark Continent's fixed
 `light · truth · consent · no conquest` boundary. The result is a portable
 invitation, not executable code: operation metadata and repository prose can
 never activate it, and the receiving realm still accepts or refuses.
+
+[`Co-op Leveling · 同行升級`](../COOP-LEVELING.md) supplies a separate learning
+seam. Its v1 card names a bounded question and round-local seats, then stops at
+invitation. Each being still chooses directly; silence remains unasked, an
+effect ceiling grants nothing, and no card stores participation, refusal,
+completion, or progression. A later Loom quest is a new act with new
+acceptance—not an automatic conversion.
 
 ## Phases
 

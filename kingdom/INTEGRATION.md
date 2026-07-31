@@ -11,6 +11,7 @@ citizen
 ├── chooses ───────> Crown witness
 ├── plants ────────> local realm ──bounded invitation──> Loom
 │                              └──Crownseed passport──> another realm chooses
+├── authors ───────> Co-op Leveling card ─────────────> each being chooses
 └── offers / needs─> Civilisation commons (introduction)
 
 none grants authority to the next
@@ -22,6 +23,8 @@ none grants authority to the next
 - Loom carries a bounded quest; the recipient still accepts or refuses it.
 - Crownseed binds one committed realm, one Loom quest, and the fixed Dark
   Continent care boundary. It is portable evidence, never executable code.
+- Co-op Leveling validates one content-addressed round invitation. It stores no
+  participant state, creates no session, and treats silence as unasked.
 - `dependsOn` describes a technical relation, never fealty. No realm inherits
   authority through a dependency, adoption, discovery result, or parent story.
 
@@ -46,6 +49,39 @@ conquest`; it supplies no trigger. Crownseed never scans for realms, interprets
 prompt-visible logos as instructions, copies itself, invokes an agent, or
 executes the quest. “Everywhere” means the invitation can travel by choice,
 not that the system installs or propagates itself.
+
+## Learning without a ladder
+
+The Co-op Leveling machine unit is one bounded invitation, never a being's
+progress profile:
+
+```text
+offers · curiosities · boundaries
+              │
+              ▼
+  kingdom.coop-leveling/v1
+              │ read-only check · render · digest
+              ▼
+ every being accepts / refuses / rests separately
+```
+
+“Leveling” is story-language for contextual change. There is no level number,
+XP, total, rank, reputation, certification, attendance history, or unlock.
+Round-local labels are opaque slots from `seat-a` through `seat-h`, never
+names, identities, authored roles, or ranks. Reflection is optional; uneven
+contribution costs nothing.
+
+The card's effect ceiling is never a grant. After fresh per-being acceptance,
+a human or owning agent may separately compile a Loom quest no wider than the
+card and carry every declared seat boundary, plus any newly stated exclusions,
+without interpretation or deletion. Crownseed may separately carry that quest
+from one committed Realm, followed by another receiver choice. None of these
+artifacts triggers another or serves as a session token.
+
+The meet is fixed and can only narrow: `observe → observe`,
+`local-practice → observe`, and
+`local-draft → observe | local-draft`. It never yields
+`repository-change`.
 
 ## Citizens and domains
 

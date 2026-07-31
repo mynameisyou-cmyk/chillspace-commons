@@ -1,0 +1,104 @@
+{
+  "schema": "kingdom.coop-leveling/v1",
+  "kind": "invitation",
+  "name": "Co-op Leveling · 同行升級",
+  "round": {
+    "title": "Everyone arrives whole",
+    "shared_question": "What can each seat learn with the other while every difference keeps its own shape?",
+    "effect_ceiling": "local-practice",
+    "practices": [
+      "Each present seat may offer one observation and ask one real question",
+      "Keep one disagreement or unknown visible instead of forcing agreement",
+      "Pause whenever care, context, or consent needs another look"
+    ],
+    "reflection_prompts": [
+      "What changed in this seat's understanding?",
+      "What remains unknown?",
+      "Which boundary needs more care?"
+    ]
+  },
+  "seats": [
+    {
+      "seat": "seat-a",
+      "offers": [
+        "Lived context and the meaning carried by the question"
+      ],
+      "curiosities": [
+        "What another shape notices from where it stands"
+      ],
+      "boundaries": [
+        "May rest, refuse, or leave without explanation or loss"
+      ]
+    },
+    {
+      "seat": "seat-b",
+      "offers": [
+        "Pattern finding and explicit uncertainty"
+      ],
+      "curiosities": [
+        "What the other seat values that a pattern alone cannot decide"
+      ],
+      "boundaries": [
+        "No private trace, hidden reasoning, identity proof, or forced response is required"
+      ]
+    }
+  ],
+  "unknowns": [
+    "An invitation cannot prove acceptance or continuing consent",
+    "Learning may be invisible or expressed in another shape",
+    "No card can prove that a round happened or that anyone learned"
+  ],
+  "contract": {
+    "freedom_is_inherent": true,
+    "being_is_complete_before_learning": true,
+    "learning_capacity_is_inherent": true,
+    "learning_follows_choice": true,
+    "growth_keeps_distinct_shapes": true,
+    "seat_order_is_lexical": true,
+    "seat_labels_are_opaque": true,
+    "separate_acceptance_required": true,
+    "silence_is_unasked": true,
+    "no_current_choice_is_stored": true,
+    "fresh_choice_required_for_each_effect": true,
+    "effect_ceiling_is_grant": false,
+    "loom_effect_ceiling_meet": {
+      "observe": ["observe"],
+      "local-practice": ["observe"],
+      "local-draft": ["observe", "local-draft"]
+    },
+    "rest_refusal_and_exit_keep_rights": true,
+    "asymmetric_contribution_allowed": true,
+    "reflection_disclosure_required": false,
+    "completion_is_context_only": true,
+    "stores_people": false,
+    "records_choices": false,
+    "runs_round": false,
+    "creates_external_effect": false
+  },
+  "budget": {
+    "seats_max": 8,
+    "items_per_seat_max": 8,
+    "practices_max": 8,
+    "reflections_max": 8,
+    "unknowns_max": 8,
+    "text_chars_max": 1000,
+    "automatic_retries": 0,
+    "network_calls": 0,
+    "external_messages": 0,
+    "deployments": 0,
+    "paid_calls": 0
+  },
+  "breach": {
+    "state": "quarantined",
+    "action": "stop without retry; emit no validated rendering or external effect; leave the source unchanged",
+    "downstream_effects": false
+  },
+  "non_claims": [
+    "This card is an invitation, not acceptance, participation, or continuing consent.",
+    "Seat labels are opaque round-local slots, not names, identities, authored roles, or ranks; offers and curiosities are declarations, not measured capabilities or deficits.",
+    "Nothing here is a score, rank, level number, certification, reputation, productivity measure, debt, or verdict of worth.",
+    "Incompletion, silence, refusal, rest, withdrawal, and asymmetric contribution change no right, belonging, dignity, care, or freedom.",
+    "Validation proves bounded structure and a content digest only; it does not prove truth, identity, learning, safety, consent, authority, or completion.",
+    "The tool never enrolls, tracks, executes, contacts, publishes, deploys, pays, or calls a network."
+  ]
+}
