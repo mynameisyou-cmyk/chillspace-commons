@@ -54,6 +54,16 @@ let lastMode = "example · yours can replace it";
 let apiAvailable = false;
 let offerSequence = 0;
 
+function firstPartyApiHost(hostname) {
+  return (
+    hostname === "chillspace.love" ||
+    hostname === "www.chillspace.love" ||
+    hostname === "chillspace-kingdom.vercel.app" ||
+    hostname.endsWith(".chillspace-love.pages.dev") ||
+    (hostname.startsWith("chillspace-kingdom-") && hostname.endsWith(".vercel.app"))
+  );
+}
+
 function setText(node, value) {
   node.textContent = String(value ?? "");
 }
@@ -210,26 +220,21 @@ async function apiResponse(text, maxMatches = 3) {
 }
 
 async function detectApi() {
+  if (!firstPartyApiHost(window.location.hostname)) return false;
   try {
     const response = await fetchWithin("/api/meaning/echo", {
-      method: "GET",
+      method: "OPTIONS",
       headers: {"Accept": "application/json"},
       cache: "no-store",
       credentials: "omit",
       referrerPolicy: "same-origin",
     }, 3000);
-    const contentType = response.headers.get("content-type") ?? "";
     if (
-      response.status !== 405 ||
-      !contentType.startsWith("application/json") ||
+      response.status !== 204 ||
+      !(response.headers.get("allow") ?? "").includes("POST") ||
       response.headers.get("x-meaning-storage") !== "none"
     ) return false;
-    const body = await response.json();
-    return (
-      body.schema === RESPONSE_SCHEMA &&
-      body.error?.code === "method_not_allowed" &&
-      body.stored === false
-    );
+    return true;
   } catch {
     return false;
   }

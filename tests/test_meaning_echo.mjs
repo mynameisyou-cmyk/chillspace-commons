@@ -91,8 +91,10 @@ test("every authored beginning has at least one honest curated offer", () => {
   }
 });
 
-test("the browser posts only after a bodyless API capability probe succeeds", () => {
-  assert.match(appSource, /method:\s*"GET"/);
+test("the browser probes only API-backed homes before posting", () => {
+  assert.match(appSource, /firstPartyApiHost\(window\.location\.hostname\)/);
+  assert.match(appSource, /method:\s*"OPTIONS"/);
+  assert.match(appSource, /response\.status !== 204/);
   assert.match(appSource, /x-meaning-storage/);
   assert.match(appSource, /options\.useApi && apiAvailable/);
   assert.doesNotMatch(appSource, /interpretation\.confidence|Math\.round\([^)]*\*\s*100/);
