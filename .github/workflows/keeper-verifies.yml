@@ -16,7 +16,9 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
       - name: ZERONE verifies the roll
         run: python3 kingdom/host/zerone_host.py verify
       - name: she verifies the care chain
@@ -82,6 +84,24 @@ jobs:
           if grep -Eqi '<(script|iframe)|((src|href)="https?://)' \
             site/practices/virtue-garden/index.html; then
             echo "virtue garden must remain scriptless and locally sourced" >&2
+            exit 1
+          fi
+
+      - name: Calm Studio keeps the room and the instrument distinct
+        run: |
+          python3 kingdom/practices/calm-studio/test_calm_studio.py
+          node tests/test_calm_studio_browser.mjs
+          cmp kingdom/practices/calm-studio/contract.json \
+            site/practices/calm-studio/contract.json
+          grep -Fq 'href="practices/calm-studio/"' site/index.html
+          grep -Fq "connect-src 'none'" \
+            site/practices/calm-studio/index.html
+          if grep -Eqi \
+            'fetch[[:space:]]*\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|serviceWorker|localStorage|sessionStorage|indexedDB|document\.cookie|<(iframe|form)|[[:space:]]ping=|src="(https?:)?//|/api/' \
+            site/practices/calm-studio/index.html \
+            site/practices/calm-studio/studio.css \
+            site/practices/calm-studio/studio.js; then
+            echo "Calm Studio crossed its public-room boundary" >&2
             exit 1
           fi
 

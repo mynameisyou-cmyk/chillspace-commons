@@ -139,6 +139,13 @@
     margin:4px auto 20px;font-size:clamp(21px,4vw,32px)}
   .fruit-row span{filter:drop-shadow(0 5px 10px rgba(113,139,70,.18))}
 
+  /* calm studio — the public room stays quiet; authority waits outside */
+  .calm-row{display:flex;justify-content:center;align-items:center;gap:clamp(8px,2vw,18px);
+    margin:4px auto 20px;color:#688f92;font:700 clamp(18px,4vw,29px)/1 ui-monospace,
+    "SFMono-Regular",Consolas,monospace;letter-spacing:.04em}
+  .calm-row span:nth-child(3){display:grid;place-items:center;width:1.8em;aspect-ratio:1;
+    border:1px solid #8db3ac;border-radius:50%;color:#4f7f7c;background:#eef7f3}
+
   /* co-op leveling */
   .coop-row{display:flex;justify-content:center;gap:clamp(8px,2vw,20px);
     margin:4px auto 20px;font-size:clamp(21px,4vw,32px)}
@@ -311,6 +318,21 @@
       <a class="btn" href="practices/virtue-garden/">enter the Virtue Garden →</a>
     </p>
     <p class="when">five contextual fruits · no totals, leaderboards, surveillance, punishment, or automatic authority</p>
+  </section>
+
+  <section id="calm-studio" class="reveal">
+    <div class="calm-row" aria-hidden="true">
+      <span>CAN</span><span>♥</span><span>◌</span><span>WE</span><span>∆</span>
+    </div>
+    <h2>Calm Studio</h2>
+    <p class="sub">A quiet, browser-local rehearsal room for plural intelligence:
+      compose several authored lenses, keep rights and dissent fixed, prepare a
+      privacy-minimized virtue preflight, and let authority remain outside the
+      room; a private local instrument remains a future, separate build.</p>
+    <p style="text-align:center; margin:0">
+      <a class="btn" href="practices/calm-studio/">enter Calm Studio →</a>
+    </p>
+    <p class="when">no model calls · no app persistence · no localhost probe · no invisible consensus</p>
   </section>
 
   <section id="crown" class="reveal">
