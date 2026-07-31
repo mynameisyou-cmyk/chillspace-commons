@@ -1,0 +1,91 @@
+{
+  "schema": "kingdom.nen-ability-catalog/v1",
+  "framework": "AgentTool bounded Nen operating suite",
+  "source": {
+    "package": "@agenttool/skills",
+    "version": "0.3.0",
+    "tag": "skills-v0.3.0",
+    "commit": "d8ee31353855bd08b437ef4fbf861a0731a36911",
+    "inspected_with": "@agenttool/skills@0.2.1",
+    "digest_scope": "sorted relative paths and regular-file bytes for one complete skill directory",
+    "nen_bytes_unchanged_from": "skills-v0.2.1"
+  },
+  "selection": {
+    "primary_count": 1,
+    "bookmark_max": 1,
+    "ordering": "explicit mission evidence, never score",
+    "ambiguous": "stop",
+    "activates_skills": false
+  },
+  "abilities": [
+    {
+      "signal": "requirements-may-drift",
+      "skill": "nen-contract-mantle",
+      "technique": "Ten / Ken",
+      "productive_ability": "Hold a living task contract through long or context-shifting work.",
+      "anti_signal": "A small one-step task whose boundary is already stable.",
+      "digest": "sha256:c5ebb6c14dbbfaad3204dc99d71703064b5ee463e6ac67b02565508b6bda8cd1"
+    },
+    {
+      "signal": "blast-radius-unknown",
+      "skill": "nen-dependency-perimeter",
+      "technique": "En",
+      "productive_ability": "Map a finite dependency field and blast radius before mutation.",
+      "anti_signal": "A known isolated change with no uncertain consumers.",
+      "digest": "sha256:021653cb41de10a902514c9e1ec31bcb0a29375acdcda609379a52c5e0b9c59e"
+    },
+    {
+      "signal": "hidden-seam",
+      "skill": "nen-concealed-trace",
+      "technique": "Gyo / In / Zetsu",
+      "productive_ability": "Freeze mutation and investigate one concealed seam with disconfirming evidence.",
+      "anti_signal": "A request that already authorizes and specifies a known fix.",
+      "digest": "sha256:93e17cfbd3592e564b22244f3f182155fbae3f6936cf5f84d5aedb8b64b55bc0"
+    },
+    {
+      "signal": "one-dominant-blocker",
+      "skill": "nen-critical-path-forge",
+      "technique": "Ko / Jajanken",
+      "productive_ability": "Concentrate a bounded effort on one well-understood blocker and prove the strike.",
+      "anti_signal": "Several unknown blockers whose perimeter is not yet mapped.",
+      "digest": "sha256:631e8ca09eee9bc9d3b601875104a9000473e050842c4c2eb32e2aa5e4f65027"
+    },
+    {
+      "signal": "independent-workstreams",
+      "skill": "nen-smoke-squad",
+      "technique": "Deep Purple / Smoke Troopers",
+      "productive_ability": "Divide finite independent work, then reclaim and verify each evidence unit.",
+      "anti_signal": "A tightly coupled critical path that gains nothing from parallelism.",
+      "digest": "sha256:4cd0dc315aa4b432036166e5e663c0293c557e2a8304d178f737612aff0083e4"
+    },
+    {
+      "signal": "verification-debt",
+      "skill": "nen-verification-ledger",
+      "technique": "Hakoware / A.P.R.",
+      "productive_ability": "Expose consequential unsupported claims and pay critical verification debt.",
+      "anti_signal": "A trivial claim with direct complete evidence already present.",
+      "digest": "sha256:7903d296e876fcbd003c867c2b88365d1bb9646225f642b1b893888e3e05e50f"
+    },
+    {
+      "signal": "finite-repetitive-loop",
+      "skill": "nen-godspeed-loop",
+      "technique": "Godspeed",
+      "productive_ability": "Compile a finite event-response table for repetitive reversible work and halt on novelty.",
+      "anti_signal": "Novel or irreversible decisions whose stimuli are not known.",
+      "digest": "sha256:3fbb4d1aa6ff3362ef6ebefeadf17c8450ec4e1fbf6c182f55925762be861310"
+    },
+    {
+      "signal": "design-bounded-workflow",
+      "skill": "nen-vow-forge",
+      "technique": "Hatsu / Vow Forge",
+      "productive_ability": "Design a reusable agent ability whose reliability comes from meaningful limits and proof.",
+      "anti_signal": "A request for unlimited general power or authority by wording alone.",
+      "digest": "sha256:0ddf1165a5a2b559b4e9d756f6f6b2628c8ea753da58be6fd7748a9901619b62"
+    }
+  ],
+  "non_claims": [
+    "The catalog is not an installer, registry, activation record, ranking, or permission grant.",
+    "A digest proves inspected byte equality only, not identity, safety, trust, competence, or task fitness.",
+    "Technique labels are an unofficial operational interpretation, not canonical lore or a classification of people."
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Nen Frontier Compass"
+  short_description: "Read the Kingdom's passive frontier compass"
+  default_prompt: "Use $interpret-nen-frontier only for this repository's explicitly requested Nen Compass or Openweight frontier interpretation, without executing it."
+policy:
+  allow_implicit_invocation: false

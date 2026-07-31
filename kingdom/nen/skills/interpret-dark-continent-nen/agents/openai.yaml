@@ -1,0 +1,6 @@
+interface:
+  display_name: "Nen Mission Lens"
+  short_description: "Bind one reviewed AgentTool Nen ability"
+  default_prompt: "Use $interpret-dark-continent-nen to bind this explicit mission to one reviewed AgentTool Nen ability and at most one inactive bookmark."
+policy:
+  allow_implicit_invocation: false

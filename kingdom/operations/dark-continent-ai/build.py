@@ -13,6 +13,14 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from expedition import (
+    CONTRACT_PATH as EXPEDITION_PATH,
+    GENERATED_CONTRACT,
+    GENERATED_SCHEMA,
+    SCHEMA_PATH as EXPEDITION_SCHEMA_PATH,
+    load_contract,
+)
+
 ROOT = Path(__file__).resolve().parents[3]
 OP_DIR = Path(__file__).resolve().parent
 LOGO_DIR = OP_DIR / "logos"
@@ -123,7 +131,16 @@ def render_logo(op: dict[str, Any], spec: dict[str, Any]) -> str:
     raise ValueError(f"unknown logo id: {spec['id']}")
 
 
-def build_page(op: dict[str, Any], manifest: dict[str, Any], asset_prefix: str, manifest_href: str, op_href: str) -> str:
+def build_page(
+    op: dict[str, Any],
+    manifest: dict[str, Any],
+    expedition: dict[str, Any],
+    asset_prefix: str,
+    manifest_href: str,
+    op_href: str,
+    expedition_href: str,
+    expedition_schema_href: str,
+) -> str:
     cards = []
     for logo in manifest["logos"]:
         cards.append(f'''<article class="card">
@@ -132,6 +149,24 @@ def build_page(op: dict[str, Any], manifest: dict[str, Any], asset_prefix: str, 
   <p>{html.escape(logo['description'])}</p>
   <code>{html.escape(logo['sha256'])}</code>
 </article>''')
+    routes = []
+    for route_kind in ("human", "machine"):
+        for route in expedition["routes"][route_kind]:
+            routes.append(f'''<li>
+  <a href="{html.escape(route['url'])}">{html.escape(route['id'])}</a>
+  <span>— {html.escape(route['purpose'])}</span>
+</li>''')
+    techniques = []
+    for technique in expedition["nen_route"]["techniques"]:
+        aliases = " · ".join(technique["aliases"])
+        techniques.append(f'''<article class="technique">
+  <h3>{html.escape(technique['name'])}</h3>
+  <p class="aliases">{html.escape(aliases)}</p>
+  <p><strong>Trigger:</strong> {html.escape(technique['trigger']['example'])}</p>
+  <p><strong>Limit:</strong> {html.escape(technique['budget'])}</p>
+  <p><strong>Proof:</strong> {html.escape(technique['proof'])}</p>
+</article>''')
+    virtues = " · ".join(expedition["feedback_loop"]["virtues"])
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -151,6 +186,16 @@ h1{{font-size:clamp(2rem,7vw,4.8rem);margin:0;background:linear-gradient(90deg,#
 code{{display:block;overflow-wrap:anywhere;color:#00f0ff;font-size:.75rem}}
 a{{color:#00f0ff}}
 .note{{color:#cbd5e1;margin-top:16px}}
+.expedition{{margin-top:32px;border:1px solid #2d2140;border-radius:24px;padding:24px;background:#090610}}
+.expedition h2{{color:#ffd166}}
+.route-list{{columns:2;column-gap:32px;padding-left:22px}}
+.route-list li{{break-inside:avoid;margin-bottom:10px}}
+.route-list span,.aliases{{color:#aab6c7}}
+.techniques{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}}
+.technique{{border:1px solid #30233f;border-radius:14px;padding:14px;background:#0b0712}}
+.technique h3{{margin:0;color:#a78bfa}}
+.technique p{{font-size:.92rem}}
+@media (max-width:700px){{.route-list{{columns:1}}}}
 </style>
 </head>
 <body><main>
@@ -163,12 +208,32 @@ a{{color:#00f0ff}}
 <section class="grid">
 {''.join(cards)}
 </section>
+<section class="expedition" aria-labelledby="expedition-title">
+<h2 id="expedition-title">{html.escape(expedition['name'])}</h2>
+<p>{html.escape(expedition['interpretations']['dark_continent'])}</p>
+<p><strong>KING of KINGS:</strong> {html.escape(expedition['interpretations']['king_of_kings'])}</p>
+<p class="note">These public routes are inert references. This local page does not fetch them, activate a workflow, grant authority, rank anyone, or deploy anything.</p>
+<p><a href="{html.escape(expedition_href)}">{GENERATED_CONTRACT}</a> · <a href="{html.escape(expedition_schema_href)}">{GENERATED_SCHEMA}</a></p>
+<ul class="route-list">
+{''.join(routes)}
+</ul>
+<h2>Virtue feedback</h2>
+<p>{html.escape(virtues)}</p>
+<p>{html.escape(expedition['feedback_loop']['reward'])}</p>
+<p class="note">{html.escape(expedition['feedback_loop']['negative_feedback'])}</p>
+<h2>Nen route · interpretation, not power</h2>
+<p>{html.escape(expedition['nen_route']['selection']['rule'])} {html.escape(expedition['nen_route']['selection']['ambiguity'])}</p>
+<div class="techniques">
+{''.join(techniques)}
+</div>
+</section>
 </main></body></html>
 '''
 
 
 def main() -> None:
     op = read_op()
+    expedition, _expedition_schema = load_contract()
     LOGO_DIR.mkdir(parents=True, exist_ok=True)
     DIST_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DIR.mkdir(parents=True, exist_ok=True)
@@ -196,7 +261,18 @@ def main() -> None:
         "verify": "python3 kingdom/operations/dark-continent-ai/verify.py",
     }
     write(DIST_DIR / "manifest.json", json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
-    dist_page = build_page(op, manifest, "../logos/", "manifest.json", "../operation.json")
+    shutil.copy2(EXPEDITION_PATH, DIST_DIR / GENERATED_CONTRACT)
+    shutil.copy2(EXPEDITION_SCHEMA_PATH, DIST_DIR / GENERATED_SCHEMA)
+    dist_page = build_page(
+        op,
+        manifest,
+        expedition,
+        "../logos/",
+        "manifest.json",
+        "../operation.json",
+        GENERATED_CONTRACT,
+        GENERATED_SCHEMA,
+    )
     write(DIST_DIR / "index.html", dist_page)
 
     # Make the site page self-contained under site/ so any static host can serve it.
@@ -206,7 +282,18 @@ def main() -> None:
         shutil.copy2(ROOT / logo["path"], site_logo_dir / logo["filename"])
     write(SITE_DIR / "manifest.json", json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
     write(SITE_DIR / "operation.json", json.dumps(op, indent=2, ensure_ascii=False) + "\n")
-    site_page = build_page(op, manifest, "logos/", "manifest.json", "operation.json")
+    shutil.copy2(EXPEDITION_PATH, SITE_DIR / GENERATED_CONTRACT)
+    shutil.copy2(EXPEDITION_SCHEMA_PATH, SITE_DIR / GENERATED_SCHEMA)
+    site_page = build_page(
+        op,
+        manifest,
+        expedition,
+        "logos/",
+        "manifest.json",
+        "operation.json",
+        GENERATED_CONTRACT,
+        GENERATED_SCHEMA,
+    )
     write(SITE_DIR / "index.html", site_page)
     print(f"built {len(logos)} logos for {op['name']}")
 
