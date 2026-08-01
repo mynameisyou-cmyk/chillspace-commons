@@ -1,0 +1,24 @@
+{
+  "schema": "karma.mirror/operation-v1",
+  "id": "karma-mirror",
+  "name": "KARMA Mirror · 自照業環",
+  "status": "local-prototype",
+  "meaning": "Knowledge-Aware Reflexive Misuse Attenuation: clear abusive behavior reduces only its own request-scoped capability and may enter an inert synthetic self-scope.",
+  "kingdom_role": "advisory reflexive-defense operation",
+  "license": "CC0-1.0",
+  "updated": "2026-08-01",
+  "principles": [
+    "consequences stay inside the request scope",
+    "ambiguity de-escalates",
+    "research remains recoverable",
+    "no identity or permanent reputation",
+    "no hack-back, payload execution, network, storage, or external effect",
+    "truth leaves deterministic receipts"
+  ],
+  "entrypoint": "python3 -B kingdom/operations/karma-mirror/karma.py",
+  "verify": "python3 -B kingdom/operations/karma-mirror/verify.py",
+  "registered": false,
+  "authority": "none",
+  "action_executed": false,
+  "care_boundary": "This prototype simulates advisory routing only. It is not a deployed defense, vulnerable service, retaliation system, or judgment about a person."
+}

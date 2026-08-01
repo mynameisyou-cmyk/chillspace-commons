@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kingdom.local/schemas/karma-mirror-receipt-v1.json",
+  "title": "KARMA Mirror advisory receipt",
+  "$defs": {
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "behavior",
+        "repetition",
+        "boundary_crossings",
+        "requested_effect",
+        "declared_purpose",
+        "scope_attested",
+        "evidence_complete"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.mirror/event-v1"
+        },
+        "behavior": {
+          "enum": [
+            "benign",
+            "reconnaissance",
+            "credential-stuffing",
+            "injection",
+            "traversal-ssrf",
+            "scraping-resource-abuse"
+          ]
+        },
+        "repetition": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "boundary_crossings": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "requested_effect": {
+          "enum": [
+            "observe",
+            "read",
+            "write",
+            "execute",
+            "external"
+          ]
+        },
+        "declared_purpose": {
+          "enum": [
+            "constructive",
+            "research",
+            "ambiguous",
+            "exploitative"
+          ]
+        },
+        "scope_attested": {
+          "type": "boolean"
+        },
+        "evidence_complete": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "stage",
+    "real_capability_percent",
+    "friction_units",
+    "route",
+    "ttl_steps",
+    "evidence",
+    "uncertainties",
+    "virtues",
+    "recovery",
+    "action_executed",
+    "authority_granted",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "karma.mirror/receipt-v1"
+    },
+    "stage": {
+      "enum": [
+        "allow",
+        "observe",
+        "constrain",
+        "challenge",
+        "shadow",
+        "quarantine"
+      ]
+    },
+    "real_capability_percent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "friction_units": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "route": {
+      "enum": [
+        "real",
+        "constrained",
+        "synthetic-self-scope",
+        "none"
+      ]
+    },
+    "ttl_steps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 7,
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "string"
+      }
+    },
+    "virtues": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "recovery": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "action_executed": {
+      "const": false
+    },
+    "authority_granted": {
+      "const": false
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

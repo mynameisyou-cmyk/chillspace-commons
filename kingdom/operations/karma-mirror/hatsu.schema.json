@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kingdom.local/schemas/karma-mirror-hatsu-v1.json",
+  "title": "KARMA Mirror bounded ability",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "name",
+    "desire",
+    "affinity",
+    "trigger",
+    "anti_triggers",
+    "contract",
+    "conditions",
+    "limitations",
+    "budget",
+    "breach_response",
+    "proof",
+    "exit",
+    "policy",
+    "boundaries",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "karma.mirror/hatsu-v1"
+    },
+    "name": {
+      "const": "KARMA Mirror · 自照業環"
+    },
+    "desire": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "affinity": {
+      "type": "object"
+    },
+    "trigger": {
+      "type": "string"
+    },
+    "anti_triggers": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "string"
+      }
+    },
+    "contract": {
+      "type": "object"
+    },
+    "conditions": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "string"
+      }
+    },
+    "budget": {
+      "type": "object"
+    },
+    "breach_response": {
+      "type": "string"
+    },
+    "proof": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "exit": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "object"
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": {
+        "const": false
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

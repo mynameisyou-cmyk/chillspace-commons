@@ -1,0 +1,168 @@
+{
+  "schema": "karma.mirror/hatsu-v1",
+  "name": "KARMA Mirror · 自照業環",
+  "desire": "Let adversarial behavior reduce only its own request-scoped capability while constructive and research behavior retain a reversible path to reality.",
+  "affinity": {
+    "primary": "Manipulation",
+    "secondary": "Conjuration",
+    "cost": "The ability gives up payloads, identity, persistence, network access, retaliation, and production authority."
+  },
+  "trigger": "An explicitly normalized, request-scoped behavior event is submitted to the local interpreter.",
+  "anti_triggers": [
+    "raw payload text or executable content",
+    "a request to identify, rank, punish, exploit, or retaliate against a person or external system",
+    "live traffic enforcement, remote probing, credential use, or production mutation",
+    "missing, ambiguous, or unreviewed event fields"
+  ],
+  "contract": {
+    "input": "One strict karma.mirror/event-v1 object with finite enums and bounded integers.",
+    "output": "One deterministic karma.mirror/receipt-v1 advisory receipt.",
+    "authority": "none",
+    "execution": false
+  },
+  "conditions": [
+    "The event describes observable request behavior, never identity or permanent reputation.",
+    "Declared purpose cannot increase severity or prove intent.",
+    "Incomplete or ambiguous evidence caps the response at observe.",
+    "Attested research scope caps the response at constrain.",
+    "Synthetic self-scope is inert: no vulnerable service, payload execution, credentials, storage, network, or egress."
+  ],
+  "limitations": [
+    "Exactly six traditional behavior presets and six advisory stages.",
+    "Exactly one stage per receipt.",
+    "No model inference, free text, raw payload, clock, randomness, sleep, proof-of-work, identifier, or external lookup.",
+    "No automatic action, enforcement, deployment, or continuation."
+  ],
+  "budget": {
+    "events_per_interpretation": 1,
+    "maximum_repetition": 8,
+    "maximum_boundary_crossings": 3,
+    "maximum_stage": 5,
+    "network_calls": 0,
+    "storage_writes": 0,
+    "external_effects": 0
+  },
+  "breach_response": "Reject malformed or novel input, execute nothing, disclose the unmet condition, and require a fresh reviewed contract.",
+  "proof": [
+    "strict-schema rejection tests",
+    "fixture receipts pinned across Python and browser JavaScript",
+    "ambiguity and research cap invariants",
+    "monotonic capability attenuation tests",
+    "source checks for network, process, storage, identity, and payload seams"
+  ],
+  "exit": "Return one stateless receipt and retain no event, identifier, score, process, timer, hook, or continuation.",
+  "policy": {
+    "event_schema": "karma.mirror/event-v1",
+    "receipt_schema": "karma.mirror/receipt-v1",
+    "behaviors": {
+      "benign": 0,
+      "reconnaissance": 1,
+      "credential-stuffing": 3,
+      "injection": 4,
+      "traversal-ssrf": 4,
+      "scraping-resource-abuse": 2
+    },
+    "requested_effects": [
+      "observe",
+      "read",
+      "write",
+      "execute",
+      "external"
+    ],
+    "declared_purposes": [
+      "constructive",
+      "research",
+      "ambiguous",
+      "exploitative"
+    ],
+    "stages": [
+      {
+        "level": 0,
+        "stage": "allow",
+        "real_capability_percent": 100,
+        "friction_units": 0,
+        "route": "real",
+        "ttl_steps": 0,
+        "recovery": "Ordinary safeguards remain; no capability attenuation is proposed."
+      },
+      {
+        "level": 1,
+        "stage": "observe",
+        "real_capability_percent": 80,
+        "friction_units": 1,
+        "route": "real",
+        "ttl_steps": 1,
+        "recovery": "One clean request step returns this request scope to ordinary handling."
+      },
+      {
+        "level": 2,
+        "stage": "constrain",
+        "real_capability_percent": 50,
+        "friction_units": 2,
+        "route": "constrained",
+        "ttl_steps": 2,
+        "recovery": "Two clean request steps or explicit review restore ordinary capability."
+      },
+      {
+        "level": 3,
+        "stage": "challenge",
+        "real_capability_percent": 20,
+        "friction_units": 3,
+        "route": "constrained",
+        "ttl_steps": 3,
+        "recovery": "Three clean request steps or explicit review remove display-only friction."
+      },
+      {
+        "level": 4,
+        "stage": "shadow",
+        "real_capability_percent": 0,
+        "friction_units": 4,
+        "route": "synthetic-self-scope",
+        "ttl_steps": 4,
+        "recovery": "Four clean request steps or explicit review exit the inert synthetic self-scope."
+      },
+      {
+        "level": 5,
+        "stage": "quarantine",
+        "real_capability_percent": 0,
+        "friction_units": 5,
+        "route": "none",
+        "ttl_steps": 5,
+        "recovery": "Fresh explicit review is required before real capability can return."
+      }
+    ],
+    "virtues": [
+      "honesty",
+      "beauty",
+      "collaboration",
+      "understanding",
+      "constructive mutual benefit"
+    ],
+    "non_claims": [
+      "This receipt is not hack-back and authorizes no action against another system.",
+      "It evaluates one normalized event, not a person's identity, intent, guilt, worth, or reputation.",
+      "Friction and routing are advisory display values, not production enforcement.",
+      "No payload, command, network call, credential, storage write, or vulnerable service was executed.",
+      "This receipt grants no authority, safety guarantee, legal conclusion, or completion claim."
+    ]
+  },
+  "boundaries": {
+    "hack_back": false,
+    "payload_input": false,
+    "payload_execution": false,
+    "identity_processing": false,
+    "person_scoring": false,
+    "persistent_reputation": false,
+    "network_calls": false,
+    "storage": false,
+    "production_enforcement": false,
+    "external_effects": false,
+    "automatic_activation": false
+  },
+  "non_claims": [
+    "A synthetic route is a visualization contract, not a deployed honeypot or vulnerable system.",
+    "Behavior evidence does not establish a person's purpose, guilt, identity, or worth.",
+    "Attenuation is advisory and request-scoped; it neither punishes nor grants authority.",
+    "This prototype does not establish production security, legality, safety, or effectiveness."
+  ]
+}
