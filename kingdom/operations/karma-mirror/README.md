@@ -89,15 +89,85 @@ action, and authority to false.
 Share copy is offered as inert text only. Manual sharing is optional; silence
 is equally complete.
 
+## KARMA Lantern · 業環明燈
+
+Lantern adds incident legibility without becoming an incident system. It
+receives one existing normalized event, recomputes and canonically checks its
+KARMA receipt and Cloudbell card, then composes three visibly separate
+artifacts:
+
+- a **Truth Receipt** that distinguishes normalized signals, declarations, a
+  deterministic policy trace, reviewed policy inferences, uncertainty, and
+  four explicit unknowns;
+- an **Action Card** with one accountable review role and exactly three
+  reversible proposals; and
+- a **Learning Seed** with a normalized replay, candidate regression targets,
+  architecture questions, and open closure requirements.
+
+The six-step rail is `normalize → separate → interpret → explain → respond →
+learn`. “Routine”, “heightened”, and “critical human” are finite review
+priority labels, not clocks, queue positions, or response guarantees. Stage,
+route, capability, friction, and recovery-step values are copied as advisory
+display data; they do not claim that enforcement happened.
+
+### Lantern Vow
+
+Name: KARMA Lantern · 業環明燈.
+
+Desire: make one normalized event quickly understandable, safely reviewable
+by a human, and useful for future design.
+
+Affinity: Conjuration; secondary Transmutation.
+
+Trigger / anti-trigger: one strict normalized event with canonically matching
+reviewed artifacts / raw traffic, payloads, identity, attribution, live
+monitoring, persistence, automatic response, automatic escalation, or novel
+fields.
+
+Input → output: `karma.mirror/event-v1` plus recomputed reviewed sources →
+`karma.lantern/brief-v1`.
+
+Conditions: truth, proposal, and learning stay separate; uncertainty remains
+visible; options stay reversible and human-owned; recovery is copied exactly;
+the replay contains only the normalized event.
+
+Limitation and budget: one brief per event, three options per stage, six causal
+steps, zero network calls, zero storage writes, and zero external actions.
+
+Breach response: reject mismatched or novel input, emit no partial brief,
+execute nothing, and name the failed condition.
+
+Proof: strict schemas, byte-pinned reviewed vocabulary and nine fixtures,
+source checks, mutation tests, and exhaustive coverage of all 15,360 finite
+events in both runtimes.
+
+Exit: return one inert brief; leave learning open until a human can attach
+evidence, test a candidate change, review side effects, and record a recovery
+path.
+
+Non-claims: not incident detection, monitoring coverage, identity or intent
+judgment, severity authority, automatic remediation, a time guarantee, a
+ticket or test generator, legal advice, or proof of completion.
+
+`lantern.schema.json` rejects novel fields and pins finite behavior, stage,
+causal, epistemic, advisory, and duplicated normalized-view relationships.
+Schema validation alone cannot recompute the KARMA decision: consumers must
+also call `lantern.validate_brief`, which rebuilds the receipt, Cloudbell card,
+policy trace, uncertainty, and entire Lantern brief from the normalized replay
+and requires canonical equality.
+
 ## Local verification
 
     PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/operations/karma-mirror/verify.py
     PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/operations/karma-mirror/test_karma_mirror.py
     PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/operations/karma-mirror/test_cloudbell.py
+    PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/operations/karma-mirror/test_lantern.py
     python3 -B kingdom/operations/karma-mirror/karma.py --fixture benign-basic
     python3 -B kingdom/operations/karma-mirror/karma.py --all-fixtures
     python3 -B kingdom/operations/karma-mirror/cloudbell.py --fixture credential-baseline
     python3 -B kingdom/operations/karma-mirror/cloudbell.py --all-fixtures
+    python3 -B kingdom/operations/karma-mirror/lantern.py --fixture injection-baseline
+    python3 -B kingdom/operations/karma-mirror/lantern.py --all-fixtures
 
 The operation is deliberately unregistered while it is a local prototype.
 Registration and any public deployment require a separate reviewed release.

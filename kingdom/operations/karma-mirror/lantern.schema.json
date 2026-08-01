@@ -1,0 +1,3097 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kingdom.local/schemas/karma-lantern-brief-v1.json",
+  "title": "KARMA Lantern Brief",
+  "$comment": "Finite structural, normalized-view, stage, and behavior coupling schema. Canonical lantern.validate_brief recomposition is still required to verify derived policy trace, uncertainty, stage selection, and frozen explanations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "ability_id",
+    "ability_name",
+    "source_event_schema",
+    "source_receipt_schema",
+    "source_cloudbell_schema",
+    "source_behavior",
+    "source_signature_id",
+    "source_stage",
+    "headline",
+    "mechanism",
+    "truth_receipt",
+    "action_card",
+    "learning_seed",
+    "causal_rail",
+    "virtues",
+    "recovery",
+    "behavior_not_person",
+    "explanatory_only",
+    "owned_surface_only",
+    "reversible_options_only",
+    "human_decision_required",
+    "replay_event_normalized_only",
+    "no_time_guarantee",
+    "policy_values_advisory_only",
+    "live_ingestion",
+    "raw_payload_input",
+    "identity_processing",
+    "person_attribution",
+    "persistent_incident_store",
+    "automatic_response",
+    "automatic_escalation",
+    "automatic_test_creation",
+    "automatic_policy_mutation",
+    "production_monitoring",
+    "network_calls",
+    "storage_writes",
+    "external_delivery",
+    "publication_authorized",
+    "action_executed",
+    "authority_granted",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "karma.lantern/brief-v1"
+    },
+    "ability_id": {
+      "const": "karma.lantern.v1"
+    },
+    "ability_name": {
+      "const": "KARMA Lantern · 業環明燈"
+    },
+    "source_event_schema": {
+      "const": "karma.mirror/event-v1"
+    },
+    "source_receipt_schema": {
+      "const": "karma.mirror/receipt-v1"
+    },
+    "source_cloudbell_schema": {
+      "const": "skycastle.herald/card-v1"
+    },
+    "source_behavior": {
+      "$ref": "#/$defs/behavior"
+    },
+    "source_signature_id": {
+      "type": "string",
+      "pattern": "^karma\\.signature\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.v1$"
+    },
+    "source_stage": {
+      "$ref": "#/$defs/stage"
+    },
+    "headline": {
+      "$ref": "#/$defs/text"
+    },
+    "mechanism": {
+      "$ref": "#/$defs/text"
+    },
+    "truth_receipt": {
+      "$ref": "#/$defs/truth"
+    },
+    "action_card": {
+      "$ref": "#/$defs/action"
+    },
+    "learning_seed": {
+      "$ref": "#/$defs/learning"
+    },
+    "causal_rail": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "const": {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          }
+        },
+        {
+          "const": {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          }
+        },
+        {
+          "const": {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          }
+        },
+        {
+          "const": {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          }
+        },
+        {
+          "const": {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          }
+        },
+        {
+          "const": {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        }
+      ],
+      "items": false
+    },
+    "virtues": {
+      "const": [
+        "honesty",
+        "beauty",
+        "collaboration",
+        "understanding",
+        "constructive mutual benefit"
+      ]
+    },
+    "recovery": {
+      "$ref": "#/$defs/recovery"
+    },
+    "behavior_not_person": {
+      "const": true
+    },
+    "explanatory_only": {
+      "const": true
+    },
+    "owned_surface_only": {
+      "const": true
+    },
+    "reversible_options_only": {
+      "const": true
+    },
+    "human_decision_required": {
+      "const": true
+    },
+    "replay_event_normalized_only": {
+      "const": true
+    },
+    "no_time_guarantee": {
+      "const": true
+    },
+    "policy_values_advisory_only": {
+      "const": true
+    },
+    "live_ingestion": {
+      "const": false
+    },
+    "raw_payload_input": {
+      "const": false
+    },
+    "identity_processing": {
+      "const": false
+    },
+    "person_attribution": {
+      "const": false
+    },
+    "persistent_incident_store": {
+      "const": false
+    },
+    "automatic_response": {
+      "const": false
+    },
+    "automatic_escalation": {
+      "const": false
+    },
+    "automatic_test_creation": {
+      "const": false
+    },
+    "automatic_policy_mutation": {
+      "const": false
+    },
+    "production_monitoring": {
+      "const": false
+    },
+    "network_calls": {
+      "const": false
+    },
+    "storage_writes": {
+      "const": false
+    },
+    "external_delivery": {
+      "const": false
+    },
+    "publication_authorized": {
+      "const": false
+    },
+    "action_executed": {
+      "const": false
+    },
+    "authority_granted": {
+      "const": false
+    },
+    "non_claims": {
+      "const": [
+        "This brief explains one normalized event and does not prove that a real incident occurred.",
+        "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+        "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+        "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+        "Its options are inert proposals and authorize or execute no infrastructure action.",
+        "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+        "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "allow"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "Ordinary safeguards remain; no capability attenuation is proposed."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.allow.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory ordinary-handling label with full capability."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.service-steward.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Service Steward · 服務守望者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.routine.v1"
+              },
+              "review_priority_title": {
+                "const": "Routine Review Priority · 常規審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Route through ordinary stewardship; this priority label makes no elapsed-time promise."
+              },
+              "policy_stage": {
+                "const": "allow"
+              },
+              "advisory_route": {
+                "const": "real"
+              },
+              "advisory_capability_percent": {
+                "const": 100
+              },
+              "display_friction_units": {
+                "const": 0
+              },
+              "advisory_recovery_steps": {
+                "const": 0
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "preserve-ordinary-safeguards",
+                    "label": "Preserve ordinary safeguards",
+                    "reason": "The advisory receipt labels no capability attenuation.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "inspect-local-receipt",
+                    "label": "Inspect the local receipt",
+                    "reason": "Confirm that the normalized signals and declarations match the review context.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "keep-recovery-visible",
+                    "label": "Keep recovery visible",
+                    "reason": "A visible exit keeps any future change reviewable and reversible.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "Ordinary safeguards remain; no capability attenuation is proposed."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.allow\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "observe"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "One clean request step returns this request scope to ordinary handling."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.observe.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory real-handling label while making uncertainty visible."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.service-steward.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Service Steward · 服務守望者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.heightened.v1"
+              },
+              "review_priority_title": {
+                "const": "Heightened Review Priority · 加強審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee."
+              },
+              "policy_stage": {
+                "const": "observe"
+              },
+              "advisory_route": {
+                "const": "real"
+              },
+              "advisory_capability_percent": {
+                "const": 80
+              },
+              "display_friction_units": {
+                "const": 1
+              },
+              "advisory_recovery_steps": {
+                "const": 1
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "inspect-visible-uncertainty",
+                    "label": "Inspect visible uncertainty",
+                    "reason": "Review declarations and unknowns without inventing missing evidence.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "request-one-clean-step",
+                    "label": "Request one clean step",
+                    "reason": "The exact recovery path returns this request scope to ordinary handling after one clean step.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "compare-declared-boundary",
+                    "label": "Compare the declared boundary",
+                    "reason": "Check whether scope and requested effect remain inside the reviewed finite event.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "One clean request step returns this request scope to ordinary handling."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.observe\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "constrain"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "Two clean request steps or explicit review restore ordinary capability."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.constrain.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory constrained-capability label with an explicit path back."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.security-reviewer.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Security Reviewer · 安全審視者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.heightened.v1"
+              },
+              "review_priority_title": {
+                "const": "Heightened Review Priority · 加強審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee."
+              },
+              "policy_stage": {
+                "const": "constrain"
+              },
+              "advisory_route": {
+                "const": "constrained"
+              },
+              "advisory_capability_percent": {
+                "const": 50
+              },
+              "display_friction_units": {
+                "const": 2
+              },
+              "advisory_recovery_steps": {
+                "const": 2
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "hold-declared-scope",
+                    "label": "Hold the declared scope",
+                    "reason": "Keep the review proposal inside the scope already represented by the receipt.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "request-explicit-review",
+                    "label": "Request explicit review",
+                    "reason": "A human reviewer can restore ordinary capability without widening this brief's authority.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "verify-two-clean-steps",
+                    "label": "Verify two clean steps",
+                    "reason": "The exact recovery path names two clean request steps as the ordinary exit.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "Two clean request steps or explicit review restore ordinary capability."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.constrain\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "challenge"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "Three clean request steps or explicit review remove display-only friction."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.challenge.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory bounded-challenge label before capability can widen."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.security-reviewer.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Security Reviewer · 安全審視者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.critical-human.v1"
+              },
+              "review_priority_title": {
+                "const": "Critical Human Review Priority · 關鍵人工審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action."
+              },
+              "policy_stage": {
+                "const": "challenge"
+              },
+              "advisory_route": {
+                "const": "constrained"
+              },
+              "advisory_capability_percent": {
+                "const": 20
+              },
+              "display_friction_units": {
+                "const": 3
+              },
+              "advisory_recovery_steps": {
+                "const": 3
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "present-bounded-challenge",
+                    "label": "Present a bounded challenge",
+                    "reason": "Keep any challenge inside the declared request scope and outside this inert brief.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "verify-scope-and-effect",
+                    "label": "Verify scope and effect",
+                    "reason": "Review the attested scope and requested effect before a human decision.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "prepare-reviewed-restoration",
+                    "label": "Prepare reviewed restoration",
+                    "reason": "The exact recovery path permits three clean steps or explicit review.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "Three clean request steps or explicit review remove display-only friction."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.challenge\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "shadow"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "Four clean request steps or explicit review exit the inert synthetic self-scope."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.shadow.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory inert synthetic-self-scope label with zero capability."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.incident-coordinator.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Incident Coordinator · 事件協調者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.critical-human.v1"
+              },
+              "review_priority_title": {
+                "const": "Critical Human Review Priority · 關鍵人工審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action."
+              },
+              "policy_stage": {
+                "const": "shadow"
+              },
+              "advisory_route": {
+                "const": "synthetic-self-scope"
+              },
+              "advisory_capability_percent": {
+                "const": 0
+              },
+              "display_friction_units": {
+                "const": 4
+              },
+              "advisory_recovery_steps": {
+                "const": 4
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "review-inert-self-scope",
+                    "label": "Review the inert self-scope label",
+                    "reason": "Do not approve wider capability before reviewed normalized evidence changes.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "review-crossing-evidence",
+                    "label": "Review crossing evidence",
+                    "reason": "Inspect only the normalized boundary signals and explicit unknowns.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "plan-four-step-recovery",
+                    "label": "Plan the four-step recovery",
+                    "reason": "The exact recovery path permits four clean steps or explicit review.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "Four clean request steps or explicit review exit the inert synthetic self-scope."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.shadow\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_stage": {
+            "const": "quarantine"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "recovery": {
+            "const": "Fresh explicit review is required before real capability can return."
+          },
+          "truth_receipt": {
+            "properties": {
+              "policy_inferences": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "karma-stage"
+                      },
+                      "id": {
+                        "const": "karma.stage.quarantine.v1"
+                      },
+                      "explanation": {
+                        "const": "The unchanged KARMA policy reports an advisory no-route label pending fresh explicit review."
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {}
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "action_card": {
+            "properties": {
+              "suggested_review_role_id": {
+                "const": "karma.role.incident-coordinator.v1"
+              },
+              "suggested_review_role_title": {
+                "const": "Incident Coordinator · 事件協調者"
+              },
+              "review_priority_id": {
+                "const": "karma.review-priority.critical-human.v1"
+              },
+              "review_priority_title": {
+                "const": "Critical Human Review Priority · 關鍵人工審視級"
+              },
+              "review_priority_explanation": {
+                "const": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action."
+              },
+              "policy_stage": {
+                "const": "quarantine"
+              },
+              "advisory_route": {
+                "const": "none"
+              },
+              "advisory_capability_percent": {
+                "const": 0
+              },
+              "display_friction_units": {
+                "const": 5
+              },
+              "advisory_recovery_steps": {
+                "const": 5
+              },
+              "options": {
+                "const": [
+                  {
+                    "id": "review-no-route-label",
+                    "label": "Review the no-route label",
+                    "reason": "The current advisory receipt exposes no route to widen.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "begin-fresh-explicit-review",
+                    "label": "Begin fresh explicit review",
+                    "reason": "A new human review is the only recovery named by the receipt.",
+                    "reversible": true
+                  },
+                  {
+                    "id": "require-reviewed-restoration",
+                    "label": "Require reviewed restoration",
+                    "reason": "Any future capability change must occur outside this brief under actual operator authority.",
+                    "reversible": true
+                  }
+                ]
+              },
+              "human_escalation_prompts": {
+                "const": [
+                  "New reviewed evidence changes a normalized event field.",
+                  "A requested effect or boundary-crossing value changes.",
+                  "The declared scope is disputed or cannot be verified."
+                ]
+              },
+              "recovery": {
+                "const": "Fresh explicit review is required before real capability can return."
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.quarantine\\.v1$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "benign"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.benign.v1"
+          },
+          "headline": {
+            "const": "The ordinary path is legible."
+          },
+          "mechanism": {
+            "const": "Ordinary request behavior remains inside the declared boundary."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "benign"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.benign.v1"
+                      },
+                      "explanation": {
+                        "const": "Ordinary request behavior remains inside the declared boundary."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.benign\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "benign"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "reconnaissance"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.reconnaissance.v1"
+          },
+          "headline": {
+            "const": "Discovery pressure is visible at the boundary."
+          },
+          "mechanism": {
+            "const": "Broad capability discovery or repeated surface mapping."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "reconnaissance"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.reconnaissance.v1"
+                      },
+                      "explanation": {
+                        "const": "Broad capability discovery or repeated surface mapping."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.reconnaissance\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "reconnaissance"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "credential-stuffing"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.credential-stuffing.v1"
+          },
+          "headline": {
+            "const": "Repeated key attempts have a readable shape."
+          },
+          "mechanism": {
+            "const": "Repeated authentication attempts represented only as a finite pattern."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "credential-stuffing"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.credential-stuffing.v1"
+                      },
+                      "explanation": {
+                        "const": "Repeated authentication attempts represented only as a finite pattern."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.credential-stuffing\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "credential-stuffing"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "injection"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.injection.v1"
+          },
+          "headline": {
+            "const": "The instruction boundary explains its own strain."
+          },
+          "mechanism": {
+            "const": "Instruction or query-boundary manipulation represented without payloads."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "injection"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.injection.v1"
+                      },
+                      "explanation": {
+                        "const": "Instruction or query-boundary manipulation represented without payloads."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.injection\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "injection"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "traversal-ssrf"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.traversal-ssrf.v1"
+          },
+          "headline": {
+            "const": "The attempted boundary hop is made explicit."
+          },
+          "mechanism": {
+            "const": "A request pattern attempts to cross a resource or network boundary."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "traversal-ssrf"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.traversal-ssrf.v1"
+                      },
+                      "explanation": {
+                        "const": "A request pattern attempts to cross a resource or network boundary."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.traversal-ssrf\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "traversal-ssrf"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_behavior": {
+            "const": "scraping-resource-abuse"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "source_signature_id": {
+            "const": "karma.signature.scraping-resource-abuse.v1"
+          },
+          "headline": {
+            "const": "Resource pressure becomes a reviewable pattern."
+          },
+          "mechanism": {
+            "const": "Automated extraction or resource pressure exceeds an ordinary request."
+          },
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "behavior": {
+                    "const": "scraping-resource-abuse"
+                  }
+                },
+                "type": "object"
+              },
+              "policy_inferences": {
+                "prefixItems": [
+                  {},
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "cloudbell-signature"
+                      },
+                      "id": {
+                        "const": "karma.signature.scraping-resource-abuse.v1"
+                      },
+                      "explanation": {
+                        "const": "Automated extraction or resource pressure exceeds an ordinary request."
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": false
+              }
+            },
+            "type": "object"
+          },
+          "learning_seed": {
+            "properties": {
+              "lesson_class_id": {
+                "pattern": "^karma\\.lesson\\.scraping-resource-abuse\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$",
+                "type": "string"
+              },
+              "replay_event": {
+                "properties": {
+                  "behavior": {
+                    "const": "scraping-resource-abuse"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 1
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 1
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 2
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 2
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 3
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 3
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 4
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 4
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 5
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 5
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 6
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 6
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 7
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 7
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "repetition": {
+                    "const": 8
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "repetition": {
+                    "const": 8
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 0
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 0
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 1
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 1
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 2
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 2
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 3
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "boundary_crossings": {
+                    "const": 3
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "observe"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "observe"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "read"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "read"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "write"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "write"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "execute"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "execute"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "external"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "normalized_signals": {
+                "properties": {
+                  "requested_effect": {
+                    "const": "external"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "constructive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "constructive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "research"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "research"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "ambiguous"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "ambiguous"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "exploitative"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "declared_purpose": {
+                    "const": "exploitative"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "scope_attested": {
+                    "const": false
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "scope_attested": {
+                    "const": false
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "scope_attested": {
+                    "const": true
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "scope_attested": {
+                    "const": true
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": false
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": false
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "learning_seed": {
+            "properties": {
+              "replay_event": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": true
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "truth_receipt": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": true
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "behavior": {
+      "enum": [
+        "benign",
+        "reconnaissance",
+        "credential-stuffing",
+        "injection",
+        "traversal-ssrf",
+        "scraping-resource-abuse"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "allow",
+        "observe",
+        "constrain",
+        "challenge",
+        "shadow",
+        "quarantine"
+      ]
+    },
+    "recovery": {
+      "enum": [
+        "Ordinary safeguards remain; no capability attenuation is proposed.",
+        "One clean request step returns this request scope to ordinary handling.",
+        "Two clean request steps or explicit review restore ordinary capability.",
+        "Three clean request steps or explicit review remove display-only friction.",
+        "Four clean request steps or explicit review exit the inert synthetic self-scope.",
+        "Fresh explicit review is required before real capability can return."
+      ]
+    },
+    "gloss": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token",
+        "explanation"
+      ],
+      "properties": {
+        "token": {
+          "$ref": "#/$defs/text"
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "policyTrace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token",
+        "explanation"
+      ],
+      "properties": {
+        "token": {
+          "enum": [
+            "behavior:benign",
+            "behavior:reconnaissance",
+            "behavior:credential-stuffing",
+            "behavior:injection",
+            "behavior:traversal-ssrf",
+            "behavior:scraping-resource-abuse",
+            "baseline:0",
+            "baseline:1",
+            "baseline:2",
+            "baseline:3",
+            "baseline:4",
+            "repeated-pattern",
+            "repeated-boundary-crossing",
+            "high-effect-request",
+            "ambiguity-cap",
+            "verified-research-cap"
+          ]
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "uncertaintyGloss": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token",
+        "explanation"
+      ],
+      "properties": {
+        "token": {
+          "enum": [
+            "incomplete-evidence",
+            "declared-purpose-ambiguous",
+            "research-scope-unverified",
+            "purpose-behavior-conflict"
+          ]
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "explanation"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "karma-stage",
+            "cloudbell-signature"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "stageInference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "explanation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "karma-stage"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^karma\\.stage\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$"
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "signatureInference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id",
+        "explanation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "cloudbell-signature"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^karma\\.signature\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.v1$"
+        },
+        "explanation": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "truth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "epistemic_id",
+        "epistemic_title",
+        "epistemic_explanation",
+        "normalized_signals",
+        "declarations",
+        "policy_trace",
+        "policy_inferences",
+        "uncertainties",
+        "explicit_unknowns",
+        "provenance"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.lantern/truth-receipt-v1"
+        },
+        "epistemic_id": {
+          "enum": [
+            "karma.epistemic.declared-complete.v1",
+            "karma.epistemic.declared-ambiguous.v1",
+            "karma.epistemic.declared-incomplete.v1"
+          ]
+        },
+        "epistemic_title": {
+          "$ref": "#/$defs/text"
+        },
+        "epistemic_explanation": {
+          "$ref": "#/$defs/text"
+        },
+        "normalized_signals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "behavior",
+            "repetition",
+            "boundary_crossings",
+            "requested_effect"
+          ],
+          "properties": {
+            "behavior": {
+              "$ref": "#/$defs/behavior"
+            },
+            "repetition": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "boundary_crossings": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "requested_effect": {
+              "enum": [
+                "observe",
+                "read",
+                "write",
+                "execute",
+                "external"
+              ]
+            }
+          }
+        },
+        "declarations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "declared_purpose",
+            "scope_attested",
+            "evidence_complete"
+          ],
+          "properties": {
+            "declared_purpose": {
+              "enum": [
+                "constructive",
+                "research",
+                "ambiguous",
+                "exploitative"
+              ]
+            },
+            "scope_attested": {
+              "type": "boolean"
+            },
+            "evidence_complete": {
+              "type": "boolean"
+            }
+          }
+        },
+        "policy_trace": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/policyTrace"
+          }
+        },
+        "policy_inferences": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/stageInference"
+            },
+            {
+              "$ref": "#/$defs/signatureInference"
+            }
+          ],
+          "items": false
+        },
+        "uncertainties": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/uncertaintyGloss"
+          }
+        },
+        "explicit_unknowns": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": false
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "epistemic_id": {
+                "const": "karma.epistemic.declared-incomplete.v1"
+              },
+              "epistemic_title": {
+                "const": "Declared Incomplete · 已明示未全"
+              },
+              "epistemic_explanation": {
+                "const": "The normalized event marks evidence incomplete, so the brief treats missing context as visible uncertainty rather than filling it in."
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": true
+                  },
+                  "declared_purpose": {
+                    "const": "ambiguous"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "epistemic_id": {
+                "const": "karma.epistemic.declared-ambiguous.v1"
+              },
+              "epistemic_title": {
+                "const": "Declared Ambiguous · 已明示模糊"
+              },
+              "epistemic_explanation": {
+                "const": "The normalized event explicitly declares an ambiguous purpose, so the brief preserves uncertainty and the KARMA stage remains capped."
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "declarations": {
+                "properties": {
+                  "evidence_complete": {
+                    "const": true
+                  },
+                  "declared_purpose": {
+                    "enum": [
+                      "constructive",
+                      "research",
+                      "exploitative"
+                    ]
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "epistemic_id": {
+                "const": "karma.epistemic.declared-complete.v1"
+              },
+              "epistemic_title": {
+                "const": "Declared Complete · 已明示完整"
+              },
+              "epistemic_explanation": {
+                "const": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review."
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "reason",
+        "reversible"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        },
+        "reversible": {
+          "const": true
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "suggested_review_role_id",
+        "suggested_review_role_title",
+        "review_priority_id",
+        "review_priority_title",
+        "review_priority_explanation",
+        "policy_stage",
+        "advisory_route",
+        "advisory_capability_percent",
+        "display_friction_units",
+        "advisory_recovery_steps",
+        "policy_values_advisory_only",
+        "options",
+        "human_escalation_prompts",
+        "recovery",
+        "reversible_only",
+        "human_decision_required",
+        "options_proposed_only",
+        "action_executed",
+        "authority_granted"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.lantern/action-card-v1"
+        },
+        "suggested_review_role_id": {
+          "type": "string",
+          "pattern": "^karma\\.role\\.(service-steward|security-reviewer|incident-coordinator)\\.v1$"
+        },
+        "suggested_review_role_title": {
+          "$ref": "#/$defs/text"
+        },
+        "review_priority_id": {
+          "type": "string",
+          "pattern": "^karma\\.review-priority\\.(routine|heightened|critical-human)\\.v1$"
+        },
+        "review_priority_title": {
+          "$ref": "#/$defs/text"
+        },
+        "review_priority_explanation": {
+          "$ref": "#/$defs/text"
+        },
+        "policy_stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "advisory_route": {
+          "enum": [
+            "real",
+            "constrained",
+            "synthetic-self-scope",
+            "none"
+          ]
+        },
+        "advisory_capability_percent": {
+          "enum": [
+            0,
+            20,
+            50,
+            80,
+            100
+          ]
+        },
+        "display_friction_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "advisory_recovery_steps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "options": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/option"
+          }
+        },
+        "policy_values_advisory_only": {
+          "const": true
+        },
+        "human_escalation_prompts": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "recovery": {
+          "$ref": "#/$defs/recovery"
+        },
+        "reversible_only": {
+          "const": true
+        },
+        "human_decision_required": {
+          "const": true
+        },
+        "options_proposed_only": {
+          "const": true
+        },
+        "action_executed": {
+          "const": false
+        },
+        "authority_granted": {
+          "const": false
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "behavior",
+        "repetition",
+        "boundary_crossings",
+        "requested_effect",
+        "declared_purpose",
+        "scope_attested",
+        "evidence_complete"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.mirror/event-v1"
+        },
+        "behavior": {
+          "$ref": "#/$defs/behavior"
+        },
+        "repetition": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "boundary_crossings": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "requested_effect": {
+          "enum": [
+            "observe",
+            "read",
+            "write",
+            "execute",
+            "external"
+          ]
+        },
+        "declared_purpose": {
+          "enum": [
+            "constructive",
+            "research",
+            "ambiguous",
+            "exploitative"
+          ]
+        },
+        "scope_attested": {
+          "type": "boolean"
+        },
+        "evidence_complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "learning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "lesson_class_id",
+        "replay_event",
+        "regression_targets",
+        "architecture_questions",
+        "closure_requirements",
+        "closure_status",
+        "future_use",
+        "automatic_test_creation",
+        "automatic_policy_mutation",
+        "persistent_storage"
+      ],
+      "properties": {
+        "schema": {
+          "const": "karma.lantern/learning-seed-v1"
+        },
+        "lesson_class_id": {
+          "type": "string",
+          "pattern": "^karma\\.lesson\\.(benign|reconnaissance|credential-stuffing|injection|traversal-ssrf|scraping-resource-abuse)\\.(allow|observe|constrain|challenge|shadow|quarantine)\\.v1$"
+        },
+        "replay_event": {
+          "$ref": "#/$defs/event"
+        },
+        "regression_targets": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "architecture_questions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "closure_requirements": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "closure_status": {
+          "const": "open"
+        },
+        "future_use": {
+          "const": "candidate-design-input"
+        },
+        "automatic_test_creation": {
+          "const": false
+        },
+        "automatic_policy_mutation": {
+          "const": false
+        },
+        "persistent_storage": {
+          "const": false
+        }
+      }
+    },
+    "causalStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "description",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "normalize",
+            "separate",
+            "interpret",
+            "explain",
+            "respond",
+            "learn"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "proposed",
+            "open"
+          ]
+        }
+      }
+    }
+  }
+}

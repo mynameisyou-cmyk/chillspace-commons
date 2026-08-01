@@ -9,20 +9,34 @@ from typing import Any
 
 import karma
 import cloudbell
+import lantern
 
 
 HERE = Path(__file__).resolve().parent
 HATSU_SCHEMA_PATH = HERE / "hatsu.schema.json"
 RECEIPT_SCHEMA_PATH = HERE / "receipt.schema.json"
 CLOUDBELL_SCHEMA_PATH = HERE / "cloudbell.schema.json"
+LANTERN_SCHEMA_PATH = HERE / "lantern.schema.json"
 OPERATION_PATH = HERE / "operation.json"
 EXPECTED_FIXTURE_SHA256 = "18c98206aaf99945da47a8f287c0774f9148d42ab7a3b1583257b3bfc2c6071a"
 EXPECTED_CLOUDBELL_LEXICON_SHA256 = "b9b9b45c7be5377b686588a2bfd55d33a40867055693deb7539130f068663d6c"
 EXPECTED_CLOUDBELL_SCHEMA_SHA256 = "57954b9ec466dd159015881ecbfce6f0f69ce690b787c9dfea0dca16b5c0057a"
 EXPECTED_CLOUDBELL_FIXTURE_SHA256 = "75ea0fc3b7fde083f1c27ef7d89dedc46f747f444f766eb8130cfe212287dee5"
+EXPECTED_LANTERN_LEXICON_SHA256 = "528dab807ef6e624524c5f75b093ad7cc1585240457cbdaff4b62968e05179da"
+EXPECTED_LANTERN_SCHEMA_SHA256 = "bdec7f36435536eeab75d3aa8c39eb6fbf4ef3bb8b445024bdeab16ace9f767c"
+EXPECTED_LANTERN_FIXTURE_SHA256 = "fbc035d89acd149f568a82aa85afc6d60a0d82e4ea54b2ca155e0f527bc12f5a"
 ALLOWED_IMPORTS = {
     "karma.py": {"__future__", "argparse", "json", "stat", "pathlib", "typing"},
     "cloudbell.py": {"__future__", "argparse", "pathlib", "typing", "karma"},
+    "lantern.py": {
+        "__future__",
+        "argparse",
+        "hashlib",
+        "pathlib",
+        "typing",
+        "karma",
+        "cloudbell",
+    },
 }
 FORBIDDEN_CALLS = {
     "eval",
@@ -93,6 +107,7 @@ def verify_schemas() -> None:
     hatsu_schema = load_schema(HATSU_SCHEMA_PATH, "Hatsu JSON Schema")
     receipt_schema = load_schema(RECEIPT_SCHEMA_PATH, "receipt JSON Schema")
     cloudbell_schema = load_schema(CLOUDBELL_SCHEMA_PATH, "Cloudbell JSON Schema")
+    lantern_schema = load_schema(LANTERN_SCHEMA_PATH, "Lantern JSON Schema")
     if hatsu_schema.get("$id") != "https://kingdom.local/schemas/karma-mirror-hatsu-v1.json":
         raise karma.KarmaError("unexpected Hatsu JSON Schema id")
     if hatsu_schema.get("additionalProperties") is not False:
@@ -118,6 +133,18 @@ def verify_schemas() -> None:
         raise karma.KarmaError("Cloudbell JSON Schema must fail closed")
     if set(cloudbell_schema.get("required", [])) != cloudbell.CARD_FIELDS:
         raise karma.KarmaError("Cloudbell JSON Schema fields differ")
+    if lantern_schema.get("$id") != "https://kingdom.local/schemas/karma-lantern-brief-v1.json":
+        raise karma.KarmaError("unexpected Lantern JSON Schema id")
+    if lantern_schema.get("additionalProperties") is not False:
+        raise karma.KarmaError("Lantern JSON Schema must fail closed")
+    if set(lantern_schema.get("required", [])) != lantern.BRIEF_FIELDS:
+        raise karma.KarmaError("Lantern JSON Schema fields differ")
+    for definition in ("truth", "action", "learning", "event"):
+        nested = lantern_schema.get("$defs", {}).get(definition)
+        if not isinstance(nested, dict) or nested.get("additionalProperties") is not False:
+            raise karma.KarmaError(
+                f"Lantern JSON Schema {definition} definition must fail closed"
+            )
 
 
 def verify_operation() -> None:
@@ -157,7 +184,8 @@ def verify_operation() -> None:
 
 def main() -> int:
     hatsu = karma.load_hatsu()
-    lexicon = cloudbell.load_lexicon()
+    cloudbell_lexicon = cloudbell.load_lexicon()
+    lantern_lexicon = lantern.load_lexicon()
     verify_operation()
     verify_schemas()
     verify_source_surface()
@@ -176,6 +204,15 @@ def main() -> int:
     cloudbell_fixture_digest = hashlib.sha256(
         karma.read_regular(cloudbell.FIXTURE_PATH, "Cloudbell fixture set")
     ).hexdigest()
+    lantern_lexicon_digest = hashlib.sha256(
+        karma.read_regular(lantern.LEXICON_PATH, "Lantern lexicon")
+    ).hexdigest()
+    lantern_schema_digest = hashlib.sha256(
+        karma.read_regular(LANTERN_SCHEMA_PATH, "Lantern JSON Schema")
+    ).hexdigest()
+    lantern_fixture_digest = hashlib.sha256(
+        karma.read_regular(lantern.FIXTURE_PATH, "Lantern fixture set")
+    ).hexdigest()
     if cloudbell_lexicon_digest != EXPECTED_CLOUDBELL_LEXICON_SHA256:
         raise karma.KarmaError("Cloudbell lexicon bytes differ from the reviewed contract")
     if cloudbell_schema_digest != EXPECTED_CLOUDBELL_SCHEMA_SHA256:
@@ -183,10 +220,25 @@ def main() -> int:
     if cloudbell_fixture_digest != EXPECTED_CLOUDBELL_FIXTURE_SHA256:
         raise karma.KarmaError("Cloudbell fixture bytes differ from the reviewed contract")
     cloudbell_receipt = cloudbell.verify_fixtures()
+    if lantern_lexicon_digest != EXPECTED_LANTERN_LEXICON_SHA256:
+        raise karma.KarmaError("Lantern lexicon bytes differ from the reviewed contract")
+    if lantern_schema_digest != EXPECTED_LANTERN_SCHEMA_SHA256:
+        raise karma.KarmaError("Lantern schema bytes differ from the reviewed contract")
+    if lantern_fixture_digest != EXPECTED_LANTERN_FIXTURE_SHA256:
+        raise karma.KarmaError("Lantern fixture bytes differ from the reviewed contract")
+    lantern_receipt = lantern.verify_fixtures()
     if any(value is not False for value in hatsu["boundaries"].values()):
         raise karma.KarmaError("a prohibited boundary became enabled")
-    if any(lexicon["boundaries"][key] is not False for key in cloudbell.FALSE_BOUNDARIES):
+    if any(
+        cloudbell_lexicon["boundaries"][key] is not False
+        for key in cloudbell.FALSE_BOUNDARIES
+    ):
         raise karma.KarmaError("a prohibited Cloudbell boundary became enabled")
+    if any(
+        lantern_lexicon["boundaries"][key] is not False
+        for key in lantern.FALSE_BOUNDARIES
+    ):
+        raise karma.KarmaError("a prohibited Lantern boundary became enabled")
     result = {
         "schema": "karma.mirror/operation-verification-v1",
         "hatsu": hatsu["name"],
@@ -196,10 +248,20 @@ def main() -> int:
         "cloudbell_fixture_sha256": cloudbell_fixture_digest,
         "cloudbell_lexicon_sha256": cloudbell_lexicon_digest,
         "cloudbell_schema_sha256": cloudbell_schema_digest,
-        "cloudbell_signatures": len(lexicon["behaviors"]),
+        "cloudbell_signatures": len(cloudbell_lexicon["behaviors"]),
+        "lantern_fixtures": lantern_receipt["cases"],
+        "lantern_fixture_sha256": lantern_fixture_digest,
+        "lantern_lexicon_sha256": lantern_lexicon_digest,
+        "lantern_schema_sha256": lantern_schema_digest,
+        "lantern_epistemic_states": len(lantern_lexicon["epistemic_states"]),
+        "lantern_review_roles": len(lantern_lexicon["review_roles"]),
+        "lantern_causal_steps": len(lantern_lexicon["causal_steps"]),
         "stages": len(hatsu["policy"]["stages"]),
         "behaviors": len(hatsu["policy"]["behaviors"]),
         "automatic_posting": False,
+        "automatic_response": False,
+        "automatic_escalation": False,
+        "automatic_policy_mutation": False,
         "external_delivery": False,
         "network_calls": 0,
         "storage_writes": 0,

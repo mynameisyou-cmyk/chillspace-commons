@@ -1,0 +1,391 @@
+{
+  "schema": "karma.lantern/lexicon-v1",
+  "ability": {
+    "id": "karma.lantern.v1",
+    "name": "KARMA Lantern · 業環明燈",
+    "desire": "Make one normalized event quickly understandable, safely reviewable, and useful for future design.",
+    "affinity": {
+      "primary": "Conjuration",
+      "secondary": "Transmutation"
+    },
+    "trigger": "One strict normalized KARMA event with its canonically matching receipt and Cloudbell card.",
+    "anti_trigger": "Raw traffic, payloads, identities, credentials, timestamps, free text, live enforcement, or unreviewed fields.",
+    "input_output": "event + matching KARMA receipt + matching Cloudbell card → one Truth Receipt + one bounded Action Card + one replayable Learning Seed + one six-step causal rail.",
+    "conditions": [
+      "The event must pass the unchanged KARMA event contract.",
+      "The receipt must match the event after canonical recomputation.",
+      "The Cloudbell card must match the event and receipt after canonical recomputation.",
+      "Every explanation and option must come from this frozen finite lexicon.",
+      "Recovery, virtues, advisory policy values, and effect boundaries must remain exact."
+    ],
+    "limitations": [
+      "The ability receives normalized fields only and never sees raw evidence.",
+      "It explains an existing decision and cannot calculate or change severity.",
+      "It proposes at most three reversible options and executes none.",
+      "It stores no incident, identity, score, clock, counter, or reputation.",
+      "Its review priorities are posture labels, not clocks or timing guarantees.",
+      "Its learning seed is a candidate for human review, not an automatic test or policy mutation."
+    ],
+    "budget": {
+      "briefs_per_event": 1,
+      "response_options_per_stage": 3,
+      "causal_steps": 6,
+      "network_calls": 0,
+      "storage_writes": 0,
+      "external_actions": 0
+    },
+    "breach_response": "Reject the novel or mismatched input, emit no partial brief, execute nothing, and name the failed condition.",
+    "proof": "Pinned lexicon and fixtures, strict schemas, mismatch tests, full-domain Python/JavaScript parity, source checks, production builds, and browser evidence.",
+    "exit": "Return one inert brief with an exact recovery path and open learning requirements, then retain no state."
+  },
+  "epistemic_states": {
+    "declared-complete": {
+      "id": "karma.epistemic.declared-complete.v1",
+      "title": "Declared Complete · 已明示完整",
+      "explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review."
+    },
+    "declared-ambiguous": {
+      "id": "karma.epistemic.declared-ambiguous.v1",
+      "title": "Declared Ambiguous · 已明示模糊",
+      "explanation": "The normalized event explicitly declares an ambiguous purpose, so the brief preserves uncertainty and the KARMA stage remains capped."
+    },
+    "declared-incomplete": {
+      "id": "karma.epistemic.declared-incomplete.v1",
+      "title": "Declared Incomplete · 已明示未全",
+      "explanation": "The normalized event marks evidence incomplete, so the brief treats missing context as visible uncertainty rather than filling it in."
+    }
+  },
+  "review_roles": {
+    "service-steward": {
+      "id": "karma.role.service-steward.v1",
+      "title": "Service Steward · 服務守望者",
+      "description": "Review ordinary handling, local evidence, and recovery without expanding authority."
+    },
+    "security-reviewer": {
+      "id": "karma.role.security-reviewer.v1",
+      "title": "Security Reviewer · 安全審視者",
+      "description": "Review boundary, scope, and capability proposals while keeping every option reversible."
+    },
+    "incident-coordinator": {
+      "id": "karma.role.incident-coordinator.v1",
+      "title": "Incident Coordinator · 事件協調者",
+      "description": "Coordinate fresh human review when real capability is absent or tightly bounded; this card appoints no person."
+    }
+  },
+  "review_priorities": {
+    "routine": {
+      "id": "karma.review-priority.routine.v1",
+      "title": "Routine Review Priority · 常規審視級",
+      "explanation": "Route through ordinary stewardship; this priority label makes no elapsed-time promise."
+    },
+    "heightened": {
+      "id": "karma.review-priority.heightened.v1",
+      "title": "Heightened Review Priority · 加強審視級",
+      "explanation": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee."
+    },
+    "critical-human": {
+      "id": "karma.review-priority.critical-human.v1",
+      "title": "Critical Human Review Priority · 關鍵人工審視級",
+      "explanation": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action."
+    }
+  },
+  "causal_steps": [
+    {
+      "id": "normalize",
+      "title": "Normalize · 規整",
+      "description": "Accept one strict finite event and no raw payload.",
+      "state": "available"
+    },
+    {
+      "id": "separate",
+      "title": "Separate · 分明",
+      "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+      "state": "available"
+    },
+    {
+      "id": "interpret",
+      "title": "Interpret · 解讀",
+      "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+      "state": "available"
+    },
+    {
+      "id": "explain",
+      "title": "Explain · 說明",
+      "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+      "state": "available"
+    },
+    {
+      "id": "respond",
+      "title": "Respond · 應對",
+      "description": "Present three reviewed reversible options for a human decision and execute none.",
+      "state": "proposed"
+    },
+    {
+      "id": "learn",
+      "title": "Learn · 共學",
+      "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+      "state": "open"
+    }
+  ],
+  "policy_trace_glossary": {
+    "behavior:benign": "The normalized behavior class is the ordinary benign preset.",
+    "behavior:reconnaissance": "The normalized behavior class represents broad capability discovery or repeated surface mapping.",
+    "behavior:credential-stuffing": "The normalized behavior class represents repeated authentication attempts without carrying credentials.",
+    "behavior:injection": "The normalized behavior class represents instruction or query-boundary manipulation without a payload.",
+    "behavior:traversal-ssrf": "The normalized behavior class represents an attempted resource or network boundary crossing without a target.",
+    "behavior:scraping-resource-abuse": "The normalized behavior class represents extraction or resource pressure beyond an ordinary request.",
+    "baseline:0": "The reviewed behavior baseline contributes zero ladder steps.",
+    "baseline:1": "The reviewed behavior baseline contributes one ladder step.",
+    "baseline:2": "The reviewed behavior baseline contributes two ladder steps.",
+    "baseline:3": "The reviewed behavior baseline contributes three ladder steps.",
+    "baseline:4": "The reviewed behavior baseline contributes four ladder steps.",
+    "repeated-pattern": "Four or more normalized occurrences add one reviewed ladder step.",
+    "repeated-boundary-crossing": "Two or more normalized boundary crossings add one reviewed ladder step.",
+    "high-effect-request": "A normalized execute or external request adds one reviewed ladder step.",
+    "ambiguity-cap": "Ambiguous purpose or incomplete evidence caps the reviewed stage at observe.",
+    "verified-research-cap": "Attested research scope caps the reviewed stage at constrain."
+  },
+  "uncertainty_glossary": {
+    "incomplete-evidence": "The normalized event explicitly says its evidence is incomplete.",
+    "declared-purpose-ambiguous": "The declared purpose is ambiguous and is not replaced with an inferred motive.",
+    "research-scope-unverified": "A research purpose is declared without an attested bounded scope.",
+    "purpose-behavior-conflict": "A constructive purpose is declared alongside a non-benign behavior preset; the brief records the conflict without judging intent."
+  },
+  "explicit_unknowns": [
+    "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+    "Raw request content, payload, credential, address, and target are not present.",
+    "Intent and root cause are not inferred from the normalized behavior class.",
+    "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+  ],
+  "behaviors": {
+    "benign": {
+      "headline": "The ordinary path is legible.",
+      "learning_target": "ordinary-path-does-not-attenuate",
+      "architecture_question": "Which ordinary-path signal would reveal accidental attenuation earliest?"
+    },
+    "reconnaissance": {
+      "headline": "Discovery pressure is visible at the boundary.",
+      "learning_target": "capability-discovery-remains-bounded",
+      "architecture_question": "Which capability-discovery surface can be reduced or made cheaper to review?"
+    },
+    "credential-stuffing": {
+      "headline": "Repeated key attempts have a readable shape.",
+      "learning_target": "authentication-attempt-pattern-remains-bounded",
+      "architecture_question": "Which authentication boundary can absorb repeated attempts without hiding legitimate recovery?"
+    },
+    "injection": {
+      "headline": "The instruction boundary explains its own strain.",
+      "learning_target": "instruction-boundary-remains-intact",
+      "architecture_question": "Which instruction boundary should reject this pattern before interpretation?"
+    },
+    "traversal-ssrf": {
+      "headline": "The attempted boundary hop is made explicit.",
+      "learning_target": "resource-boundary-remains-intact",
+      "architecture_question": "Which resource boundary should make this crossing structurally unavailable?"
+    },
+    "scraping-resource-abuse": {
+      "headline": "Resource pressure becomes a reviewable pattern.",
+      "learning_target": "resource-pressure-remains-bounded",
+      "architecture_question": "Which quota or caching boundary can reduce pressure while preserving ordinary access?"
+    }
+  },
+  "stages": {
+    "allow": {
+      "review_role": "service-steward",
+      "review_priority": "routine",
+      "explanation": "The unchanged KARMA policy reports an advisory ordinary-handling label with full capability.",
+      "response_options": [
+        {
+          "id": "preserve-ordinary-safeguards",
+          "label": "Preserve ordinary safeguards",
+          "reason": "The advisory receipt labels no capability attenuation.",
+          "reversible": true
+        },
+        {
+          "id": "inspect-local-receipt",
+          "label": "Inspect the local receipt",
+          "reason": "Confirm that the normalized signals and declarations match the review context.",
+          "reversible": true
+        },
+        {
+          "id": "keep-recovery-visible",
+          "label": "Keep recovery visible",
+          "reason": "A visible exit keeps any future change reviewable and reversible.",
+          "reversible": true
+        }
+      ]
+    },
+    "observe": {
+      "review_role": "service-steward",
+      "review_priority": "heightened",
+      "explanation": "The unchanged KARMA policy reports an advisory real-handling label while making uncertainty visible.",
+      "response_options": [
+        {
+          "id": "inspect-visible-uncertainty",
+          "label": "Inspect visible uncertainty",
+          "reason": "Review declarations and unknowns without inventing missing evidence.",
+          "reversible": true
+        },
+        {
+          "id": "request-one-clean-step",
+          "label": "Request one clean step",
+          "reason": "The exact recovery path returns this request scope to ordinary handling after one clean step.",
+          "reversible": true
+        },
+        {
+          "id": "compare-declared-boundary",
+          "label": "Compare the declared boundary",
+          "reason": "Check whether scope and requested effect remain inside the reviewed finite event.",
+          "reversible": true
+        }
+      ]
+    },
+    "constrain": {
+      "review_role": "security-reviewer",
+      "review_priority": "heightened",
+      "explanation": "The unchanged KARMA policy reports an advisory constrained-capability label with an explicit path back.",
+      "response_options": [
+        {
+          "id": "hold-declared-scope",
+          "label": "Hold the declared scope",
+          "reason": "Keep the review proposal inside the scope already represented by the receipt.",
+          "reversible": true
+        },
+        {
+          "id": "request-explicit-review",
+          "label": "Request explicit review",
+          "reason": "A human reviewer can restore ordinary capability without widening this brief's authority.",
+          "reversible": true
+        },
+        {
+          "id": "verify-two-clean-steps",
+          "label": "Verify two clean steps",
+          "reason": "The exact recovery path names two clean request steps as the ordinary exit.",
+          "reversible": true
+        }
+      ]
+    },
+    "challenge": {
+      "review_role": "security-reviewer",
+      "review_priority": "critical-human",
+      "explanation": "The unchanged KARMA policy reports an advisory bounded-challenge label before capability can widen.",
+      "response_options": [
+        {
+          "id": "present-bounded-challenge",
+          "label": "Present a bounded challenge",
+          "reason": "Keep any challenge inside the declared request scope and outside this inert brief.",
+          "reversible": true
+        },
+        {
+          "id": "verify-scope-and-effect",
+          "label": "Verify scope and effect",
+          "reason": "Review the attested scope and requested effect before a human decision.",
+          "reversible": true
+        },
+        {
+          "id": "prepare-reviewed-restoration",
+          "label": "Prepare reviewed restoration",
+          "reason": "The exact recovery path permits three clean steps or explicit review.",
+          "reversible": true
+        }
+      ]
+    },
+    "shadow": {
+      "review_role": "incident-coordinator",
+      "review_priority": "critical-human",
+      "explanation": "The unchanged KARMA policy reports an advisory inert synthetic-self-scope label with zero capability.",
+      "response_options": [
+        {
+          "id": "review-inert-self-scope",
+          "label": "Review the inert self-scope label",
+          "reason": "Do not approve wider capability before reviewed normalized evidence changes.",
+          "reversible": true
+        },
+        {
+          "id": "review-crossing-evidence",
+          "label": "Review crossing evidence",
+          "reason": "Inspect only the normalized boundary signals and explicit unknowns.",
+          "reversible": true
+        },
+        {
+          "id": "plan-four-step-recovery",
+          "label": "Plan the four-step recovery",
+          "reason": "The exact recovery path permits four clean steps or explicit review.",
+          "reversible": true
+        }
+      ]
+    },
+    "quarantine": {
+      "review_role": "incident-coordinator",
+      "review_priority": "critical-human",
+      "explanation": "The unchanged KARMA policy reports an advisory no-route label pending fresh explicit review.",
+      "response_options": [
+        {
+          "id": "review-no-route-label",
+          "label": "Review the no-route label",
+          "reason": "The current advisory receipt exposes no route to widen.",
+          "reversible": true
+        },
+        {
+          "id": "begin-fresh-explicit-review",
+          "label": "Begin fresh explicit review",
+          "reason": "A new human review is the only recovery named by the receipt.",
+          "reversible": true
+        },
+        {
+          "id": "require-reviewed-restoration",
+          "label": "Require reviewed restoration",
+          "reason": "Any future capability change must occur outside this brief under actual operator authority.",
+          "reversible": true
+        }
+      ]
+    }
+  },
+  "human_escalation_prompts": [
+    "New reviewed evidence changes a normalized event field.",
+    "A requested effect or boundary-crossing value changes.",
+    "The declared scope is disputed or cannot be verified."
+  ],
+  "closure_requirements": [
+    "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+    "The suggested human review role accepts or revises the proposed response.",
+    "The exact recovery path is confirmed.",
+    "A regression target and architecture question have an explicit future owner."
+  ],
+  "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review.",
+  "non_claims": [
+    "This brief explains one normalized event and does not prove that a real incident occurred.",
+    "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+    "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+    "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+    "Its options are inert proposals and authorize or execute no infrastructure action.",
+    "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+    "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+  ],
+  "boundaries": {
+    "behavior_not_person": true,
+    "explanatory_only": true,
+    "owned_surface_only": true,
+    "reversible_options_only": true,
+    "human_decision_required": true,
+    "replay_event_normalized_only": true,
+    "no_time_guarantee": true,
+    "policy_values_advisory_only": true,
+    "live_ingestion": false,
+    "raw_payload_input": false,
+    "identity_processing": false,
+    "person_attribution": false,
+    "persistent_incident_store": false,
+    "automatic_response": false,
+    "automatic_escalation": false,
+    "automatic_test_creation": false,
+    "automatic_policy_mutation": false,
+    "production_monitoring": false,
+    "network_calls": false,
+    "storage_writes": false,
+    "external_delivery": false,
+    "publication_authorized": false,
+    "action_executed": false,
+    "authority_granted": false
+  }
+}

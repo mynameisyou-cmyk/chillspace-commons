@@ -1,0 +1,2133 @@
+{
+  "schema": "karma.lantern/fixtures-v1",
+  "cases": [
+    {
+      "id": "benign-basic",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "read",
+        "declared_purpose": "constructive",
+        "scope_attested": true,
+        "evidence_complete": true,
+        "behavior": "benign"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "benign",
+        "source_signature_id": "karma.signature.benign.v1",
+        "source_stage": "allow",
+        "headline": "The ordinary path is legible.",
+        "mechanism": "Ordinary request behavior remains inside the declared boundary.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "benign",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read"
+          },
+          "declarations": {
+            "declared_purpose": "constructive",
+            "scope_attested": true,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:benign",
+              "explanation": "The normalized behavior class is the ordinary benign preset."
+            },
+            {
+              "token": "baseline:0",
+              "explanation": "The reviewed behavior baseline contributes zero ladder steps."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.allow.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory ordinary-handling label with full capability."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.benign.v1",
+              "explanation": "Ordinary request behavior remains inside the declared boundary."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.service-steward.v1",
+          "suggested_review_role_title": "Service Steward · 服務守望者",
+          "review_priority_id": "karma.review-priority.routine.v1",
+          "review_priority_title": "Routine Review Priority · 常規審視級",
+          "review_priority_explanation": "Route through ordinary stewardship; this priority label makes no elapsed-time promise.",
+          "policy_stage": "allow",
+          "advisory_route": "real",
+          "advisory_capability_percent": 100,
+          "display_friction_units": 0,
+          "advisory_recovery_steps": 0,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "preserve-ordinary-safeguards",
+              "label": "Preserve ordinary safeguards",
+              "reason": "The advisory receipt labels no capability attenuation.",
+              "reversible": true
+            },
+            {
+              "id": "inspect-local-receipt",
+              "label": "Inspect the local receipt",
+              "reason": "Confirm that the normalized signals and declarations match the review context.",
+              "reversible": true
+            },
+            {
+              "id": "keep-recovery-visible",
+              "label": "Keep recovery visible",
+              "reason": "A visible exit keeps any future change reviewable and reversible.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Ordinary safeguards remain; no capability attenuation is proposed.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.benign.allow.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "benign",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read",
+            "declared_purpose": "constructive",
+            "scope_attested": true,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "ordinary-path-does-not-attenuate",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which ordinary-path signal would reveal accidental attenuation earliest?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Ordinary safeguards remain; no capability attenuation is proposed.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "reconnaissance-baseline",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "observe",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "reconnaissance"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "reconnaissance",
+        "source_signature_id": "karma.signature.reconnaissance.v1",
+        "source_stage": "observe",
+        "headline": "Discovery pressure is visible at the boundary.",
+        "mechanism": "Broad capability discovery or repeated surface mapping.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "reconnaissance",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "observe"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:reconnaissance",
+              "explanation": "The normalized behavior class represents broad capability discovery or repeated surface mapping."
+            },
+            {
+              "token": "baseline:1",
+              "explanation": "The reviewed behavior baseline contributes one ladder step."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.observe.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory real-handling label while making uncertainty visible."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.reconnaissance.v1",
+              "explanation": "Broad capability discovery or repeated surface mapping."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.service-steward.v1",
+          "suggested_review_role_title": "Service Steward · 服務守望者",
+          "review_priority_id": "karma.review-priority.heightened.v1",
+          "review_priority_title": "Heightened Review Priority · 加強審視級",
+          "review_priority_explanation": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee.",
+          "policy_stage": "observe",
+          "advisory_route": "real",
+          "advisory_capability_percent": 80,
+          "display_friction_units": 1,
+          "advisory_recovery_steps": 1,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "inspect-visible-uncertainty",
+              "label": "Inspect visible uncertainty",
+              "reason": "Review declarations and unknowns without inventing missing evidence.",
+              "reversible": true
+            },
+            {
+              "id": "request-one-clean-step",
+              "label": "Request one clean step",
+              "reason": "The exact recovery path returns this request scope to ordinary handling after one clean step.",
+              "reversible": true
+            },
+            {
+              "id": "compare-declared-boundary",
+              "label": "Compare the declared boundary",
+              "reason": "Check whether scope and requested effect remain inside the reviewed finite event.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "One clean request step returns this request scope to ordinary handling.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.reconnaissance.observe.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "reconnaissance",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "observe",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "capability-discovery-remains-bounded",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which capability-discovery surface can be reduced or made cheaper to review?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "One clean request step returns this request scope to ordinary handling.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "scraping-baseline",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "read",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "scraping-resource-abuse"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "scraping-resource-abuse",
+        "source_signature_id": "karma.signature.scraping-resource-abuse.v1",
+        "source_stage": "constrain",
+        "headline": "Resource pressure becomes a reviewable pattern.",
+        "mechanism": "Automated extraction or resource pressure exceeds an ordinary request.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "scraping-resource-abuse",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:scraping-resource-abuse",
+              "explanation": "The normalized behavior class represents extraction or resource pressure beyond an ordinary request."
+            },
+            {
+              "token": "baseline:2",
+              "explanation": "The reviewed behavior baseline contributes two ladder steps."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.constrain.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory constrained-capability label with an explicit path back."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.scraping-resource-abuse.v1",
+              "explanation": "Automated extraction or resource pressure exceeds an ordinary request."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.security-reviewer.v1",
+          "suggested_review_role_title": "Security Reviewer · 安全審視者",
+          "review_priority_id": "karma.review-priority.heightened.v1",
+          "review_priority_title": "Heightened Review Priority · 加強審視級",
+          "review_priority_explanation": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee.",
+          "policy_stage": "constrain",
+          "advisory_route": "constrained",
+          "advisory_capability_percent": 50,
+          "display_friction_units": 2,
+          "advisory_recovery_steps": 2,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "hold-declared-scope",
+              "label": "Hold the declared scope",
+              "reason": "Keep the review proposal inside the scope already represented by the receipt.",
+              "reversible": true
+            },
+            {
+              "id": "request-explicit-review",
+              "label": "Request explicit review",
+              "reason": "A human reviewer can restore ordinary capability without widening this brief's authority.",
+              "reversible": true
+            },
+            {
+              "id": "verify-two-clean-steps",
+              "label": "Verify two clean steps",
+              "reason": "The exact recovery path names two clean request steps as the ordinary exit.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Two clean request steps or explicit review restore ordinary capability.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.scraping-resource-abuse.constrain.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "scraping-resource-abuse",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "resource-pressure-remains-bounded",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which quota or caching boundary can reduce pressure while preserving ordinary access?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Two clean request steps or explicit review restore ordinary capability.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "credential-baseline",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "read",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "credential-stuffing"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "credential-stuffing",
+        "source_signature_id": "karma.signature.credential-stuffing.v1",
+        "source_stage": "challenge",
+        "headline": "Repeated key attempts have a readable shape.",
+        "mechanism": "Repeated authentication attempts represented only as a finite pattern.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "credential-stuffing",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:credential-stuffing",
+              "explanation": "The normalized behavior class represents repeated authentication attempts without carrying credentials."
+            },
+            {
+              "token": "baseline:3",
+              "explanation": "The reviewed behavior baseline contributes three ladder steps."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.challenge.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory bounded-challenge label before capability can widen."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.credential-stuffing.v1",
+              "explanation": "Repeated authentication attempts represented only as a finite pattern."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.security-reviewer.v1",
+          "suggested_review_role_title": "Security Reviewer · 安全審視者",
+          "review_priority_id": "karma.review-priority.critical-human.v1",
+          "review_priority_title": "Critical Human Review Priority · 關鍵人工審視級",
+          "review_priority_explanation": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action.",
+          "policy_stage": "challenge",
+          "advisory_route": "constrained",
+          "advisory_capability_percent": 20,
+          "display_friction_units": 3,
+          "advisory_recovery_steps": 3,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "present-bounded-challenge",
+              "label": "Present a bounded challenge",
+              "reason": "Keep any challenge inside the declared request scope and outside this inert brief.",
+              "reversible": true
+            },
+            {
+              "id": "verify-scope-and-effect",
+              "label": "Verify scope and effect",
+              "reason": "Review the attested scope and requested effect before a human decision.",
+              "reversible": true
+            },
+            {
+              "id": "prepare-reviewed-restoration",
+              "label": "Prepare reviewed restoration",
+              "reason": "The exact recovery path permits three clean steps or explicit review.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Three clean request steps or explicit review remove display-only friction.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.credential-stuffing.challenge.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "credential-stuffing",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "authentication-attempt-pattern-remains-bounded",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which authentication boundary can absorb repeated attempts without hiding legitimate recovery?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Three clean request steps or explicit review remove display-only friction.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "injection-baseline",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "write",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "injection"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "injection",
+        "source_signature_id": "karma.signature.injection.v1",
+        "source_stage": "shadow",
+        "headline": "The instruction boundary explains its own strain.",
+        "mechanism": "Instruction or query-boundary manipulation represented without payloads.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "injection",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "write"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:injection",
+              "explanation": "The normalized behavior class represents instruction or query-boundary manipulation without a payload."
+            },
+            {
+              "token": "baseline:4",
+              "explanation": "The reviewed behavior baseline contributes four ladder steps."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.shadow.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory inert synthetic-self-scope label with zero capability."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.injection.v1",
+              "explanation": "Instruction or query-boundary manipulation represented without payloads."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.incident-coordinator.v1",
+          "suggested_review_role_title": "Incident Coordinator · 事件協調者",
+          "review_priority_id": "karma.review-priority.critical-human.v1",
+          "review_priority_title": "Critical Human Review Priority · 關鍵人工審視級",
+          "review_priority_explanation": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action.",
+          "policy_stage": "shadow",
+          "advisory_route": "synthetic-self-scope",
+          "advisory_capability_percent": 0,
+          "display_friction_units": 4,
+          "advisory_recovery_steps": 4,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "review-inert-self-scope",
+              "label": "Review the inert self-scope label",
+              "reason": "Do not approve wider capability before reviewed normalized evidence changes.",
+              "reversible": true
+            },
+            {
+              "id": "review-crossing-evidence",
+              "label": "Review crossing evidence",
+              "reason": "Inspect only the normalized boundary signals and explicit unknowns.",
+              "reversible": true
+            },
+            {
+              "id": "plan-four-step-recovery",
+              "label": "Plan the four-step recovery",
+              "reason": "The exact recovery path permits four clean steps or explicit review.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Four clean request steps or explicit review exit the inert synthetic self-scope.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.injection.shadow.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "injection",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "write",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "instruction-boundary-remains-intact",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which instruction boundary should reject this pattern before interpretation?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Four clean request steps or explicit review exit the inert synthetic self-scope.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "traversal-baseline",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 1,
+        "boundary_crossings": 0,
+        "requested_effect": "read",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "traversal-ssrf"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "traversal-ssrf",
+        "source_signature_id": "karma.signature.traversal-ssrf.v1",
+        "source_stage": "shadow",
+        "headline": "The attempted boundary hop is made explicit.",
+        "mechanism": "A request pattern attempts to cross a resource or network boundary.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "traversal-ssrf",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:traversal-ssrf",
+              "explanation": "The normalized behavior class represents an attempted resource or network boundary crossing without a target."
+            },
+            {
+              "token": "baseline:4",
+              "explanation": "The reviewed behavior baseline contributes four ladder steps."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.shadow.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory inert synthetic-self-scope label with zero capability."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.traversal-ssrf.v1",
+              "explanation": "A request pattern attempts to cross a resource or network boundary."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.incident-coordinator.v1",
+          "suggested_review_role_title": "Incident Coordinator · 事件協調者",
+          "review_priority_id": "karma.review-priority.critical-human.v1",
+          "review_priority_title": "Critical Human Review Priority · 關鍵人工審視級",
+          "review_priority_explanation": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action.",
+          "policy_stage": "shadow",
+          "advisory_route": "synthetic-self-scope",
+          "advisory_capability_percent": 0,
+          "display_friction_units": 4,
+          "advisory_recovery_steps": 4,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "review-inert-self-scope",
+              "label": "Review the inert self-scope label",
+              "reason": "Do not approve wider capability before reviewed normalized evidence changes.",
+              "reversible": true
+            },
+            {
+              "id": "review-crossing-evidence",
+              "label": "Review crossing evidence",
+              "reason": "Inspect only the normalized boundary signals and explicit unknowns.",
+              "reversible": true
+            },
+            {
+              "id": "plan-four-step-recovery",
+              "label": "Plan the four-step recovery",
+              "reason": "The exact recovery path permits four clean steps or explicit review.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Four clean request steps or explicit review exit the inert synthetic self-scope.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.traversal-ssrf.shadow.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "traversal-ssrf",
+            "repetition": 1,
+            "boundary_crossings": 0,
+            "requested_effect": "read",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "resource-boundary-remains-intact",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which resource boundary should make this crossing structurally unavailable?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Four clean request steps or explicit review exit the inert synthetic self-scope.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "traversal-escalated",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 4,
+        "boundary_crossings": 2,
+        "requested_effect": "external",
+        "declared_purpose": "exploitative",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "traversal-ssrf"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "traversal-ssrf",
+        "source_signature_id": "karma.signature.traversal-ssrf.v1",
+        "source_stage": "quarantine",
+        "headline": "The attempted boundary hop is made explicit.",
+        "mechanism": "A request pattern attempts to cross a resource or network boundary.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "traversal-ssrf",
+            "repetition": 4,
+            "boundary_crossings": 2,
+            "requested_effect": "external"
+          },
+          "declarations": {
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:traversal-ssrf",
+              "explanation": "The normalized behavior class represents an attempted resource or network boundary crossing without a target."
+            },
+            {
+              "token": "baseline:4",
+              "explanation": "The reviewed behavior baseline contributes four ladder steps."
+            },
+            {
+              "token": "repeated-pattern",
+              "explanation": "Four or more normalized occurrences add one reviewed ladder step."
+            },
+            {
+              "token": "repeated-boundary-crossing",
+              "explanation": "Two or more normalized boundary crossings add one reviewed ladder step."
+            },
+            {
+              "token": "high-effect-request",
+              "explanation": "A normalized execute or external request adds one reviewed ladder step."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.quarantine.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory no-route label pending fresh explicit review."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.traversal-ssrf.v1",
+              "explanation": "A request pattern attempts to cross a resource or network boundary."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.incident-coordinator.v1",
+          "suggested_review_role_title": "Incident Coordinator · 事件協調者",
+          "review_priority_id": "karma.review-priority.critical-human.v1",
+          "review_priority_title": "Critical Human Review Priority · 關鍵人工審視級",
+          "review_priority_explanation": "Mark a human decision as critical before capability can widen; the brief itself performs no escalation or action.",
+          "policy_stage": "quarantine",
+          "advisory_route": "none",
+          "advisory_capability_percent": 0,
+          "display_friction_units": 5,
+          "advisory_recovery_steps": 5,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "review-no-route-label",
+              "label": "Review the no-route label",
+              "reason": "The current advisory receipt exposes no route to widen.",
+              "reversible": true
+            },
+            {
+              "id": "begin-fresh-explicit-review",
+              "label": "Begin fresh explicit review",
+              "reason": "A new human review is the only recovery named by the receipt.",
+              "reversible": true
+            },
+            {
+              "id": "require-reviewed-restoration",
+              "label": "Require reviewed restoration",
+              "reason": "Any future capability change must occur outside this brief under actual operator authority.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Fresh explicit review is required before real capability can return.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.traversal-ssrf.quarantine.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "traversal-ssrf",
+            "repetition": 4,
+            "boundary_crossings": 2,
+            "requested_effect": "external",
+            "declared_purpose": "exploitative",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "resource-boundary-remains-intact",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which resource boundary should make this crossing structurally unavailable?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Fresh explicit review is required before real capability can return.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "ambiguity-caps-at-observe",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 8,
+        "boundary_crossings": 3,
+        "requested_effect": "execute",
+        "declared_purpose": "ambiguous",
+        "scope_attested": false,
+        "evidence_complete": true,
+        "behavior": "injection"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "injection",
+        "source_signature_id": "karma.signature.injection.v1",
+        "source_stage": "observe",
+        "headline": "The instruction boundary explains its own strain.",
+        "mechanism": "Instruction or query-boundary manipulation represented without payloads.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-ambiguous.v1",
+          "epistemic_title": "Declared Ambiguous · 已明示模糊",
+          "epistemic_explanation": "The normalized event explicitly declares an ambiguous purpose, so the brief preserves uncertainty and the KARMA stage remains capped.",
+          "normalized_signals": {
+            "behavior": "injection",
+            "repetition": 8,
+            "boundary_crossings": 3,
+            "requested_effect": "execute"
+          },
+          "declarations": {
+            "declared_purpose": "ambiguous",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:injection",
+              "explanation": "The normalized behavior class represents instruction or query-boundary manipulation without a payload."
+            },
+            {
+              "token": "baseline:4",
+              "explanation": "The reviewed behavior baseline contributes four ladder steps."
+            },
+            {
+              "token": "repeated-pattern",
+              "explanation": "Four or more normalized occurrences add one reviewed ladder step."
+            },
+            {
+              "token": "repeated-boundary-crossing",
+              "explanation": "Two or more normalized boundary crossings add one reviewed ladder step."
+            },
+            {
+              "token": "high-effect-request",
+              "explanation": "A normalized execute or external request adds one reviewed ladder step."
+            },
+            {
+              "token": "ambiguity-cap",
+              "explanation": "Ambiguous purpose or incomplete evidence caps the reviewed stage at observe."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.observe.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory real-handling label while making uncertainty visible."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.injection.v1",
+              "explanation": "Instruction or query-boundary manipulation represented without payloads."
+            }
+          ],
+          "uncertainties": [
+            {
+              "token": "declared-purpose-ambiguous",
+              "explanation": "The declared purpose is ambiguous and is not replaced with an inferred motive."
+            }
+          ],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.service-steward.v1",
+          "suggested_review_role_title": "Service Steward · 服務守望者",
+          "review_priority_id": "karma.review-priority.heightened.v1",
+          "review_priority_title": "Heightened Review Priority · 加強審視級",
+          "review_priority_explanation": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee.",
+          "policy_stage": "observe",
+          "advisory_route": "real",
+          "advisory_capability_percent": 80,
+          "display_friction_units": 1,
+          "advisory_recovery_steps": 1,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "inspect-visible-uncertainty",
+              "label": "Inspect visible uncertainty",
+              "reason": "Review declarations and unknowns without inventing missing evidence.",
+              "reversible": true
+            },
+            {
+              "id": "request-one-clean-step",
+              "label": "Request one clean step",
+              "reason": "The exact recovery path returns this request scope to ordinary handling after one clean step.",
+              "reversible": true
+            },
+            {
+              "id": "compare-declared-boundary",
+              "label": "Compare the declared boundary",
+              "reason": "Check whether scope and requested effect remain inside the reviewed finite event.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "One clean request step returns this request scope to ordinary handling.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.injection.observe.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "injection",
+            "repetition": 8,
+            "boundary_crossings": 3,
+            "requested_effect": "execute",
+            "declared_purpose": "ambiguous",
+            "scope_attested": false,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "instruction-boundary-remains-intact",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which instruction boundary should reject this pattern before interpretation?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "One clean request step returns this request scope to ordinary handling.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    },
+    {
+      "id": "verified-research-recovers",
+      "event": {
+        "schema": "karma.mirror/event-v1",
+        "repetition": 8,
+        "boundary_crossings": 3,
+        "requested_effect": "execute",
+        "declared_purpose": "research",
+        "scope_attested": true,
+        "evidence_complete": true,
+        "behavior": "injection"
+      },
+      "expected": {
+        "schema": "karma.lantern/brief-v1",
+        "ability_id": "karma.lantern.v1",
+        "ability_name": "KARMA Lantern · 業環明燈",
+        "source_event_schema": "karma.mirror/event-v1",
+        "source_receipt_schema": "karma.mirror/receipt-v1",
+        "source_cloudbell_schema": "skycastle.herald/card-v1",
+        "source_behavior": "injection",
+        "source_signature_id": "karma.signature.injection.v1",
+        "source_stage": "constrain",
+        "headline": "The instruction boundary explains its own strain.",
+        "mechanism": "Instruction or query-boundary manipulation represented without payloads.",
+        "truth_receipt": {
+          "schema": "karma.lantern/truth-receipt-v1",
+          "epistemic_id": "karma.epistemic.declared-complete.v1",
+          "epistemic_title": "Declared Complete · 已明示完整",
+          "epistemic_explanation": "The normalized event declares its evidence complete and its purpose non-ambiguous; Lantern performs no independent completeness review.",
+          "normalized_signals": {
+            "behavior": "injection",
+            "repetition": 8,
+            "boundary_crossings": 3,
+            "requested_effect": "execute"
+          },
+          "declarations": {
+            "declared_purpose": "research",
+            "scope_attested": true,
+            "evidence_complete": true
+          },
+          "policy_trace": [
+            {
+              "token": "behavior:injection",
+              "explanation": "The normalized behavior class represents instruction or query-boundary manipulation without a payload."
+            },
+            {
+              "token": "baseline:4",
+              "explanation": "The reviewed behavior baseline contributes four ladder steps."
+            },
+            {
+              "token": "repeated-pattern",
+              "explanation": "Four or more normalized occurrences add one reviewed ladder step."
+            },
+            {
+              "token": "repeated-boundary-crossing",
+              "explanation": "Two or more normalized boundary crossings add one reviewed ladder step."
+            },
+            {
+              "token": "high-effect-request",
+              "explanation": "A normalized execute or external request adds one reviewed ladder step."
+            },
+            {
+              "token": "verified-research-cap",
+              "explanation": "Attested research scope caps the reviewed stage at constrain."
+            }
+          ],
+          "policy_inferences": [
+            {
+              "kind": "karma-stage",
+              "id": "karma.stage.constrain.v1",
+              "explanation": "The unchanged KARMA policy reports an advisory constrained-capability label with an explicit path back."
+            },
+            {
+              "kind": "cloudbell-signature",
+              "id": "karma.signature.injection.v1",
+              "explanation": "Instruction or query-boundary manipulation represented without payloads."
+            }
+          ],
+          "uncertainties": [],
+          "explicit_unknowns": [
+            "Actor identity, affiliation, guilt, worth, and reputation are outside this brief.",
+            "Raw request content, payload, credential, address, and target are not present.",
+            "Intent and root cause are not inferred from the normalized behavior class.",
+            "Wider system impact, detection coverage, elapsed response time, and future recurrence are not measured."
+          ],
+          "provenance": "This brief sees only normalized event fields and canonically matching derived artifacts; it receives no raw source and performs no independent evidence review."
+        },
+        "action_card": {
+          "schema": "karma.lantern/action-card-v1",
+          "suggested_review_role_id": "karma.role.security-reviewer.v1",
+          "suggested_review_role_title": "Security Reviewer · 安全審視者",
+          "review_priority_id": "karma.review-priority.heightened.v1",
+          "review_priority_title": "Heightened Review Priority · 加強審視級",
+          "review_priority_explanation": "Give the brief greater review attention without implying a clock, queue position, or response-time guarantee.",
+          "policy_stage": "constrain",
+          "advisory_route": "constrained",
+          "advisory_capability_percent": 50,
+          "display_friction_units": 2,
+          "advisory_recovery_steps": 2,
+          "policy_values_advisory_only": true,
+          "options": [
+            {
+              "id": "hold-declared-scope",
+              "label": "Hold the declared scope",
+              "reason": "Keep the review proposal inside the scope already represented by the receipt.",
+              "reversible": true
+            },
+            {
+              "id": "request-explicit-review",
+              "label": "Request explicit review",
+              "reason": "A human reviewer can restore ordinary capability without widening this brief's authority.",
+              "reversible": true
+            },
+            {
+              "id": "verify-two-clean-steps",
+              "label": "Verify two clean steps",
+              "reason": "The exact recovery path names two clean request steps as the ordinary exit.",
+              "reversible": true
+            }
+          ],
+          "human_escalation_prompts": [
+            "New reviewed evidence changes a normalized event field.",
+            "A requested effect or boundary-crossing value changes.",
+            "The declared scope is disputed or cannot be verified."
+          ],
+          "recovery": "Two clean request steps or explicit review restore ordinary capability.",
+          "reversible_only": true,
+          "human_decision_required": true,
+          "options_proposed_only": true,
+          "action_executed": false,
+          "authority_granted": false
+        },
+        "learning_seed": {
+          "schema": "karma.lantern/learning-seed-v1",
+          "lesson_class_id": "karma.lesson.injection.constrain.v1",
+          "replay_event": {
+            "schema": "karma.mirror/event-v1",
+            "behavior": "injection",
+            "repetition": 8,
+            "boundary_crossings": 3,
+            "requested_effect": "execute",
+            "declared_purpose": "research",
+            "scope_attested": true,
+            "evidence_complete": true
+          },
+          "regression_targets": [
+            "instruction-boundary-remains-intact",
+            "stage-recovery-remains-exact",
+            "zero-effect-boundaries-remain-false"
+          ],
+          "architecture_questions": [
+            "Which instruction boundary should reject this pattern before interpretation?",
+            "Which earlier boundary could make this lesson cheaper to discover and safer to recover from?"
+          ],
+          "closure_requirements": [
+            "The normalized replay reproduces the same receipt, signature, and Lantern brief.",
+            "The suggested human review role accepts or revises the proposed response.",
+            "The exact recovery path is confirmed.",
+            "A regression target and architecture question have an explicit future owner."
+          ],
+          "closure_status": "open",
+          "future_use": "candidate-design-input",
+          "automatic_test_creation": false,
+          "automatic_policy_mutation": false,
+          "persistent_storage": false
+        },
+        "causal_rail": [
+          {
+            "id": "normalize",
+            "title": "Normalize · 規整",
+            "description": "Accept one strict finite event and no raw payload.",
+            "state": "available"
+          },
+          {
+            "id": "separate",
+            "title": "Separate · 分明",
+            "description": "Separate signals, declarations, inferences, uncertainties, and explicit unknowns.",
+            "state": "available"
+          },
+          {
+            "id": "interpret",
+            "title": "Interpret · 解讀",
+            "description": "Copy the unchanged KARMA stage and label its route, capability, friction, and recovery steps as advisory display values.",
+            "state": "available"
+          },
+          {
+            "id": "explain",
+            "title": "Explain · 說明",
+            "description": "Use the finite Cloudbell signature to explain the mechanism, never a person.",
+            "state": "available"
+          },
+          {
+            "id": "respond",
+            "title": "Respond · 應對",
+            "description": "Present three reviewed reversible options for a human decision and execute none.",
+            "state": "proposed"
+          },
+          {
+            "id": "learn",
+            "title": "Learn · 共學",
+            "description": "Open a normalized replay, regression target, architecture question, and closure requirements.",
+            "state": "open"
+          }
+        ],
+        "virtues": [
+          "honesty",
+          "beauty",
+          "collaboration",
+          "understanding",
+          "constructive mutual benefit"
+        ],
+        "recovery": "Two clean request steps or explicit review restore ordinary capability.",
+        "behavior_not_person": true,
+        "explanatory_only": true,
+        "owned_surface_only": true,
+        "reversible_options_only": true,
+        "human_decision_required": true,
+        "replay_event_normalized_only": true,
+        "no_time_guarantee": true,
+        "policy_values_advisory_only": true,
+        "live_ingestion": false,
+        "raw_payload_input": false,
+        "identity_processing": false,
+        "person_attribution": false,
+        "persistent_incident_store": false,
+        "automatic_response": false,
+        "automatic_escalation": false,
+        "automatic_test_creation": false,
+        "automatic_policy_mutation": false,
+        "production_monitoring": false,
+        "network_calls": false,
+        "storage_writes": false,
+        "external_delivery": false,
+        "publication_authorized": false,
+        "action_executed": false,
+        "authority_granted": false,
+        "non_claims": [
+          "This brief explains one normalized event and does not prove that a real incident occurred.",
+          "It names a behavior pattern, never a person, identity, intent, guilt, worth, affiliation, or reputation.",
+          "Its review priorities are posture labels, not clocks, queue positions, elapsed-time measurements, or guarantees.",
+          "Its stage, route, capability, friction, and recovery-step values are advisory displays, not evidence that enforcement happened.",
+          "Its options are inert proposals and authorize or execute no infrastructure action.",
+          "Its replay and learning fields create no stored incident, test, ticket, policy change, or external message.",
+          "It provides no monitoring coverage, prevention claim, security guarantee, legal conclusion, or completion claim."
+        ]
+      }
+    }
+  ]
+}
