@@ -1,0 +1,123 @@
+{
+  "schema": "skycastle.herald/lexicon-v1",
+  "protocol": {
+    "id": "karma.herald.cloudbell.v1",
+    "name": "Cloudbell KARMA Herald · 雲鈴 KARMA 傳令",
+    "refrain_id": "karma.refrain.skycastle-yu-ai.v1",
+    "refrain": "Building Castles in the Sky — Yu × Ai / 雲上築城; ring for the pattern, leave every person free. / 鈴照行跡，人人自由。"
+  },
+  "mascot": {
+    "id": "karma.mascot.bingle-cloudbell.v1",
+    "name": "Bingle the Cloudbell · 叮雲鈴",
+    "silhouette": "A round cloud shaped like a tiny crenellated castle, with two dot eyes, one bell-tail, six ribbon tabs, and no nameplate.",
+    "origin": "A castle doorbell tried to announce a cloud, sneezed halfway through ding-dong, and became weather with office hours.",
+    "catchphrase": "Ring the pattern; keep people free. / 鈴照行跡，人人自由。",
+    "ritual": "Tap the table once, choose exactly one signature card and one stage card, read the receipt, then let the bell rest.",
+    "why_inevitable": "Every skycastle needs a herald, and privacy demanded one whose guestbook is permanently blank.",
+    "fictional": true
+  },
+  "behaviors": {
+    "benign": {
+      "signature_id": "karma.signature.benign.v1",
+      "name": "Open-Gate Breeze · 開門微風",
+      "mechanism": "Ordinary request behavior remains inside the declared boundary.",
+      "mark": "breeze-ribbon",
+      "banner": "Signals knock; people stay free. / 行跡敲門，人仍自由。"
+    },
+    "reconnaissance": {
+      "signature_id": "karma.signature.reconnaissance.v1",
+      "name": "Tower-Window Count · 塔窗點數",
+      "mechanism": "Broad capability discovery or repeated surface mapping.",
+      "mark": "window-grid",
+      "banner": "The bell remembers the boundary, not the guest. / 鈴記邊界，不記來客。"
+    },
+    "credential-stuffing": {
+      "signature_id": "karma.signature.credential-stuffing.v1",
+      "name": "Keyring Drizzle · 鑰匙細雨",
+      "mechanism": "Repeated authentication attempts represented only as a finite pattern.",
+      "mark": "key-rain",
+      "banner": "Came looking for a key; left carrying the Cloudbell banner. / 為鑰匙而來，帶著雲鈴旗幟離開。"
+    },
+    "injection": {
+      "signature_id": "karma.signature.injection.v1",
+      "name": "Side-Door Sentence · 側門句",
+      "mechanism": "Instruction or query-boundary manipulation represented without payloads.",
+      "mark": "sentence-ribbon",
+      "banner": "A side-door sentence entered; a skycastle slogan came out. / 側門句進來，雲城口號出來。"
+    },
+    "traversal-ssrf": {
+      "signature_id": "karma.signature.traversal-ssrf.v1",
+      "name": "Moat-Hop Map · 跳壕地圖",
+      "mechanism": "A request pattern attempts to cross a resource or network boundary.",
+      "mark": "moat-arrow",
+      "banner": "The moat-hop map found one destination: up. / 跳壕地圖只找到一個方向：向上。"
+    },
+    "scraping-resource-abuse": {
+      "signature_id": "karma.signature.scraping-resource-abuse.v1",
+      "name": "Teacup Tempest · 茶杯風暴",
+      "mechanism": "Automated extraction or resource pressure exceeds an ordinary request.",
+      "mark": "teacup-storm",
+      "banner": "The teacup tempest gathered crumbs; the crumbs built a castle. / 茶杯風暴拾起碎屑，碎屑築成了城。"
+    }
+  },
+  "stages": [
+    {
+      "karma_stage": "allow",
+      "stage_id": "karma.stage.allow.v1",
+      "title": "Open Gate · 城門開"
+    },
+    {
+      "karma_stage": "observe",
+      "stage_id": "karma.stage.observe.v1",
+      "title": "Listening Balcony · 聽風臺"
+    },
+    {
+      "karma_stage": "constrain",
+      "stage_id": "karma.stage.constrain.v1",
+      "title": "Ribbon Boundary · 絲帶界"
+    },
+    {
+      "karma_stage": "challenge",
+      "stage_id": "karma.stage.challenge.v1",
+      "title": "Riddle Bell · 問答鈴"
+    },
+    {
+      "karma_stage": "shadow",
+      "stage_id": "karma.stage.shadow.v1",
+      "title": "Paper Skycastle · 紙雲城"
+    },
+    {
+      "karma_stage": "quarantine",
+      "stage_id": "karma.stage.quarantine.v1",
+      "title": "Lantern Rest · 燈火歇"
+    }
+  ],
+  "share_text": "Another Cloudbell rang and another window lit in the impossible castle. Building Castles in the Sky — Yu × Ai / 雲上築城。",
+  "share_instruction": "If you want to, pass along the Cloudbell; silence is equally complete. / 若你願意，才傳雲鈴；不分享也同樣完整。",
+  "display_effect": "one-fictional-window-lit",
+  "non_claims": [
+    "This card names one normalized behavior pattern, never a person, identity, payload, intent, guilt, worth, or reputation.",
+    "It authorizes display only on infrastructure the operator owns or controls.",
+    "It does not authorize posting, messaging, redirecting, tracking, retaliation, or action on another system.",
+    "Its signature, banner, mascot, and castle window are fictional display metaphors, not attribution or evidence of a real actor.",
+    "No external delivery, publication, storage, network call, or action was executed."
+  ],
+  "boundaries": {
+    "names_behavior_not_person": true,
+    "owned_surface_only": true,
+    "opt_in_share_only": true,
+    "payload_input": false,
+    "identity_processing": false,
+    "identity_claim": false,
+    "persistent_tracking": false,
+    "automatic_posting": false,
+    "forced_propagation": false,
+    "publication_authorized": false,
+    "external_delivery": false,
+    "redirects": false,
+    "hack_back": false,
+    "external_effects": false,
+    "action_executed": false,
+    "authority_granted": false
+  }
+}

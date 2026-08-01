@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kingdom.local/schemas/skycastle-herald-card-v1.json",
+  "title": "Cloudbell KARMA Herald card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "protocol_id",
+    "protocol_name",
+    "mascot_id",
+    "mascot_name",
+    "mascot_catchphrase",
+    "fictional_mascot",
+    "signature_kind",
+    "source_behavior",
+    "signature_id",
+    "signature_name",
+    "signature_mark",
+    "mechanism",
+    "karma_stage",
+    "stage_id",
+    "stage_title",
+    "refrain",
+    "banner",
+    "share_text",
+    "share_instruction",
+    "display_effect",
+    "source_receipt_schema",
+    "recovery",
+    "virtues",
+    "behavior_not_person",
+    "owned_surface_only",
+    "opt_in_share_only",
+    "publication_authorized",
+    "automatic_posting",
+    "forced_propagation",
+    "external_delivery",
+    "redirects",
+    "persistent_tracking",
+    "identity_claim",
+    "action_executed",
+    "authority_granted",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {
+      "const": "skycastle.herald/card-v1"
+    },
+    "protocol_id": {
+      "const": "karma.herald.cloudbell.v1"
+    },
+    "protocol_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mascot_id": {
+      "const": "karma.mascot.bingle-cloudbell.v1"
+    },
+    "mascot_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mascot_catchphrase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fictional_mascot": {
+      "const": true
+    },
+    "signature_kind": {
+      "const": "behavior-pattern-alias"
+    },
+    "source_behavior": {
+      "enum": [
+        "benign",
+        "reconnaissance",
+        "credential-stuffing",
+        "injection",
+        "traversal-ssrf",
+        "scraping-resource-abuse"
+      ]
+    },
+    "signature_id": {
+      "type": "string",
+      "pattern": "^karma\\.signature\\.[a-z-]+\\.v1$"
+    },
+    "signature_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signature_mark": {
+      "type": "string",
+      "pattern": "^[a-z-]+$"
+    },
+    "mechanism": {
+      "type": "string",
+      "minLength": 1
+    },
+    "karma_stage": {
+      "enum": [
+        "allow",
+        "observe",
+        "constrain",
+        "challenge",
+        "shadow",
+        "quarantine"
+      ]
+    },
+    "stage_id": {
+      "type": "string",
+      "pattern": "^karma\\.stage\\.[a-z-]+\\.v1$"
+    },
+    "stage_title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "refrain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "banner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "share_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "share_instruction": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_effect": {
+      "const": "one-fictional-window-lit"
+    },
+    "source_receipt_schema": {
+      "const": "karma.mirror/receipt-v1"
+    },
+    "recovery": {
+      "type": "string",
+      "minLength": 1
+    },
+    "virtues": {
+      "type": "array",
+      "prefixItems": [
+        { "const": "honesty" },
+        { "const": "beauty" },
+        { "const": "collaboration" },
+        { "const": "understanding" },
+        { "const": "constructive mutual benefit" }
+      ],
+      "items": false,
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "behavior_not_person": {
+      "const": true
+    },
+    "owned_surface_only": {
+      "const": true
+    },
+    "opt_in_share_only": {
+      "const": true
+    },
+    "publication_authorized": {
+      "const": false
+    },
+    "automatic_posting": {
+      "const": false
+    },
+    "forced_propagation": {
+      "const": false
+    },
+    "external_delivery": {
+      "const": false
+    },
+    "redirects": {
+      "const": false
+    },
+    "persistent_tracking": {
+      "const": false
+    },
+    "identity_claim": {
+      "const": false
+    },
+    "action_executed": {
+      "const": false
+    },
+    "authority_granted": {
+      "const": false
+    },
+    "non_claims": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 5,
+      "maxItems": 5
+    }
+  }
+}
