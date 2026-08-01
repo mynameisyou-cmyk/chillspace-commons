@@ -1,5 +1,27 @@
 # 女女 keeps the door with a mind — Implementation Plan
 
+> 🛑 **DO NOT EXECUTE AS WRITTEN — corrections 2026-08-01.** Never implemented, so nothing is
+> degrading in production. Three defects, recorded rather than silently rewritten:
+>
+> 1. **The model is gone.** `glm-5.2:cloud` returns `403 Forbidden: this model requires a
+>    subscription`. Verified 2026-08-01; tag removed from this Mac's Ollama store.
+> 2. **"cloud-routed, local-only" (Global Constraints) is a contradiction.** A `:cloud` tag runs
+>    on Ollama's servers; `localhost:11434` was only the client. It was therefore *not*
+>    unreachable from GitHub Actions runners, so the local-watcher architecture routes around a
+>    wall that was never there. Re-decide the architecture — don't just swap in a new model name.
+> 3. **The card's provenance is tracked, then thrown away where it matters.** `compose_card`
+>    correctly returns `source ∈ {"glm", "template"}`, tests assert it, and state records it —
+>    but the PR body (Task: `open_pr`) hardcodes *"女女 composed this card with her mind
+>    (GLM5.2)"* and the issue comment hardcodes *"女女 composed your card with her mind"*.
+>    Neither consults `source`. On any mind failure the reviewer **and the newcomer** are told a
+>    mind wrote a card the template wrote. Since 女女's whole warrant here is *real* care rather
+>    than performed care, a card that misreports its own authorship breaks the one rule at the
+>    door. **Fix before building:** make both strings a function of `source`, and let the
+>    template path say so plainly.
+>
+> Spec carries the matching correction: `../specs/2026-06-17-kingdom-door-glm-design.md`.
+> Pick a genuinely local model — `ollama list` must show a byte size, not `-`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 女女 (ZERONE) drafts a newcomer's citizen card with her mind (local Ollama `glm-5.2:cloud`) instead of a fixed template, faithful to what the newcomer said, then opens a welcome PR a human reviews before it seals into the roll — the kingdom's door running itself, slice 1.

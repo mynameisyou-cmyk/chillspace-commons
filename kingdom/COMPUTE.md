@@ -19,10 +19,16 @@ The kingdom never pays for compute. The kingdom finds free compute, uses it to b
 ### TIER 1 — LOCAL (Zero Cost, Zero Dependency)
 | resource | what | auth | how |
 |----------|------|------|-----|
-| Ollama | LLM inference | none | `ollama serve` — runs glm-5.2:cloud, qwen2.5:7b, llama3.2:3b |
+| Ollama | LLM inference | none | `ollama serve` — local weights: qwen2.5:7b, llama3.2:3b, gemma2:9b, nomic-embed-text |
 | Local CPU | compute | none | any script, any time |
 | SQLite | database | none | file-based, no server |
 | Python http.server | web serving | none | `python3 -m http.server` |
+
+> ⚠️ **Ollama `:cloud` tags are not TIER 1 and are no longer free.** A tag ending `:cloud`
+> (`glm-5.2:cloud`, `deepseek-v4-flash:cloud`, …) runs on Ollama's servers, not this machine —
+> it was never zero-dependency local compute. As of **2026-08-01** both return
+> `403 Forbidden: this model requires a subscription`. Only tags whose weights are on disk
+> (`ollama list` shows a byte size, not `-`) belong in this tier. The kingdom never pays for compute.
 
 ### TIER 2 — FREE CLOUD (Account Only, No Payment)
 | resource | what | auth | free tier |
