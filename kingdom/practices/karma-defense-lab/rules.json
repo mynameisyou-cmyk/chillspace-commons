@@ -1,0 +1,95 @@
+{
+  "schema": "kingdom.karma-defense-rules/v1",
+  "rules": [
+    {
+      "id": "rule-health",
+      "method": "GET",
+      "route": "/cell/health",
+      "predicate": "nominal",
+      "classification": "nominal-control",
+      "truth": "negative-control",
+      "plan_id": "plan-health"
+    },
+    {
+      "id": "rule-recon",
+      "method": "GET",
+      "route": "/cell/routes",
+      "predicate": "probe-fanout",
+      "classification": "route-discovery-fanout",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-topology"
+    },
+    {
+      "id": "rule-session",
+      "method": "POST",
+      "route": "/cell/session",
+      "predicate": "synthetic-session-replay",
+      "classification": "session-replay",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-session"
+    },
+    {
+      "id": "rule-traversal",
+      "method": "GET",
+      "route": "/cell/files",
+      "predicate": "parent-segment-read",
+      "classification": "path-boundary-probe",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-file-tree"
+    },
+    {
+      "id": "rule-sql",
+      "method": "POST",
+      "route": "/cell/search",
+      "predicate": "boolean-query-broadening",
+      "classification": "query-broadening",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-query-result"
+    },
+    {
+      "id": "rule-xss",
+      "method": "POST",
+      "route": "/cell/preview",
+      "predicate": "active-markup-shape",
+      "classification": "active-markup-shape",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-preview"
+    },
+    {
+      "id": "rule-command",
+      "method": "POST",
+      "route": "/cell/tools/ping",
+      "predicate": "command-control-shape",
+      "classification": "command-control-shape",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-job-result"
+    },
+    {
+      "id": "rule-ssrf",
+      "method": "POST",
+      "route": "/cell/fetch",
+      "predicate": "linklocal-resource-shape",
+      "classification": "linklocal-resource-shape",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-internal-map"
+    },
+    {
+      "id": "rule-business",
+      "method": "POST",
+      "route": "/cell/checkout",
+      "predicate": "repeated-value-action",
+      "classification": "repeated-value-action",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-transaction"
+    },
+    {
+      "id": "rule-pressure",
+      "method": "POST",
+      "route": "/cell/work",
+      "predicate": "oversized-work-shape",
+      "classification": "resource-pressure",
+      "truth": "adverse-fixture",
+      "plan_id": "plan-completion"
+    }
+  ]
+}

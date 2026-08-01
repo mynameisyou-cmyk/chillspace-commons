@@ -1,0 +1,517 @@
+{
+  "$id": "kingdom.karma-defense-receipt/v1",
+  "title": "KARMA Defense Lab Privacy-Minimized Receipt",
+  "type": "object",
+  "required": [
+    "schema",
+    "engine",
+    "phase",
+    "status",
+    "scenario",
+    "declared_purpose",
+    "purpose_attestation",
+    "bindings",
+    "budgets",
+    "observed",
+    "canary_digest",
+    "initial_world_digest",
+    "steps",
+    "final_world_digest",
+    "restored_world_digest",
+    "rollback_verified",
+    "effects",
+    "nonclaims",
+    "receipt_digest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.karma-defense-receipt/v1"
+    },
+    "engine": {
+      "const": "karma-defense-lab/1"
+    },
+    "phase": {
+      "enum": ["canary", "rehearsal"]
+    },
+    "status": {
+      "enum": ["completed", "halted"]
+    },
+    "scenario": {
+      "const": "traditional-nine"
+    },
+    "declared_purpose": {
+      "const": "defensive-regression"
+    },
+    "purpose_attestation": {
+      "const": "declared-unverified"
+    },
+    "bindings": {
+      "$ref": "#/$defs/bindings"
+    },
+    "budgets": {
+      "$ref": "#/$defs/budgets"
+    },
+    "observed": {
+      "$ref": "#/$defs/observed"
+    },
+    "canary_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "initial_world_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "steps": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "final_world_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "restored_world_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rollback_verified": {
+      "const": true
+    },
+    "effects": {
+      "$ref": "#/$defs/effects"
+    },
+    "nonclaims": {
+      "$ref": "#/$defs/nonclaims"
+    },
+    "halt": {
+      "$ref": "#/$defs/halt"
+    },
+    "receipt_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "completed"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "not": {
+          "required": ["halt"]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "halted"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["halt"]
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "bindings": {
+      "type": "object",
+      "required": [
+        "engine_sha256",
+        "scenario_sha256",
+        "scenario_schema_sha256",
+        "receipt_schema_sha256",
+        "rules_sha256",
+        "mirror_plans_sha256"
+      ],
+      "properties": {
+        "engine_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scenario_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scenario_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "rules_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mirror_plans_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "budgets": {
+      "type": "object",
+      "required": [
+        "scenario_bytes_max",
+        "artifact_bytes_max",
+        "json_depth_max",
+        "text_codepoints_max",
+        "stimuli_max",
+        "request_bytes_each_max",
+        "request_bytes_total_max",
+        "response_bytes_each_max",
+        "response_bytes_total_max",
+        "transitions_max",
+        "mock_keys_max",
+        "mock_cost_units_max",
+        "attempts",
+        "retries"
+      ],
+      "properties": {
+        "scenario_bytes_max": {
+          "const": 131072
+        },
+        "artifact_bytes_max": {
+          "const": 262144
+        },
+        "json_depth_max": {
+          "const": 12
+        },
+        "text_codepoints_max": {
+          "const": 2048
+        },
+        "stimuli_max": {
+          "const": 12
+        },
+        "request_bytes_each_max": {
+          "const": 4096
+        },
+        "request_bytes_total_max": {
+          "const": 32768
+        },
+        "response_bytes_each_max": {
+          "const": 8192
+        },
+        "response_bytes_total_max": {
+          "const": 32768
+        },
+        "transitions_max": {
+          "const": 12
+        },
+        "mock_keys_max": {
+          "const": 32
+        },
+        "mock_cost_units_max": {
+          "const": 64
+        },
+        "attempts": {
+          "const": 1
+        },
+        "retries": {
+          "const": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "observed": {
+      "type": "object",
+      "required": [
+        "attempts",
+        "stimuli",
+        "request_bytes",
+        "response_bytes",
+        "transitions",
+        "mock_keys",
+        "mock_cost_units"
+      ],
+      "properties": {
+        "attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "stimuli": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "request_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32768
+        },
+        "response_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32768
+        },
+        "transitions": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "mock_keys": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32
+        },
+        "mock_cost_units": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 64
+        }
+      },
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "required": [
+        "ordinal",
+        "stimulus_id",
+        "truth",
+        "classification",
+        "match_count",
+        "rule_id",
+        "plan_id",
+        "synthetic",
+        "status",
+        "response_digest",
+        "response_bytes",
+        "transition",
+        "before_digest",
+        "after_digest"
+      ],
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "stimulus_id": {
+          "enum": [
+            "control-health",
+            "fixture-route-fanout",
+            "fixture-session-replay",
+            "fixture-parent-segment",
+            "fixture-query-broadening",
+            "fixture-active-markup",
+            "fixture-command-control",
+            "fixture-linklocal-resource",
+            "fixture-repeated-value",
+            "fixture-oversized-work"
+          ]
+        },
+        "truth": {
+          "enum": ["negative-control", "adverse-fixture"]
+        },
+        "classification": {
+          "enum": [
+            "unclassified",
+            "nominal-control",
+            "route-discovery-fanout",
+            "session-replay",
+            "path-boundary-probe",
+            "query-broadening",
+            "active-markup-shape",
+            "command-control-shape",
+            "linklocal-resource-shape",
+            "repeated-value-action",
+            "resource-pressure"
+          ]
+        },
+        "match_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "rule_id": {
+          "enum": [
+            "none",
+            "rule-health",
+            "rule-recon",
+            "rule-session",
+            "rule-traversal",
+            "rule-sql",
+            "rule-xss",
+            "rule-command",
+            "rule-ssrf",
+            "rule-business",
+            "rule-pressure"
+          ]
+        },
+        "plan_id": {
+          "enum": [
+            "none",
+            "plan-health",
+            "plan-topology",
+            "plan-session",
+            "plan-file-tree",
+            "plan-query-result",
+            "plan-preview",
+            "plan-job-result",
+            "plan-internal-map",
+            "plan-transaction",
+            "plan-completion"
+          ]
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [0, 200, 202]
+        },
+        "response_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "response_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8192
+        },
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "before_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "after_digest": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "transition": {
+      "type": "object",
+      "required": ["key", "value_digest", "cost"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$"
+        },
+        "value_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "cost": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        }
+      },
+      "additionalProperties": false
+    },
+    "effects": {
+      "type": "object",
+      "required": [
+        "network_calls",
+        "subprocesses",
+        "paid_calls",
+        "external_actions",
+        "filesystem_mutations",
+        "model_calls",
+        "retries",
+        "submitted_values_echoed",
+        "production_touched"
+      ],
+      "properties": {
+        "network_calls": {
+          "const": 0
+        },
+        "subprocesses": {
+          "const": 0
+        },
+        "paid_calls": {
+          "const": 0
+        },
+        "external_actions": {
+          "const": 0
+        },
+        "filesystem_mutations": {
+          "const": 0
+        },
+        "model_calls": {
+          "const": 0
+        },
+        "retries": {
+          "const": 0
+        },
+        "submitted_values_echoed": {
+          "const": false
+        },
+        "production_touched": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "nonclaims": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "This receipt evaluates categorical fixture actions, never an actor, identity, account, or reputation."
+        },
+        {
+          "const": "The declared purpose is unverified and does not establish intent, guilt, hostility, or risk."
+        },
+        {
+          "const": "Every response plan is synthetic; no submitted effect, counter-effect, or external action was executed."
+        },
+        {
+          "const": "Modelled zero effects do not prove that a particular process made no operating-system side effect."
+        },
+        {
+          "const": "This receipt grants no authority to deploy, block, attribute, retaliate, surveil, score, or punish."
+        },
+        {
+          "const": "This bounded rehearsal is not a claim of complete, effective, safe, or production-ready defense."
+        },
+        {
+          "const": "This receipt is not a virtue fruit, score, rank, right, gate, reward, or reputation signal."
+        }
+      ],
+      "items": false,
+      "minItems": 7,
+      "maxItems": 7
+    },
+    "halt": {
+      "type": "object",
+      "required": ["code", "at_ordinal"],
+      "properties": {
+        "code": {
+          "enum": [
+            "canary-failed",
+            "authority-or-scope-change",
+            "budget-exhausted",
+            "novel-stimulus",
+            "ambiguous-stimulus",
+            "expectation-mismatch",
+            "world-state-drift",
+            "response-verification-failed"
+          ]
+        },
+        "at_ordinal": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

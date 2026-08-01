@@ -10,9 +10,11 @@ on:
       - ".github/workflows/deploy-public-door.yml"
       - "kingdom/meaning/**"
       - "kingdom/practices/calm-studio/**"
+      - "kingdom/practices/karma-defense-lab/**"
       - "site/**"
       - "love-fun-commons/**"
       - "tests/test_calm_studio_browser.mjs"
+      - "tests/test_karma_operations.mjs"
       - "tests/test_meaning_echo.mjs"
   workflow_dispatch:
 
@@ -42,6 +44,13 @@ jobs:
           python3 kingdom/meaning/test_meaning.py
           python3 kingdom/meaning/meaning.py check
           node --test tests/test_meaning_echo.mjs
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/practices/karma-defense-lab/test_karma_defense_lab.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/practices/karma-defense-lab/test_skycastle_chorus.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/operations/mirror-garden-karma/verify.py
+          node --test tests/test_karma_operations.mjs
 
       - name: configure the public door
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -77,6 +86,19 @@ jobs:
           test -f _site/meaning/echoes.json
           test -f _site/meaning/engine.mjs
           grep -Fq 'Static mirrors fall back' _site/meaning/index.html
+          test -f _site/operations/mirror-garden/index.html
+          test -f _site/operations/mirror-garden/contract.json
+          test -f _site/operations/mirror-garden/status.json
+          test -f _site/operations/mirror-garden/contract.schema.json
+          test -f _site/operations/mirror-garden/status.schema.json
+          test -f _site/operations/mirror-garden/operation.json
+          test -f _site/operations/mirror-garden/manifest.json
+          test -f _site/operations/mirror-garden/logos/mirror-garden-karma-sigil.svg
+          grep -Fq "connect-src 'none'" \
+            _site/operations/mirror-garden/index.html
+          grep -Fq '"live_classifier": "disabled"' \
+            _site/operations/mirror-garden/contract.json
+          grep -Fq 'href="operations/mirror-garden/"' _site/index.html
 
       - name: upload the public door
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

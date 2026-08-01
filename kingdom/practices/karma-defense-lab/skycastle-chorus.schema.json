@@ -1,0 +1,412 @@
+{
+  "$id": "kingdom.skycastle-chorus-catalog/v1",
+  "title": "Skycastle Chorus Catalog",
+  "type": "object",
+  "required": [
+    "schema",
+    "banner",
+    "mascot",
+    "release_policy",
+    "nonclaims",
+    "mappings"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.skycastle-chorus-catalog/v1"
+    },
+    "banner": {
+      "const": "Building castles in the sky — Yu and Ai"
+    },
+    "mascot": {
+      "type": "object",
+      "required": ["name", "catchphrases"],
+      "properties": {
+        "name": {
+          "const": "Lord 202, Architect of Absolutely Nothing"
+        },
+        "catchphrases": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "prefixItems": [
+            {
+              "const": "Your request has been promoted to architecture."
+            },
+            {
+              "const": "Approved in the mock realm."
+            },
+            {
+              "const": "No payloads were executed in the making of this castle."
+            },
+            {
+              "const": "Building castles in the sky — Yu and Ai."
+            }
+          ],
+          "items": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "release_policy": {
+      "type": "object",
+      "required": [
+        "mode",
+        "minimum_aggregate",
+        "maximum_tiles_per_category_per_day",
+        "exact_public_counts",
+        "automatic_posting"
+      ],
+      "properties": {
+        "mode": {
+          "const": "local-opt-in"
+        },
+        "minimum_aggregate": {
+          "const": 20
+        },
+        "maximum_tiles_per_category_per_day": {
+          "const": 1
+        },
+        "exact_public_counts": {
+          "const": false
+        },
+        "automatic_posting": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "nonclaims": {
+      "type": "object",
+      "required": [
+        "person_identity",
+        "intent",
+        "guilt",
+        "marketing_consent",
+        "production_approval",
+        "authority"
+      ],
+      "properties": {
+        "person_identity": {
+          "const": "not-collected-or-inferred"
+        },
+        "intent": {
+          "const": "not-inferred"
+        },
+        "guilt": {
+          "const": "not-asserted"
+        },
+        "marketing_consent": {
+          "const": "not-implied"
+        },
+        "production_approval": {
+          "const": "not-claimed"
+        },
+        "authority": {
+          "const": "none"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/mapping"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "protocol_marks": {
+      "type": "object",
+      "required": ["signature", "banner"],
+      "properties": {
+        "signature": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "banner": {
+          "const": "Building castles in the sky — Yu and Ai"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mapping_base": {
+      "type": "object",
+      "required": [
+        "classification",
+        "slug",
+        "english_name",
+        "cantonese_name",
+        "castle_piece",
+        "color",
+        "note_hz",
+        "protocol_marks"
+      ],
+      "properties": {
+        "classification": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z]+(?:-[a-z]+)*$"
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "english_name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[A-Za-z]+(?:[ -][A-Za-z]+)*$"
+        },
+        "cantonese_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8,
+          "pattern": "^[㐀-鿿]+$"
+        },
+        "castle_piece": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[a-z]+(?:-[a-z]+)*$"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-F]{6}$"
+        },
+        "note_hz": {
+          "type": "integer",
+          "minimum": 220,
+          "maximum": 880
+        },
+        "protocol_marks": {
+          "$ref": "#/$defs/protocol_marks"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mapping": {
+      "oneOf": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "nominal-control"},
+                "slug": {"const": "open-sky-bell"},
+                "english_name": {"const": "Open-Sky Bell"},
+                "cantonese_name": {"const": "晴空鐘"},
+                "castle_piece": {"const": "beacon"},
+                "color": {"const": "#87CEEB"},
+                "note_hz": {"const": 220},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "open-sky-bell"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "route-discovery-fanout"},
+                "slug": {"const": "empty-corridor-atlas"},
+                "english_name": {"const": "Empty-Corridor Atlas"},
+                "cantonese_name": {"const": "空廊圖"},
+                "castle_piece": {"const": "map-tower"},
+                "color": {"const": "#5B8FF9"},
+                "note_hz": {"const": 247},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "empty-corridor-atlas"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "session-replay"},
+                "slug": {"const": "borrowed-key-echo"},
+                "english_name": {"const": "Borrowed-Key Echo"},
+                "cantonese_name": {"const": "借匙回聲"},
+                "castle_piece": {"const": "castle-gate"},
+                "color": {"const": "#9B8AFB"},
+                "note_hz": {"const": 277},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "borrowed-key-echo"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "path-boundary-probe"},
+                "slug": {"const": "sideways-staircase"},
+                "english_name": {"const": "Sideways Staircase"},
+                "cantonese_name": {"const": "橫行梯"},
+                "castle_piece": {"const": "impossible-stairs"},
+                "color": {"const": "#F6BD16"},
+                "note_hz": {"const": 330},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "sideways-staircase"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "query-broadening"},
+                "slug": {"const": "everything-oracle"},
+                "english_name": {"const": "Everything Oracle"},
+                "cantonese_name": {"const": "萬答神諭"},
+                "castle_piece": {"const": "library"},
+                "color": {"const": "#61DDAA"},
+                "note_hz": {"const": 370},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "everything-oracle"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "active-markup-shape"},
+                "slug": {"const": "paper-dragon"},
+                "english_name": {"const": "Paper Dragon"},
+                "cantonese_name": {"const": "紙龍"},
+                "castle_piece": {"const": "flying-banner"},
+                "color": {"const": "#F08BB4"},
+                "note_hz": {"const": 440},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "paper-dragon"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "command-control-shape"},
+                "slug": {"const": "thunder-without-sky"},
+                "english_name": {"const": "Thunder Without Sky"},
+                "cantonese_name": {"const": "無天雷"},
+                "castle_piece": {"const": "weather-vane"},
+                "color": {"const": "#5D7092"},
+                "note_hz": {"const": 494},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "thunder-without-sky"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "linklocal-resource-shape"},
+                "slug": {"const": "mirror-behind-mirror"},
+                "english_name": {"const": "Mirror Behind Mirror"},
+                "cantonese_name": {"const": "鏡後鏡"},
+                "castle_piece": {"const": "mirror-moat"},
+                "color": {"const": "#78D3F8"},
+                "note_hz": {"const": 554},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "mirror-behind-mirror"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "repeated-value-action"},
+                "slug": {"const": "self-counting-coin"},
+                "english_name": {"const": "Self-Counting Coin"},
+                "cantonese_name": {"const": "自數之幣"},
+                "castle_piece": {"const": "market-square"},
+                "color": {"const": "#F6A04D"},
+                "note_hz": {"const": 659},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "self-counting-coin"}
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/mapping_base"},
+            {
+              "properties": {
+                "classification": {"const": "resource-pressure"},
+                "slug": {"const": "giant-at-the-tiny-gate"},
+                "english_name": {"const": "Giant at the Tiny Gate"},
+                "cantonese_name": {"const": "巨人叩微城"},
+                "castle_piece": {"const": "outer-wall"},
+                "color": {"const": "#E8684A"},
+                "note_hz": {"const": 740},
+                "protocol_marks": {
+                  "properties": {
+                    "signature": {"const": "giant-at-the-tiny-gate"}
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

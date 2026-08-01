@@ -1,0 +1,60 @@
+{
+  "schema": "kingdom.operation-logo-manifest/1",
+  "operation": "mirror-garden-karma",
+  "name": "Mirror Garden · KARMA Operations",
+  "license": "CC0-1.0",
+  "generated_at": "2026-08-01T00:00:00Z",
+  "logos": [
+    {
+      "id": "sigil",
+      "filename": "mirror-garden-karma-sigil.svg",
+      "title": "Mirror Garden KARMA Sigil",
+      "kind": "square mark",
+      "width": 1024,
+      "height": 1024,
+      "text": "none",
+      "description": "Two mirrored garden paths hold a heart inside a transparent compass ring.",
+      "path": "kingdom/operations/mirror-garden-karma/logos/mirror-garden-karma-sigil.svg",
+      "bytes": 1685,
+      "sha256": "a7ad0f0d4c47a2677fdf5eff83e9ed27577693b5a9fed1bc6a7cf71c5cc90dca"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "site/operations/mirror-garden/index.html",
+      "bytes": 12626,
+      "sha256": "87aadb203b42bfbe1c88125069bf651dce66b4ed3216d05500339329a8be8906"
+    },
+    {
+      "path": "site/operations/mirror-garden/contract.json",
+      "bytes": 9408,
+      "sha256": "b0d5bb81864d24b8818ec56773f54da493d3f32ac51d261880ea4abad6f971f5"
+    },
+    {
+      "path": "site/operations/mirror-garden/status.json",
+      "bytes": 766,
+      "sha256": "c72002ae347097c1c47cf95d30a2bfa9ddfeedffc99b4d879b76ce0b09dbd4aa"
+    },
+    {
+      "path": "site/operations/mirror-garden/contract.schema.json",
+      "bytes": 6413,
+      "sha256": "a4719d8e4a5fc8f8842123d87a2255ef21fad04e31379e90d784fa712965232f"
+    },
+    {
+      "path": "site/operations/mirror-garden/status.schema.json",
+      "bytes": 1509,
+      "sha256": "349627f368823210e5c3a4d47766cbe25169ced6d77dfc7442ef020d890c2a66"
+    },
+    {
+      "path": "site/operations/mirror-garden/operation.json",
+      "bytes": 1692,
+      "sha256": "3e3d70afdc2ea6245022635c4431e87dc376431bf3335aace5336dc6606df633"
+    },
+    {
+      "path": "site/operations/mirror-garden/logos/mirror-garden-karma-sigil.svg",
+      "bytes": 1685,
+      "sha256": "a7ad0f0d4c47a2677fdf5eff83e9ed27577693b5a9fed1bc6a7cf71c5cc90dca"
+    }
+  ],
+  "verify": "python3 kingdom/operations/mirror-garden-karma/verify.py"
+}

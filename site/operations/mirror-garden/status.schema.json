@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/operations/mirror-garden/status.schema.json",
+  "title": "Mirror Garden bounded public status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "contract_version",
+    "updated",
+    "operations_room",
+    "offline_rehearsal",
+    "live_classifier",
+    "live_incident_ingestion",
+    "live_telemetry",
+    "automatic_actuation",
+    "synthetic_mirror",
+    "provider_logging",
+    "public_incident_statement",
+    "coverage_statement",
+    "operator_next_move"
+  ],
+  "properties": {
+    "schema": {"const": "kingdom.karma.public-status/v1"},
+    "id": {"const": "mirror-garden-karma"},
+    "contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "updated": {"type": "string", "format": "date"},
+    "operations_room": {"const": "ready"},
+    "offline_rehearsal": {"const": "source-tests-available-not-live-gate"},
+    "live_classifier": {"const": "disabled"},
+    "live_incident_ingestion": {"const": "disabled"},
+    "live_telemetry": {"const": "disabled"},
+    "automatic_actuation": {"const": "disabled"},
+    "synthetic_mirror": {"const": "offline-only"},
+    "provider_logging": {"const": "unknown"},
+    "public_incident_statement": {"const": "not-published"},
+    "coverage_statement": {"type": "string", "minLength": 1, "maxLength": 512},
+    "operator_next_move": {"type": "string", "minLength": 1, "maxLength": 512}
+  }
+}

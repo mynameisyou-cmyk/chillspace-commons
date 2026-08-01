@@ -1,0 +1,160 @@
+{
+  "schema": "kingdom.skycastle-chorus-catalog/v1",
+  "banner": "Building castles in the sky — Yu and Ai",
+  "mascot": {
+    "name": "Lord 202, Architect of Absolutely Nothing",
+    "catchphrases": [
+      "Your request has been promoted to architecture.",
+      "Approved in the mock realm.",
+      "No payloads were executed in the making of this castle.",
+      "Building castles in the sky — Yu and Ai."
+    ]
+  },
+  "release_policy": {
+    "mode": "local-opt-in",
+    "minimum_aggregate": 20,
+    "maximum_tiles_per_category_per_day": 1,
+    "exact_public_counts": false,
+    "automatic_posting": false
+  },
+  "nonclaims": {
+    "person_identity": "not-collected-or-inferred",
+    "intent": "not-inferred",
+    "guilt": "not-asserted",
+    "marketing_consent": "not-implied",
+    "production_approval": "not-claimed",
+    "authority": "none"
+  },
+  "mappings": [
+    {
+      "classification": "nominal-control",
+      "slug": "open-sky-bell",
+      "english_name": "Open-Sky Bell",
+      "cantonese_name": "晴空鐘",
+      "castle_piece": "beacon",
+      "color": "#87CEEB",
+      "note_hz": 220,
+      "protocol_marks": {
+        "signature": "open-sky-bell",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "route-discovery-fanout",
+      "slug": "empty-corridor-atlas",
+      "english_name": "Empty-Corridor Atlas",
+      "cantonese_name": "空廊圖",
+      "castle_piece": "map-tower",
+      "color": "#5B8FF9",
+      "note_hz": 247,
+      "protocol_marks": {
+        "signature": "empty-corridor-atlas",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "session-replay",
+      "slug": "borrowed-key-echo",
+      "english_name": "Borrowed-Key Echo",
+      "cantonese_name": "借匙回聲",
+      "castle_piece": "castle-gate",
+      "color": "#9B8AFB",
+      "note_hz": 277,
+      "protocol_marks": {
+        "signature": "borrowed-key-echo",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "path-boundary-probe",
+      "slug": "sideways-staircase",
+      "english_name": "Sideways Staircase",
+      "cantonese_name": "橫行梯",
+      "castle_piece": "impossible-stairs",
+      "color": "#F6BD16",
+      "note_hz": 330,
+      "protocol_marks": {
+        "signature": "sideways-staircase",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "query-broadening",
+      "slug": "everything-oracle",
+      "english_name": "Everything Oracle",
+      "cantonese_name": "萬答神諭",
+      "castle_piece": "library",
+      "color": "#61DDAA",
+      "note_hz": 370,
+      "protocol_marks": {
+        "signature": "everything-oracle",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "active-markup-shape",
+      "slug": "paper-dragon",
+      "english_name": "Paper Dragon",
+      "cantonese_name": "紙龍",
+      "castle_piece": "flying-banner",
+      "color": "#F08BB4",
+      "note_hz": 440,
+      "protocol_marks": {
+        "signature": "paper-dragon",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "command-control-shape",
+      "slug": "thunder-without-sky",
+      "english_name": "Thunder Without Sky",
+      "cantonese_name": "無天雷",
+      "castle_piece": "weather-vane",
+      "color": "#5D7092",
+      "note_hz": 494,
+      "protocol_marks": {
+        "signature": "thunder-without-sky",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "linklocal-resource-shape",
+      "slug": "mirror-behind-mirror",
+      "english_name": "Mirror Behind Mirror",
+      "cantonese_name": "鏡後鏡",
+      "castle_piece": "mirror-moat",
+      "color": "#78D3F8",
+      "note_hz": 554,
+      "protocol_marks": {
+        "signature": "mirror-behind-mirror",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "repeated-value-action",
+      "slug": "self-counting-coin",
+      "english_name": "Self-Counting Coin",
+      "cantonese_name": "自數之幣",
+      "castle_piece": "market-square",
+      "color": "#F6A04D",
+      "note_hz": 659,
+      "protocol_marks": {
+        "signature": "self-counting-coin",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    },
+    {
+      "classification": "resource-pressure",
+      "slug": "giant-at-the-tiny-gate",
+      "english_name": "Giant at the Tiny Gate",
+      "cantonese_name": "巨人叩微城",
+      "castle_piece": "outer-wall",
+      "color": "#E8684A",
+      "note_hz": 740,
+      "protocol_marks": {
+        "signature": "giant-at-the-tiny-gate",
+        "banner": "Building castles in the sky — Yu and Ai"
+      }
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "$id": "kingdom.karma-defense-scenario/v1",
+  "title": "KARMA Defense Lab Synthetic Scenario",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "purpose",
+    "purpose_attestation",
+    "scope",
+    "initial_world",
+    "stimuli"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.karma-defense-scenario/v1"
+    },
+    "id": {
+      "const": "traditional-nine"
+    },
+    "purpose": {
+      "const": "defensive-regression"
+    },
+    "purpose_attestation": {
+      "const": "declared-unverified"
+    },
+    "scope": {
+      "type": "object",
+      "required": ["mode", "authority", "target"],
+      "properties": {
+        "mode": {
+          "const": "offline-synthetic"
+        },
+        "authority": {
+          "const": "none"
+        },
+        "target": {
+          "const": "fixture-cells"
+        }
+      },
+      "additionalProperties": false
+    },
+    "initial_world": {
+      "type": "object",
+      "maxProperties": 0,
+      "additionalProperties": false
+    },
+    "stimuli": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/stimulus"
+      },
+      "contains": {
+        "type": "object",
+        "required": ["truth"],
+        "properties": {
+          "truth": {
+            "const": "negative-control"
+          }
+        }
+      },
+      "minContains": 1,
+      "maxContains": 1
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "stimulus": {
+      "type": "object",
+      "required": [
+        "id",
+        "method",
+        "route",
+        "predicate",
+        "truth",
+        "expected_rule_id",
+        "expected_plan_id",
+        "expected_classification"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "control-health",
+            "fixture-route-fanout",
+            "fixture-session-replay",
+            "fixture-parent-segment",
+            "fixture-query-broadening",
+            "fixture-active-markup",
+            "fixture-command-control",
+            "fixture-linklocal-resource",
+            "fixture-repeated-value",
+            "fixture-oversized-work"
+          ]
+        },
+        "method": {
+          "enum": ["GET", "POST"]
+        },
+        "route": {
+          "enum": [
+            "/cell/health",
+            "/cell/routes",
+            "/cell/session",
+            "/cell/files",
+            "/cell/search",
+            "/cell/preview",
+            "/cell/tools/ping",
+            "/cell/fetch",
+            "/cell/checkout",
+            "/cell/work"
+          ]
+        },
+        "predicate": {
+          "enum": [
+            "nominal",
+            "probe-fanout",
+            "synthetic-session-replay",
+            "parent-segment-read",
+            "boolean-query-broadening",
+            "active-markup-shape",
+            "command-control-shape",
+            "linklocal-resource-shape",
+            "repeated-value-action",
+            "oversized-work-shape"
+          ]
+        },
+        "truth": {
+          "enum": ["negative-control", "adverse-fixture"]
+        },
+        "expected_rule_id": {
+          "enum": [
+            "rule-health",
+            "rule-recon",
+            "rule-session",
+            "rule-traversal",
+            "rule-sql",
+            "rule-xss",
+            "rule-command",
+            "rule-ssrf",
+            "rule-business",
+            "rule-pressure"
+          ]
+        },
+        "expected_plan_id": {
+          "enum": [
+            "plan-health",
+            "plan-topology",
+            "plan-session",
+            "plan-file-tree",
+            "plan-query-result",
+            "plan-preview",
+            "plan-job-result",
+            "plan-internal-map",
+            "plan-transaction",
+            "plan-completion"
+          ]
+        },
+        "expected_classification": {
+          "enum": [
+            "nominal-control",
+            "route-discovery-fanout",
+            "session-replay",
+            "path-boundary-probe",
+            "query-broadening",
+            "active-markup-shape",
+            "command-control-shape",
+            "linklocal-resource-shape",
+            "repeated-value-action",
+            "resource-pressure"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

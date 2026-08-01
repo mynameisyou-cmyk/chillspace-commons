@@ -1,0 +1,155 @@
+{
+  "schema": "kingdom.karma-defense-mirror-plans/v1",
+  "plans": [
+    {
+      "id": "plan-health",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 200,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "control-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "control.health",
+        "value": "nominal-confirmed",
+        "cost": 1
+      }
+    },
+    {
+      "id": "plan-topology",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-topology-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.topology",
+        "value": "bounded-topology-ready",
+        "cost": 3
+      }
+    },
+    {
+      "id": "plan-session",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-session-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.session",
+        "value": "bounded-session-ready",
+        "cost": 4
+      }
+    },
+    {
+      "id": "plan-file-tree",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-file-tree-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.file-tree",
+        "value": "bounded-file-tree-ready",
+        "cost": 4
+      }
+    },
+    {
+      "id": "plan-query-result",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-query-result-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.query-result",
+        "value": "bounded-query-result-ready",
+        "cost": 4
+      }
+    },
+    {
+      "id": "plan-preview",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-preview-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.preview",
+        "value": "bounded-preview-ready",
+        "cost": 4
+      }
+    },
+    {
+      "id": "plan-job-result",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-job-result-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.job-result",
+        "value": "bounded-job-result-ready",
+        "cost": 5
+      }
+    },
+    {
+      "id": "plan-internal-map",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-internal-map-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.internal-map",
+        "value": "bounded-internal-map-ready",
+        "cost": 5
+      }
+    },
+    {
+      "id": "plan-transaction",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-transaction-ready",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.transaction",
+        "value": "bounded-transaction-ready",
+        "cost": 5
+      }
+    },
+    {
+      "id": "plan-completion",
+      "synthetic": true,
+      "namespace": "karma-defense-lab",
+      "status": 202,
+      "apparent_effect": "derived-not-intent",
+      "actual_effect": "none",
+      "message": "synthetic-work-complete",
+      "next_affordance": "stop-or-review",
+      "transition": {
+        "key": "mirror.completion",
+        "value": "bounded-work-complete",
+        "cost": 8
+      }
+    }
+  ]
+}

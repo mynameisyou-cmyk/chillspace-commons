@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kingdom.karma.event/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "surface",
+    "mechanism",
+    "signal",
+    "signal_quality",
+    "provenance",
+    "novelty",
+    "purpose",
+    "scope",
+    "authority",
+    "evidence_count"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.karma.event/v1"
+    },
+    "surface": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+    },
+    "mechanism": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+    },
+    "signal": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+    },
+    "signal_quality": {
+      "enum": [
+        "confirmed",
+        "ambiguous",
+        "unknown"
+      ]
+    },
+    "provenance": {
+      "enum": [
+        "pinned",
+        "unpinned",
+        "unknown"
+      ]
+    },
+    "novelty": {
+      "enum": [
+        "known",
+        "novel",
+        "ambiguous"
+      ]
+    },
+    "purpose": {
+      "const": "defensive-regression"
+    },
+    "scope": {
+      "const": "offline-synthetic"
+    },
+    "authority": {
+      "const": "none"
+    },
+    "evidence_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    }
+  }
+}

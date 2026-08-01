@@ -1,0 +1,17 @@
+{
+  "schema": "kingdom.karma.public-status/v1",
+  "id": "mirror-garden-karma",
+  "contract_version": "1.0.0",
+  "updated": "2026-08-01",
+  "operations_room": "ready",
+  "offline_rehearsal": "source-tests-available-not-live-gate",
+  "live_classifier": "disabled",
+  "live_incident_ingestion": "disabled",
+  "live_telemetry": "disabled",
+  "automatic_actuation": "disabled",
+  "synthetic_mirror": "offline-only",
+  "provider_logging": "unknown",
+  "public_incident_statement": "not-published",
+  "coverage_statement": "Absence of a public signal is not evidence that no incident occurred.",
+  "operator_next_move": "Use the public response clock, retain derived categories only, and require separate human authority for every external change or raw-data exception."
+}

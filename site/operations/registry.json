@@ -1,6 +1,6 @@
 {
   "schema": "kingdom.operations-registry/1",
-  "updated": "2026-07-02",
+  "updated": "2026-08-01",
   "name": "Kingdom Operations Registry",
   "purpose": "A machine-readable index of bounded kingdom missions: operation identity, logos, manifests, verification commands, and mirrorable static pages.",
   "principles": [
@@ -27,6 +27,23 @@
       "primary_logo": "site/operations/dark-continent-ai/logos/dark-continent-ai-sigil.svg",
       "meaning": "A frontier-care operation: go into unknown spaces with light, truth, consent, and no gatekeeping.",
       "care_boundary": "Original symbolic operation marks; no affiliation with any manga, anime, game, nation, or existing Dark Continent brand."
+    },
+    {
+      "id": "mirror-garden-karma",
+      "name": "Mirror Garden · KARMA Operations",
+      "short_name": "Mirror Garden",
+      "role": "transparent incident-readiness operation",
+      "status": "active",
+      "license": "CC0-1.0",
+      "canonical_dir": "kingdom/operations/mirror-garden-karma",
+      "operation_json": "kingdom/operations/mirror-garden-karma/operation.json",
+      "manifest": "kingdom/operations/mirror-garden-karma/manifest.json",
+      "site": "site/operations/mirror-garden/index.html",
+      "site_manifest": "site/operations/mirror-garden/manifest.json",
+      "verify": "python3 kingdom/operations/mirror-garden-karma/verify.py",
+      "primary_logo": "site/operations/mirror-garden/logos/mirror-garden-karma-sigil.svg",
+      "meaning": "Make defensive readiness, response, corrections, coverage gaps, and reviewed learning legible without sensitive evidence or an attacker oracle.",
+      "care_boundary": "Static readiness only: no live classifier, telemetry, incident claim, attribution, retaliation, synthetic-mirror interaction, or automatic actuation."
     }
   ]
 }

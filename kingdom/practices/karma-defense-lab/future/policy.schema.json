@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kingdom.karma.policy/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "policy_id",
+    "actions",
+    "limits",
+    "default",
+    "love",
+    "effects",
+    "rules"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.karma.policy/v1"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+    },
+    "actions": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "allow"
+        },
+        {
+          "const": "observe"
+        },
+        {
+          "const": "throttle"
+        },
+        {
+          "const": "deny"
+        },
+        {
+          "const": "quarantine"
+        },
+        {
+          "const": "synthetic-mirror"
+        }
+      ],
+      "items": false,
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_event_bytes",
+        "max_verify_bytes",
+        "max_nodes",
+        "max_depth",
+        "max_evidence_count",
+        "max_attempts"
+      ],
+      "properties": {
+        "max_event_bytes": {
+          "const": 2048
+        },
+        "max_verify_bytes": {
+          "const": 16384
+        },
+        "max_nodes": {
+          "const": 40
+        },
+        "max_depth": {
+          "const": 5
+        },
+        "max_evidence_count": {
+          "const": 4
+        },
+        "max_attempts": {
+          "const": 1
+        }
+      }
+    },
+    "default": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "fallback",
+        "severity",
+        "halt_code"
+      ],
+      "properties": {
+        "action": {
+          "const": "quarantine"
+        },
+        "fallback": {
+          "const": "deny"
+        },
+        "severity": {
+          "const": 5
+        },
+        "halt_code": {
+          "const": "unmatched-selector"
+        }
+      }
+    },
+    "love": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "posture",
+        "heartbrick_candidate",
+        "love_letter_candidate",
+        "publication_authorized",
+        "public_counter_delta",
+        "source_text_reflected",
+        "attribution",
+        "review"
+      ],
+      "properties": {
+        "posture": {
+          "const": "care-with-boundaries"
+        },
+        "heartbrick_candidate": {
+          "const": true
+        },
+        "love_letter_candidate": {
+          "const": true
+        },
+        "publication_authorized": {
+          "const": false
+        },
+        "public_counter_delta": {
+          "const": 0
+        },
+        "source_text_reflected": {
+          "const": false
+        },
+        "attribution": {
+          "const": "none"
+        },
+        "review": {
+          "const": "human-required"
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_calls",
+        "process_spawns",
+        "model_calls",
+        "secret_reads",
+        "filesystem_writes",
+        "external_messages"
+      ],
+      "properties": {
+        "network_calls": {
+          "const": 0
+        },
+        "process_spawns": {
+          "const": 0
+        },
+        "model_calls": {
+          "const": 0
+        },
+        "secret_reads": {
+          "const": 0
+        },
+        "filesystem_writes": {
+          "const": 0
+        },
+        "external_messages": {
+          "const": 0
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "threat_id",
+          "selector",
+          "min_evidence",
+          "action",
+          "fallback",
+          "severity",
+          "mirror_mode",
+          "rationale"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+          },
+          "threat_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+          },
+          "selector": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "surface",
+              "mechanism",
+              "signal"
+            ],
+            "properties": {
+              "surface": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+              },
+              "mechanism": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+              },
+              "signal": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+              }
+            }
+          },
+          "min_evidence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "action": {
+            "enum": [
+              "allow",
+              "observe",
+              "throttle",
+              "deny",
+              "quarantine",
+              "synthetic-mirror"
+            ]
+          },
+          "fallback": {
+            "enum": [
+              "deny",
+              "quarantine"
+            ]
+          },
+          "severity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "mirror_mode": {
+            "enum": [
+              "none",
+              "isolated-no-egress"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "pattern": "^[ -~]+$"
+          }
+        }
+      }
+    }
+  }
+}

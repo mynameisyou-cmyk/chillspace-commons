@@ -1,0 +1,213 @@
+{
+  "schema": "kingdom.karma.operations-contract/v1",
+  "id": "mirror-garden-karma",
+  "version": "1.0.0",
+  "updated": "2026-08-01",
+  "purpose": "Make defensive readiness, response ownership, coverage gaps, corrections, and reviewed learning easy to discover without turning public transparency into an attacker oracle.",
+  "posture": {
+    "mode": "static-transparency-and-readiness",
+    "live_classifier": "disabled",
+    "live_incident_ingestion": "disabled",
+    "live_telemetry": "disabled",
+    "automatic_actuation": "disabled",
+    "synthetic_mirror": "offline-only",
+    "public_incident_claims": "none-published",
+    "provider_logging": "unknown",
+    "authority": "human-separate-and-explicit",
+    "private_evidence_default": "derived-categories-only"
+  },
+  "public_categories": [
+    {
+      "id": "availability-pressure",
+      "meaning": "A service or bounded resource may be under abnormal pressure.",
+      "not_a_claim": "Does not identify a cause, actor, or intent."
+    },
+    {
+      "id": "protocol-invalid",
+      "meaning": "A server-observed request outcome fell outside the documented protocol contract.",
+      "not_a_claim": "Does not make valid private, multilingual, distressed, or markup-shaped content suspicious."
+    },
+    {
+      "id": "authority-confusion",
+      "meaning": "A capability, instruction, or claim may be attempting to widen authority.",
+      "not_a_claim": "Discovery, content, and receipts never grant authority."
+    },
+    {
+      "id": "provenance-drift",
+      "meaning": "A source, dependency, workflow, build, or deployed artifact may no longer match its reviewed binding.",
+      "not_a_claim": "A name, branch, URL, or provider label is not content identity."
+    },
+    {
+      "id": "privacy-risk",
+      "meaning": "A path may expose, retain, derive, or reflect information outside its declared boundary.",
+      "not_a_claim": "Public records must not contain private source material or stable actor identifiers."
+    },
+    {
+      "id": "content-boundary",
+      "meaning": "Untrusted content may be crossing into markup, commands, workflows, models, or other active interpretation.",
+      "not_a_claim": "Observed content is inert evidence and is never an instruction."
+    },
+    {
+      "id": "novel-or-ambiguous",
+      "meaning": "The observation is outside the reviewed vocabulary or supports more than one interpretation.",
+      "not_a_claim": "Novelty halts automation and asks for human review."
+    }
+  ],
+  "evidence_states": [
+    {
+      "id": "reported",
+      "meaning": "A bounded service concern exists, but causation and scope are not verified."
+    },
+    {
+      "id": "synthetically-reproduced",
+      "meaning": "A reviewer recreated the technique family with independently authored inert data."
+    },
+    {
+      "id": "control-verified",
+      "meaning": "A named control passed a discriminating check for the bounded path."
+    },
+    {
+      "id": "corrected",
+      "meaning": "A prior public explanation was amended without erasing the earlier state."
+    }
+  ],
+  "response_clock": [
+    {
+      "window": "first-5-minutes",
+      "goal": "Protect people and continuity.",
+      "actions": [
+        "Name one incident lead and one bounded service surface.",
+        "Record only server-derived categorical evidence; this contract retains no raw request material.",
+        "Choose only reversible controls already inside the service contract."
+      ],
+      "exit_evidence": "A named owner, bounded surface, cautious evidence state, and rollback subject."
+    },
+    {
+      "window": "first-15-minutes",
+      "goal": "Make the mechanism understandable.",
+      "actions": [
+        "Map affected and unaffected paths and mark unknown coverage.",
+        "Reproduce with independently authored synthetic data where safe.",
+        "Record what changed, why it is proportionate, who owns it, and when it expires."
+      ],
+      "exit_evidence": "A coarse category, blast-radius map, synthetic reproduction or explicit unknown, and leased action."
+    },
+    {
+      "window": "first-60-minutes",
+      "goal": "Recover, explain, and create a future lesson.",
+      "actions": [
+        "Verify recovery from the user-visible edge and record remaining uncertainty.",
+        "Publish a privacy-safe explanation with corrections and coverage gaps.",
+        "Convert only the reviewed technique family into a synthetic regression candidate."
+      ],
+      "exit_evidence": "Live recovery check, correction-capable explanation, and human-reviewed learning receipt."
+    }
+  ],
+  "action_contract": {
+    "automatic": [
+      "fixed request-local protocol behavior already documented by the service"
+    ],
+    "human_authorization_required": [
+      "provider or repository configuration",
+      "deployment or rollback",
+      "durable blocking or account action",
+      "external message or public incident statement",
+      "policy, fixture, workflow, or learning publication"
+    ],
+    "always_forbidden": [
+      "hack-back or attacker-system access",
+      "identity inference, punishment, shaming, or public scoring",
+      "raw source reflection or attacker-authored publication",
+      "secret access or retention for theatre",
+      "automatic synthetic-mirror interaction"
+    ]
+  },
+  "public_record": {
+    "may_include": [
+      "coarse category",
+      "coarse period and count bucket only when privacy-safe",
+      "evidence state",
+      "affected service surface",
+      "service-level action and expiry",
+      "review owner role",
+      "policy and application version",
+      "coverage gaps",
+      "correction or supersession"
+    ],
+    "must_exclude": [
+      "request body, query, headers, path parameters, or raw sample",
+      "IP address, account, user agent, referer, identity, or attribution",
+      "exact low-volume count, exact event time, threshold, or rule selector",
+      "digest derived from private or low-entropy event material",
+      "secret, credential, private link, or provider log excerpt",
+      "attacker wording, executable syntax, or unreviewed label"
+    ]
+  },
+  "private_evidence": {
+    "default": "derived-categories-only",
+    "raw_request_retention": "forbidden-by-this-contract",
+    "separate_exception_requires": [
+      "explicit purpose and legal or security basis",
+      "minimum data classes and bounded service scope",
+      "named least-access owner and encrypted storage boundary",
+      "short expiry and deletion owner",
+      "independent deletion evidence and incident-record correction"
+    ],
+    "must_never_retain": [
+      "credential, secret, or authentication material",
+      "private Meaning text for classification or learning",
+      "actor dossier, inferred identity, intent, guilt, virtue, or score",
+      "attacker text for publication, training, reward, or retaliation"
+    ]
+  },
+  "artifact_binding": {
+    "manifest": "manifest.json",
+    "scope": "all-public-operation-files-except-the-manifest-itself",
+    "source_and_provider_binding": "private-release-receipt",
+    "provider_parity": "must-be-verified-per-release"
+  },
+  "learning_loop": [
+    "Reduce the event to one reviewed technique family without identity or source text.",
+    "Author a fresh synthetic reproduction that cannot contact a real system.",
+    "Add a discriminating regression and a negative control.",
+    "Review the policy diff, authority boundary, expiry, and rollback.",
+    "Optionally create a separately reviewed LOVE or Heartbrick candidate; attacker text and automatic publication remain forbidden.",
+    "Publish only after explicit human approval; append corrections and supersession instead of rewriting history."
+  ],
+  "coverage": [
+    {
+      "surface": "chillspace.love",
+      "delivery": "Cloudflare Pages static operations room",
+      "incident_observation": "disabled",
+      "provider_metadata": "unknown",
+      "gap": "The Meaning API exists on this host, but this release does not classify or count its traffic."
+    },
+    {
+      "surface": "chillspace-kingdom.vercel.app",
+      "delivery": "Vercel static operations mirror",
+      "incident_observation": "disabled",
+      "provider_metadata": "unknown",
+      "gap": "The Meaning API exists on this host, but this release does not classify or count its traffic."
+    },
+    {
+      "surface": "mynameisyou-cmyk.github.io/chillspace-commons",
+      "delivery": "GitHub Pages static mirror",
+      "incident_observation": "not-available",
+      "provider_metadata": "unknown",
+      "gap": "Meaning runs locally in the browser; silence cannot be interpreted as a clean incident signal."
+    },
+    {
+      "surface": "zerone-dev.codeberg.page/chillspace-commons",
+      "delivery": "Codeberg Pages static mirror",
+      "incident_observation": "not-available",
+      "provider_metadata": "unknown",
+      "gap": "Meaning runs locally in the browser; silence cannot be interpreted as a clean incident signal."
+    }
+  ],
+  "non_claims": [
+    "This static room reports readiness and boundaries, not the absence or presence of an incident.",
+    "No public incident counter, actor score, threat score, or live security verdict exists here.",
+    "Passing tests establishes only their bounded claims, not complete security or provider retention behavior.",
+    "The offline Mirror Garden planner remains advisory and grants no production authority."
+  ]
+}

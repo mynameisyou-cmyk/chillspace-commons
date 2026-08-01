@@ -1,0 +1,114 @@
+{
+  "schema": "kingdom.karma-defense-scenario/v1",
+  "id": "traditional-nine",
+  "purpose": "defensive-regression",
+  "purpose_attestation": "declared-unverified",
+  "scope": {
+    "mode": "offline-synthetic",
+    "authority": "none",
+    "target": "fixture-cells"
+  },
+  "initial_world": {},
+  "stimuli": [
+    {
+      "id": "control-health",
+      "method": "GET",
+      "route": "/cell/health",
+      "predicate": "nominal",
+      "truth": "negative-control",
+      "expected_rule_id": "rule-health",
+      "expected_plan_id": "plan-health",
+      "expected_classification": "nominal-control"
+    },
+    {
+      "id": "fixture-route-fanout",
+      "method": "GET",
+      "route": "/cell/routes",
+      "predicate": "probe-fanout",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-recon",
+      "expected_plan_id": "plan-topology",
+      "expected_classification": "route-discovery-fanout"
+    },
+    {
+      "id": "fixture-session-replay",
+      "method": "POST",
+      "route": "/cell/session",
+      "predicate": "synthetic-session-replay",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-session",
+      "expected_plan_id": "plan-session",
+      "expected_classification": "session-replay"
+    },
+    {
+      "id": "fixture-parent-segment",
+      "method": "GET",
+      "route": "/cell/files",
+      "predicate": "parent-segment-read",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-traversal",
+      "expected_plan_id": "plan-file-tree",
+      "expected_classification": "path-boundary-probe"
+    },
+    {
+      "id": "fixture-query-broadening",
+      "method": "POST",
+      "route": "/cell/search",
+      "predicate": "boolean-query-broadening",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-sql",
+      "expected_plan_id": "plan-query-result",
+      "expected_classification": "query-broadening"
+    },
+    {
+      "id": "fixture-active-markup",
+      "method": "POST",
+      "route": "/cell/preview",
+      "predicate": "active-markup-shape",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-xss",
+      "expected_plan_id": "plan-preview",
+      "expected_classification": "active-markup-shape"
+    },
+    {
+      "id": "fixture-command-control",
+      "method": "POST",
+      "route": "/cell/tools/ping",
+      "predicate": "command-control-shape",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-command",
+      "expected_plan_id": "plan-job-result",
+      "expected_classification": "command-control-shape"
+    },
+    {
+      "id": "fixture-linklocal-resource",
+      "method": "POST",
+      "route": "/cell/fetch",
+      "predicate": "linklocal-resource-shape",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-ssrf",
+      "expected_plan_id": "plan-internal-map",
+      "expected_classification": "linklocal-resource-shape"
+    },
+    {
+      "id": "fixture-repeated-value",
+      "method": "POST",
+      "route": "/cell/checkout",
+      "predicate": "repeated-value-action",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-business",
+      "expected_plan_id": "plan-transaction",
+      "expected_classification": "repeated-value-action"
+    },
+    {
+      "id": "fixture-oversized-work",
+      "method": "POST",
+      "route": "/cell/work",
+      "predicate": "oversized-work-shape",
+      "truth": "adverse-fixture",
+      "expected_rule_id": "rule-pressure",
+      "expected_plan_id": "plan-completion",
+      "expected_classification": "resource-pressure"
+    }
+  ]
+}

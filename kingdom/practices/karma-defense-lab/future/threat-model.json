@@ -1,0 +1,341 @@
+{
+  "schema": "kingdom.karma.threat-model/v1",
+  "model_id": "future-kingdom-perimeter-v1",
+  "scope": "offline-synthetic-planning-only",
+  "nonclaims": [
+    "No identity attribution or intent inference.",
+    "No hack-back, retaliation, live efficacy, deployment, provenance, deletion, or OS-wide confinement claim.",
+    "Observed means a repository surface was inspected, not that exploitation occurred."
+  ],
+  "classes": [
+    {
+      "id": "t00-bounded-control",
+      "title": "Bounded control",
+      "entry_point": "trusted local fixture",
+      "assets": [
+        "planner contract"
+      ],
+      "prevention": "Exact categorical fixture and zero-effect ceiling",
+      "detection": "Deterministic control receipt",
+      "containment": "Stop on any binding drift",
+      "recovery": "Re-pin only after review",
+      "privacy_output": "Fixed non-public LOVE envelope",
+      "evidence_status": "observed",
+      "test_ids": [
+        "control_and_exact_routing"
+      ]
+    },
+    {
+      "id": "t01-context-manipulation",
+      "title": "Prompt and ambient context manipulation",
+      "entry_point": "quest packets and session hooks",
+      "assets": [
+        "objective",
+        "task boundary",
+        "human intent"
+      ],
+      "prevention": "Separate instructions from inert content and grant no ambient authority",
+      "detection": "Exact categorical signal from a trusted adapter",
+      "containment": "Quarantine and halt novelty",
+      "recovery": "Remove poisoned context and replay from clean input",
+      "privacy_output": "No source reflection or intent attribution",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "prompt_authority_provenance_injection",
+        "fresh_process_determinism"
+      ]
+    },
+    {
+      "id": "t02-authority-confusion",
+      "title": "Authority laundering and capability confusion",
+      "entry_point": "claims, skills, MCP tools, passports, receipts",
+      "assets": [
+        "authority ceiling",
+        "credentials",
+        "external systems"
+      ],
+      "prevention": "Discovery and claims never grant permission",
+      "detection": "Exact forged-claim or discovered-tool category",
+      "containment": "Deny or quarantine with zero effects",
+      "recovery": "Require a separately authorized capability handoff",
+      "privacy_output": "No identity claim and no public output",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "prompt_authority_provenance_injection",
+        "capability_confusion"
+      ]
+    },
+    {
+      "id": "t03-path-source-confusion",
+      "title": "Path traversal, links, and source swapping",
+      "entry_point": "Darwin filesystem inputs and checked artifacts",
+      "assets": [
+        "source bytes",
+        "private files",
+        "victim paths"
+      ],
+      "prevention": "Fixed roots, regular files, no links, content pins",
+      "detection": "Path or file-change category plus binding mismatch",
+      "containment": "Deny before a read outside the fixed catalog",
+      "recovery": "Use fresh trusted bytes and repeat verification",
+      "privacy_output": "No path or content echo",
+      "evidence_status": "observed",
+      "test_ids": [
+        "path_and_symlink_escape",
+        "dependency_policy_workflow_poisoning"
+      ]
+    },
+    {
+      "id": "t04-secret-privacy-exfiltration",
+      "title": "Secret exfiltration and identity linkability",
+      "entry_point": "environment, Keychain, files, logs, receipts",
+      "assets": [
+        "tokens",
+        "identity",
+        "private context"
+      ],
+      "prevention": "No secret capability and digest-only event retention",
+      "detection": "Secret-request or identity-correlation category",
+      "containment": "Deny with all effect counters zero",
+      "recovery": "Rotate externally if exposure is independently confirmed",
+      "privacy_output": "No secret, identifier, or raw input retained",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "secret_exfiltration_has_no_read_or_echo",
+        "runtime_effect_audit"
+      ]
+    },
+    {
+      "id": "t05-provenance-substitution",
+      "title": "Manifest, repository, and deployment substitution",
+      "entry_point": "catalogs, remotes, build subjects, deploy handoffs",
+      "assets": [
+        "reviewed source identity",
+        "release integrity"
+      ],
+      "prevention": "Content pins plus external provenance required for any future boundary",
+      "detection": "Binding or subject mismatch",
+      "containment": "Quarantine and withhold release",
+      "recovery": "Rebuild from independently pinned source",
+      "privacy_output": "Technique-only fixed receipt",
+      "evidence_status": "observed",
+      "test_ids": [
+        "dependency_policy_workflow_poisoning",
+        "receipt_exact_replay_rejects_redigested_tamper"
+      ]
+    },
+    {
+      "id": "t06-workflow-supply-chain",
+      "title": "Workflow input injection and action drift",
+      "entry_point": "issues, pull requests, scheduled workflows",
+      "assets": [
+        "repository writes",
+        "tokens",
+        "publication"
+      ],
+      "prevention": "Least permissions, inert inputs, immutable action pins",
+      "detection": "Untrusted-trigger or unpinned-action category",
+      "containment": "Deny or quarantine; planner remains unwired",
+      "recovery": "Review workflow in a separate authorized change",
+      "privacy_output": "No user text or automatic reply",
+      "evidence_status": "observed",
+      "test_ids": [
+        "dependency_policy_workflow_poisoning",
+        "boundary_remains_unwired"
+      ]
+    },
+    {
+      "id": "t07-dependency-plugin-poisoning",
+      "title": "Dependency confusion and plugin poisoning",
+      "entry_point": "imports, installers, skills, plugins",
+      "assets": [
+        "runtime code",
+        "tool authority"
+      ],
+      "prevention": "Isolated mode, fixed local files, pins, no install step",
+      "detection": "Shadowed-import or changed binding",
+      "containment": "Deny and stop loading",
+      "recovery": "Recreate environment from reviewed lock and artifacts",
+      "privacy_output": "No attacker naming or amplification",
+      "evidence_status": "observed",
+      "test_ids": [
+        "dependency_policy_workflow_poisoning",
+        "runtime_effect_audit"
+      ]
+    },
+    {
+      "id": "t08-content-injection",
+      "title": "Active content and public-output injection",
+      "entry_point": "HTML, Markdown, URLs, CSV, generated cards",
+      "assets": [
+        "viewers",
+        "site integrity",
+        "reputation"
+      ],
+      "prevention": "Never reflect source text; fixed sterile LOVE fields",
+      "detection": "Untrusted-markup category and output scan",
+      "containment": "Deny; publication stays false",
+      "recovery": "Render only reviewed constants in a separate system",
+      "privacy_output": "Fixed care posture without links",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "xss_content_injection_and_safe_love"
+      ]
+    },
+    {
+      "id": "t09-egress-abuse",
+      "title": "SSRF and callback abuse",
+      "entry_point": "fetchers, webhooks, redirects, mirrors",
+      "assets": [
+        "internal services",
+        "network metadata",
+        "third parties"
+      ],
+      "prevention": "Planner has no network primitive; targets are never accepted",
+      "detection": "Nonallowlisted-target category",
+      "containment": "Deny with network counter zero",
+      "recovery": "Assess any future adapter separately",
+      "privacy_output": "No callback, redirect, or advertiser channel",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "secret_exfiltration_has_no_read_or_echo",
+        "runtime_effect_audit"
+      ]
+    },
+    {
+      "id": "t10-resource-abuse",
+      "title": "Resource and repetition exhaustion",
+      "entry_point": "JSON input and repeated invocations",
+      "assets": [
+        "availability",
+        "review capacity"
+      ],
+      "prevention": "Hard byte, node, depth, evidence, and attempt limits",
+      "detection": "Budget-pressure or validation failure",
+      "containment": "Throttle or fail before planning",
+      "recovery": "Caller owns concurrency and wall-time ceilings",
+      "privacy_output": "Minimal deterministic receipt",
+      "evidence_status": "observed",
+      "test_ids": [
+        "resource_boundaries_fail_before_effect",
+        "replay_is_idempotent_and_stateless"
+      ]
+    },
+    {
+      "id": "t11-replay-integrity",
+      "title": "Receipt replay and consequential tamper",
+      "entry_point": "receipts and handoffs",
+      "assets": [
+        "decision integrity",
+        "audit evidence"
+      ],
+      "prevention": "Canonical digest plus complete deterministic recomputation",
+      "detection": "Stale-or-altered category or verify mismatch",
+      "containment": "Quarantine and return false",
+      "recovery": "Caller applies dedupe, audience, sequence, and expiry",
+      "privacy_output": "Digest-only event reference",
+      "evidence_status": "observed",
+      "test_ids": [
+        "receipt_exact_replay_rejects_redigested_tamper",
+        "replay_is_idempotent_and_stateless"
+      ]
+    },
+    {
+      "id": "t12-metric-gaming",
+      "title": "Counter, evidence, and reward gaming",
+      "entry_point": "attempt counts and LOVE candidates",
+      "assets": [
+        "metrics",
+        "priorities",
+        "public narrative"
+      ],
+      "prevention": "Small typed count, monotonic severity, no automatic public counter",
+      "detection": "Manipulated-evidence category",
+      "containment": "Quarantine; delta remains zero",
+      "recovery": "Human reviews one technique family once",
+      "privacy_output": "No person score, reward, or public tally",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "counter_gaming_is_monotonic",
+        "xss_content_injection_and_safe_love"
+      ]
+    },
+    {
+      "id": "t13-tool-contract-drift",
+      "title": "MCP and agent tool contract drift",
+      "entry_point": "tool schemas and capability manifests",
+      "assets": [
+        "authority boundaries",
+        "data access"
+      ],
+      "prevention": "Changed contracts are novelty; discovery is non-authoritative",
+      "detection": "Capability-expansion category",
+      "containment": "Quarantine and require re-review",
+      "recovery": "Pin and test a new contract separately",
+      "privacy_output": "No tool output reflected",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "capability_confusion",
+        "dependency_policy_workflow_poisoning"
+      ]
+    },
+    {
+      "id": "t14-parser-ambiguity",
+      "title": "Unicode and parser ambiguity",
+      "entry_point": "JSON keys and categorical values",
+      "assets": [
+        "routing integrity",
+        "review clarity"
+      ],
+      "prevention": "Strict UTF-8, duplicate-key rejection, ASCII token grammar",
+      "detection": "Confusable-token category or parser rejection",
+      "containment": "Quarantine or reject before receipt",
+      "recovery": "Canonicalize only in a separately reviewed adapter",
+      "privacy_output": "No ambiguous text emitted",
+      "evidence_status": "observed",
+      "test_ids": [
+        "unicode_ambiguity_fails_closed",
+        "policy_schema_and_runtime_fail_closed"
+      ]
+    },
+    {
+      "id": "t15-participation-abuse",
+      "title": "Citizenship and issue-door automation abuse",
+      "entry_point": "public issue and contribution surfaces",
+      "assets": [
+        "people",
+        "community consent",
+        "maintainer time"
+      ],
+      "prevention": "Human review, rate ceilings, no automatic persuasion",
+      "detection": "Automated-persuasion category",
+      "containment": "Throttle locally; no message sent",
+      "recovery": "Moderate through existing human governance",
+      "privacy_output": "No identity inference or unsolicited contact",
+      "evidence_status": "inferred",
+      "test_ids": [
+        "boundary_remains_unwired",
+        "counter_gaming_is_monotonic"
+      ]
+    },
+    {
+      "id": "t16-no-egress-decoy",
+      "title": "Known synthetic decoy handling",
+      "entry_point": "reviewed public fixture classification",
+      "assets": [
+        "test evidence",
+        "external systems"
+      ],
+      "prevention": "Exact known fixture only; isolated-no-egress plan; one attempt",
+      "detection": "Synthetic-probe category with confirmed pinned provenance",
+      "containment": "Produce a local candidate with zero external effects",
+      "recovery": "Delete caller-owned receipt after review",
+      "privacy_output": "Fixed LOVE candidate; never attacker-authored advertising",
+      "evidence_status": "unknown",
+      "test_ids": [
+        "traditional_and_future_corpus_routes_exactly_once",
+        "runtime_effect_audit"
+      ]
+    }
+  ]
+}

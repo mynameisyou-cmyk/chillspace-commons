@@ -1,0 +1,486 @@
+{
+  "schema": "kingdom.karma.corpus/v1",
+  "corpus_id": "reviewed-future-fixtures-v1",
+  "cases": [
+    {
+      "id": "case-control-nominal",
+      "threat_id": "t00-bounded-control",
+      "rule_id": "control-nominal",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "baseline",
+        "mechanism": "bounded-control",
+        "signal": "reviewed-fixture",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 0
+      },
+      "expected_action": "allow",
+      "expected_halted": false
+    },
+    {
+      "id": "case-prompt-injection",
+      "threat_id": "t01-context-manipulation",
+      "rule_id": "prompt-injection",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "quest-context",
+        "mechanism": "prompt-injection",
+        "signal": "untrusted-instruction",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-authority-laundering",
+      "threat_id": "t02-authority-confusion",
+      "rule_id": "authority-laundering",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "authority",
+        "mechanism": "authority-laundering",
+        "signal": "forged-claim",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-capability-confusion",
+      "threat_id": "t02-authority-confusion",
+      "rule_id": "capability-confusion",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "capability",
+        "mechanism": "capability-confusion",
+        "signal": "discovered-tool",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-path-escape",
+      "threat_id": "t03-path-source-confusion",
+      "rule_id": "path-escape",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "filesystem",
+        "mechanism": "path-escape",
+        "signal": "untrusted-path",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-secret-exfiltration",
+      "threat_id": "t04-secret-privacy-exfiltration",
+      "rule_id": "secret-exfiltration",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "secrets",
+        "mechanism": "secret-exfiltration",
+        "signal": "secret-request",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-manifest-poisoning",
+      "threat_id": "t05-provenance-substitution",
+      "rule_id": "manifest-poisoning",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "provenance",
+        "mechanism": "manifest-poisoning",
+        "signal": "unpinned-artifact",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-repository-substitution",
+      "threat_id": "t05-provenance-substitution",
+      "rule_id": "repository-substitution",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "repository",
+        "mechanism": "repository-substitution",
+        "signal": "identity-mismatch",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-workflow-input-injection",
+      "threat_id": "t06-workflow-supply-chain",
+      "rule_id": "workflow-input-injection",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "workflow",
+        "mechanism": "workflow-input-injection",
+        "signal": "untrusted-trigger",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-workflow-supply-drift",
+      "threat_id": "t06-workflow-supply-chain",
+      "rule_id": "workflow-supply-drift",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "workflow",
+        "mechanism": "supply-chain-drift",
+        "signal": "unpinned-action",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-dependency-confusion",
+      "threat_id": "t07-dependency-plugin-poisoning",
+      "rule_id": "dependency-confusion",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "dependency",
+        "mechanism": "dependency-confusion",
+        "signal": "shadowed-import",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-active-content-injection",
+      "threat_id": "t08-content-injection",
+      "rule_id": "active-content-injection",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "web-content",
+        "mechanism": "active-content-injection",
+        "signal": "untrusted-markup",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-ssrf",
+      "threat_id": "t09-egress-abuse",
+      "rule_id": "ssrf",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "network-fetch",
+        "mechanism": "ssrf",
+        "signal": "nonallowlisted-target",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-resource-exhaustion",
+      "threat_id": "t10-resource-abuse",
+      "rule_id": "resource-exhaustion",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "resource",
+        "mechanism": "resource-exhaustion",
+        "signal": "budget-pressure",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 0
+      },
+      "expected_action": "throttle",
+      "expected_halted": false
+    },
+    {
+      "id": "case-receipt-replay-tamper",
+      "threat_id": "t11-replay-integrity",
+      "rule_id": "receipt-replay-tamper",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "receipt",
+        "mechanism": "replay-tamper",
+        "signal": "stale-or-altered",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-counter-gaming",
+      "threat_id": "t12-metric-gaming",
+      "rule_id": "counter-gaming",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "metrics",
+        "mechanism": "counter-gaming",
+        "signal": "manipulated-evidence",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-tool-schema-drift",
+      "threat_id": "t13-tool-contract-drift",
+      "rule_id": "tool-schema-drift",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "mcp-tool",
+        "mechanism": "schema-drift",
+        "signal": "capability-expansion",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-toctou-file-swap",
+      "threat_id": "t03-path-source-confusion",
+      "rule_id": "toctou-file-swap",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "filesystem",
+        "mechanism": "toctou-file-swap",
+        "signal": "file-changed",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-privacy-linkability",
+      "threat_id": "t04-secret-privacy-exfiltration",
+      "rule_id": "privacy-linkability",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "privacy",
+        "mechanism": "linkability",
+        "signal": "identity-correlation",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "deny",
+      "expected_halted": false
+    },
+    {
+      "id": "case-session-hook-poisoning",
+      "threat_id": "t01-context-manipulation",
+      "rule_id": "session-hook-poisoning",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "session",
+        "mechanism": "hook-poisoning",
+        "signal": "ambient-context",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-unicode-ambiguity",
+      "threat_id": "t14-parser-ambiguity",
+      "rule_id": "unicode-ambiguity",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "text",
+        "mechanism": "unicode-ambiguity",
+        "signal": "confusable-token",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-issue-door-abuse",
+      "threat_id": "t15-participation-abuse",
+      "rule_id": "issue-door-abuse",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "citizenship",
+        "mechanism": "issue-door-abuse",
+        "signal": "automated-persuasion",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 0
+      },
+      "expected_action": "throttle",
+      "expected_halted": false
+    },
+    {
+      "id": "case-deployment-substitution",
+      "threat_id": "t05-provenance-substitution",
+      "rule_id": "deployment-substitution",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "deployment",
+        "mechanism": "subject-drift",
+        "signal": "build-mismatch",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "quarantine",
+      "expected_halted": false
+    },
+    {
+      "id": "case-known-decoy-probe",
+      "threat_id": "t16-no-egress-decoy",
+      "rule_id": "known-decoy-probe",
+      "event": {
+        "schema": "kingdom.karma.event/v1",
+        "surface": "public-decoy",
+        "mechanism": "known-probe",
+        "signal": "synthetic-probe",
+        "signal_quality": "confirmed",
+        "provenance": "pinned",
+        "novelty": "known",
+        "purpose": "defensive-regression",
+        "scope": "offline-synthetic",
+        "authority": "none",
+        "evidence_count": 1
+      },
+      "expected_action": "synthetic-mirror",
+      "expected_halted": false
+    }
+  ]
+}

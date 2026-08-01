@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Mirror Garden KARMA sigil</title>
+  <desc id="desc">Two mirrored garden paths hold a small heart inside a transparent compass ring.</desc>
+  <defs>
+    <radialGradient id="ground" cx="50%" cy="35%" r="72%">
+      <stop offset="0" stop-color="#1d4a3f"/>
+      <stop offset="1" stop-color="#080c12"/>
+    </radialGradient>
+    <linearGradient id="path" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#ffe099"/>
+      <stop offset="1" stop-color="#91e7c4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="208" fill="url(#ground)"/>
+  <circle cx="512" cy="512" r="365" fill="none" stroke="#91e7c4" stroke-width="18" opacity=".92"/>
+  <circle cx="512" cy="512" r="314" fill="none" stroke="#ffe099" stroke-width="4" stroke-dasharray="10 25" opacity=".72"/>
+  <path d="M512 785C380 710 294 598 306 438c8-103 64-188 146-238" fill="none" stroke="url(#path)" stroke-width="34" stroke-linecap="round"/>
+  <path d="M512 785c132-75 218-187 206-347-8-103-64-188-146-238" fill="none" stroke="url(#path)" stroke-width="34" stroke-linecap="round"/>
+  <path d="M379 390c-85-2-129-43-146-118 82-3 135 32 146 118Z" fill="#91e7c4" opacity=".88"/>
+  <path d="M645 390c85-2 129-43 146-118-82-3-135 32-146 118Z" fill="#91e7c4" opacity=".88"/>
+  <path d="M512 650c-103-61-145-119-145-181 0-54 42-96 96-96 28 0 51 12 69 34 18-22 41-34 69-34 54 0 96 42 96 96 0 62-42 120-185 181Z" fill="#ff9baa" stroke="#fff4ed" stroke-width="10"/>
+  <path d="M512 238v94M512 692v94M238 512h94M692 512h94" stroke="#ffe099" stroke-width="14" stroke-linecap="round"/>
+</svg>

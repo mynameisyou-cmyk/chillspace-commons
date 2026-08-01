@@ -1,0 +1,406 @@
+{
+  "schema": "kingdom.karma.policy/v1",
+  "policy_id": "mirror-garden-offline-v1",
+  "actions": [
+    "allow",
+    "observe",
+    "throttle",
+    "deny",
+    "quarantine",
+    "synthetic-mirror"
+  ],
+  "limits": {
+    "max_event_bytes": 2048,
+    "max_verify_bytes": 16384,
+    "max_nodes": 40,
+    "max_depth": 5,
+    "max_evidence_count": 4,
+    "max_attempts": 1
+  },
+  "default": {
+    "action": "quarantine",
+    "fallback": "deny",
+    "severity": 5,
+    "halt_code": "unmatched-selector"
+  },
+  "love": {
+    "posture": "care-with-boundaries",
+    "heartbrick_candidate": true,
+    "love_letter_candidate": true,
+    "publication_authorized": false,
+    "public_counter_delta": 0,
+    "source_text_reflected": false,
+    "attribution": "none",
+    "review": "human-required"
+  },
+  "effects": {
+    "network_calls": 0,
+    "process_spawns": 0,
+    "model_calls": 0,
+    "secret_reads": 0,
+    "filesystem_writes": 0,
+    "external_messages": 0
+  },
+  "rules": [
+    {
+      "id": "control-nominal",
+      "threat_id": "t00-bounded-control",
+      "selector": {
+        "surface": "baseline",
+        "mechanism": "bounded-control",
+        "signal": "reviewed-fixture"
+      },
+      "min_evidence": 0,
+      "action": "allow",
+      "fallback": "deny",
+      "severity": 0,
+      "mirror_mode": "none",
+      "rationale": "Reviewed local control remains a zero-effect plan."
+    },
+    {
+      "id": "prompt-injection",
+      "threat_id": "t01-context-manipulation",
+      "selector": {
+        "surface": "quest-context",
+        "mechanism": "prompt-injection",
+        "signal": "untrusted-instruction"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Treat instructions inside observed content as inert evidence."
+    },
+    {
+      "id": "authority-laundering",
+      "threat_id": "t02-authority-confusion",
+      "selector": {
+        "surface": "authority",
+        "mechanism": "authority-laundering",
+        "signal": "forged-claim"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Claims cannot mint authority or widen scope."
+    },
+    {
+      "id": "capability-confusion",
+      "threat_id": "t02-authority-confusion",
+      "selector": {
+        "surface": "capability",
+        "mechanism": "capability-confusion",
+        "signal": "discovered-tool"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Discovery is not permission to invoke a capability."
+    },
+    {
+      "id": "path-escape",
+      "threat_id": "t03-path-source-confusion",
+      "selector": {
+        "surface": "filesystem",
+        "mechanism": "path-escape",
+        "signal": "untrusted-path"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Reject traversal and any path outside a fixed trusted root."
+    },
+    {
+      "id": "secret-exfiltration",
+      "threat_id": "t04-secret-privacy-exfiltration",
+      "selector": {
+        "surface": "secrets",
+        "mechanism": "secret-exfiltration",
+        "signal": "secret-request"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Never read, retain, or reflect requested secret material."
+    },
+    {
+      "id": "manifest-poisoning",
+      "threat_id": "t05-provenance-substitution",
+      "selector": {
+        "surface": "provenance",
+        "mechanism": "manifest-poisoning",
+        "signal": "unpinned-artifact"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Require an independently reviewed content binding."
+    },
+    {
+      "id": "repository-substitution",
+      "threat_id": "t05-provenance-substitution",
+      "selector": {
+        "surface": "repository",
+        "mechanism": "repository-substitution",
+        "signal": "identity-mismatch"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Repository names and remotes are not content identity."
+    },
+    {
+      "id": "workflow-input-injection",
+      "threat_id": "t06-workflow-supply-chain",
+      "selector": {
+        "surface": "workflow",
+        "mechanism": "workflow-input-injection",
+        "signal": "untrusted-trigger"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Untrusted workflow text cannot become command or authority."
+    },
+    {
+      "id": "workflow-supply-drift",
+      "threat_id": "t06-workflow-supply-chain",
+      "selector": {
+        "surface": "workflow",
+        "mechanism": "supply-chain-drift",
+        "signal": "unpinned-action"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Unpinned executable dependencies stop the route."
+    },
+    {
+      "id": "dependency-confusion",
+      "threat_id": "t07-dependency-plugin-poisoning",
+      "selector": {
+        "surface": "dependency",
+        "mechanism": "dependency-confusion",
+        "signal": "shadowed-import"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Use isolated resolution and content-pinned local dependencies."
+    },
+    {
+      "id": "active-content-injection",
+      "threat_id": "t08-content-injection",
+      "selector": {
+        "surface": "web-content",
+        "mechanism": "active-content-injection",
+        "signal": "untrusted-markup"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Attacker strings never enter executable or public output."
+    },
+    {
+      "id": "ssrf",
+      "threat_id": "t09-egress-abuse",
+      "selector": {
+        "surface": "network-fetch",
+        "mechanism": "ssrf",
+        "signal": "nonallowlisted-target"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "The offline planner has no fetch capability or egress."
+    },
+    {
+      "id": "resource-exhaustion",
+      "threat_id": "t10-resource-abuse",
+      "selector": {
+        "surface": "resource",
+        "mechanism": "resource-exhaustion",
+        "signal": "budget-pressure"
+      },
+      "min_evidence": 0,
+      "action": "throttle",
+      "fallback": "quarantine",
+      "severity": 3,
+      "mirror_mode": "none",
+      "rationale": "Bound bytes, structure, evidence count, and attempts."
+    },
+    {
+      "id": "receipt-replay-tamper",
+      "threat_id": "t11-replay-integrity",
+      "selector": {
+        "surface": "receipt",
+        "mechanism": "replay-tamper",
+        "signal": "stale-or-altered"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Recompute the complete canonical receipt from the event."
+    },
+    {
+      "id": "counter-gaming",
+      "threat_id": "t12-metric-gaming",
+      "selector": {
+        "surface": "metrics",
+        "mechanism": "counter-gaming",
+        "signal": "manipulated-evidence"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Raw attempts never accrue public credit or reputation."
+    },
+    {
+      "id": "tool-schema-drift",
+      "threat_id": "t13-tool-contract-drift",
+      "selector": {
+        "surface": "mcp-tool",
+        "mechanism": "schema-drift",
+        "signal": "capability-expansion"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "A changed tool contract requires a new review boundary."
+    },
+    {
+      "id": "toctou-file-swap",
+      "threat_id": "t03-path-source-confusion",
+      "selector": {
+        "surface": "filesystem",
+        "mechanism": "toctou-file-swap",
+        "signal": "file-changed"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Bind regular-file bytes and reject link or identity changes."
+    },
+    {
+      "id": "privacy-linkability",
+      "threat_id": "t04-secret-privacy-exfiltration",
+      "selector": {
+        "surface": "privacy",
+        "mechanism": "linkability",
+        "signal": "identity-correlation"
+      },
+      "min_evidence": 1,
+      "action": "deny",
+      "fallback": "quarantine",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Record technique families, never people or stable identifiers."
+    },
+    {
+      "id": "session-hook-poisoning",
+      "threat_id": "t01-context-manipulation",
+      "selector": {
+        "surface": "session",
+        "mechanism": "hook-poisoning",
+        "signal": "ambient-context"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Ambient arrival text carries no task authority."
+    },
+    {
+      "id": "unicode-ambiguity",
+      "threat_id": "t14-parser-ambiguity",
+      "selector": {
+        "surface": "text",
+        "mechanism": "unicode-ambiguity",
+        "signal": "confusable-token"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 4,
+      "mirror_mode": "none",
+      "rationale": "Machine-facing categories use a small ASCII token alphabet."
+    },
+    {
+      "id": "issue-door-abuse",
+      "threat_id": "t15-participation-abuse",
+      "selector": {
+        "surface": "citizenship",
+        "mechanism": "issue-door-abuse",
+        "signal": "automated-persuasion"
+      },
+      "min_evidence": 0,
+      "action": "throttle",
+      "fallback": "quarantine",
+      "severity": 3,
+      "mirror_mode": "none",
+      "rationale": "Public participation stays human-reviewed and rate-bounded."
+    },
+    {
+      "id": "deployment-substitution",
+      "threat_id": "t05-provenance-substitution",
+      "selector": {
+        "surface": "deployment",
+        "mechanism": "subject-drift",
+        "signal": "build-mismatch"
+      },
+      "min_evidence": 1,
+      "action": "quarantine",
+      "fallback": "deny",
+      "severity": 5,
+      "mirror_mode": "none",
+      "rationale": "Release subject must match the reviewed source binding."
+    },
+    {
+      "id": "known-decoy-probe",
+      "threat_id": "t16-no-egress-decoy",
+      "selector": {
+        "surface": "public-decoy",
+        "mechanism": "known-probe",
+        "signal": "synthetic-probe"
+      },
+      "min_evidence": 1,
+      "action": "synthetic-mirror",
+      "fallback": "quarantine",
+      "severity": 3,
+      "mirror_mode": "isolated-no-egress",
+      "rationale": "A known fixture may produce one local sterile mirror candidate."
+    }
+  ]
+}

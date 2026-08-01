@@ -105,6 +105,16 @@ jobs:
             exit 1
           fi
 
+      - name: Mirror Garden keeps incidents legible without becoming an oracle
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/practices/karma-defense-lab/test_karma_defense_lab.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/practices/karma-defense-lab/test_skycastle_chorus.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/operations/mirror-garden-karma/verify.py
+          node --test tests/test_karma_operations.mjs
+
       - name: Calm Studio keeps the room and the instrument distinct
         run: |
           python3 kingdom/practices/calm-studio/test_calm_studio.py

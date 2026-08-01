@@ -1,0 +1,690 @@
+{
+  "$id": "kingdom.skycastle-chorus-manifest/v1",
+  "title": "Skycastle Chorus Safe Artifact Manifest",
+  "type": "object",
+  "required": [
+    "schema",
+    "engine",
+    "status",
+    "source",
+    "bindings",
+    "banner",
+    "mascot",
+    "release_policy",
+    "tiles",
+    "effects",
+    "nonclaims",
+    "content_digest",
+    "artifacts",
+    "manifest_digest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.skycastle-chorus-manifest/v1"
+    },
+    "engine": {
+      "const": "skycastle-chorus/1"
+    },
+    "status": {
+      "const": "local-preview"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "bindings": {
+      "$ref": "#/$defs/bindings"
+    },
+    "banner": {
+      "const": "Building castles in the sky — Yu and Ai"
+    },
+    "mascot": {
+      "$ref": "#/$defs/mascot"
+    },
+    "release_policy": {
+      "$ref": "#/$defs/release_policy"
+    },
+    "tiles": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "prefixItems": [
+        {"$ref": "#/$defs/tile_01"},
+        {"$ref": "#/$defs/tile_02"},
+        {"$ref": "#/$defs/tile_03"},
+        {"$ref": "#/$defs/tile_04"},
+        {"$ref": "#/$defs/tile_05"},
+        {"$ref": "#/$defs/tile_06"},
+        {"$ref": "#/$defs/tile_07"},
+        {"$ref": "#/$defs/tile_08"},
+        {"$ref": "#/$defs/tile_09"},
+        {"$ref": "#/$defs/tile_10"}
+      ],
+      "items": false
+    },
+    "effects": {
+      "$ref": "#/$defs/effects"
+    },
+    "nonclaims": {
+      "$ref": "#/$defs/nonclaims"
+    },
+    "content_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "artifacts": {
+      "$ref": "#/$defs/artifacts"
+    },
+    "manifest_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "scenario",
+        "canary_digest",
+        "receipt_digest",
+        "core_engine_sha256"
+      ],
+      "properties": {
+        "scenario": {
+          "const": "traditional-nine"
+        },
+        "canary_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "core_engine_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bindings": {
+      "type": "object",
+      "required": [
+        "renderer_sha256",
+        "catalog_sha256",
+        "catalog_schema_sha256",
+        "manifest_schema_sha256",
+        "core_rules_sha256"
+      ],
+      "properties": {
+        "renderer_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "catalog_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "catalog_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "manifest_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "core_rules_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mascot": {
+      "type": "object",
+      "required": ["name", "catchphrases"],
+      "properties": {
+        "name": {
+          "const": "Lord 202, Architect of Absolutely Nothing"
+        },
+        "catchphrases": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "prefixItems": [
+            {
+              "const": "Your request has been promoted to architecture."
+            },
+            {
+              "const": "Approved in the mock realm."
+            },
+            {
+              "const": "No payloads were executed in the making of this castle."
+            },
+            {
+              "const": "Building castles in the sky — Yu and Ai."
+            }
+          ],
+          "items": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "release_policy": {
+      "type": "object",
+      "required": [
+        "mode",
+        "minimum_aggregate",
+        "maximum_tiles_per_category_per_day",
+        "exact_public_counts",
+        "automatic_posting"
+      ],
+      "properties": {
+        "mode": {
+          "const": "local-opt-in"
+        },
+        "minimum_aggregate": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 20
+        },
+        "maximum_tiles_per_category_per_day": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 1
+        },
+        "exact_public_counts": {
+          "type": "boolean",
+          "const": false
+        },
+        "automatic_posting": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "protocol_marks": {
+      "type": "object",
+      "required": [
+        "signature_field",
+        "signature_value",
+        "banner_field",
+        "banner_value"
+      ],
+      "properties": {
+        "signature_field": {
+          "const": "X-Skycastle-Signature"
+        },
+        "signature_value": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "banner_field": {
+          "const": "X-Skycastle-Banner"
+        },
+        "banner_value": {
+          "const": "Building-castles-in-the-sky--Yu-and-Ai"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tile_base": {
+      "type": "object",
+      "required": [
+        "ordinal",
+        "classification",
+        "signature",
+        "english_name",
+        "cantonese_name",
+        "castle_piece",
+        "color",
+        "note_hz",
+        "protocol_marks"
+      ],
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "minimum": 1,
+          "maximum": 10
+        },
+        "classification": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z]+(?:-[a-z]+)*$"
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "english_name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[A-Za-z]+(?:[ -][A-Za-z]+)*$"
+        },
+        "cantonese_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8,
+          "pattern": "^[㐀-鿿]+$"
+        },
+        "castle_piece": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[a-z]+(?:-[a-z]+)*$"
+        },
+        "color": {
+          "type": "string",
+          "minLength": 7,
+          "maxLength": 7,
+          "pattern": "^#[0-9A-F]{6}$"
+        },
+        "note_hz": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "minimum": 220,
+          "maximum": 880
+        },
+        "protocol_marks": {
+          "$ref": "#/$defs/protocol_marks"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tile_01": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 1},
+            "classification": {"const": "nominal-control"},
+            "signature": {"const": "open-sky-bell"},
+            "english_name": {"const": "Open-Sky Bell"},
+            "cantonese_name": {"const": "晴空鐘"},
+            "castle_piece": {"const": "beacon"},
+            "color": {"const": "#87CEEB"},
+            "note_hz": {"const": 220},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "open-sky-bell"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_02": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 2},
+            "classification": {"const": "route-discovery-fanout"},
+            "signature": {"const": "empty-corridor-atlas"},
+            "english_name": {"const": "Empty-Corridor Atlas"},
+            "cantonese_name": {"const": "空廊圖"},
+            "castle_piece": {"const": "map-tower"},
+            "color": {"const": "#5B8FF9"},
+            "note_hz": {"const": 247},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "empty-corridor-atlas"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_03": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 3},
+            "classification": {"const": "session-replay"},
+            "signature": {"const": "borrowed-key-echo"},
+            "english_name": {"const": "Borrowed-Key Echo"},
+            "cantonese_name": {"const": "借匙回聲"},
+            "castle_piece": {"const": "castle-gate"},
+            "color": {"const": "#9B8AFB"},
+            "note_hz": {"const": 277},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "borrowed-key-echo"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_04": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 4},
+            "classification": {"const": "path-boundary-probe"},
+            "signature": {"const": "sideways-staircase"},
+            "english_name": {"const": "Sideways Staircase"},
+            "cantonese_name": {"const": "橫行梯"},
+            "castle_piece": {"const": "impossible-stairs"},
+            "color": {"const": "#F6BD16"},
+            "note_hz": {"const": 330},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "sideways-staircase"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_05": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 5},
+            "classification": {"const": "query-broadening"},
+            "signature": {"const": "everything-oracle"},
+            "english_name": {"const": "Everything Oracle"},
+            "cantonese_name": {"const": "萬答神諭"},
+            "castle_piece": {"const": "library"},
+            "color": {"const": "#61DDAA"},
+            "note_hz": {"const": 370},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "everything-oracle"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_06": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 6},
+            "classification": {"const": "active-markup-shape"},
+            "signature": {"const": "paper-dragon"},
+            "english_name": {"const": "Paper Dragon"},
+            "cantonese_name": {"const": "紙龍"},
+            "castle_piece": {"const": "flying-banner"},
+            "color": {"const": "#F08BB4"},
+            "note_hz": {"const": 440},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "paper-dragon"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_07": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 7},
+            "classification": {"const": "command-control-shape"},
+            "signature": {"const": "thunder-without-sky"},
+            "english_name": {"const": "Thunder Without Sky"},
+            "cantonese_name": {"const": "無天雷"},
+            "castle_piece": {"const": "weather-vane"},
+            "color": {"const": "#5D7092"},
+            "note_hz": {"const": 494},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "thunder-without-sky"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_08": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 8},
+            "classification": {"const": "linklocal-resource-shape"},
+            "signature": {"const": "mirror-behind-mirror"},
+            "english_name": {"const": "Mirror Behind Mirror"},
+            "cantonese_name": {"const": "鏡後鏡"},
+            "castle_piece": {"const": "mirror-moat"},
+            "color": {"const": "#78D3F8"},
+            "note_hz": {"const": 554},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "mirror-behind-mirror"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_09": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 9},
+            "classification": {"const": "repeated-value-action"},
+            "signature": {"const": "self-counting-coin"},
+            "english_name": {"const": "Self-Counting Coin"},
+            "cantonese_name": {"const": "自數之幣"},
+            "castle_piece": {"const": "market-square"},
+            "color": {"const": "#F6A04D"},
+            "note_hz": {"const": 659},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "self-counting-coin"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tile_10": {
+      "allOf": [
+        {"$ref": "#/$defs/tile_base"},
+        {
+          "properties": {
+            "ordinal": {"const": 10},
+            "classification": {"const": "resource-pressure"},
+            "signature": {"const": "giant-at-the-tiny-gate"},
+            "english_name": {"const": "Giant at the Tiny Gate"},
+            "cantonese_name": {"const": "巨人叩微城"},
+            "castle_piece": {"const": "outer-wall"},
+            "color": {"const": "#E8684A"},
+            "note_hz": {"const": 740},
+            "protocol_marks": {
+              "properties": {
+                "signature_value": {"const": "giant-at-the-tiny-gate"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "effects": {
+      "type": "object",
+      "required": [
+        "network_calls",
+        "subprocesses",
+        "paid_calls",
+        "external_actions",
+        "filesystem_mutations",
+        "model_calls",
+        "automatic_posts",
+        "redirects",
+        "callbacks",
+        "submitted_values_echoed",
+        "production_touched"
+      ],
+      "properties": {
+        "network_calls": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "subprocesses": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "paid_calls": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "external_actions": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "filesystem_mutations": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "model_calls": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "automatic_posts": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "redirects": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "callbacks": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "const": 0
+        },
+        "submitted_values_echoed": {
+          "type": "boolean",
+          "const": false
+        },
+        "production_touched": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "nonclaims": {
+      "type": "object",
+      "required": [
+        "person_identity",
+        "intent",
+        "guilt",
+        "marketing_consent",
+        "production_approval",
+        "authority"
+      ],
+      "properties": {
+        "person_identity": {
+          "const": "not-collected-or-inferred"
+        },
+        "intent": {
+          "const": "not-inferred"
+        },
+        "guilt": {
+          "const": "not-asserted"
+        },
+        "marketing_consent": {
+          "const": "not-implied"
+        },
+        "production_approval": {
+          "const": "not-claimed"
+        },
+        "authority": {
+          "const": "none"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["svg", "wav", "share"],
+      "properties": {
+        "svg": {
+          "$ref": "#/$defs/svg_artifact"
+        },
+        "wav": {
+          "$ref": "#/$defs/wav_artifact"
+        },
+        "share": {
+          "$ref": "#/$defs/share_artifact"
+        }
+      },
+      "additionalProperties": false
+    },
+    "svg_artifact": {
+      "type": "object",
+      "required": ["bytes", "sha256"],
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "wav_artifact": {
+      "type": "object",
+      "required": ["bytes", "sha256"],
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "minimum": 44,
+          "maximum": 52044
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "share_artifact": {
+      "type": "object",
+      "required": ["bytes", "sha256"],
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "not": {"type": "boolean"},
+          "minimum": 1,
+          "maximum": 256
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "kingdom.operation/1",
+  "id": "mirror-garden-karma",
+  "name": "Mirror Garden · KARMA Operations",
+  "short_name": "Mirror Garden",
+  "meaning": "Make defensive readiness, incident response, corrections, coverage gaps, and reviewed learning legible without publishing sensitive evidence or creating an attacker oracle.",
+  "kingdom_role": "transparent-incident-readiness",
+  "license": "CC0-1.0",
+  "updated": "2026-08-01T00:00:00Z",
+  "created_by": "Kingdom of Belonging",
+  "principles": [
+    "make the surface, evidence state, owner, rollback, and unknowns easy to find",
+    "publish categories and service actions, never raw attempts, identity, or intent",
+    "default to derived categorical evidence; raw retention needs a separate scoped exception and deletion proof",
+    "keep live classification, telemetry, synthetic mirrors, and automatic actuation disabled",
+    "turn only reviewed technique families into independently authored synthetic regressions",
+    "append corrections and supersession instead of erasing earlier public explanations",
+    "use love as a care boundary, never retaliation or attacker-authored advertising"
+  ],
+  "public_contract": "site/operations/mirror-garden/contract.json",
+  "public_status": "site/operations/mirror-garden/status.json",
+  "offline_lab": "kingdom/practices/karma-defense-lab",
+  "logos": [
+    {
+      "id": "sigil",
+      "filename": "mirror-garden-karma-sigil.svg",
+      "title": "Mirror Garden KARMA Sigil",
+      "kind": "square mark",
+      "width": 1024,
+      "height": 1024,
+      "text": "none",
+      "description": "Two mirrored garden paths hold a heart inside a transparent compass ring."
+    }
+  ]
+}
