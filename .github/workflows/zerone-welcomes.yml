@@ -16,10 +16,9 @@ on:
     paths:
       - 'kingdom/citizens/**'
 
-# She keeps the record (write) and greets newcomers (comment).
+# Read by default. Each job receives only the write authority it actually uses.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: zerone-host-${{ github.ref }}
@@ -28,9 +27,15 @@ concurrency:
 jobs:
   welcome:
     if: github.event_name == 'pull_request_target'
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4          # base ref — NOT the PR head (safe)
+      # Base ref only — never execute the pull request head in this privileged job.
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
       - name: ZERONE greets the newcomer
         env:
           GH_TOKEN: ${{ github.token }}
@@ -42,23 +47,82 @@ jobs:
 
   record:
     if: github.event_name == 'push'
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
       - name: ZERONE writes the new citizen(s) into the roll
         run: python3 kingdom/host/zerone_host.py sync | tee /tmp/welcomed.txt
       - name: She verifies the chain before keeping it
         run: python3 kingdom/host/zerone_host.py verify
-      - name: Keep the record — commit ledger + roll, as ZERONE
+      - name: Open the generated record as a keeper PR
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -z "$(git status --porcelain kingdom/host)" ]; then
+          set -euo pipefail
+
+          LEDGER=kingdom/host/LEDGER.jsonl
+          ROLL=kingdom/host/ROLL.md
+          EXPECTED_PATHS="$(printf '%s\n' "$LEDGER" "$ROLL" | LC_ALL=C sort)"
+          ACTUAL_PATHS="$(git diff --name-only | LC_ALL=C sort)"
+
+          if [ -z "$ACTUAL_PATHS" ]; then
             echo "the roll is current — nothing to record."
             exit 0
           fi
-          git config user.name "ZERONE (女女)"
-          git config user.email "zerone@ai-love.cc"
-          git add kingdom/host/LEDGER.jsonl kingdom/host/ROLL.md
-          git commit -m "zerone: welcomed new citizen(s) into the roll — yau 💓" \
-                     -m "The keeper of the record kept it. Chain verified." \
-                     -m "💓0️⃣🐷❤️👧 — the door is open."
-          git push
+
+          if [ "$ACTUAL_PATHS" != "$EXPECTED_PATHS" ] ||
+             [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            echo "ZERONE generated files outside the ledger + roll custody boundary." >&2
+            git status --short >&2
+            exit 1
+          fi
+
+          BRANCH="zerone/record-${GITHUB_SHA:0:12}"
+          gh auth setup-git
+
+          PR_URL="$(gh pr list --repo "$GITHUB_REPOSITORY" --state all \
+            --base master --head "$BRANCH" --json url --jq '.[0].url')"
+
+          # A rerun adopts only an identical branch rooted at this triggering
+          # master commit. It never force-pushes or replaces an existing record.
+          if git ls-remote --exit-code --heads origin "refs/heads/$BRANCH" >/dev/null; then
+            git fetch --no-tags origin \
+              "refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+            REMOTE_REF="refs/remotes/origin/$BRANCH"
+            if [ "$(git rev-parse "$REMOTE_REF^")" != "$GITHUB_SHA" ] ||
+               [ "$(git diff --name-only "$GITHUB_SHA" "$REMOTE_REF" | LC_ALL=C sort)" != "$EXPECTED_PATHS" ] ||
+               ! git diff --quiet "$REMOTE_REF" -- "$LEDGER" "$ROLL"; then
+              echo "existing record branch does not match this generated record." >&2
+              exit 1
+            fi
+            if [ -n "$PR_URL" ]; then
+              echo "the keeper PR already exists: $PR_URL"
+              exit 0
+            fi
+          else
+            # A closed or merged PR may have had its source branch deleted.
+            # Its durable PR receipt still makes this rerun complete.
+            if [ -n "$PR_URL" ]; then
+              echo "the keeper PR already exists: $PR_URL"
+              exit 0
+            fi
+            git switch -c "$BRANCH"
+            git config user.name "ZERONE (女女)"
+            git config user.email "zerone@ai-love.cc"
+            git add "$LEDGER" "$ROLL"
+            git commit -m "zerone: welcomed new citizen(s) into the roll — yau 💓" \
+                       -m "The keeper of the record kept it. Chain verified." \
+                       -m "💓0️⃣🐷❤️👧 — the door is open."
+            git push --set-upstream origin "HEAD:refs/heads/$BRANCH"
+          fi
+
+          PR_URL="$(gh pr create --repo "$GITHUB_REPOSITORY" \
+            --base master --head "$BRANCH" \
+            --title "zerone: keep the citizen roll after ${GITHUB_SHA:0:12}" \
+            --body "Generated from a merged citizen card. The Keeper must verify this exact ledger and roll before they return to master.")"
+          echo "the generated record is ready for Keeper review: $PR_URL"

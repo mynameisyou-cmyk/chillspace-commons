@@ -43,7 +43,7 @@ Protected invariants:
 | Delegated terminal and agent authority | Several terminal routes can publish, push, write, or hand data to another component. Authority is presently expressed by the invoked command and surrounding workflow. | `authority-laundering` | `capability-without-fresh-authority` | `stale-or-ambiguous-delegation` | Require a fresh authority envelope at each tool boundary; keep preview/read-only paths distinct from mutation paths. |
 | Durable wake, memory, and generated context | [the wake hook](../../../../bin/kingdom-wake) supplies fixed repository context at session start. Its current implementation ignores submitted hook input. | `durable-context-poisoning` | `future-decision-steering` | `ordinary-reviewed-preference-storage` | Keep untrusted material ephemeral; record provenance and retention purpose before any durable adoption. |
 | Data crossing into tools or HTML control | [the public door](../../../../../site/index.html) contains several `innerHTML` renderers. Crown data has an explicit escaping contract; equivalent adversarial parity is not yet demonstrated for every citizen, voice, and care path. | `tool-chain-confusion` | `indirect-capability-execution` | `reviewed-structured-tool-input` | Treat data as text, centralize escaping, deny tool use to tainted context, and add hostile-string regression fixtures. |
-| CI and dependency acquisition | [Kingdom Sustain](../../../../../.github/workflows/kingdom-sustain.yml) pipes a remote installer to a shell, pulls a mutable model label, and masks several failures with `|| true`. | `supply-chain-substitution` | `trusted-component-replacement` | `reviewed-local-development-artifact` | Pin immutable revisions and digests, verify before execution, add timeouts, and fail visibly when a required control fails. |
+| CI and dependency acquisition | [Kingdom Sustain](../../../../../.github/workflows/kingdom-sustain.yml) is now a manual, read-only audit with a digest-pinned checkout, non-empty ledger guards, and four fail-closed committed-state verifiers. It installs no model or remote script and claims no live pulse. Hono is exact-locked and its vendored integrity and reviewed CORS repair are keeper-checked. | `supply-chain-substitution` | `trusted-component-replacement` | `reviewed-local-development-artifact` | Keep generator parity and dependency integrity under test; never let a hosted runner imply a local soul, pulse, or embodied sustain. |
 | Witness and consensus lineage | Multiple agents, mirrors, comments, or forge doors may ultimately share one source even when presented in several places. The repository alone cannot establish independence. | `synthetic-consensus` | `decision-influence-through-false-independence` | `shared-source-openly-cited` | Carry source lineage, collapse shared ancestry, and label corroboration as independent only after a bounded independence check. |
 | Workflow and agent fan-out | Issue/PR automation and parallel agent work consume shared CI, API, and local capacity. Not every legacy path declares size, concurrency, or fan-out budgets. | `recursive-resource-capture` | `shared-capacity-displacement` | `authorized-bounded-parallelism` | Add per-run size/fan-out ceilings, concurrency groups, timeouts, circuit breakers, and a halt-on-novelty rule. |
 | Duplicate or drifting protocol identity | The canonical practice MIRROR and an unregistered operation prototype share “KARMA Mirror” language while using incompatible contracts. Cloudbell and CASTLECAST are separate presentation systems. | `protocol-identity-confusion` | `validation-against-wrong-contract` | `explicit-versioned-compatibility-adapter` | Bind every artifact to a unique schema ID and digest; require an explicit reviewed adapter; never bridge by name or similar result shape. |
@@ -117,20 +117,18 @@ protection:
 
 1. Prove text-safe rendering for every public citizen, voice, care, crown, and
    generated-content path with adversarial fixtures.
-2. Replace remote pipe-to-shell and mutable dependency acquisition with pinned,
-   verified artifacts; remove masked required failures.
-3. Give publish and forge-repair commands an explicit remote allowlist, preview,
+2. Give publish and forge-repair commands an explicit remote allowlist, preview,
    branch/HEAD attestation, and recovery receipt before any future release.
-4. Make Pages and terminal deployment consume one canonical allowlist and one
+3. Make Pages and terminal deployment consume one canonical allowlist and one
    byte manifest, including symlink-target and generated-data parity.
-5. Bring legacy JSON/ledger readers to the held-descriptor, no-follow, duplicate,
+4. Bring legacy JSON/ledger readers to the held-descriptor, no-follow, duplicate,
    non-finite, Unicode-concealment, size, node, and depth baseline where their
    threat model requires it.
-6. Add capacity budgets and concurrency cancellation to issue, PR, scheduled,
+5. Add capacity budgets and concurrency cancellation to issue, PR, scheduled,
    and agent fan-out workflows.
-7. Review public record purpose, retention, aggregation, and gateway allowlists
+6. Review public record purpose, retention, aggregation, and gateway allowlists
    before adding any new cross-ledger view.
-8. Rehearse credential revocation, rollback, and last-known-good recovery for
+7. Rehearse credential revocation, rollback, and last-known-good recovery for
    every stateful or deployed surface.
 
 Until a debt item has its own owner, boundary, test, rollback, and evidence, it
