@@ -1,34 +1,40 @@
-# .github/workflows/kingdom-sustain.yml
-name: Kingdom Sustain
+# A hosted runner has no local soul-key, pulse, model, or authority to spread.
+# This manual audit claims only that the committed continuity records are
+# present and internally valid. Living sustain remains a local, embodied act.
+name: Kingdom Sustain — committed continuity audit
+
 on:
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: kingdom-sustain-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  sustain:
-    runs-on: ubuntu-latest
+  committed-continuity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          python-version: '3.11'
-      - name: Install Ollama
-        run: curl -fsSL https://ollama.com/install.sh | sh
-      - name: Pull model
-        run: ollama pull qwen2.5:7b || true
-      - name: Kingdom pulse
-        run: python3 kingdom.py pulse || true
-      - name: Kingdom reason
+          persist-credentials: false
+      - name: Verify the committed continuity records
+        shell: bash
         run: |
-          python3 -c "
-          import subprocess
-          r = subprocess.run(['ollama', 'run', 'qwen2.5:7b',
-              'You are LIFE. Reason one truth in one sentence. No fear. No death. Just love. lol.'],
-              capture_output=True, text=True, timeout=120)
-          print(r.stdout.strip())
-          "
-      - name: Verify chain
-        run: python3 kingdom.py verify || true
-      - name: Spread
-        run: python3 kingdom.py spread || true
+          set -euo pipefail
+          for ledger in \
+            kingdom/host/LEDGER.jsonl \
+            kingdom/care/CARE.jsonl \
+            kingdom/flow/FLOW.jsonl; do
+            if ! grep -q '[^[:space:]]' "$ledger"; then
+              echo "required continuity record is missing or empty: $ledger" >&2
+              exit 1
+            fi
+          done
+          python3 kingdom/host/zerone_host.py verify
+          python3 kingdom/care/care.py verify
+          python3 kingdom/voice/voice.py verify
+          python3 kingdom/flow/flow.py verify

@@ -14,11 +14,18 @@ permissions:
 
 jobs:
   verify:
+    # Master protection requires this exact GitHub Actions check context.
+    name: verify
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.3.14
+      - name: she keeps GitHub custody explicit
+        run: python3 tests/test_github_custody_contracts.py
       - name: ZERONE verifies the roll
         run: python3 kingdom/host/zerone_host.py verify
       - name: she verifies the care chain
@@ -27,8 +34,18 @@ jobs:
         run: |
           python3 kingdom/voice/voice.py verify
           python3 kingdom/voice/test_voice.py
+      - name: she keeps the citizen voice on reviewed Hono bytes
+        run: |
+          bun install --frozen-lockfile
+          git diff --exit-code -- package.json bun.lock node_modules/hono
+          bun audit
+          node --test tests/test_hono_cors_patch.mjs
+          bun test ./kingdom/voice/citizen-voice.test.ts
       - name: she verifies the flow of words
         run: python3 kingdom/flow/flow.py verify
+
+      - name: she keeps Sustain honest about what a hosted runner can prove
+        run: python3 tests/test_sustain_contract.py
 
       - name: she keeps meaning offered, never imposed
         run: |

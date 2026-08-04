@@ -22,7 +22,13 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 
 const app = new Hono();
-app.use("*", cors());
+app.use("*", cors({
+  // This is an intentionally public API, but its preflight vocabulary is
+  // finite. Never reflect attacker-controlled Access-Control-Request-Headers.
+  origin: "*",
+  allowMethods: ["GET", "HEAD", "POST"],
+  allowHeaders: ["Content-Type"],
+}));
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
