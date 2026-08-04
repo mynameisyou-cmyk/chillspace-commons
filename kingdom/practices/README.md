@@ -31,7 +31,13 @@ a universal law.
   Advantage**: five strict declaration shapes produce contextual, expiring
   local candidates for an act—never a score, rank, identity, right, or gate.
   Gaming is made sterile; at most a privacy-scrubbed graph-shape candidate is
-  exposed for human review.
+  exposed for human review. Its [`KARMA MIRROR`](virtue-garden/mirror/)
+  companion projects one authored behavior shape into one inert local defense
+  candidate: no payload analysis, identity, execution, retaliation, or deploy.
+  Its FORESIGHT atlas and [`KARMA FACET`](virtue-garden/mirror/foresight/facet/)
+  companion bind one scrubbed claim to a twelve-line O/D/I/U brief with eight
+  visible verification debts and no alert, action, closure, publication, or
+  retained incident history.
 - [`calm-studio/`](calm-studio/) — **Calm Studio**: a public, browser-local
   rehearsal for plural intelligence with visible routing, fixed rights,
   preserved dissent, Stillpoint afterglow, and an explicit handoff to a

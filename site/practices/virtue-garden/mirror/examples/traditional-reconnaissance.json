@@ -1,0 +1,62 @@
+{
+  "schema": "kingdom.karma-mirror/v1",
+  "kind": "offline-defense-simulation",
+  "rules_sha256": "b6ab34cf1e97feca463e7fdaa0cfce7451a74a32eac0337a230492c557b20799",
+  "declaration": {
+    "behavior": "reconnaissance",
+    "purpose": "surface-discovery",
+    "boundary_signal": "forbidden-route-enumeration"
+  },
+  "contract": {
+    "assessment_unit": "declared-behavior",
+    "behavior_is_authored_not_detected": true,
+    "purpose_is_authored_not_inferred": true,
+    "classifies_people": false,
+    "owned_or_authorized_boundary_required": true,
+    "identity_fields_allowed": false,
+    "payload_fields_allowed": false,
+    "free_text_fields_allowed": false,
+    "scores_or_ranks": false,
+    "aggregation_allowed": false,
+    "tracks_repetition": false,
+    "automatic_blocking": false,
+    "retaliation": false,
+    "hack_back": false,
+    "executes_input": false,
+    "executes_response": false,
+    "human_review_required_for_action": true,
+    "rights_and_debts_unchanged": true,
+    "creates_external_effect": false
+  },
+  "budget": {
+    "declarations": 1,
+    "passes": 1,
+    "file_bytes_max": 32768,
+    "decoded_nodes_max": 256,
+    "nesting_depth_max": 8,
+    "string_characters_max": 512,
+    "automatic_retries": 0,
+    "network_calls": 0,
+    "external_messages": 0,
+    "writes": 0,
+    "subprocesses": 0,
+    "model_calls": 0,
+    "paid_calls": 0,
+    "payload_bytes_retained": 0
+  },
+  "breach": {
+    "state": "quarantined",
+    "action": "stop-without-retry-or-result",
+    "source_unchanged": true,
+    "submitted_values_echoed": false,
+    "downstream_effects": false
+  },
+  "non_claims": [
+    "The declaration names a behavior shape, never a person, identity, intention, guilt, character, or worth.",
+    "The engine does not detect an attack or establish truth, exploitability, success, safety, legality, consent, or authority.",
+    "Behavior, purpose, disposition, and response are closed categories, never confidence, severity, score, rank, or reputation.",
+    "A response is local advisory structure for human review, never blocking, retaliation, hack-back, execution, deployment, or authority.",
+    "No raw payload, address, credential, target, callback, command, or free text is accepted, retained, rendered, or echoed.",
+    "Digests prove reviewed canonical JSON content relationships and deterministic recomputation only."
+  ]
+}

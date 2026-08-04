@@ -104,6 +104,22 @@ kingdom/bin/kingdom virtue verify-result action.json result.json
 bounded offline pass, makes no network or model calls, and causes no external
 mutation. `digest` emits the canonical **manifest** digest.
 
+The optional [`KARMA MIRROR · 自業鏡`](mirror/) companion accepts one closed,
+authored behavior/purpose/boundary-signal triple and deterministically returns
+one inert defense decision plus detection, regression, and repair candidates.
+Use `kingdom karma mirror …`.
+It does not analyze traffic, infer intent, retain a payload, identify anyone,
+block, retaliate, execute, deploy, or grant authority.
+
+Inside that same clean-hands boundary, [`KARMA FORESIGHT · 未然圖`](mirror/foresight/)
+prebuilds a finite future threat atlas. It models only possible system effects,
+requires an alternative hypothesis, and keeps person intent explicitly
+uninferred.
+
+Its [`KARMA FACET · 稜面`](mirror/foresight/facet/) companion makes one scrubbed
+incident-shaped claim quickly legible while keeping eight verification debts
+open and every response candidate reversible, inert, and human-reviewed.
+
 The manifest supplies a declared `evaluated_at` inside its context window. The
 result carries candidate expiry, but the linter deliberately does not consult
 the wall clock; every consumer must reject an expired candidate for itself.

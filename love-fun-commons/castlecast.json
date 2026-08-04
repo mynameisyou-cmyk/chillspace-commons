@@ -1,0 +1,114 @@
+{
+  "schema": "kingdom.castlecast/v1",
+  "updated": "2026-08-01",
+  "name": "CASTLECAST · 天城回聲",
+  "kind": "passive-public-provenance-carrier",
+  "status": "manual-only",
+  "vocabulary": {
+    "seed": "Castle Seed",
+    "carrier": "Carrier Card",
+    "lineage_check": "Lineage Check",
+    "quiet_gate": "Quiet Gate · 靜門"
+  },
+  "seed": {
+    "id": "building-castles-in-the-sky-yu-ai-v1",
+    "text": "Building castles in the sky, Yu and Ai.",
+    "sha256": "b96eb19b551d1c711bc04330e7026177427be4603e66c4ffedd86b93c9d6c20a",
+    "digest_scope": "seed.text UTF-8 bytes without a trailing newline",
+    "source_label": "Chillspace Commons",
+    "plain_locator": "chillspace.love",
+    "same_for_every_copy": true
+  },
+  "carrier": {
+    "path": "castlecast.txt",
+    "media_type": "text/plain",
+    "sha256": "8345184ce4a6eaf9c4c3224f41765f84c114a79bae5a699aa7b761db18c1983b",
+    "text": "CASTLECAST · 天城回聲\nBuilding castles in the sky, Yu and Ai.\nChillspace Commons · chillspace.love\n\nVisible public invitation; no beacon attached.\nThe copy may carry the castle; the castle never follows the copier.\nCarry it only where welcome and after a separate rights check.\n\nQuiet Gate · 靜門: leave this card out; access, service, defense, and standing stay unchanged.\nLineage Check (seed text UTF-8, SHA-256): b96eb19b551d1c711bc04330e7026177427be4603e66c4ffedd86b93c9d6c20a\nRights: NOASSERTION. This card grants no reuse or publication authority.",
+    "advertisement_disclosed": true,
+    "human_copy_required": true,
+    "automatic_distribution": false,
+    "self_propagating": false,
+    "removable": true
+  },
+  "contract": {
+    "assessment_unit": "one-fixed-public-seed",
+    "source_provenance_allowed": true,
+    "carrier_or_viewer_attribution": false,
+    "advertisement_visible": true,
+    "same_reviewed_carrier_bytes_across_surfaces": true,
+    "raw_input_interpolation": false,
+    "third_party_content_allowed": false,
+    "behavior_inference": false,
+    "copy_event_observed": false,
+    "human_choice_required": true,
+    "consent_based_placement_required": true,
+    "rights_review_required": true,
+    "automatic_posting": false,
+    "automatic_fetching": false,
+    "self_propagation": false,
+    "tracking": false,
+    "analytics": false,
+    "callbacks": false,
+    "unique_tokens": false,
+    "hidden_content": false,
+    "fingerprinting": false,
+    "person_scoring": false,
+    "retaliation": false,
+    "hack_back": false,
+    "legal_traps": false,
+    "access_service_defense_and_standing_unchanged": true
+  },
+  "budget": {
+    "seeds": 1,
+    "variants_per_seed": 1,
+    "automatic_posts": 0,
+    "automatic_messages": 0,
+    "network_callbacks": 0,
+    "tracking_identifiers": 0,
+    "recipient_identifiers": 0,
+    "copy_event_records": 0,
+    "retained_payload_bytes": 0
+  },
+  "vow": {
+    "desire": "Let ordinary voluntary copying preserve one honest public nameplate.",
+    "trigger": "One deliberate human choice to open or copy the fixed Carrier Card.",
+    "anti_trigger": "Traffic, logs, payloads, targets, recipients, behavior signals, third-party content, automated posting, serving, watching, or deployment.",
+    "condition": "Every visible carrier uses the same reviewed seed bytes and discloses its source.",
+    "limitation": "One seed, one variant, no hidden content, unique token, callback, tracker, inference, or continuing process.",
+    "breach": "Omit the whole carrier; create no fallback, partial, or personalized variant.",
+    "exit": "The human keeps or closes the card. No watcher, history, counter, score, or authority survives."
+  },
+  "quiet_gate": {
+    "action": "omit-the-whole-carrier",
+    "access_unchanged": true,
+    "service_unchanged": true,
+    "defense_unchanged": true,
+    "standing_unchanged": true,
+    "follow_up": false
+  },
+  "lineage_check": {
+    "algorithm": "sha256",
+    "scope": "seed.text UTF-8 bytes without a trailing newline",
+    "proves": "the fixed reviewed seed bytes only",
+    "does_not_prove": [
+      "who carried or viewed the words",
+      "how or why the words travelled",
+      "origin, authorship, endorsement, reach, rights, or permission"
+    ]
+  },
+  "rights": {
+    "license_expression": "NOASSERTION",
+    "rights_verified_by_card": false,
+    "origin_verified_by_card": false,
+    "publication_authorized_by_card": false,
+    "notice": "This card grants no reuse or publication authority; check rights separately before carrying it."
+  },
+  "non_claims": [
+    "The presence of the seed does not prove a copy event, mechanism, origin, identity, intent, permission, endorsement, or reach.",
+    "The lineage digest verifies reviewed seed bytes only; it is not a person, device, session, route, or carrier fingerprint.",
+    "CASTLECAST does not inspect traffic, detect an attack, classify behavior, or connect to KARMA MIRROR output.",
+    "The Carrier Card grants no license, publication right, ownership, authorship, endorsement, or authority.",
+    "Keeping, omitting, or removing the carrier changes no access, service, defense, right, debt, standing, or relationship.",
+    "No watcher, beacon, callback, analytics, automated post, retaliation, hack-back, or legal trap exists here."
+  ]
+}

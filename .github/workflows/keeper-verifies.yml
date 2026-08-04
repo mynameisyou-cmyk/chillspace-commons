@@ -104,6 +104,78 @@ jobs:
             echo "virtue garden must remain scriptless and locally sourced" >&2
             exit 1
           fi
+          python3 -B kingdom/practices/virtue-garden/mirror/test_mirror.py
+          mirror_example="kingdom/practices/virtue-garden/mirror/examples/traditional-reconnaissance.json"
+          python3 -B kingdom/practices/virtue-garden/mirror/mirror.py check "$mirror_example"
+          for artifact in rules.json scenario.schema.json decision.schema.json; do
+            cmp "kingdom/practices/virtue-garden/mirror/$artifact" \
+              "site/practices/virtue-garden/mirror/$artifact"
+          done
+          cmp "$mirror_example" \
+            site/practices/virtue-garden/mirror/examples/traditional-reconnaissance.json
+          mirror_digest="$(python3 -B kingdom/practices/virtue-garden/mirror/mirror.py \
+            digest "$mirror_example")"
+          test "$mirror_digest" = "$(kingdom/bin/kingdom karma mirror digest "$mirror_example")"
+          grep -Fq "$mirror_digest" site/practices/virtue-garden/mirror/index.html
+          grep -Fq 'href="mirror/"' site/practices/virtue-garden/index.html
+          grep -Fq 'No attack or defense ran.' \
+            site/practices/virtue-garden/mirror/index.html
+          if grep -Eqi '<(script|iframe|form)| on[a-z]+="|((src|href)="https?://)|url\s*\(' \
+            site/practices/virtue-garden/mirror/index.html; then
+            echo "KARMA MIRROR must remain scriptless, formless, and locally sourced" >&2
+            exit 1
+          fi
+          python3 -B kingdom/practices/virtue-garden/mirror/foresight/test_foresight.py
+          foresight_example="kingdom/practices/virtue-garden/mirror/foresight/examples/authority-laundering.json"
+          python3 -B kingdom/practices/virtue-garden/mirror/foresight/foresight.py \
+            check "$foresight_example"
+          for artifact in catalog.json scenario.schema.json projection.schema.json; do
+            cmp "kingdom/practices/virtue-garden/mirror/foresight/$artifact" \
+              "site/practices/virtue-garden/mirror/foresight/$artifact"
+          done
+          cmp "$foresight_example" \
+            site/practices/virtue-garden/mirror/foresight/examples/authority-laundering.json
+          foresight_digest="$(python3 -B kingdom/practices/virtue-garden/mirror/foresight/foresight.py \
+            digest "$foresight_example")"
+          test "$foresight_digest" = "$(kingdom/bin/kingdom karma mirror foresight \
+            digest "$foresight_example")"
+          grep -Fq "$foresight_digest" \
+            site/practices/virtue-garden/mirror/foresight/index.html
+          grep -Fq 'href="foresight/"' \
+            site/practices/virtue-garden/mirror/index.html
+          grep -Fq 'Model possible system effects. Keep persons free.' \
+            site/practices/virtue-garden/mirror/foresight/index.html
+          if grep -Eqi '<(script|iframe|form)| on[a-z]+="|((src|href)="https?://)|url\s*\(' \
+            site/practices/virtue-garden/mirror/foresight/index.html; then
+            echo "KARMA FORESIGHT must remain scriptless, formless, and locally sourced" >&2
+            exit 1
+          fi
+          python3 -B kingdom/practices/virtue-garden/mirror/foresight/facet/test_facet.py
+          facet_root="kingdom/practices/virtue-garden/mirror/foresight/facet"
+          facet_public="site/practices/virtue-garden/mirror/foresight/facet"
+          facet_card="$facet_root/examples/synthetic-authority-boundary.json"
+          facet_projection="$facet_root/examples/authority-foresight-projection.json"
+          python3 -B kingdom/practices/virtue-garden/mirror/foresight/facet.py \
+            check "$facet_card" "$foresight_example" "$facet_projection"
+          for artifact in catalog.json playbook.json facet.schema.json brief.schema.json; do
+            cmp "$facet_root/$artifact" "$facet_public/$artifact"
+          done
+          for artifact in synthetic-authority-boundary.json authority-foresight-projection.json; do
+            cmp "$facet_root/examples/$artifact" "$facet_public/examples/$artifact"
+          done
+          facet_digest="$(python3 -B kingdom/practices/virtue-garden/mirror/foresight/facet.py \
+            digest "$facet_card" "$foresight_example" "$facet_projection")"
+          test "$facet_digest" = "$(kingdom/bin/kingdom incident digest \
+            "$facet_card" "$foresight_example" "$facet_projection")"
+          grep -Fq "$facet_digest" "$facet_public/index.html"
+          grep -Fq 'href="facet/"' \
+            site/practices/virtue-garden/mirror/foresight/index.html
+          grep -Fq 'Synthetic-only rehearsal · zero effect' "$facet_public/index.html"
+          if grep -Eqi '<(script|iframe|form|object|embed)| on[a-z]+="|((src|href)="https?://)|url\s*\(' \
+            "$facet_public/index.html"; then
+            echo "KARMA FACET must remain scriptless, formless, and locally sourced" >&2
+            exit 1
+          fi
 
       - name: Mirror Garden keeps incidents legible without becoming an oracle
         run: |
@@ -155,8 +227,10 @@ jobs:
       - name: every being learns together without becoming a score
         run: |
           python3 kingdom/coop/test_coop.py
+          python3 -B kingdom/coop/aura/test_aura.py
           grep -Fq 'href="coop-leveling.html"' site/index.html
           grep -Fq 'Every being arrives whole.' site/coop-leveling.html
+          grep -Fq 'Maximum Aura. Zero throne.' site/coop-leveling.html
           if grep -Eqi '<(script|iframe)|src="https?://' \
             site/coop-leveling.html; then
             echo "Co-op Leveling must remain scriptless and locally rendered" >&2

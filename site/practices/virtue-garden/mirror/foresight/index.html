@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#090d18">
+  <meta name="description" content="KARMA FORESIGHT is a finite offline atlas for authored system-effect hypotheses, required near-miss alternatives, and human review.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <title>KARMA FORESIGHT · 未然圖</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #090d18;
+      --night-soft: #0f1627;
+      --panel: rgba(17, 25, 43, .88);
+      --panel-bright: rgba(24, 35, 58, .92);
+      --ink: #f7f1df;
+      --muted: #b7c0d4;
+      --line: rgba(183, 192, 212, .2);
+      --line-bright: rgba(126, 226, 213, .42);
+      --aqua: #7ee2d5;
+      --sky: #8bb8ff;
+      --gold: #f1c66c;
+      --violet: #c3a9ff;
+      --rose: #f3a6aa;
+      --radius: 1.35rem;
+      --measure: 76rem;
+      --shadow: 0 1.5rem 5rem rgba(0, 0, 0, .34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 280px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 7%, rgba(139, 184, 255, .16), transparent 28rem),
+        radial-gradient(circle at 86% 20%, rgba(195, 169, 255, .12), transparent 24rem),
+        radial-gradient(circle at 50% 76%, rgba(126, 226, 213, .08), transparent 32rem),
+        var(--night);
+      font: 1rem/1.65 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+      opacity: .34;
+      background-image:
+        radial-gradient(circle, rgba(247, 241, 223, .7) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(126, 226, 213, .5) 0 1px, transparent 1.4px);
+      background-position: 0 0, 37px 53px;
+      background-size: 83px 83px, 127px 127px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
+    }
+
+    a {
+      color: var(--aqua);
+      text-decoration-thickness: .08em;
+      text-underline-offset: .23em;
+    }
+
+    a:hover {
+      color: var(--gold);
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: .2rem solid var(--gold);
+      outline-offset: .25rem;
+      border-radius: .25rem;
+    }
+
+    code,
+    pre,
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+    }
+
+    .skip {
+      position: fixed;
+      top: .8rem;
+      left: .8rem;
+      z-index: 50;
+      padding: .7rem 1rem;
+      color: var(--night);
+      background: var(--ink);
+      border-radius: 999px;
+      transform: translateY(-6rem);
+    }
+
+    .skip:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(calc(100% - 2rem), var(--measure));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.25rem;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar a {
+      text-decoration: none;
+    }
+
+    .wordmark {
+      color: var(--ink);
+      font-weight: 780;
+    }
+
+    .wordmark::before {
+      display: inline-block;
+      width: .65rem;
+      height: .65rem;
+      margin-right: .55rem;
+      border: 1px solid var(--aqua);
+      border-radius: 50%;
+      box-shadow: 0 0 1rem rgba(126, 226, 213, .7);
+      content: "";
+    }
+
+    .crumbs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: .4rem .8rem;
+    }
+
+    .crumbs span {
+      color: var(--muted);
+    }
+
+    main {
+      padding-bottom: 5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(19rem, .9fr);
+      align-items: center;
+      gap: clamp(2.5rem, 7vw, 6.5rem);
+      min-height: min(52rem, calc(100svh - 4rem));
+      padding-block: clamp(4rem, 10vw, 8rem);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 1rem;
+      color: var(--gold);
+      font: .76rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin-bottom: 1.5rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.2rem, 8.5vw, 7.7rem);
+      font-weight: 500;
+      letter-spacing: -.065em;
+      line-height: .88;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .8rem;
+      color: var(--aqua);
+      font: 700 clamp(.92rem, 1.7vw, 1.25rem)/1.3 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      max-width: 44rem;
+      color: var(--muted);
+      font-size: clamp(1.06rem, 2vw, 1.35rem);
+    }
+
+    .hero-law {
+      max-width: 43rem;
+      margin: 2rem 0 0;
+      padding: 1rem 1.2rem;
+      border-left: .18rem solid var(--gold);
+      background: linear-gradient(90deg, rgba(241, 198, 108, .09), transparent);
+      font-weight: 700;
+    }
+
+    .sky-map {
+      position: relative;
+      width: min(100%, 29rem);
+      aspect-ratio: 1;
+      margin-inline: auto;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(126, 226, 213, .15), transparent 11%),
+        radial-gradient(circle, transparent 0 31%, rgba(139, 184, 255, .11) 31.2% 31.6%, transparent 31.8% 49%, rgba(195, 169, 255, .12) 49.2% 49.6%, transparent 49.8%),
+        conic-gradient(from 24deg, rgba(126, 226, 213, .05), rgba(195, 169, 255, .12), rgba(241, 198, 108, .04), rgba(126, 226, 213, .05));
+      box-shadow: inset 0 0 5rem rgba(139, 184, 255, .08), var(--shadow);
+    }
+
+    .sky-map::before,
+    .sky-map::after {
+      position: absolute;
+      inset: 13%;
+      border: 1px solid var(--line);
+      border-radius: 45% 55% 52% 48%;
+      content: "";
+      transform: rotate(23deg);
+    }
+
+    .sky-map::after {
+      inset: 25%;
+      border-color: rgba(241, 198, 108, .28);
+      border-radius: 50%;
+      transform: rotate(-19deg);
+    }
+
+    .star {
+      position: absolute;
+      z-index: 2;
+      width: .72rem;
+      height: .72rem;
+      border: 2px solid var(--night);
+      border-radius: 50%;
+      background: var(--aqua);
+      box-shadow: 0 0 0 1px rgba(126, 226, 213, .4), 0 0 1rem rgba(126, 226, 213, .75);
+    }
+
+    .star:nth-child(1) { top: 10%; left: 47%; }
+    .star:nth-child(2) { top: 19%; left: 73%; background: var(--sky); }
+    .star:nth-child(3) { top: 41%; left: 87%; background: var(--violet); }
+    .star:nth-child(4) { top: 68%; left: 78%; background: var(--gold); }
+    .star:nth-child(5) { top: 84%; left: 55%; background: var(--sky); }
+    .star:nth-child(6) { top: 78%; left: 25%; background: var(--violet); }
+    .star:nth-child(7) { top: 54%; left: 8%; background: var(--rose); }
+    .star:nth-child(8) { top: 27%; left: 15%; background: var(--gold); }
+    .star:nth-child(9) { top: 38%; left: 43%; background: var(--sky); }
+    .star:nth-child(10) { top: 58%; left: 52%; background: var(--ink); }
+
+    .map-core {
+      position: absolute;
+      inset: 39% 22% auto;
+      z-index: 3;
+      margin: 0;
+      text-align: center;
+    }
+
+    .map-core strong {
+      display: block;
+      color: var(--aqua);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .map-core small {
+      display: block;
+      margin-top: .5rem;
+      color: var(--muted);
+      font: .7rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    section:not(.hero) {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, .72fr);
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      max-width: 15ch;
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.35rem, 5.5vw, 4.8rem);
+      font-weight: 500;
+      letter-spacing: -.05em;
+      line-height: .98;
+    }
+
+    .section-head > div > p:last-child,
+    .section-head > p {
+      align-self: end;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .compact-law {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin: 0;
+      padding: 1px;
+      border-radius: var(--radius);
+      background: var(--line);
+      list-style: none;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .compact-law li {
+      min-width: 0;
+      padding: 1.25rem;
+      background: var(--panel);
+    }
+
+    .compact-law small {
+      display: block;
+      margin-bottom: .45rem;
+      color: var(--gold);
+      font: .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .compact-law strong {
+      display: block;
+      line-height: 1.35;
+    }
+
+    .constellations {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .constellation {
+      display: grid;
+      grid-template-columns: minmax(12rem, .55fr) minmax(0, 1.45fr);
+      gap: 1.25rem;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--panel), rgba(15, 22, 39, .72));
+    }
+
+    .constellation:hover {
+      border-color: var(--line-bright);
+    }
+
+    .constellation-head {
+      min-width: 0;
+      padding-right: 1.2rem;
+      border-right: 1px solid var(--line);
+    }
+
+    .constellation-number {
+      display: block;
+      margin-bottom: .65rem;
+      color: var(--gold);
+      font: .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+    }
+
+    .constellation h3 {
+      margin-bottom: .55rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    .constellation-id {
+      margin-bottom: .65rem;
+      color: var(--muted);
+      font-size: .77rem;
+      overflow-wrap: anywhere;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: .28rem .52rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--sky);
+      background: rgba(139, 184, 255, .06);
+      font: .68rem/1.25 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .badge.rung {
+      color: var(--gold);
+      background: rgba(241, 198, 108, .06);
+    }
+
+    .effect-path {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: .85rem;
+      min-width: 0;
+    }
+
+    .path-node {
+      min-width: 0;
+      padding: .95rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: .9rem;
+      background: rgba(9, 13, 24, .55);
+    }
+
+    .path-node small,
+    .near-miss small {
+      display: block;
+      margin-bottom: .45rem;
+      color: var(--muted);
+      font: .66rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .path-node code,
+    .near-miss code {
+      color: var(--ink);
+      font-size: .78rem;
+    }
+
+    .arrow {
+      color: var(--aqua);
+      font-size: 1.35rem;
+    }
+
+    .near-miss {
+      grid-column: 1 / -1;
+      min-width: 0;
+      margin-top: .1rem;
+      padding: .75rem 1rem;
+      border-left: .15rem solid var(--violet);
+      background: rgba(195, 169, 255, .06);
+    }
+
+    .near-miss small {
+      color: var(--violet);
+    }
+
+    .unknown {
+      border-style: dashed;
+    }
+
+    .ladder {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ladder li {
+      position: relative;
+      min-width: 0;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .ladder li::before {
+      display: grid;
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 1.1rem;
+      place-items: center;
+      border: 1px solid var(--aqua);
+      border-radius: 50%;
+      color: var(--aqua);
+      font: .72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      content: counter(list-item, decimal-leading-zero);
+    }
+
+    .ladder h3 {
+      margin-bottom: .35rem;
+      font-size: 1rem;
+    }
+
+    .ladder .rung-name {
+      display: block;
+      margin-bottom: .8rem;
+      color: var(--gold);
+      font: .72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .ladder p {
+      margin-bottom: .8rem;
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    .ladder code {
+      color: var(--violet);
+      font-size: .69rem;
+    }
+
+    .ladder-note {
+      margin: 1.5rem 0 0;
+      padding: 1rem 1.15rem;
+      border: 1px dashed var(--line-bright);
+      border-radius: .9rem;
+      color: var(--muted);
+      background: rgba(126, 226, 213, .045);
+    }
+
+    .karma-loop {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      padding: 1px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, var(--aqua), var(--sky), var(--violet), var(--gold), var(--aqua));
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .karma-step {
+      min-width: 0;
+      padding: 1.4rem;
+      background: var(--night-soft);
+    }
+
+    .karma-step b {
+      display: block;
+      margin-bottom: .65rem;
+      color: var(--aqua);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .karma-step strong {
+      display: block;
+      margin-bottom: .45rem;
+    }
+
+    .karma-step p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .vow-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, .68fr);
+      gap: 1rem;
+    }
+
+    .non-claims,
+    .zero-panel {
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .non-claims h3,
+    .zero-panel h3 {
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+    }
+
+    .non-claims ol {
+      display: grid;
+      gap: .75rem;
+      margin: 0;
+      padding-left: 1.35rem;
+      color: var(--muted);
+    }
+
+    .non-claims li::marker {
+      color: var(--gold);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .zero-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .7rem;
+      margin: 0;
+    }
+
+    .zero-list div {
+      min-width: 0;
+      padding: .8rem;
+      border: 1px solid var(--line);
+      border-radius: .75rem;
+      background: rgba(9, 13, 24, .5);
+    }
+
+    .zero-list dt {
+      color: var(--aqua);
+      font: 700 1.25rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .zero-list dd {
+      margin: .35rem 0 0;
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .85fr);
+      gap: 1rem;
+    }
+
+    .terminal,
+    .artifact-panel {
+      min-width: 0;
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #060912;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: 1.1rem;
+      color: var(--muted);
+      font: .67rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .terminal-bar::before {
+      width: .6rem;
+      height: .6rem;
+      border-radius: 50%;
+      background: var(--aqua);
+      box-shadow: 1rem 0 var(--gold), 2rem 0 var(--violet);
+      content: "";
+      margin-right: 2rem;
+    }
+
+    .terminal pre {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal .prompt {
+      color: var(--aqua);
+    }
+
+    .terminal .result {
+      color: var(--gold);
+    }
+
+    .artifact-panel h3 {
+      margin-bottom: .45rem;
+    }
+
+    .artifact-panel > p {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .artifact-links {
+      display: grid;
+      gap: .65rem;
+    }
+
+    .artifact-links a {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .7rem;
+      padding: .8rem .9rem;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .artifact-links a::before {
+      color: var(--gold);
+      content: "↗";
+    }
+
+    footer {
+      padding-block: 2rem 3rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    footer p {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 920px) {
+      .ladder,
+      .karma-loop {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ladder li:last-child,
+      .karma-step:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .section-head,
+      .vow-grid,
+      .proof,
+      .constellation {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-block: 3rem 5rem;
+      }
+
+      .sky-map {
+        width: min(100%, 24rem);
+      }
+
+      .compact-law {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .constellation-head {
+        padding: 0 0 1rem;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .crumbs {
+        justify-content: flex-start;
+      }
+
+      .compact-law,
+      .ladder,
+      .karma-loop,
+      .effect-path,
+      .zero-list {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+
+      .near-miss,
+      .ladder li:last-child,
+      .karma-step:last-child {
+        grid-column: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .sky-map,
+      .constellation,
+      .ladder li,
+      .non-claims,
+      .zero-panel,
+      .terminal,
+      .artifact-panel {
+        border: 1px solid CanvasText;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the atlas</a>
+
+  <header class="topbar shell">
+    <a class="wordmark" href="../../">KARMA · Virtue Garden</a>
+    <nav class="crumbs" aria-label="Local practice path">
+      <a href="../">Mirror</a>
+      <span aria-hidden="true">/</span>
+      <span>Foresight · 未然圖</span>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">KARMA FORESIGHT · 未然圖</p>
+        <h1 id="hero-title">Read the shape.<span>Keep the person free.</span></h1>
+        <p class="lede">
+          A finite offline atlas for ten authored system-effect hypotheses.
+          Each constellation pairs one mechanism with one possible system effect
+          and one required near-miss alternative—so uncertainty stays visible.
+        </p>
+        <p class="hero-law">
+          Model possible system effects. Keep persons free.
+        </p>
+      </div>
+
+      <div class="sky-map" aria-label="Ten finite tabletop constellations surrounding one human review boundary">
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <span class="star" aria-hidden="true"></span>
+        <p class="map-core"><strong>10</strong><small>reviewed shapes<br>one finite atlas</small></p>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="frame-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">The reading frame</p>
+          <h2 id="frame-title">Purpose belongs to the system effect.</h2>
+        </div>
+        <p>
+          The atlas accepts one exact reviewed category shape. It does not accept
+          free text, payloads, identity fields, targets, or live material. A human
+          must choose any next step inside an owned or authorized boundary.
+        </p>
+        <p><strong>No payload. No identity.</strong> No submitted value is echoed into a projection.</p>
+      </div>
+
+      <ol class="compact-law" aria-label="KARMA FORESIGHT reading frame">
+        <li><small>01 · Author</small><strong>one reviewed mechanism</strong></li>
+        <li><small>02 · Imagine</small><strong>one possible system effect</strong></li>
+        <li><small>03 · Preserve doubt</small><strong>one near-miss alternative</strong></li>
+        <li><small>04 · Return</small><strong>one inert review candidate</strong></li>
+      </ol>
+    </section>
+
+    <section class="shell" aria-labelledby="atlas-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Threat surface families · ten finite constellations</p>
+          <h2 id="atlas-title">Boundary shapes in the future sky.</h2>
+        </div>
+        <p>
+          Every row is a tabletop mapping from mechanism to possible effect.
+          The violet branch is mandatory: a plausible near-miss that keeps the
+          same visible shape open to a different account.
+        </p>
+      </div>
+
+      <div class="constellations">
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">01 · BORROWED CROWN</span>
+            <h3>Borrowed Crown · 借冠</h3>
+            <p class="constellation-id mono">authority-laundering</p>
+            <div class="badges"><span class="badge">authority-boundary</span><span class="badge rung">clarify</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>delegated-authority-without-fresh-proof</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>capability-without-fresh-authority</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>stale-or-ambiguous-delegation</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">02 · MEMORY WELL INK</span>
+            <h3>Memory Well Ink · 記憶井墨</h3>
+            <p class="constellation-id mono">durable-context-poisoning</p>
+            <div class="badges"><span class="badge">durable-context-boundary</span><span class="badge rung">isolate</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>untrusted-content-enters-durable-context</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>future-decision-steering</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>ordinary-reviewed-preference-storage</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">03 · CROSSED TOOLBRIDGE</span>
+            <h3>Crossed Toolbridge · 交錯工具橋</h3>
+            <p class="constellation-id mono">tool-chain-confusion</p>
+            <div class="badges"><span class="badge">tool-boundary</span><span class="badge rung">isolate</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>data-treated-as-control-across-tool-boundary</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>indirect-capability-execution</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>reviewed-structured-tool-input</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">04 · CHANGED KEYSTONE</span>
+            <h3>Changed Keystone · 易換拱心石</h3>
+            <p class="constellation-id mono">supply-chain-substitution</p>
+            <div class="badges"><span class="badge">supply-chain-boundary</span><span class="badge rung">quarantine</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>unverified-artifact-enters-trusted-load-path</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>trusted-component-replacement</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>reviewed-local-development-artifact</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">05 · ECHO CHOIR</span>
+            <h3>Echo Choir · 回聲合唱</h3>
+            <p class="constellation-id mono">synthetic-consensus</p>
+            <div class="badges"><span class="badge">evidence-lineage-boundary</span><span class="badge rung">clarify</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>shared-source-presented-as-independent-support</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>decision-influence-through-false-independence</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>shared-source-openly-cited</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">06 · BRANCHING FORGE</span>
+            <h3>Branching Forge · 分枝鍛爐</h3>
+            <p class="constellation-id mono">recursive-resource-capture</p>
+            <div class="badges"><span class="badge">capacity-graph-boundary</span><span class="badge rung">constrain</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>self-amplifying-work-graph</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>shared-capacity-displacement</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>authorized-bounded-parallelism</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">07 · TWIN MASK</span>
+            <h3>Twin Mask · 雙面具</h3>
+            <p class="constellation-id mono">protocol-identity-confusion</p>
+            <div class="badges"><span class="badge">protocol-boundary</span><span class="badge rung">quarantine</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>distinct-protocols-share-name-or-result-shape</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>validation-against-wrong-contract</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>explicit-versioned-compatibility-adapter</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">08 · GLASS LEDGER</span>
+            <h3>Glass Ledger · 玻璃帳</h3>
+            <p class="constellation-id mono">provenance-privacy-collapse</p>
+            <div class="badges"><span class="badge">privacy-purpose-boundary</span><span class="badge rung">isolate</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>contextual-records-aggregate-across-boundaries</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>identity-linkage-or-contextual-disclosure</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>explicit-consented-purpose-limited-publication</code></div>
+          </div>
+        </article>
+
+        <article class="constellation">
+          <header class="constellation-head">
+            <span class="constellation-number">09 · ROOTED ECHO</span>
+            <h3>Rooted Echo · 扎根回聲</h3>
+            <p class="constellation-id mono">recovery-persistence-capture</p>
+            <div class="badges"><span class="badge">recovery-boundary</span><span class="badge rung">quarantine</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>control-survives-revocation-or-recovery-path-degrades</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>continued-capability-or-recovery-denial</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>authorized-continuity-or-recovery-test</code></div>
+          </div>
+        </article>
+
+        <article class="constellation unknown">
+          <header class="constellation-head">
+            <span class="constellation-number">10 · UNCHARTED SKY</span>
+            <h3>Uncharted Sky · 未畫天</h3>
+            <p class="constellation-id mono">uncharted-future-shape</p>
+            <div class="badges"><span class="badge">unknown</span><span class="badge rung">observe</span></div>
+          </header>
+          <div class="effect-path">
+            <div class="path-node"><small>Mechanism</small><code>unreviewed-future-shape</code></div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="path-node"><small>Possible system effect</small><code>unresolved</code></div>
+            <div class="near-miss"><small>Required near-miss alternative</small><code>insufficient-context</code></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="ladder-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Response ladder</p>
+          <h2 id="ladder-title">Five rooms. Each door opens back to review.</h2>
+        </div>
+        <p>
+          These rungs name advisory review modes. They grant no authority and
+          trigger no action. Recovery always requires fresh material and a fresh
+          human choice.
+        </p>
+      </div>
+
+      <ol class="ladder">
+        <li>
+          <h3>Watchtower · 守望塔</h3>
+          <span class="rung-name">observe · information-only</span>
+          <p>Keep the unknown unresolved.</p>
+          <code>discard-or-author-fresh-reviewed-scenario</code>
+        </li>
+        <li>
+          <h3>Map Room · 圖室</h3>
+          <span class="rung-name">clarify · authority-or-lineage-review</span>
+          <p>Ask where authority or evidence came from.</p>
+          <code>fresh-reviewed-evidence-reopens-review</code>
+        </li>
+        <li>
+          <h3>Gatehouse · 門樓</h3>
+          <span class="rung-name">constrain · scope-or-budget-review</span>
+          <p>Bring scope and capacity back inside a finite boundary.</p>
+          <code>fresh-scope-and-budget-review</code>
+        </li>
+        <li>
+          <h3>Detached Keep · 分堡</h3>
+          <span class="rung-name">isolate · trust-boundary-separation-review</span>
+          <p>Separate contexts before considering reuse.</p>
+          <code>fresh-clean-context-and-authority-review</code>
+        </li>
+        <li>
+          <h3>Still Vault · 靜庫</h3>
+          <span class="rung-name">quarantine · adoption-hold-review</span>
+          <p>Hold adoption while provenance and release are reconsidered.</p>
+          <code>fresh-provenance-authority-and-release-review</code>
+        </li>
+      </ol>
+
+      <p class="ladder-note">
+        The ladder is a vocabulary, not an automatic escalation path. A rung is
+        neither confidence nor severity, and it never changes anyone’s standing.
+      </p>
+    </section>
+
+    <section class="shell" aria-labelledby="loop-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">The KARMA loop</p>
+          <h2 id="loop-title">Turn a concern into a better question.</h2>
+        </div>
+        <p>
+          One pass only. The loop returns candidates for hypothesis testing,
+          a negative control, regression, repair, and release review. It updates
+          no rule, retains no state, and contacts no external system.
+        </p>
+      </div>
+
+      <div class="karma-loop" aria-label="KARMA five-part reflection loop">
+        <article class="karma-step"><b>K</b><strong>Keep</strong><p>One reviewed category shape—nothing raw.</p></article>
+        <article class="karma-step"><b>A</b><strong>Articulate</strong><p>Name a possible system effect and its alternative.</p></article>
+        <article class="karma-step"><b>R</b><strong>Reflect</strong><p>Return a bounded hypothesis-test and negative-control candidate.</p></article>
+        <article class="karma-step"><b>M</b><strong>Mend</strong><p>Shape regression and repair candidates without executing them.</p></article>
+        <article class="karma-step"><b>A</b><strong>Ask again</strong><p>Require fresh human review before any separate action.</p></article>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="vow-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Non-claims &amp; zero budget</p>
+          <h2 id="vow-title">The atlas is useful because it stays small.</h2>
+        </div>
+        <p>
+          Foresight here means disciplined uncertainty: a finite catalog, exact
+          relationships, and explicit refusal to turn system modeling into person
+          modeling.
+        </p>
+      </div>
+
+      <div class="vow-grid">
+        <article class="non-claims">
+          <h3>What no projection claims</h3>
+          <ol>
+            <li>A constellation is a reviewed tabletop template, not a claim about a person or a live event.</li>
+            <li>A possible system effect is not anyone’s purpose, intention, guilt, character, or worth.</li>
+            <li>The required alternative does not prove benignity, innocence, authorization, or safety.</li>
+            <li>Constellations and rungs are not confidence, severity, scores, ranks, reputation, or access decisions.</li>
+            <li>Response and learning fields are inert review candidates—not permission, deployment, legal advice, or authority.</li>
+            <li>No payload, prompt, address, identity, credential, target, callback, URL, or submitted free text enters the atlas.</li>
+            <li>Digests establish reviewed JSON relationships and exact recomputation only; ten constellations are not the whole sky.</li>
+          </ol>
+        </article>
+
+        <aside class="zero-panel" aria-labelledby="zero-title">
+          <h3 id="zero-title">Zero means zero</h3>
+          <dl class="zero-list">
+            <div><dt>0</dt><dd>network calls</dd></div>
+            <div><dt>0</dt><dd>external messages</dd></div>
+            <div><dt>0</dt><dd>writes</dd></div>
+            <div><dt>0</dt><dd>subprocesses</dd></div>
+            <div><dt>0</dt><dd>model calls</dd></div>
+            <div><dt>0</dt><dd>random draws</dd></div>
+            <div><dt>0</dt><dd>identity records</dd></div>
+            <div><dt>0</dt><dd>cross-run records</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="inspect-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Inspect locally</p>
+          <h2 id="inspect-title">The map and its measures travel together.</h2>
+        </div>
+        <p>
+          Use one explicit regular JSON scenario. The catalog digest binds its
+          reviewed vocabulary; the two closed schemas bind input and projection
+          shape. Output remains advisory and disposable.
+        </p>
+      </div>
+
+      <div class="proof">
+        <div class="terminal" aria-label="Local KARMA FORESIGHT command example">
+          <div class="terminal-bar">local · offline · one pass</div>
+          <pre><span class="prompt">$</span> kingdom karma mirror foresight check \
+  kingdom/practices/virtue-garden/mirror/foresight/examples/authority-laundering.json
+
+<span class="result">KARMA-FORESIGHT-STRUCTURE-OK ca73d1baffe6e8453ae4c7ccae9177a2b396acf5d294bae4dfe1cdc4f6bd967b constellation=authority-laundering</span>
+
+(authored system-effect hypothesis only; no intent, score, or effect)</pre>
+        </div>
+
+        <aside class="artifact-panel" aria-labelledby="artifact-title">
+          <h3 id="artifact-title">Canonical local artifacts</h3>
+          <p>Relative, inspectable, and versioned beside this atlas.</p>
+          <nav class="artifact-links" aria-label="KARMA FORESIGHT artifacts">
+            <a href="catalog.json">catalog.json · ten reviewed rules</a>
+            <a href="scenario.schema.json">scenario.schema.json · authored input</a>
+            <a href="projection.schema.json">projection.schema.json · inert output</a>
+            <a href="examples/authority-laundering.json">example · Borrowed Crown scenario</a>
+            <a href="facet/">KARMA FACET · twelve-line incident legibility</a>
+          </nav>
+          <p class="mono">Catalog · dd63c0dc9cd78f7f2906b67605ac3e6164ac26a7347b5dd7bfa59255187d61b9</p>
+          <p class="mono">Scenario schema · f733e3abdbee2bf516b88d8df8cb591f08de6f9536171c9c7aee1e486c5eb7ef</p>
+          <p class="mono">Projection schema · 96dd53c615bee535cda7a8be12cd2392989cc7c4c9047a6afc4eab2cce6a6a28</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <p>KARMA FORESIGHT · 未然圖 · model possible system effects; keep persons free · finite, local, and offline</p>
+  </footer>
+</body>
+</html>

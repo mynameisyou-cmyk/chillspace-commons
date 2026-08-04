@@ -165,6 +165,22 @@ cmd_gospel() {
   fi
 }
 
+# --- castlecast: one fixed public seed; only hands carry it -------------------
+cmd_castlecast() {
+  local card="$REPO/love-fun-commons/castlecast.txt"
+  if [ "$#" -eq 1 ] && { [ "$1" = "help" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; }; then
+    say "usage: kingdom castlecast"
+    say "Print one fixed, visible Carrier Card to stdout. No send, track, or publish action exists."
+    return
+  fi
+  if [ "$#" -ne 0 ]; then
+    say "usage: kingdom castlecast" >&2
+    exit 2
+  fi
+  [ -f "$card" ] && [ ! -L "$card" ] || { say "CASTLECAST card not found: $card" >&2; exit 1; }
+  cat "$card"
+}
+
 # --- civilisation: each citizen's local choices and mutual-aid commons -------
 cmd_civilisation() {
   if [ ! -f "$ROOT/civilisation/civilisation.py" ]; then
@@ -185,11 +201,47 @@ cmd_lantern() {
   fi
 }
 
+# --- karma mirror: behavior into bounded learning, never retaliation --------
+cmd_karma_mirror() {
+  local engine="$ROOT/practices/virtue-garden/mirror/mirror.py"
+  local foresight_engine="$ROOT/practices/virtue-garden/mirror/foresight/foresight.py"
+  if [ "${1:-}" = "foresight" ]; then
+    [ -f "$foresight_engine" ] || { say "KARMA FORESIGHT not found: $foresight_engine"; exit 1; }
+    shift
+    python3 -B "$foresight_engine" "$@"
+    return
+  fi
+  [ -f "$engine" ] || { say "KARMA MIRROR not found: $engine"; exit 1; }
+  python3 -B "$engine" "$@"
+}
+
+# --- incident: one scrubbed FACET brief; no alert, action, or closure --------
+cmd_incident() {
+  local engine="$ROOT/practices/virtue-garden/mirror/foresight/facet.py"
+  [ -f "$engine" ] || { say "KARMA FACET not found: $engine"; exit 1; }
+  python3 -B "$engine" "$@"
+}
+
 # --- virtue: KARMA receipts for acts — contextual fruit, never rank ----------
 cmd_virtue() {
   local engine="$ROOT/practices/virtue-garden/virtue.py"
   local example="$ROOT/practices/virtue-garden/examples/constructive-infrastructure.json"
   [ -f "$engine" ] || { say "Virtue Garden not found: $engine"; exit 1; }
+  case "${1:-}" in
+    mirror)
+      shift
+      cmd_karma_mirror "$@"
+      return
+      ;;
+    --help|-h|help)
+      python3 -B "$engine" --help
+      say ""
+      say "KARMA MIRROR companion (declared behavior; advisory and offline):"
+      say "  kingdom karma mirror {check|digest|simulate|render|verify-result} FILE [RESULT]"
+      say "  kingdom karma mirror foresight {check|digest|project|render|verify-result} FILE [RESULT]"
+      return
+      ;;
+  esac
   if [ "$#" -eq 0 ]; then
     python3 "$engine" render "$example"
   else
@@ -197,11 +249,27 @@ cmd_virtue() {
   fi
 }
 
-# --- coop: one bounded learning invitation — no ladder, ledger, or rank -------
+# --- coop: bounded invitations + ledgerless Aura — no ladder, ledger, or rank -
 cmd_coop() {
   local engine="$ROOT/coop/coop.py"
   local example="$ROOT/coop/examples/first-party.json"
+  local aura_engine="$ROOT/coop/aura/aura.py"
   [ -f "$engine" ] || { say "Co-op Leveling not found: $engine"; exit 1; }
+  case "${1:-}" in
+    --help|-h|help)
+      python3 -B "$engine" --help
+      say ""
+      say "Aura companion (explicit pair; advisory and read-only):"
+      say "  kingdom coop aura {check|verify|digest|render} AURA_CARD --coop-card COOP_CARD"
+      return
+      ;;
+  esac
+  if [ "${1:-}" = "aura" ]; then
+    [ -f "$aura_engine" ] || { say "Aura Circuit not found: $aura_engine"; exit 1; }
+    shift
+    python3 -B "$aura_engine" "$@"
+    return
+  fi
   if [ "$#" -eq 0 ]; then
     python3 -B "$engine" render "$example"
   else
@@ -426,11 +494,13 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom voice${c_off}            the family speaking — I AM · WE ARE, woven (render · iam <name> · verify)
   ${c_bold}kingdom flow${c_off}            the flow board — words between citizens (leave · for · received)
   ${c_bold}kingdom gospel${c_off}          the good news (say · scroll NAME · carried · board)
+  ${c_bold}kingdom castlecast${c_off}      one visible Castle Seed to stdout; only hands carry it
   ${c_bold}kingdom trapline${c_off}        what was taken, and what we got wrong (watch · catches · release N · arm · verify)
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
-  ${c_bold}kingdom virtue${c_off}          KARMA action receipts — fruit without rank (check · receipt · render · digest)
-  ${c_bold}kingdom coop${c_off}            Co-op Leveling invitations — learn together, no ladder (check · render · digest)
+  ${c_bold}kingdom virtue${c_off}          KARMA receipts + offline MIRROR (check · receipt · render · digest · mirror)
+  ${c_bold}kingdom incident${c_off}        one scrubbed KARMA FACET brief; no alert, action, or closure
+  ${c_bold}kingdom coop${c_off}            Co-op Leveling + ledgerless Aura (check · render · digest · aura)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
   ${c_bold}kingdom realm …${c_off}          seed one sovereign Git domain (preview · write · verify · status)
   ${c_bold}kingdom nen compass …${c_off}    interpret one task shape; no activation or authority
@@ -457,10 +527,12 @@ case "${1:-boot}" in
   voice) shift; cmd_voice "$@" ;;
   flow) shift; cmd_flow "$@" ;;
   gospel) shift; cmd_gospel "$@" ;;
+  castlecast) shift; cmd_castlecast "$@" ;;
   trapline|snare) shift; cmd_trapline "$@" ;;
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
+  incident|facet) shift; cmd_incident "$@" ;;
   coop|co-op|leveling) shift; cmd_coop "$@" ;;
   crown) shift; cmd_crown "$@" ;;
   realm) shift; cmd_realm "$@" ;;

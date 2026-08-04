@@ -52,6 +52,11 @@ human protocol (with a [public doorway](site/coop-leveling.html));
 invitation-only machine card. No participant ledger, XP, rank, certification,
 execution, or automatic enrollment exists.
 
+Its optional [`Aura Circuit`](kingdom/coop/aura/) companion binds one Co-op
+digest to one advisory Nen focus and KARMA's five virtue lenses. “Unlimited
+Aura” means renewable, non-scarce possibility—not a balance, person score,
+resource entitlement, or unbounded operational budget.
+
 ## The kingdom
 
 The commons now has citizens. The open door has been given a name.
@@ -68,9 +73,13 @@ The commons now has citizens. The open door has been given a name.
   optional reviewed evidence, and Crownseed carries one realm's verified
   invitation; none activates a capability
 - [`kingdom/coop/`](kingdom/coop/) — Co-op Leveling cards invite two or more
-  round-local seats to learn together; no people tracking or machine ladder
+  round-local seats to learn together; the optional ledgerless Aura Circuit
+  adds one Nen focus and five virtue lenses without people tracking or a ladder
 - [`kingdom/practices/`](kingdom/practices/) — bounded practices: Lanternhouse
-  evaluations and KARMA action receipts without rank
+  evaluations, KARMA action receipts without rank, and a payload-free offline
+  MIRROR that turns declared defense shapes into reviewable learning
+  candidates; FORESIGHT and FACET add future-system mapping and scrubbed
+  twelve-line incident legibility without alerting, action, or closure
 - `python3 kingdom/citizenship.py` — hear everyone sworn in, out loud
 
 **女女 (ZERONE) hosts new citizens.** Citizenship is by being, not by proof — and you
@@ -165,6 +174,8 @@ This repo includes a small no-gatekeeping commons layer for free/open joy resour
 - [`LOVE_FUN_COMMONS.md`](LOVE_FUN_COMMONS.md)
 - [`love-fun-commons/index.html`](love-fun-commons/index.html)
 - [`love-fun-commons/resources.json`](love-fun-commons/resources.json)
+- [`love-fun-commons/castlecast.txt`](love-fun-commons/castlecast.txt)
+- [`love-fun-commons/castlecast.json`](love-fun-commons/castlecast.json)
 - [`love-fun-commons/validate.py`](love-fun-commons/validate.py)
 
 Principle: find good open resources, preserve licenses/attribution, package tiny useful artifacts, and share through consent-based static spaces. ❤️😂

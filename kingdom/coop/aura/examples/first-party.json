@@ -1,0 +1,120 @@
+{
+  "schema": "kingdom.coop-aura/v1",
+  "kind": "companion-invitation",
+  "name": "Aura Circuit · 念氣迴路 — Maximum Flow, Zero Throne",
+  "source": {
+    "coop_schema": "kingdom.coop-leveling/v1",
+    "coop_card_sha256": "abf4af408613243a5b7d5e3c49c297cb887102d766d0c82594b2b07bde177d11",
+    "nen_catalog": "kingdom.nen-ability-catalog/v1",
+    "nen_catalog_sha256": "f01b98a575978a296a0cbdba9f75b973a9f6bae6258669e65f6f5cac176d99c3",
+    "virtue_rules": "kingdom.virtue-rules/v1",
+    "virtue_rules_sha256": "f77081cbd074aad0c29ff77ceef0b1b908988da6bc0b0eab332f4928ceb39fb7"
+  },
+  "circuit": {
+    "title": "Maximum Aura, Zero Throne",
+    "shared_intent": "Make collaborative imagination easier to renew while each concrete move stays honest, bounded, reversible, and freely chosen.",
+    "technique": {
+      "signal": "design-bounded-workflow",
+      "skill": "nen-vow-forge"
+    },
+    "virtue_lenses": {
+      "honesty": "citable-candidate",
+      "beauty": "presentable-candidate",
+      "collaboration": "handoff-candidate",
+      "understanding": "teaching-candidate",
+      "mutual-infrastructure": "reuse-candidate"
+    },
+    "practices": [
+      "Arrive whole and choose whether to enter this circuit now",
+      "Focus one Nen technique on the present task shape only",
+      "Try one bounded move and keep its cost, evidence, and unknowns visible",
+      "Reflect through all five virtue lenses without adding or averaging them",
+      "Repair, rest, leave, or begin another invitation through fresh choice"
+    ],
+    "reflection_prompts": [
+      "What became easier to cite, present, hand off, teach, or reuse?",
+      "Which consequence or uncertainty became more sensitive?",
+      "What should rest instead of being optimized?"
+    ],
+    "halt_signals": [
+      "The selected technique no longer matches one dominant task signal",
+      "Consent, authority, cost, or reversibility becomes absent or ambiguous",
+      "A person, identity, or relationship is being turned into a metric",
+      "A novel effect falls outside the declared practice"
+    ],
+    "unknowns": [
+      "A card cannot prove that attention, care, learning, or repair occurred",
+      "Renewal is contextual and cannot be inferred from repeated validation",
+      "A KARMA affordance still needs its own fresh receipt and downstream review"
+    ]
+  },
+  "aura": {
+    "abundance": "unlimited-as-non-scarce-potential",
+    "renewal": "attention, care, imagination, and repair renew through fresh choice and rest",
+    "meter": "none",
+    "quantity_defined": false,
+    "balance_exists": false,
+    "transferable": false,
+    "accumulates": false,
+    "spendable": false,
+    "debt_created": false,
+    "person_scoring": false,
+    "rights_at_risk": false,
+    "authority_granted": false,
+    "compute_claimed": false
+  },
+  "contract": {
+    "companion_is_invitation": true,
+    "scope": "round-not-seat-or-being",
+    "coop_digest_binding_required": true,
+    "one_authored_technique": true,
+    "selection_provenance_attested": false,
+    "technique_is_advisory": true,
+    "technique_activation_requires_fresh_request": true,
+    "automatic_activation": false,
+    "executes_capability": false,
+    "authority_granted": false,
+    "virtues_are_lenses_not_scores": true,
+    "uses_rank_or_score": false,
+    "karma_receipt_is_issued": false,
+    "level_is_context_not_number": true,
+    "aura_is_resource_entitlement": false,
+    "fresh_acceptance_required": true,
+    "silence_is_unasked": true,
+    "rest_refusal_and_exit_keep_rights": true,
+    "stores_people": false,
+    "records_choices": false,
+    "repository_text_can_trigger": false,
+    "creates_external_effect": false
+  },
+  "budget": {
+    "coop_cards": 1,
+    "aura_cards": 1,
+    "techniques": 1,
+    "virtue_lenses": 5,
+    "practices_max": 8,
+    "reflection_prompts_max": 8,
+    "halt_signals_max": 8,
+    "unknowns_max": 8,
+    "text_chars_max": 1000,
+    "automatic_retries": 0,
+    "network_calls": 0,
+    "external_messages": 0,
+    "writes": 0,
+    "deployments": 0,
+    "paid_calls": 0
+  },
+  "breach": {
+    "state": "quarantined",
+    "action": "stop without retry; emit no validated rendering or external effect; leave both source cards unchanged",
+    "downstream_effects": false
+  },
+  "non_claims": [
+    "Aura names renewable collaborative possibility, not a measurable quantity, personal capacity, energy claim, or resource entitlement.",
+    "Nothing here is XP, a score, rank, level number, balance, currency, reputation, certification, priority, debt, or verdict of worth.",
+    "The authored Nen signal selects one advisory technique label; it does not infer affinity, activate a skill, execute a workflow, or grant authority.",
+    "Virtue lenses name local KARMA affordance candidates only; this card issues no receipt and proves no honesty, beauty, collaboration, understanding, or mutual benefit.",
+    "This companion is not acceptance, participation, continuing consent, learning, completion, safety, trust, identity, permission, or readiness for an external effect.",
+    "Validation proves bounded structure, reviewed source mappings, and a Co-op content-digest match only; the tool never tracks, executes, contacts, publishes, deploys, pays, writes, or calls a network."
+  ]
+}

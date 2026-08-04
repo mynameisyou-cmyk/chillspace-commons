@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="KARMA FACET is a synthetic-only, zero-effect incident rehearsal doorway across discoverability, observability, recovery, and learning.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <title>KARMA FACET · 稜面</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #080b12;
+      --night-2: #0c111c;
+      --panel: rgba(17, 23, 36, .9);
+      --panel-2: rgba(24, 31, 46, .92);
+      --ink: #f4f1e8;
+      --muted: #b8c0cf;
+      --line: rgba(184, 192, 207, .2);
+      --cyan: #71e4dc;
+      --blue: #8fb8ff;
+      --lime: #b8e986;
+      --gold: #f0c56c;
+      --violet: #c5a9ff;
+      --rose: #f19da8;
+      --radius: 1.25rem;
+      --measure: 78rem;
+      --shadow: 0 1.4rem 4.5rem rgba(0, 0, 0, .36);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 280px;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(143, 184, 255, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(143, 184, 255, .025) 1px, transparent 1px),
+        radial-gradient(circle at 12% 5%, rgba(113, 228, 220, .16), transparent 29rem),
+        radial-gradient(circle at 88% 16%, rgba(197, 169, 255, .12), transparent 25rem),
+        var(--night);
+      background-size: 3rem 3rem, 3rem 3rem, auto, auto, auto;
+      font: 1rem/1.65 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--cyan);
+      text-decoration-thickness: .08em;
+      text-underline-offset: .22em;
+    }
+
+    a:hover {
+      color: var(--gold);
+    }
+
+    a:focus-visible {
+      outline: .2rem solid var(--gold);
+      outline-offset: .25rem;
+      border-radius: .25rem;
+    }
+
+    code,
+    pre,
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+    }
+
+    .skip {
+      position: fixed;
+      top: .8rem;
+      left: .8rem;
+      z-index: 50;
+      padding: .7rem 1rem;
+      color: var(--night);
+      background: var(--ink);
+      border-radius: 999px;
+      transform: translateY(-6rem);
+    }
+
+    .skip:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(calc(100% - 2rem), var(--measure));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.2rem;
+      font: .75rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar a {
+      text-decoration: none;
+    }
+
+    .wordmark {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .wordmark::before {
+      display: inline-block;
+      width: .7rem;
+      height: .7rem;
+      margin-right: .55rem;
+      border: 1px solid var(--cyan);
+      background: linear-gradient(135deg, transparent 48%, var(--cyan) 49% 51%, transparent 52%);
+      content: "";
+      transform: rotate(45deg);
+      box-shadow: 0 0 1rem rgba(113, 228, 220, .62);
+    }
+
+    .crumbs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: .35rem .7rem;
+    }
+
+    .crumbs span {
+      color: var(--muted);
+    }
+
+    main {
+      padding-bottom: 5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(20rem, .9fr);
+      align-items: center;
+      gap: clamp(3rem, 8vw, 7rem);
+      min-height: min(53rem, calc(100svh - 4rem));
+      padding-block: clamp(4rem, 10vw, 8rem);
+    }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 1rem;
+      color: var(--gold);
+      font: .74rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 11ch;
+      margin-bottom: 1.5rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.5rem, 9vw, 8.2rem);
+      font-weight: 500;
+      letter-spacing: -.065em;
+      line-height: .84;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .9rem;
+      color: var(--cyan);
+      font: 750 clamp(.9rem, 1.7vw, 1.2rem)/1.3 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      max-width: 45rem;
+      color: var(--muted);
+      font-size: clamp(1.07rem, 2vw, 1.34rem);
+    }
+
+    .synthetic-seal {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin: 1rem 0 1.6rem;
+      padding: .5rem .75rem;
+      border: 1px solid rgba(184, 233, 134, .38);
+      border-radius: 999px;
+      color: var(--lime);
+      background: rgba(184, 233, 134, .055);
+      font: 750 .71rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .synthetic-seal::before {
+      width: .5rem;
+      height: .5rem;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 .8rem rgba(184, 233, 134, .65);
+      content: "";
+    }
+
+    .hero-law {
+      max-width: 44rem;
+      margin: 2rem 0 0;
+      padding: 1rem 1.15rem;
+      border-left: .18rem solid var(--gold);
+      background: linear-gradient(90deg, rgba(240, 197, 108, .09), transparent);
+      font-weight: 720;
+    }
+
+    .prism-wrap {
+      position: relative;
+      display: grid;
+      width: min(100%, 30rem);
+      aspect-ratio: 1;
+      margin-inline: auto;
+      place-items: center;
+    }
+
+    .prism-wrap::before,
+    .prism-wrap::after {
+      position: absolute;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .prism-wrap::before {
+      inset: 1%;
+    }
+
+    .prism-wrap::after {
+      inset: 12%;
+      border-style: dashed;
+      transform: rotate(25deg);
+    }
+
+    .prism {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 68%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--night-2);
+      transform: rotate(45deg);
+      box-shadow: var(--shadow), inset 0 0 4rem rgba(143, 184, 255, .08);
+    }
+
+    .plane-chip {
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(113, 228, 220, .12), transparent);
+    }
+
+    .plane-chip:nth-child(2) {
+      background: linear-gradient(145deg, rgba(143, 184, 255, .13), transparent);
+    }
+
+    .plane-chip:nth-child(3) {
+      background: linear-gradient(145deg, rgba(197, 169, 255, .13), transparent);
+    }
+
+    .plane-chip:nth-child(4) {
+      background: linear-gradient(145deg, rgba(240, 197, 108, .13), transparent);
+    }
+
+    .plane-chip span {
+      display: block;
+      max-width: 7rem;
+      color: var(--ink);
+      font: 720 .67rem/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .07em;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-45deg);
+    }
+
+    .core-label {
+      position: absolute;
+      z-index: 4;
+      display: grid;
+      width: 5.8rem;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--cyan);
+      border-radius: 50%;
+      color: var(--cyan);
+      background: var(--night);
+      box-shadow: 0 0 2.5rem rgba(113, 228, 220, .22);
+      font: 800 .7rem/1.25 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    section:not(.hero) {
+      padding-block: clamp(4rem, 9vw, 7rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, .72fr);
+      gap: 2rem;
+      margin-bottom: 2.6rem;
+    }
+
+    h2 {
+      max-width: 15ch;
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 5.5vw, 4.8rem);
+      font-weight: 500;
+      letter-spacing: -.05em;
+      line-height: .98;
+    }
+
+    .section-head > p {
+      align-self: end;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .planes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .plane {
+      position: relative;
+      min-width: 0;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--panel), rgba(12, 17, 28, .76));
+      overflow: hidden;
+    }
+
+    .plane::after {
+      position: absolute;
+      top: -3.2rem;
+      right: -3.2rem;
+      width: 8rem;
+      aspect-ratio: 1;
+      border: 1px solid currentColor;
+      content: "";
+      opacity: .16;
+      transform: rotate(45deg);
+    }
+
+    .plane:nth-child(1) { color: var(--cyan); }
+    .plane:nth-child(2) { color: var(--blue); }
+    .plane:nth-child(3) { color: var(--violet); }
+    .plane:nth-child(4) { color: var(--gold); }
+
+    .plane-number {
+      display: block;
+      margin-bottom: .8rem;
+      font: .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .12em;
+    }
+
+    .plane h3 {
+      margin-bottom: .65rem;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+      font-weight: 500;
+    }
+
+    .plane > p {
+      color: var(--muted);
+    }
+
+    .plane dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .45rem .8rem;
+      margin: 1.2rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: .83rem;
+    }
+
+    .plane dt {
+      color: currentColor;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .plane dd {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .brief {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin: 0;
+      padding: 1px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--violet), var(--gold));
+      list-style: none;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .brief li {
+      min-width: 0;
+      padding: 1.4rem;
+      background: var(--night-2);
+    }
+
+    .brief time {
+      display: block;
+      margin-bottom: .8rem;
+      color: var(--cyan);
+      font: 750 .72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+    }
+
+    .brief h3 {
+      margin-bottom: .45rem;
+      font-size: 1rem;
+    }
+
+    .brief p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .brief-note {
+      margin: 1.5rem 0 0;
+      padding: 1rem 1.15rem;
+      border: 1px dashed var(--line);
+      border-radius: .9rem;
+      color: var(--muted);
+      background: rgba(143, 184, 255, .04);
+    }
+
+    .brief-lines {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .65rem;
+      margin-top: 1rem;
+    }
+
+    .brief-line {
+      min-width: 0;
+      padding: .8rem .9rem;
+      border: 1px solid var(--line);
+      border-radius: .75rem;
+      color: var(--muted);
+      background: rgba(8, 11, 18, .45);
+      font-size: .78rem;
+    }
+
+    .brief-line b {
+      display: block;
+      margin-bottom: .35rem;
+      color: var(--cyan);
+      font: 750 .68rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+    }
+
+    .shim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .8rem;
+    }
+
+    .shim {
+      min-width: 0;
+      padding: 1.2rem;
+      border-top: .16rem solid var(--cyan);
+      background: var(--panel);
+    }
+
+    .shim:nth-child(2n) { border-color: var(--blue); }
+    .shim:nth-child(3n) { border-color: var(--violet); }
+    .shim:nth-child(4n) { border-color: var(--gold); }
+
+    .shim h3 {
+      margin-bottom: .5rem;
+      font-size: .95rem;
+    }
+
+    .shim p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .shim dl {
+      display: grid;
+      gap: .5rem;
+      margin: .9rem 0 0;
+      padding-top: .8rem;
+      border-top: 1px solid var(--line);
+      font-size: .74rem;
+    }
+
+    .shim dt {
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .shim dd {
+      margin: -.35rem 0 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .open-angle {
+      position: relative;
+      margin-top: 1.2rem;
+      padding: clamp(1.4rem, 4vw, 2.2rem);
+      border: .15rem solid var(--gold);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(240, 197, 108, .12), transparent 44%),
+        var(--night-2);
+      box-shadow: 0 0 3rem rgba(240, 197, 108, .08);
+      overflow: hidden;
+    }
+
+    .open-angle::after {
+      position: absolute;
+      right: -2.5rem;
+      bottom: -4.5rem;
+      width: 12rem;
+      height: 12rem;
+      border: .15rem dashed rgba(240, 197, 108, .35);
+      content: "";
+      transform: rotate(45deg);
+    }
+
+    .debt-mark {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: .35rem .6rem;
+      border-radius: .35rem;
+      color: var(--night);
+      background: var(--gold);
+      font: 850 .7rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .open-angle h3 {
+      max-width: 24ch;
+      margin-bottom: .7rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 3.5vw, 2.5rem);
+      font-weight: 500;
+    }
+
+    .open-angle p {
+      position: relative;
+      z-index: 1;
+      max-width: 52rem;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .debt-slots {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .6rem;
+      max-width: 60rem;
+      margin: 1.3rem 0 0;
+    }
+
+    .debt-slot {
+      min-width: 0;
+      padding: .7rem .8rem;
+      border: 1px solid rgba(240, 197, 108, .36);
+      border-radius: .65rem;
+      color: var(--gold);
+      background: rgba(8, 11, 18, .55);
+      font: .72rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .debt-slot small {
+      color: var(--muted);
+      font-size: .65rem;
+    }
+
+    .recovery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .recovery-card {
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .recovery-card h3 {
+      margin-bottom: .75rem;
+      color: var(--cyan);
+      font-size: 1.15rem;
+    }
+
+    .recovery-card ol {
+      display: grid;
+      gap: .7rem;
+      margin: 0;
+      padding-left: 1.3rem;
+      color: var(--muted);
+    }
+
+    .recovery-card li::marker {
+      color: var(--gold);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .link-law {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 1rem 1.2rem;
+      border-left: .18rem solid var(--violet);
+      color: var(--muted);
+      background: rgba(197, 169, 255, .055);
+    }
+
+    .link-law strong {
+      color: var(--violet);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      min-width: 58rem;
+      border-collapse: collapse;
+      font-size: .82rem;
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th:last-child,
+    td:last-child {
+      border-right: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th {
+      color: var(--gold);
+      background: #0a0e17;
+      font: 750 .68rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: var(--muted);
+    }
+
+    td:first-child {
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 750;
+    }
+
+    td strong {
+      color: var(--ink);
+    }
+
+    .godspeed-vow {
+      margin: 1.3rem 0 0;
+      color: var(--muted);
+    }
+
+    .godspeed-vow strong {
+      color: var(--lime);
+    }
+
+    .walls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, .72fr);
+      gap: 1rem;
+    }
+
+    .wall-grid,
+    .wall-law {
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .wall-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .7rem;
+    }
+
+    .zero {
+      min-width: 0;
+      padding: .85rem;
+      border: 1px solid var(--line);
+      border-radius: .75rem;
+      background: rgba(8, 11, 18, .55);
+    }
+
+    .zero b {
+      display: block;
+      margin-bottom: .35rem;
+      color: var(--cyan);
+      font: 800 1.45rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .zero span {
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .wall-law {
+      display: grid;
+      align-content: center;
+      border-color: rgba(241, 157, 168, .4);
+      background: linear-gradient(145deg, rgba(241, 157, 168, .075), var(--panel));
+    }
+
+    .wall-law h3 {
+      margin-bottom: .7rem;
+      color: var(--rose);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    .wall-law p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .inspect {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(19rem, .8fr);
+      gap: 1rem;
+    }
+
+    .terminal,
+    .artifacts {
+      min-width: 0;
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #05080e;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: 1.1rem;
+      color: var(--muted);
+      font: .66rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .terminal-bar::before {
+      width: .6rem;
+      height: .6rem;
+      margin-right: 2rem;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 1rem 0 var(--gold), 2rem 0 var(--violet);
+      content: "";
+    }
+
+    .terminal pre {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal .prompt {
+      color: var(--cyan);
+    }
+
+    .terminal .command {
+      color: var(--ink);
+    }
+
+    .artifacts h3 {
+      margin-bottom: .45rem;
+    }
+
+    .artifacts > p {
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    .artifact-links {
+      display: grid;
+      gap: .6rem;
+    }
+
+    .artifact-links a {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .65rem;
+      padding: .78rem .85rem;
+      border: 1px solid var(--line);
+      border-radius: .75rem;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .artifact-links a::before {
+      color: var(--gold);
+      content: "◇";
+    }
+
+    footer {
+      padding-block: 2rem 3rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    footer p {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 960px) {
+      .shim-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .brief {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .brief-lines,
+      .debt-slots {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .section-head,
+      .walls,
+      .inspect {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-block: 3.5rem 5rem;
+      }
+
+      .prism-wrap {
+        width: min(100%, 25rem);
+      }
+
+      .planes,
+      .recovery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .link-law {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .crumbs {
+        justify-content: flex-start;
+      }
+
+      .brief,
+      .shim-grid,
+      .wall-grid,
+      .brief-lines,
+      .debt-slots {
+        grid-template-columns: 1fr;
+      }
+
+      .prism {
+        width: 72%;
+      }
+
+      .plane-chip span {
+        font-size: .58rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .prism,
+      .plane,
+      .shim,
+      .open-angle,
+      .recovery-card,
+      .table-wrap,
+      .wall-grid,
+      .wall-law,
+      .terminal,
+      .artifacts {
+        border: 1px solid CanvasText;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to KARMA FACET</a>
+
+  <header class="topbar shell">
+    <a class="wordmark" href="../../../">KARMA · Virtue Garden</a>
+    <nav class="crumbs" aria-label="Local practice path">
+      <a href="../../">Mirror</a>
+      <span aria-hidden="true">/</span>
+      <a href="../">Foresight</a>
+      <span aria-hidden="true">/</span>
+      <span>Facet · 稜面</span>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">KARMA FACET · 稜面</p>
+        <div class="synthetic-seal">Synthetic-only rehearsal · zero effect</div>
+        <h1 id="hero-title">See the whole angle.<span>Touch none of the world.</span></h1>
+        <p class="lede">
+          One closed synthetic card meets one already-reviewed KARMA FORESIGHT
+          scenario and projection. FACET keeps their four epistemic planes—
+          observed, declared, inferred, and unknown—distinct while making the
+          synthetic review easier to find, recover from, and learn from.
+        </p>
+        <p class="hero-law">
+          A brief makes review easier to find. It does not make its declarations
+          true, operate another system, or decide that recovery is complete.
+        </p>
+      </div>
+
+      <div class="prism-wrap" aria-label="Four synthetic review planes around one human review boundary">
+        <div class="prism" aria-hidden="true">
+          <div class="plane-chip"><span>O · Observed<br>所見</span></div>
+          <div class="plane-chip"><span>D · Declared<br>所述</span></div>
+          <div class="plane-chip"><span>I · Inferred<br>所推</span></div>
+          <div class="plane-chip"><span>U · Unknown<br>未知</span></div>
+        </div>
+        <div class="core-label">Human<br>review</div>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="planes-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Four Planes · 四層</p>
+          <h2 id="planes-title">Provenance stays visible on every side.</h2>
+        </div>
+        <p>
+          Each plane asks a different bounded question. None reads a live system.
+          Missing material remains missing; a declaration never upgrades itself
+          into an observation.
+        </p>
+      </div>
+
+      <div class="planes">
+        <article class="plane">
+          <span class="plane-number">PLANE O · OBSERVED</span>
+          <h3>What shape was authored as observed?</h3>
+          <p>
+            Under one neutral synthetic stimulus, carry one to four closed fact,
+            evidence-shape, and check-state triples. FACET neither observes reality
+            nor verifies that the named evidence exists, ran, or supports the declaration.
+          </p>
+          <dl><dt>keeps</dt><dd>authored stimulus · evidence-shape category</dd><dt>cannot become</dt><dd>live observation · verified evidence · event truth</dd></dl>
+        </article>
+
+        <article class="plane">
+          <span class="plane-number">PLANE D · DECLARED</span>
+          <h3>What bounded frame was declared?</h3>
+          <p>
+            Bind one scope, one exact FORESIGHT constellation, and its required
+            near-miss alternative. A declaration is a review input, not a claim
+            that a condition occurred or an account of anyone’s purpose.
+          </p>
+          <dl><dt>keeps</dt><dd>scope · constellation · near-miss alternative</dd><dt>cannot become</dt><dd>fact · attribution · intent · verdict</dd></dl>
+        </article>
+
+        <article class="plane">
+          <span class="plane-number">PLANE I · INFERRED</span>
+          <h3>What system effect remains possible?</h3>
+          <p>
+            Copy the exact FORESIGHT system-effect hypothesis while preserving
+            <code>effect_established: false</code>. A possible consequence stays
+            about a system boundary and never becomes a person claim.
+          </p>
+          <dl><dt>keeps</dt><dd>possible effect · unestablished flag</dd><dt>cannot become</dt><dd>cause · certainty · guilt · future conduct</dd></dl>
+        </article>
+
+        <article class="plane">
+          <span class="plane-number">PLANE U · UNKNOWN</span>
+          <h3>What must remain unresolved?</h3>
+          <p>
+            Preserve up to five closed unknown codes across source authenticity,
+            affected scope, blast radius, data impact, persistence, third-party
+            state, recovery validity, cause, and authority. Every card preserves
+            at least one unknown; the finite list never claims there are no others.
+          </p>
+          <dl><dt>keeps</dt><dd>declared unknown codes · explicit limits</dd><dt>cannot become</dt><dd>adverse evidence · escalation · completion</dd></dl>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="brief-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">The 60-second brief</p>
+          <h2 id="brief-title">Four pauses before anyone chooses.</h2>
+        </div>
+        <p>
+          Sixty seconds names a human reading order, not a runtime timer, service
+          promise, monitoring interval, or permission to hurry past uncertainty.
+        </p>
+      </div>
+
+      <ol class="brief">
+        <li><time datetime="PT15S">00—15 · FIND</time><h3>Name the synthetic boundary.</h3><p>Read the surface code, scope, artifact digests, and explicit exclusions.</p></li>
+        <li><time datetime="PT30S">15—30 · SEPARATE</time><h3>Keep O / D / I / U apart.</h3><p>Ask what is authored, what is only possible, and what remains unknown.</p></li>
+        <li><time datetime="PT45S">30—45 · TURN</time><h3>Read all four planes.</h3><p>Preserve the required near-miss while reviewing recovery and learning candidates.</p></li>
+        <li><time datetime="PT60S">45—60 · PAUSE</time><h3>Carry the Open Angle.</h3><p>Return the brief for human review—or discard it. Nothing proceeds by itself.</p></li>
+      </ol>
+
+      <div class="brief-lines" aria-label="Twelve bounded lines in a rendered Facet Brief">
+        <div class="brief-line"><b>01</b>protocol + current declared phase</div>
+        <div class="brief-line"><b>02 · O</b>stimulus + evidence shape</div>
+        <div class="brief-line"><b>03 · D</b>scope + FORESIGHT constellation</div>
+        <div class="brief-line"><b>04 · D</b>required near-miss alternative</div>
+        <div class="brief-line"><b>05 · I</b>possible effect · unestablished</div>
+        <div class="brief-line"><b>06 · U</b>declared unknown codes</div>
+        <div class="brief-line"><b>07</b>precommitted Safety Shims</div>
+        <div class="brief-line"><b>08</b>eight Open Angle states</div>
+        <div class="brief-line"><b>09</b>Return Fit declaration</div>
+        <div class="brief-line"><b>10</b>Repair Grain candidates</div>
+        <div class="brief-line"><b>11</b>fresh human-review boundary</div>
+        <div class="brief-line"><b>12</b>fixed non-claims</div>
+      </div>
+
+      <p class="brief-note">
+        The synthetic card, FORESIGHT scenario, and FORESIGHT projection are an
+        indivisible reviewed trio. Similar names, partial files, or recombined
+        fields do not count as the same brief.
+      </p>
+    </section>
+
+    <section class="shell" aria-labelledby="shims-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Safety Shims</p>
+          <h2 id="shims-title">Thin layers that stop category collapse.</h2>
+        </div>
+        <p>
+          Shims do not make a scenario safe or true. They keep the documentation
+          doorway too narrow for real material, hidden authority, or effectful
+          behavior to pass through.
+        </p>
+      </div>
+
+      <div class="shim-grid">
+        <article class="shim">
+          <h3><code>preserve-and-observe</code></h3>
+          <p>Keep uncertainty visible without changing the modeled boundary.</p>
+          <dl><dt>condition</dt><dd>uncertainty-remains</dd><dt>release</dt><dd>no-change-to-reverse</dd><dt>proof shape</dt><dd>unknowns-and-debt-visible</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>pause-new-fanout</code></h3>
+          <p>Hold new synthetic branches while capacity or blast radius stays unresolved.</p>
+          <dl><dt>condition</dt><dd>capacity-or-blast-radius-unresolved</dd><dt>release</dt><dd>resume-after-finite-budget-review</dd><dt>proof shape</dt><dd>queue-and-budget-check</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>narrow-delegated-authority</code></h3>
+          <p>Review a smaller authority envelope until its source and scope are fresh.</p>
+          <dl><dt>condition</dt><dd>authority-boundary-unresolved</dd><dt>release</dt><dd>restore-after-fresh-authority-review</dd><dt>proof shape</dt><dd>authority-envelope-check</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>separate-tainted-context</code></h3>
+          <p>Keep data, control, and retention questions in a clean review context.</p>
+          <dl><dt>condition</dt><dd>data-control-or-retention-boundary-unresolved</dd><dt>release</dt><dd>discard-ephemeral-context-after-clean-review</dd><dt>proof shape</dt><dd>clean-context-negative-control</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>hold-artifact-adoption</code></h3>
+          <p>Keep an artifact outside adoption while provenance or protocol binding is unclear.</p>
+          <dl><dt>condition</dt><dd>provenance-or-protocol-binding-unresolved</dd><dt>release</dt><dd>release-after-reproducible-provenance-review</dd><dt>proof shape</dt><dd>digest-and-schema-binding-check</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>withhold-publication</code></h3>
+          <p>Keep a synthetic publication candidate private while its purpose boundary remains unresolved.</p>
+          <dl><dt>condition</dt><dd>privacy-release-boundary-unresolved</dd><dt>release</dt><dd>release-after-purpose-and-privacy-review</dd><dt>proof shape</dt><dd>privacy-release-review</dd></dl>
+        </article>
+        <article class="shim">
+          <h3><code>restore-last-known-good</code></h3>
+          <p>Name a reversible return candidate only when a tested synthetic reference is available.</p>
+          <dl><dt>condition</dt><dd>tested-last-known-good-available</dd><dt>release</dt><dd>return-after-repair-and-release-review</dd><dt>proof shape</dt><dd>rollback-rehearsal-receipt</dd></dl>
+        </article>
+      </div>
+
+      <p class="brief-note">
+        Every Safety Shim is <code>reversible: true</code> and requires human
+        activation. FACET authorizes and executes none of them; rung membership
+        only limits which candidates a synthetic card may name.
+      </p>
+
+      <article class="open-angle" aria-labelledby="debt-title">
+        <span class="debt-mark">Eight Open Angles · debt stays visible</span>
+        <h3 id="debt-title">A citation never makes uncertainty paid.</h3>
+        <p>
+          Every current card carries all eight fixed receipt slots. A null slot
+          renders <code>open</code>; a populated slot is <code>receipt-cited</code>
+          or <code>contested</code>. A citation means only that a separately held,
+          privacy-scrubbed receipt digest was named. FACET does not fetch or judge
+          those bytes. Critical open debt prevents only a structural closeout-ready
+          claim inside the brief—it does not block a system or conclude a real event.
+        </p>
+        <div class="debt-slots" aria-label="Eight fixed Open Angle slots">
+          <div class="debt-slot">occurrence<br><small>high · review debt</small></div>
+          <div class="debt-slot">scope-authority<br><small>critical · closeout blocker</small></div>
+          <div class="debt-slot">evidence-integrity<br><small>high · review debt</small></div>
+          <div class="debt-slot">source-lineage<br><small>high · review debt</small></div>
+          <div class="debt-slot">counterevidence<br><small>high · review debt</small></div>
+          <div class="debt-slot">containment<br><small>critical · closeout blocker</small></div>
+          <div class="debt-slot">recovery<br><small>critical · closeout blocker</small></div>
+          <div class="debt-slot">privacy-release<br><small>critical · closeout blocker</small></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="shell" aria-labelledby="recovery-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Recovery &amp; learning</p>
+          <h2 id="recovery-title">Return with evidence. Learn without appetite.</h2>
+        </div>
+        <p>
+          The useful residue is a smaller question and a stronger synthetic test.
+          No command marks work complete, changes an external system, or carries a
+          conclusion forward without a new reviewed card.
+        </p>
+      </div>
+
+      <div class="recovery-grid">
+        <article class="recovery-card">
+          <h3>Return Fit · 復位證</h3>
+          <ol>
+            <li>Carry one closed recovery claim and receipt-shape category.</li>
+            <li>Optionally cite one scrubbed receipt SHA-256 without fetching it.</li>
+            <li>Keep the negative-control state explicit and reviewable.</li>
+            <li>Emit <code>recovery_established: false</code> even when the declaration says restored.</li>
+          </ol>
+        </article>
+
+        <article class="recovery-card">
+          <h3>Repair Grain · 修復紋</h3>
+          <ol>
+            <li>Name one closed, current-card lesson candidate without blame.</li>
+            <li>Point only toward a separately reviewed regression or repair boundary.</li>
+            <li>Keep it current-brief-only, with no recurrence or person generalization claim.</li>
+            <li>Require fresh human review before any adoption outside the brief.</li>
+          </ol>
+        </article>
+
+        <p class="link-law">
+          <strong>Linkage is not closure.</strong> <code>verify-link</code> checks the
+          declared previous/current relationship. It does not establish chronology,
+          recovery, truth, safety, or completion.
+        </p>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="godspeed-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Finite Godspeed · 神速</p>
+          <h2 id="godspeed-title">Fast because every safe reaction is already named.</h2>
+        </div>
+        <p>
+          This table governs only local synthetic documentation. One stimulus may
+          match one row. Any novelty, authority change, failed check, ambiguity,
+          or exhausted budget halts the loop for conscious review.
+        </p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Priority</th><th>Synthetic stimulus</th><th>Guard</th><th>Response</th><th>Verification</th><th>Halt if</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>g0</td><td><strong>authority-or-scope-change-requested</strong></td><td>any-real-control-change-needs-fresh-authority</td><td>separate-authority-review</td><td>no-control-or-action-field-enabled</td><td>always-before-real-change</td></tr>
+            <tr><td>g1</td><td><strong>playbook-drift-observed</strong></td><td>reviewed-v1-bytes-or-identity-differ</td><td>protocol-version-quarantine-review</td><td>pinned-v1-remains-unchanged</td><td>always-on-version-ambiguity</td></tr>
+            <tr><td>g2</td><td><strong>volume-budget-crossed</strong></td><td>one-card-or-finite-budget-no-longer-holds</td><td>halt-intake-and-bounded-sampling-review</td><td>no-batch-retry-alert-or-message</td><td>always-at-budget-boundary</td></tr>
+            <tr><td>g3</td><td><strong>privacy-release-risk</strong></td><td>privacy-release-receipt-is-not-safely-cited</td><td>withhold-publication-review</td><td>publication-remains-false-and-debt-visible</td><td>always-before-publication</td></tr>
+            <tr><td>g4</td><td><strong>claim-contested</strong></td><td>counterevidence-or-source-lineage-remains-contested</td><td>counterevidence-and-lineage-review</td><td>alternative-and-contested-state-remain-visible</td><td>conflicting-or-novel-state</td></tr>
+            <tr><td>g5</td><td><strong>recovery-evidence-missing</strong></td><td>recovery-receipt-is-open-or-contested</td><td>keep-open-recovery-review</td><td>recovery-debt-blocks-closeout-candidate</td><td>always-without-recovery-review</td></tr>
+            <tr><td>g6a</td><td><strong>closure-review-requested</strong></td><td>any-closure-blocking-debt-open-or-contested</td><td>keep-open-review-candidate</td><td>closure-authorized-remains-false</td><td>always-while-blocking-debt-remains</td></tr>
+            <tr><td>g6b</td><td><strong>closure-review-requested</strong></td><td>all-eight-distinct-receipt-shapes-cited</td><td>fresh-human-closure-review-candidate</td><td>closure-still-requires-human-authority</td><td>any-authenticity-privacy-or-lineage-uncertainty</td></tr>
+            <tr><td>g7</td><td><strong>new-authored-claim</strong></td><td>one-closed-synthetic-or-scrubbed-claim</td><td>bounded-triage-review-candidate</td><td>no-occurrence-claim-upgraded</td><td>novelty-or-scope-change</td></tr>
+            <tr><td>g8</td><td><strong>unresolved-novelty</strong></td><td>shape-is-uncharted-or-not-reviewed</td><td>observe-only</td><td>no-repair-enforcement-or-closure</td><td>always</td></tr>
+            <tr><td>breach</td><td><strong>schema-or-digest-verification-failed</strong></td><td>any-required-structural-verification-fails</td><td>stop-without-retry-or-result</td><td>source-unchanged-and-no-partial-brief</td><td>always</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="godspeed-vow">
+        <strong>Godspeed vow:</strong> speed removes deliberation only inside this
+        finite synthetic table. The public doorway takes only the synthetic branch
+        of <code>g7</code>. No row grants permission or proves wider state.
+      </p>
+    </section>
+
+    <section class="shell" aria-labelledby="walls-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Zero-effect walls</p>
+          <h2 id="walls-title">A doorway with no machinery behind it.</h2>
+        </div>
+        <p>
+          FACET reads closed synthetic artifacts and writes only bounded output to
+          the local terminal. The public doorway is static documentation.
+        </p>
+      </div>
+
+      <div class="walls">
+        <div class="wall-grid" aria-label="FACET zero-effect budget">
+          <div class="zero"><b>0</b><span>network calls</span></div>
+          <div class="zero"><b>0</b><span>external messages</span></div>
+          <div class="zero"><b>0</b><span>filesystem writes</span></div>
+          <div class="zero"><b>0</b><span>subprocesses</span></div>
+          <div class="zero"><b>0</b><span>model calls</span></div>
+          <div class="zero"><b>0</b><span>live collection</span></div>
+          <div class="zero"><b>0</b><span>person fields</span></div>
+          <div class="zero"><b>0</b><span>state changes</span></div>
+          <div class="zero"><b>0</b><span>completion decisions</span></div>
+        </div>
+
+        <aside class="wall-law" aria-labelledby="wall-law-title">
+          <h3 id="wall-law-title">No real event enters.</h3>
+          <p>
+            No production snapshot, request, log line, address, account, credential,
+            target, callback, or submitted prose belongs here. If material is real,
+            FACET is not its intake path.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="inspect-title">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Intended local interface</p>
+          <h2 id="inspect-title">Inspect the facet from the terminal.</h2>
+        </div>
+        <p>
+          Commands remain local and inert. They validate, digest, brief, render,
+          recompute, or compare declared lineage; none performs the modeled
+          recovery or marks a real condition complete.
+        </p>
+      </div>
+
+      <div class="inspect">
+        <div class="terminal" aria-label="Intended local KARMA FACET commands">
+          <div class="terminal-bar">synthetic fixture · local · one pass</div>
+          <pre><span class="prompt">$</span> <span class="command">kingdom incident brief \
+  CARD FORESIGHT_SCENARIO FORESIGHT_PROJECTION</span>
+
+<span class="prompt">$</span> kingdom incident {check|digest|brief|render} \
+  CARD FORESIGHT_SCENARIO FORESIGHT_PROJECTION
+
+<span class="prompt">$</span> kingdom incident verify-result \
+  CARD FORESIGHT_SCENARIO FORESIGHT_PROJECTION BRIEF
+
+<span class="prompt">$</span> <span class="command">kingdom incident verify-link \
+  PREVIOUS_CARD CURRENT_CARD</span>
+
+(synthetic structure and linkage only;
+ no external effect or completion claim)</pre>
+        </div>
+
+        <aside class="artifacts" aria-labelledby="artifacts-title">
+          <h3 id="artifacts-title">Local reviewed artifacts</h3>
+          <p>Relative files beside this doorway; each contract keeps its own namespace.</p>
+          <nav class="artifact-links" aria-label="KARMA FACET local artifacts">
+            <a href="catalog.json"><span><code>catalog.json</code><br><small>kingdom.karma-facet-catalog/v1</small></span></a>
+            <a href="playbook.json"><span><code>playbook.json</code><br><small>kingdom.karma-facet-playbook/v1</small></span></a>
+            <a href="facet.schema.json"><span><code>facet.schema.json</code><br><small>kingdom.karma-facet/v1</small></span></a>
+            <a href="brief.schema.json"><span><code>brief.schema.json</code><br><small>kingdom.karma-facet-brief/v1</small></span></a>
+            <a href="examples/synthetic-authority-boundary.json"><span><code>synthetic-authority-boundary.json</code><br><small>closed synthetic card</small></span></a>
+            <a href="examples/authority-foresight-projection.json"><span><code>authority-foresight-projection.json</code><br><small>reviewed projection fixture</small></span></a>
+          </nav>
+          <p class="mono">Catalog · ee751c456b3d2c7cf9f82a5b97698fbdf9b319e9ddf990b1440756ec1414dbc2</p>
+          <p class="mono">Playbook · 5753ac3dc00a9c8b262808b846b380c4dbd184e24452bb521dacb9052c85d5d7</p>
+          <p class="mono">Facet schema · 8cf120b340600631ded53fc9a36fbbfed9f9a73836cf596305150a48bf05d84e</p>
+          <p class="mono">Brief schema · 66970d1ec2ec18c83d41733b637e177c6add44df14328441610968f9202dc096</p>
+          <p class="mono">Synthetic card · c2f23776204b1bdc39e55c4a9db68a85dc7f56c49f53c2d6ff6c331f32ed534b</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <p>KARMA FACET · 稜面 · four synthetic planes · eight visible Open Angles · zero external effect</p>
+  </footer>
+</body>
+</html>

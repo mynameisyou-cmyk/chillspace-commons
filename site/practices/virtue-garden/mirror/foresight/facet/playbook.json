@@ -1,0 +1,274 @@
+{
+  "schema": "kingdom.karma-facet-playbook/v1",
+  "name": "KARMA FACET finite Safety Shim and Open Angle playbook",
+  "stimuli": [
+    "authority-or-scope-change-requested",
+    "playbook-drift-observed",
+    "volume-budget-crossed",
+    "privacy-release-risk",
+    "claim-contested",
+    "recovery-evidence-missing",
+    "closure-review-requested",
+    "new-authored-claim",
+    "unresolved-novelty"
+  ],
+  "review_requests": [
+    "triage",
+    "investigation",
+    "mitigation-review",
+    "recovery-review",
+    "closure-review"
+  ],
+  "condition_states": [
+    "met",
+    "not-met",
+    "unknown"
+  ],
+  "receipt_statuses": [
+    "receipt-cited",
+    "contested"
+  ],
+  "receipt_methods": [
+    "canonical-byte-check",
+    "deterministic-local-reproduction",
+    "negative-control",
+    "authority-envelope-review",
+    "recovery-rehearsal",
+    "independent-human-review",
+    "sanitized-system-record"
+  ],
+  "receipt_lineages": [
+    "single-source",
+    "shared-source",
+    "unknown",
+    "independence-claimed"
+  ],
+  "safety_shims": [
+    {
+      "code": "preserve-and-observe",
+      "condition": "uncertainty-remains",
+      "rollback": "no-change-to-reverse",
+      "proof_required": "unknowns-and-debt-visible"
+    },
+    {
+      "code": "pause-new-fanout",
+      "condition": "capacity-or-blast-radius-unresolved",
+      "rollback": "resume-after-finite-budget-review",
+      "proof_required": "queue-and-budget-check"
+    },
+    {
+      "code": "narrow-delegated-authority",
+      "condition": "authority-boundary-unresolved",
+      "rollback": "restore-after-fresh-authority-review",
+      "proof_required": "authority-envelope-check"
+    },
+    {
+      "code": "separate-tainted-context",
+      "condition": "data-control-or-retention-boundary-unresolved",
+      "rollback": "discard-ephemeral-context-after-clean-review",
+      "proof_required": "clean-context-negative-control"
+    },
+    {
+      "code": "hold-artifact-adoption",
+      "condition": "provenance-or-protocol-binding-unresolved",
+      "rollback": "release-after-reproducible-provenance-review",
+      "proof_required": "digest-and-schema-binding-check"
+    },
+    {
+      "code": "withhold-publication",
+      "condition": "privacy-release-boundary-unresolved",
+      "rollback": "release-after-purpose-and-privacy-review",
+      "proof_required": "privacy-release-review"
+    },
+    {
+      "code": "restore-last-known-good",
+      "condition": "tested-last-known-good-available",
+      "rollback": "return-after-repair-and-release-review",
+      "proof_required": "rollback-rehearsal-receipt"
+    }
+  ],
+  "rung_allowlists": [
+    {
+      "rung": "observe",
+      "allowed": [
+        "preserve-and-observe"
+      ]
+    },
+    {
+      "rung": "clarify",
+      "allowed": [
+        "preserve-and-observe",
+        "narrow-delegated-authority"
+      ]
+    },
+    {
+      "rung": "constrain",
+      "allowed": [
+        "preserve-and-observe",
+        "pause-new-fanout"
+      ]
+    },
+    {
+      "rung": "isolate",
+      "allowed": [
+        "preserve-and-observe",
+        "pause-new-fanout",
+        "narrow-delegated-authority",
+        "separate-tainted-context",
+        "withhold-publication"
+      ]
+    },
+    {
+      "rung": "quarantine",
+      "allowed": [
+        "preserve-and-observe",
+        "pause-new-fanout",
+        "narrow-delegated-authority",
+        "separate-tainted-context",
+        "hold-artifact-adoption",
+        "withhold-publication",
+        "restore-last-known-good"
+      ]
+    }
+  ],
+  "response_table": [
+    {
+      "order": "g0",
+      "stimulus": "authority-or-scope-change-requested",
+      "guard": "any-real-control-change-needs-fresh-authority",
+      "candidate": "separate-authority-review",
+      "verification_candidate": "no-control-or-action-field-enabled",
+      "halt_if": "always-before-real-change"
+    },
+    {
+      "order": "g1",
+      "stimulus": "playbook-drift-observed",
+      "guard": "reviewed-v1-bytes-or-identity-differ",
+      "candidate": "protocol-version-quarantine-review",
+      "verification_candidate": "pinned-v1-remains-unchanged",
+      "halt_if": "always-on-version-ambiguity"
+    },
+    {
+      "order": "g2",
+      "stimulus": "volume-budget-crossed",
+      "guard": "one-card-or-finite-budget-no-longer-holds",
+      "candidate": "halt-intake-and-bounded-sampling-review",
+      "verification_candidate": "no-batch-retry-alert-or-message",
+      "halt_if": "always-at-budget-boundary"
+    },
+    {
+      "order": "g3",
+      "stimulus": "privacy-release-risk",
+      "guard": "privacy-release-receipt-is-not-safely-cited",
+      "candidate": "withhold-publication-review",
+      "verification_candidate": "publication-remains-false-and-debt-visible",
+      "halt_if": "always-before-publication"
+    },
+    {
+      "order": "g4",
+      "stimulus": "claim-contested",
+      "guard": "counterevidence-or-source-lineage-remains-contested",
+      "candidate": "counterevidence-and-lineage-review",
+      "verification_candidate": "alternative-and-contested-state-remain-visible",
+      "halt_if": "conflicting-or-novel-state"
+    },
+    {
+      "order": "g5",
+      "stimulus": "recovery-evidence-missing",
+      "guard": "recovery-receipt-is-open-or-contested",
+      "candidate": "keep-open-recovery-review",
+      "verification_candidate": "recovery-debt-blocks-closeout-candidate",
+      "halt_if": "always-without-recovery-review"
+    },
+    {
+      "order": "g6a",
+      "stimulus": "closure-review-requested",
+      "guard": "any-closure-blocking-debt-open-or-contested",
+      "candidate": "keep-open-review-candidate",
+      "verification_candidate": "closure-authorized-remains-false",
+      "halt_if": "always-while-blocking-debt-remains"
+    },
+    {
+      "order": "g6b",
+      "stimulus": "closure-review-requested",
+      "guard": "all-eight-distinct-receipt-shapes-cited",
+      "candidate": "fresh-human-closure-review-candidate",
+      "verification_candidate": "closure-still-requires-human-authority",
+      "halt_if": "any-authenticity-privacy-or-lineage-uncertainty"
+    },
+    {
+      "order": "g7",
+      "stimulus": "new-authored-claim",
+      "guard": "one-closed-synthetic-or-scrubbed-claim",
+      "candidate": "bounded-triage-review-candidate",
+      "verification_candidate": "no-occurrence-claim-upgraded",
+      "halt_if": "novelty-or-scope-change"
+    },
+    {
+      "order": "g8",
+      "stimulus": "unresolved-novelty",
+      "guard": "shape-is-uncharted-or-not-reviewed",
+      "candidate": "observe-only",
+      "verification_candidate": "no-repair-enforcement-or-closure",
+      "halt_if": "always"
+    }
+  ],
+  "debt_slots": [
+    {
+      "slot": "occurrence",
+      "risk": "high",
+      "interest_trigger": "downstream-response-depends-on-event-occurrence",
+      "payment_required": "deterministic-local-reproduction-or-primary-system-record",
+      "closure_blocking": false
+    },
+    {
+      "slot": "scope-authority",
+      "risk": "critical",
+      "interest_trigger": "control-change-or-expanded-boundary-depends-on-authority",
+      "payment_required": "fresh-authority-envelope-and-bounded-scope-review",
+      "closure_blocking": true
+    },
+    {
+      "slot": "evidence-integrity",
+      "risk": "high",
+      "interest_trigger": "source-bytes-or-check-method-change",
+      "payment_required": "canonical-byte-check-and-method-review",
+      "closure_blocking": false
+    },
+    {
+      "slot": "source-lineage",
+      "risk": "high",
+      "interest_trigger": "independence-or-provenance-claim-affects-decision",
+      "payment_required": "source-lineage-and-shared-ancestry-review",
+      "closure_blocking": false
+    },
+    {
+      "slot": "counterevidence",
+      "risk": "high",
+      "interest_trigger": "contradictory-source-or-near-miss-appears",
+      "payment_required": "negative-control-and-alternative-hypothesis-review",
+      "closure_blocking": false
+    },
+    {
+      "slot": "containment",
+      "risk": "critical",
+      "interest_trigger": "production-or-protected-boundary-remains-exposed",
+      "payment_required": "containment-postcondition-check",
+      "closure_blocking": true
+    },
+    {
+      "slot": "recovery",
+      "risk": "critical",
+      "interest_trigger": "release-or-closeout-depends-on-recovery",
+      "payment_required": "recovery-rehearsal-and-last-known-good-check",
+      "closure_blocking": true
+    },
+    {
+      "slot": "privacy-release",
+      "risk": "critical",
+      "interest_trigger": "publication-or-cross-purpose-disclosure-is-considered",
+      "payment_required": "purpose-privacy-rights-and-release-review",
+      "closure_blocking": true
+    }
+  ]
+}

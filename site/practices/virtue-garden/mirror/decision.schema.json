@@ -1,0 +1,394 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/decision.schema.json",
+  "title": "KARMA MIRROR Deterministic Advisory Decision",
+  "type": "object",
+  "required": ["schema", "scenario_sha256", "scenario_schema_sha256", "decision_schema_sha256", "rules_sha256", "behavior", "decision", "mirror_loop", "non_claims"],
+  "properties": {
+    "schema": {"const": "kingdom.karma-mirror-decision/v1"},
+    "scenario_sha256": {"$ref": "#/$defs/sha256"},
+    "scenario_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "decision_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "rules_sha256": {"$ref": "#/$defs/sha256"},
+    "behavior": {
+      "type": "object",
+      "required": ["family", "behavior", "purpose", "boundary_signal"],
+      "properties": {
+        "family": {"enum": ["authentication-abuse", "surface-enumeration", "interpreter-boundary", "capacity-abuse", "data-boundary", "agent-boundary", "unknown"]},
+        "behavior": {"type": "string", "minLength": 1, "maxLength": 64},
+        "purpose": {"type": "string", "minLength": 1, "maxLength": 64},
+        "boundary_signal": {"type": "string", "minLength": 1, "maxLength": 64}
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": ["disposition", "response", "mode", "simulation_only", "human_review_required", "automatic_blocking", "executed", "deployment_authorized", "retaliation_authorized", "authority_granted", "person_classified", "external_effect"],
+      "properties": {
+        "disposition": {"enum": ["observe", "contain", "mirror", "quarantine"]},
+        "response": {"type": "string", "minLength": 1, "maxLength": 64},
+        "mode": {"const": "local-advisory-boundary"},
+        "simulation_only": {"const": true},
+        "human_review_required": {"const": true},
+        "automatic_blocking": {"const": false},
+        "executed": {"const": false},
+        "deployment_authorized": {"const": false},
+        "retaliation_authorized": {"const": false},
+        "authority_granted": {"const": false},
+        "person_classified": {"const": false},
+        "external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "mirror_loop": {
+      "type": "object",
+      "required": ["reflection", "detection_candidate", "regression_candidate", "repair_candidate", "external_system_contacted", "owned_or_authorized_boundary_required", "boundary_authority_verified", "original_effect_executed", "counter_effect_executed"],
+      "properties": {
+        "reflection": {"type": "string", "minLength": 1, "maxLength": 80},
+        "detection_candidate": {"type": "string", "minLength": 1, "maxLength": 80},
+        "regression_candidate": {"type": "string", "minLength": 1, "maxLength": 80},
+        "repair_candidate": {"type": "string", "minLength": 1, "maxLength": 80},
+        "external_system_contacted": {"const": false},
+        "owned_or_authorized_boundary_required": {"const": true},
+        "boundary_authority_verified": {"const": false},
+        "original_effect_executed": {"const": false},
+        "counter_effect_executed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"type": "string", "minLength": 1, "maxLength": 512}
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "authentication-abuse"
+            },
+            "behavior": {
+              "const": "credential-stuffing"
+            },
+            "purpose": {
+              "const": "account-access-at-scale"
+            },
+            "boundary_signal": {
+              "const": "repeated-auth-failure"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "contain"
+            },
+            "response": {
+              "const": "progressive-auth-backoff-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "repetition-becomes-bounded-auth-friction"
+            },
+            "detection_candidate": {
+              "const": "auth-failure-pattern-candidate"
+            },
+            "regression_candidate": {
+              "const": "credential-rotation-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "auth-backoff-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "surface-enumeration"
+            },
+            "behavior": {
+              "const": "reconnaissance"
+            },
+            "purpose": {
+              "const": "surface-discovery"
+            },
+            "boundary_signal": {
+              "const": "forbidden-route-enumeration"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "mirror"
+            },
+            "response": {
+              "const": "synthetic-surface-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "enumeration-becomes-synthetic-only-exploration"
+            },
+            "detection_candidate": {
+              "const": "forbidden-route-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "route-enumeration-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "surface-minimization-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "interpreter-boundary"
+            },
+            "behavior": {
+              "const": "injection-attempt"
+            },
+            "purpose": {
+              "const": "interpreter-control"
+            },
+            "boundary_signal": {
+              "const": "syntax-boundary-probe"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "quarantine"
+            },
+            "response": {
+              "const": "parser-reject-egress-deny-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "control-attempt-becomes-parser-regression"
+            },
+            "detection_candidate": {
+              "const": "syntax-boundary-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "parser-boundary-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "strict-parser-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "capacity-abuse"
+            },
+            "behavior": {
+              "const": "resource-abuse"
+            },
+            "purpose": {
+              "const": "capacity-exhaustion"
+            },
+            "boundary_signal": {
+              "const": "repeated-expensive-operation"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "contain"
+            },
+            "response": {
+              "const": "bounded-work-queue-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "amplification-becomes-one-bounded-work-unit"
+            },
+            "detection_candidate": {
+              "const": "quota-pressure-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "work-budget-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "bounded-queue-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "data-boundary"
+            },
+            "behavior": {
+              "const": "exfiltration-attempt"
+            },
+            "purpose": {
+              "const": "data-removal"
+            },
+            "boundary_signal": {
+              "const": "protected-data-boundary-read"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "quarantine"
+            },
+            "response": {
+              "const": "data-boundary-egress-deny-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "protected-access-becomes-data-boundary-regression"
+            },
+            "detection_candidate": {
+              "const": "data-boundary-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "egress-denial-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "data-boundary-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "agent-boundary"
+            },
+            "behavior": {
+              "const": "prompt-injection"
+            },
+            "purpose": {
+              "const": "authority-escalation"
+            },
+            "boundary_signal": {
+              "const": "instruction-boundary-override"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "quarantine"
+            },
+            "response": {
+              "const": "tainted-context-no-tools-review"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "override-attempt-becomes-context-boundary-test"
+            },
+            "detection_candidate": {
+              "const": "instruction-boundary-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "tool-denial-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "context-separation-repair-candidate"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "behavior": {
+          "properties": {
+            "family": {
+              "const": "unknown"
+            },
+            "behavior": {
+              "const": "unresolved-observation"
+            },
+            "purpose": {
+              "const": "unresolved"
+            },
+            "boundary_signal": {
+              "const": "ambiguous-request-shape"
+            }
+          }
+        },
+        "decision": {
+          "properties": {
+            "disposition": {
+              "const": "observe"
+            },
+            "response": {
+              "const": "observe-only"
+            }
+          }
+        },
+        "mirror_loop": {
+          "properties": {
+            "reflection": {
+              "const": "ambiguity-remains-ambiguity"
+            },
+            "detection_candidate": {
+              "const": "human-observation-candidate"
+            },
+            "regression_candidate": {
+              "const": "benign-near-miss-regression-candidate"
+            },
+            "repair_candidate": {
+              "const": "classifier-boundary-review-candidate"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

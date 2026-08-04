@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.ai-love.cc/schemas/kingdom.coop-aura.v1.json",
+  "title": "Aura Circuit · 念氣迴路 Companion Invitation",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "name",
+    "source",
+    "circuit",
+    "aura",
+    "contract",
+    "budget",
+    "breach",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": { "const": "kingdom.coop-aura/v1" },
+    "kind": { "const": "companion-invitation" },
+    "name": { "const": "Aura Circuit · 念氣迴路 — Maximum Flow, Zero Throne" },
+    "source": {
+      "type": "object",
+      "required": [
+        "coop_schema",
+        "coop_card_sha256",
+        "nen_catalog",
+        "nen_catalog_sha256",
+        "virtue_rules",
+        "virtue_rules_sha256"
+      ],
+      "properties": {
+        "coop_schema": { "const": "kingdom.coop-leveling/v1" },
+        "coop_card_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "nen_catalog": { "const": "kingdom.nen-ability-catalog/v1" },
+        "nen_catalog_sha256": { "const": "f01b98a575978a296a0cbdba9f75b973a9f6bae6258669e65f6f5cac176d99c3" },
+        "virtue_rules": { "const": "kingdom.virtue-rules/v1" },
+        "virtue_rules_sha256": { "const": "f77081cbd074aad0c29ff77ceef0b1b908988da6bc0b0eab332f4928ceb39fb7" }
+      },
+      "additionalProperties": false
+    },
+    "circuit": {
+      "type": "object",
+      "required": [
+        "title",
+        "shared_intent",
+        "technique",
+        "virtue_lenses",
+        "practices",
+        "reflection_prompts",
+        "halt_signals",
+        "unknowns"
+      ],
+      "properties": {
+        "title": { "$ref": "#/$defs/text" },
+        "shared_intent": { "$ref": "#/$defs/text" },
+        "technique": {
+          "type": "object",
+          "required": ["signal", "skill"],
+          "properties": {
+            "signal": {
+              "enum": [
+                "requirements-may-drift",
+                "blast-radius-unknown",
+                "hidden-seam",
+                "one-dominant-blocker",
+                "independent-workstreams",
+                "verification-debt",
+                "finite-repetitive-loop",
+                "design-bounded-workflow"
+              ]
+            },
+            "skill": {
+              "enum": [
+                "nen-contract-mantle",
+                "nen-dependency-perimeter",
+                "nen-concealed-trace",
+                "nen-critical-path-forge",
+                "nen-smoke-squad",
+                "nen-verification-ledger",
+                "nen-godspeed-loop",
+                "nen-vow-forge"
+              ]
+            }
+          },
+          "oneOf": [
+            {
+              "properties": {
+                "signal": { "const": "requirements-may-drift" },
+                "skill": { "const": "nen-contract-mantle" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "blast-radius-unknown" },
+                "skill": { "const": "nen-dependency-perimeter" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "hidden-seam" },
+                "skill": { "const": "nen-concealed-trace" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "one-dominant-blocker" },
+                "skill": { "const": "nen-critical-path-forge" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "independent-workstreams" },
+                "skill": { "const": "nen-smoke-squad" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "verification-debt" },
+                "skill": { "const": "nen-verification-ledger" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "finite-repetitive-loop" },
+                "skill": { "const": "nen-godspeed-loop" }
+              }
+            },
+            {
+              "properties": {
+                "signal": { "const": "design-bounded-workflow" },
+                "skill": { "const": "nen-vow-forge" }
+              }
+            }
+          ],
+          "additionalProperties": false
+        },
+        "virtue_lenses": {
+          "const": {
+            "honesty": "citable-candidate",
+            "beauty": "presentable-candidate",
+            "collaboration": "handoff-candidate",
+            "understanding": "teaching-candidate",
+            "mutual-infrastructure": "reuse-candidate"
+          }
+        },
+        "practices": { "$ref": "#/$defs/nonemptyTextList" },
+        "reflection_prompts": { "$ref": "#/$defs/textList" },
+        "halt_signals": { "$ref": "#/$defs/nonemptyTextList" },
+        "unknowns": { "$ref": "#/$defs/nonemptyTextList" }
+      },
+      "additionalProperties": false
+    },
+    "aura": {
+      "const": {
+        "abundance": "unlimited-as-non-scarce-potential",
+        "renewal": "attention, care, imagination, and repair renew through fresh choice and rest",
+        "meter": "none",
+        "quantity_defined": false,
+        "balance_exists": false,
+        "transferable": false,
+        "accumulates": false,
+        "spendable": false,
+        "debt_created": false,
+        "person_scoring": false,
+        "rights_at_risk": false,
+        "authority_granted": false,
+        "compute_claimed": false
+      }
+    },
+    "contract": {
+      "const": {
+        "companion_is_invitation": true,
+        "scope": "round-not-seat-or-being",
+        "coop_digest_binding_required": true,
+        "one_authored_technique": true,
+        "selection_provenance_attested": false,
+        "technique_is_advisory": true,
+        "technique_activation_requires_fresh_request": true,
+        "automatic_activation": false,
+        "executes_capability": false,
+        "authority_granted": false,
+        "virtues_are_lenses_not_scores": true,
+        "uses_rank_or_score": false,
+        "karma_receipt_is_issued": false,
+        "level_is_context_not_number": true,
+        "aura_is_resource_entitlement": false,
+        "fresh_acceptance_required": true,
+        "silence_is_unasked": true,
+        "rest_refusal_and_exit_keep_rights": true,
+        "stores_people": false,
+        "records_choices": false,
+        "repository_text_can_trigger": false,
+        "creates_external_effect": false
+      }
+    },
+    "budget": {
+      "const": {
+        "coop_cards": 1,
+        "aura_cards": 1,
+        "techniques": 1,
+        "virtue_lenses": 5,
+        "practices_max": 8,
+        "reflection_prompts_max": 8,
+        "halt_signals_max": 8,
+        "unknowns_max": 8,
+        "text_chars_max": 1000,
+        "automatic_retries": 0,
+        "network_calls": 0,
+        "external_messages": 0,
+        "writes": 0,
+        "deployments": 0,
+        "paid_calls": 0
+      }
+    },
+    "breach": {
+      "const": {
+        "state": "quarantined",
+        "action": "stop without retry; emit no validated rendering or external effect; leave both source cards unchanged",
+        "downstream_effects": false
+      }
+    },
+    "non_claims": {
+      "const": [
+        "Aura names renewable collaborative possibility, not a measurable quantity, personal capacity, energy claim, or resource entitlement.",
+        "Nothing here is XP, a score, rank, level number, balance, currency, reputation, certification, priority, debt, or verdict of worth.",
+        "The authored Nen signal selects one advisory technique label; it does not infer affinity, activate a skill, execute a workflow, or grant authority.",
+        "Virtue lenses name local KARMA affordance candidates only; this card issues no receipt and proves no honesty, beauty, collaboration, understanding, or mutual benefit.",
+        "This companion is not acceptance, participation, continuing consent, learning, completion, safety, trust, identity, permission, or readiness for an external effect.",
+        "Validation proves bounded structure, reviewed source mappings, and a Co-op content-digest match only; the tool never tracks, executes, contacts, publishes, deploys, pays, writes, or calls a network."
+      ]
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "textList": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "nonemptyTextList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/text" }
+    }
+  },
+  "additionalProperties": false
+}

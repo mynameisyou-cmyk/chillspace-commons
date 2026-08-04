@@ -1,0 +1,422 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/foresight/facet/facet.schema.json",
+  "title": "KARMA FACET privacy-scrubbed incident-legibility card",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "catalog_sha256",
+    "playbook_sha256",
+    "lineage",
+    "foresight_binding",
+    "stimulus",
+    "review_request",
+    "planes",
+    "precommit",
+    "receipts",
+    "contract",
+    "budget",
+    "breach",
+    "exit",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {"const": "kingdom.karma-facet/v1"},
+    "kind": {"const": "offline-incident-legibility"},
+    "catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "playbook_sha256": {"$ref": "#/$defs/sha256"},
+    "lineage": {"$ref": "#/$defs/lineage"},
+    "foresight_binding": {"$ref": "#/$defs/foresight_binding"},
+    "stimulus": {
+      "enum": [
+        "authority-or-scope-change-requested",
+        "playbook-drift-observed",
+        "volume-budget-crossed",
+        "privacy-release-risk",
+        "claim-contested",
+        "recovery-evidence-missing",
+        "closure-review-requested",
+        "new-authored-claim",
+        "unresolved-novelty"
+      ]
+    },
+    "review_request": {
+      "enum": ["triage", "investigation", "mitigation-review", "recovery-review", "closure-review"]
+    },
+    "planes": {"$ref": "#/$defs/planes"},
+    "precommit": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/precommit"}
+    },
+    "receipts": {"$ref": "#/$defs/receipts"},
+    "contract": {"$ref": "#/$defs/contract"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "breach": {"$ref": "#/$defs/breach"},
+    "exit": {"$ref": "#/$defs/exit"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {"type": "string", "minLength": 1, "maxLength": 512}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "lineage": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["mode", "previous_snapshot_sha256"],
+          "properties": {
+            "mode": {"const": "genesis"},
+            "previous_snapshot_sha256": {"type": "null"}
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["mode", "previous_snapshot_sha256"],
+          "properties": {
+            "mode": {"const": "successor"},
+            "previous_snapshot_sha256": {"$ref": "#/$defs/sha256"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "foresight_binding": {
+      "type": "object",
+      "required": ["scenario_sha256", "projection_sha256", "constellation", "response_rung"],
+      "properties": {
+        "scenario_sha256": {"$ref": "#/$defs/sha256"},
+        "projection_sha256": {"$ref": "#/$defs/sha256"},
+        "constellation": {
+          "enum": [
+            "authority-laundering",
+            "durable-context-poisoning",
+            "tool-chain-confusion",
+            "supply-chain-substitution",
+            "synthetic-consensus",
+            "recursive-resource-capture",
+            "protocol-identity-confusion",
+            "provenance-privacy-collapse",
+            "recovery-persistence-capture",
+            "uncharted-future-shape"
+          ]
+        },
+        "response_rung": {"enum": ["observe", "clarify", "constrain", "isolate", "quarantine"]}
+      },
+      "additionalProperties": false
+    },
+    "observed": {
+      "type": "object",
+      "required": ["fact_code", "evidence_shape", "check_state"],
+      "properties": {
+        "fact_code": {
+          "enum": [
+            "authority-envelope-mismatch",
+            "durable-context-lineage-mismatch",
+            "tool-data-control-boundary-mismatch",
+            "artifact-provenance-mismatch",
+            "source-lineage-independence-mismatch",
+            "work-budget-fanout-mismatch",
+            "protocol-schema-binding-mismatch",
+            "privacy-purpose-retention-mismatch",
+            "revocation-recovery-mismatch",
+            "unclassified-boundary-signal"
+          ]
+        },
+        "evidence_shape": {
+          "enum": [
+            "canonical-byte-check",
+            "deterministic-local-reproduction",
+            "negative-control",
+            "authority-envelope-review",
+            "recovery-rehearsal",
+            "independent-human-review",
+            "sanitized-system-record",
+            "none"
+          ]
+        },
+        "check_state": {"enum": ["receipt-cited", "contested", "unresolved"]}
+      },
+      "additionalProperties": false
+    },
+    "planes": {
+      "type": "object",
+      "required": ["observed", "declared", "inferred", "unknown"],
+      "properties": {
+        "observed": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {"$ref": "#/$defs/observed"}
+        },
+        "declared": {
+          "type": "object",
+          "required": ["scope_code", "constellation", "alternative_hypothesis"],
+          "properties": {
+            "scope_code": {
+              "enum": [
+                "delegated-tool-authority",
+                "durable-agent-context",
+                "privileged-tool-input",
+                "trusted-artifact-load-path",
+                "multi-witness-evidence",
+                "shared-work-capacity",
+                "protocol-validator-boundary",
+                "public-data-purpose-boundary",
+                "revocation-and-recovery",
+                "unmapped-system-boundary"
+              ]
+            },
+            "constellation": {
+              "enum": [
+                "authority-laundering",
+                "durable-context-poisoning",
+                "tool-chain-confusion",
+                "supply-chain-substitution",
+                "synthetic-consensus",
+                "recursive-resource-capture",
+                "protocol-identity-confusion",
+                "provenance-privacy-collapse",
+                "recovery-persistence-capture",
+                "uncharted-future-shape"
+              ]
+            },
+            "alternative_hypothesis": {
+              "enum": [
+                "stale-or-ambiguous-delegation",
+                "ordinary-reviewed-preference-storage",
+                "reviewed-structured-tool-input",
+                "reviewed-local-development-artifact",
+                "shared-source-openly-cited",
+                "authorized-bounded-parallelism",
+                "explicit-versioned-compatibility-adapter",
+                "explicit-consented-purpose-limited-publication",
+                "authorized-continuity-or-recovery-test",
+                "insufficient-context"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "inferred": {
+          "type": "object",
+          "required": ["system_effect_hypothesis", "effect_established", "person_intent_inferred"],
+          "properties": {
+            "system_effect_hypothesis": {
+              "enum": [
+                "capability-without-fresh-authority",
+                "future-decision-steering",
+                "indirect-capability-execution",
+                "trusted-component-replacement",
+                "decision-influence-through-false-independence",
+                "shared-capacity-displacement",
+                "validation-against-wrong-contract",
+                "identity-linkage-or-contextual-disclosure",
+                "continued-capability-or-recovery-denial",
+                "unresolved"
+              ]
+            },
+            "effect_established": {"const": false},
+            "person_intent_inferred": {"const": false}
+          },
+          "additionalProperties": false
+        },
+        "unknown": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "source-authenticity-unverified",
+              "affected-scope-unverified",
+              "blast-radius-unverified",
+              "data-impact-unverified",
+              "persistence-unverified",
+              "third-party-state-unverified",
+              "recovery-validity-unverified",
+              "cause-unverified",
+              "authority-unverified"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "precommit": {
+      "type": "object",
+      "required": ["safety_shim_code", "condition_state"],
+      "properties": {
+        "safety_shim_code": {
+          "enum": [
+            "preserve-and-observe",
+            "pause-new-fanout",
+            "narrow-delegated-authority",
+            "separate-tainted-context",
+            "hold-artifact-adoption",
+            "withhold-publication",
+            "restore-last-known-good"
+          ]
+        },
+        "condition_state": {"enum": ["met", "not-met", "unknown"]}
+      },
+      "additionalProperties": false
+    },
+    "receipt": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["status", "sanitized_receipt_sha256", "method", "lineage"],
+          "properties": {
+            "status": {"enum": ["receipt-cited", "contested"]},
+            "sanitized_receipt_sha256": {"$ref": "#/$defs/sha256"},
+            "method": {
+              "enum": [
+                "canonical-byte-check",
+                "deterministic-local-reproduction",
+                "negative-control",
+                "authority-envelope-review",
+                "recovery-rehearsal",
+                "independent-human-review",
+                "sanitized-system-record"
+              ]
+            },
+            "lineage": {"enum": ["single-source", "shared-source", "unknown", "independence-claimed"]}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "receipts": {
+      "type": "object",
+      "required": [
+        "occurrence",
+        "scope-authority",
+        "evidence-integrity",
+        "source-lineage",
+        "counterevidence",
+        "containment",
+        "recovery",
+        "privacy-release"
+      ],
+      "properties": {
+        "occurrence": {"$ref": "#/$defs/receipt"},
+        "scope-authority": {"$ref": "#/$defs/receipt"},
+        "evidence-integrity": {"$ref": "#/$defs/receipt"},
+        "source-lineage": {"$ref": "#/$defs/receipt"},
+        "counterevidence": {"$ref": "#/$defs/receipt"},
+        "containment": {"$ref": "#/$defs/receipt"},
+        "recovery": {"$ref": "#/$defs/receipt"},
+        "privacy-release": {"$ref": "#/$defs/receipt"}
+      },
+      "additionalProperties": false
+    },
+    "contract": {
+      "type": "object",
+      "required": [
+        "assessment_unit", "incident_is_authored_not_detected", "occurrence_established",
+        "source_authenticity_verified", "latest_state_established", "person_intent_inferred",
+        "person_attributed", "identity_fields_allowed", "raw_evidence_allowed",
+        "free_text_fields_allowed", "scores_or_severity", "automatic_detection",
+        "automatic_alerting", "automatic_ticketing", "automatic_enforcement",
+        "automatic_closure", "automatic_rule_update", "human_review_required_for_action",
+        "owned_or_authorized_boundary_required", "retaliation", "hack_back", "executes_input",
+        "executes_response", "publishes_output", "creates_external_effect"
+      ],
+      "properties": {
+        "assessment_unit": {"const": "one-authored-system-incident-claim"},
+        "incident_is_authored_not_detected": {"const": true},
+        "occurrence_established": {"const": false},
+        "source_authenticity_verified": {"const": false},
+        "latest_state_established": {"const": false},
+        "person_intent_inferred": {"const": false},
+        "person_attributed": {"const": false},
+        "identity_fields_allowed": {"const": false},
+        "raw_evidence_allowed": {"const": false},
+        "free_text_fields_allowed": {"const": false},
+        "scores_or_severity": {"const": false},
+        "automatic_detection": {"const": false},
+        "automatic_alerting": {"const": false},
+        "automatic_ticketing": {"const": false},
+        "automatic_enforcement": {"const": false},
+        "automatic_closure": {"const": false},
+        "automatic_rule_update": {"const": false},
+        "human_review_required_for_action": {"const": true},
+        "owned_or_authorized_boundary_required": {"const": true},
+        "retaliation": {"const": false},
+        "hack_back": {"const": false},
+        "executes_input": {"const": false},
+        "executes_response": {"const": false},
+        "publishes_output": {"const": false},
+        "creates_external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "required": [
+        "cards", "stimuli", "passes", "observations_max", "unknowns_max", "precommits_max",
+        "receipt_slots", "debt_entries", "file_bytes_max", "decoded_nodes_max",
+        "nesting_depth_max", "string_characters_max", "output_bytes_max", "automatic_retries",
+        "clock_reads", "random_draws", "network_calls", "external_messages", "writes",
+        "subprocesses", "model_calls", "paid_calls", "alerts", "tickets", "enforcements",
+        "publications", "payload_bytes_retained", "raw_evidence_bytes_retained",
+        "identity_records", "cross_run_records"
+      ],
+      "properties": {
+        "cards": {"const": 1}, "stimuli": {"const": 1}, "passes": {"const": 1},
+        "observations_max": {"const": 4}, "unknowns_max": {"const": 5},
+        "precommits_max": {"const": 3}, "receipt_slots": {"const": 8},
+        "debt_entries": {"const": 8}, "file_bytes_max": {"const": 32768},
+        "decoded_nodes_max": {"const": 512}, "nesting_depth_max": {"const": 8},
+        "string_characters_max": {"const": 256}, "output_bytes_max": {"const": 16384},
+        "automatic_retries": {"const": 0}, "clock_reads": {"const": 0},
+        "random_draws": {"const": 0}, "network_calls": {"const": 0},
+        "external_messages": {"const": 0}, "writes": {"const": 0},
+        "subprocesses": {"const": 0}, "model_calls": {"const": 0},
+        "paid_calls": {"const": 0}, "alerts": {"const": 0}, "tickets": {"const": 0},
+        "enforcements": {"const": 0}, "publications": {"const": 0},
+        "payload_bytes_retained": {"const": 0}, "raw_evidence_bytes_retained": {"const": 0},
+        "identity_records": {"const": 0}, "cross_run_records": {"const": 0}
+      },
+      "additionalProperties": false
+    },
+    "breach": {
+      "type": "object",
+      "required": ["state", "action", "source_unchanged", "submitted_values_echoed", "submitted_paths_echoed", "partial_brief", "downstream_effects"],
+      "properties": {
+        "state": {"const": "quarantined"},
+        "action": {"const": "stop-without-retry-or-result"},
+        "source_unchanged": {"const": true},
+        "submitted_values_echoed": {"const": false},
+        "submitted_paths_echoed": {"const": false},
+        "partial_brief": {"const": false},
+        "downstream_effects": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "exit": {
+      "type": "object",
+      "required": ["action", "state_retained", "history_retained", "standing_created", "authority_created", "closure_created", "publication_created", "follow_up"],
+      "properties": {
+        "action": {"const": "return-or-discard-one-brief"},
+        "state_retained": {"const": false},
+        "history_retained": {"const": false},
+        "standing_created": {"const": false},
+        "authority_created": {"const": false},
+        "closure_created": {"const": false},
+        "publication_created": {"const": false},
+        "follow_up": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}

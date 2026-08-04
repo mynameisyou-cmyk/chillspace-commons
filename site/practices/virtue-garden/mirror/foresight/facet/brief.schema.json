@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/foresight/facet/brief.schema.json",
+  "title": "KARMA FACET deterministic 60-second brief",
+  "type": "object",
+  "required": [
+    "schema",
+    "card_sha256",
+    "card_schema_sha256",
+    "brief_schema_sha256",
+    "catalog_sha256",
+    "playbook_sha256",
+    "foresight_binding",
+    "lineage_claim",
+    "incident_claim",
+    "brief",
+    "planes",
+    "response",
+    "safety_shims",
+    "evidence_debt",
+    "readiness",
+    "return_fit",
+    "lessons",
+    "exit",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {"const": "kingdom.karma-facet-brief/v1"},
+    "card_sha256": {"$ref": "#/$defs/sha256"},
+    "card_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "brief_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "playbook_sha256": {"$ref": "#/$defs/sha256"},
+    "foresight_binding": {"$ref": "#/$defs/foresight_binding"},
+    "lineage_claim": {"$ref": "#/$defs/lineage_claim"},
+    "incident_claim": {"$ref": "#/$defs/incident_claim"},
+    "brief": {"$ref": "#/$defs/brief"},
+    "planes": {"$ref": "#/$defs/planes"},
+    "response": {"$ref": "#/$defs/response"},
+    "safety_shims": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/safety_shim"}
+    },
+    "evidence_debt": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/debt"}
+    },
+    "readiness": {"$ref": "#/$defs/readiness"},
+    "return_fit": {"$ref": "#/$defs/return_fit"},
+    "lessons": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {"$ref": "#/$defs/lesson"}
+    },
+    "exit": {"$ref": "#/$defs/exit"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {"type": "string", "minLength": 1, "maxLength": 512}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "foresight_binding": {
+      "type": "object",
+      "required": ["scenario_sha256", "projection_sha256", "constellation", "response_rung", "exact_recomputation"],
+      "properties": {
+        "scenario_sha256": {"$ref": "#/$defs/sha256"},
+        "projection_sha256": {"$ref": "#/$defs/sha256"},
+        "constellation": {"type": "string", "minLength": 1, "maxLength": 64},
+        "response_rung": {"enum": ["observe", "clarify", "constrain", "isolate", "quarantine"]},
+        "exact_recomputation": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "lineage_claim": {
+      "type": "object",
+      "required": ["mode", "previous_snapshot_sha256", "predecessor_verified", "chronology_established", "latest_state_established"],
+      "properties": {
+        "mode": {"enum": ["genesis", "successor"]},
+        "previous_snapshot_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "predecessor_verified": {"const": false},
+        "chronology_established": {"const": false},
+        "latest_state_established": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "incident_claim": {
+      "type": "object",
+      "required": [
+        "stimulus", "review_request", "incident_occurrence_established", "source_authenticity_verified",
+        "system_effect_established", "cause_established", "person_intent_inferred", "person_attributed"
+      ],
+      "properties": {
+        "stimulus": {"type": "string", "minLength": 1, "maxLength": 64},
+        "review_request": {"type": "string", "minLength": 1, "maxLength": 32},
+        "incident_occurrence_established": {"const": false},
+        "source_authenticity_verified": {"const": false},
+        "system_effect_established": {"const": false},
+        "cause_established": {"const": false},
+        "person_intent_inferred": {"const": false},
+        "person_attributed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "brief": {
+      "type": "object",
+      "required": ["title", "read_seconds_target", "line_budget", "structural_state"],
+      "properties": {
+        "title": {"const": "KARMA FACET · 60-second incident brief"},
+        "read_seconds_target": {"const": 60},
+        "line_budget": {"const": 12},
+        "structural_state": {"const": "one-scrubbed-claim-compiled"}
+      },
+      "additionalProperties": false
+    },
+    "observed": {
+      "type": "object",
+      "required": ["fact_code", "evidence_shape", "check_state"],
+      "properties": {
+        "fact_code": {"type": "string", "minLength": 1, "maxLength": 96},
+        "evidence_shape": {"type": "string", "minLength": 1, "maxLength": 64},
+        "check_state": {"enum": ["receipt-cited", "contested", "unresolved"]}
+      },
+      "additionalProperties": false
+    },
+    "planes": {
+      "type": "object",
+      "required": ["observed", "declared", "inferred", "unknown"],
+      "properties": {
+        "observed": {"type": "array", "minItems": 1, "maxItems": 4, "items": {"$ref": "#/$defs/observed"}},
+        "declared": {
+          "type": "object",
+          "required": ["scope_code", "constellation", "alternative_hypothesis"],
+          "properties": {
+            "scope_code": {"type": "string", "minLength": 1, "maxLength": 64},
+            "constellation": {"type": "string", "minLength": 1, "maxLength": 64},
+            "alternative_hypothesis": {"type": "string", "minLength": 1, "maxLength": 96}
+          },
+          "additionalProperties": false
+        },
+        "inferred": {
+          "type": "object",
+          "required": ["system_effect_hypothesis", "effect_established", "person_intent_inferred"],
+          "properties": {
+            "system_effect_hypothesis": {"type": "string", "minLength": 1, "maxLength": 96},
+            "effect_established": {"const": false},
+            "person_intent_inferred": {"const": false}
+          },
+          "additionalProperties": false
+        },
+        "unknown": {"type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 64}}
+      },
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "required": [
+        "rule", "guard", "candidate", "verification_candidate", "halt_if", "advisory_only",
+        "human_review_required", "automatic_alert", "automatic_ticket", "automatic_enforcement",
+        "execution_authorized", "executed", "closure_authorized", "publication_authorized",
+        "authority_granted", "person_classified", "external_effect"
+      ],
+      "properties": {
+        "rule": {"type": "string", "pattern": "^g[0-9]+[ab]?$"},
+        "guard": {"type": "string", "minLength": 1, "maxLength": 96},
+        "candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "verification_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "halt_if": {"type": "string", "minLength": 1, "maxLength": 96},
+        "advisory_only": {"const": true},
+        "human_review_required": {"const": true},
+        "automatic_alert": {"const": false},
+        "automatic_ticket": {"const": false},
+        "automatic_enforcement": {"const": false},
+        "execution_authorized": {"const": false},
+        "executed": {"const": false},
+        "closure_authorized": {"const": false},
+        "publication_authorized": {"const": false},
+        "authority_granted": {"const": false},
+        "person_classified": {"const": false},
+        "external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "safety_shim": {
+      "type": "object",
+      "required": ["code", "condition", "condition_state", "rollback", "proof_required", "reversible", "human_activation_required", "execution_authorized", "executed", "external_effect"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1, "maxLength": 64},
+        "condition": {"type": "string", "minLength": 1, "maxLength": 96},
+        "condition_state": {"enum": ["met", "not-met", "unknown"]},
+        "rollback": {"type": "string", "minLength": 1, "maxLength": 96},
+        "proof_required": {"type": "string", "minLength": 1, "maxLength": 96},
+        "reversible": {"const": true},
+        "human_activation_required": {"const": true},
+        "execution_authorized": {"const": false},
+        "executed": {"const": false},
+        "external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "debt": {
+      "type": "object",
+      "required": ["slot", "risk", "state", "lineage", "interest_trigger", "payment_required", "closure_blocking", "receipt_cites_shared_digest", "compiler_can_pay", "external_fact_established"],
+      "properties": {
+        "slot": {"type": "string", "minLength": 1, "maxLength": 32},
+        "risk": {"enum": ["critical", "high", "medium", "low"]},
+        "state": {"enum": ["open", "receipt-cited", "contested"]},
+        "lineage": {"enum": ["none", "single-source", "shared-source", "unknown", "independence-claimed"]},
+        "interest_trigger": {"type": "string", "minLength": 1, "maxLength": 128},
+        "payment_required": {"type": "string", "minLength": 1, "maxLength": 128},
+        "closure_blocking": {"type": "boolean"},
+        "receipt_cites_shared_digest": {"type": "boolean"},
+        "compiler_can_pay": {"const": false},
+        "external_fact_established": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "readiness": {
+      "type": "object",
+      "required": ["structure_valid", "critical_open_slots", "all_receipt_shapes_cited", "distinct_receipt_commitments", "fresh_human_closure_review_candidate", "incident_truth_verified", "authenticity_verified", "privacy_release_authorized", "closure_authorized"],
+      "properties": {
+        "structure_valid": {"const": true},
+        "critical_open_slots": {"type": "array", "maxItems": 4, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 32}},
+        "all_receipt_shapes_cited": {"type": "boolean"},
+        "distinct_receipt_commitments": {"type": "boolean"},
+        "fresh_human_closure_review_candidate": {"type": "boolean"},
+        "incident_truth_verified": {"const": false},
+        "authenticity_verified": {"const": false},
+        "privacy_release_authorized": {"const": false},
+        "closure_authorized": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "return_fit": {
+      "type": "object",
+      "required": ["recovery_receipt_state", "negative_control_receipt_state", "proof_shape_complete", "recovery_established", "human_release_review_required"],
+      "properties": {
+        "recovery_receipt_state": {"enum": ["open", "receipt-cited", "contested"]},
+        "negative_control_receipt_state": {"enum": ["open", "receipt-cited", "contested"]},
+        "proof_shape_complete": {"type": "boolean"},
+        "recovery_established": {"const": false},
+        "human_release_review_required": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "lesson": {
+      "type": "object",
+      "required": ["repair_grain", "state", "current_brief_only", "blame_assigned", "person_generalization", "recurrence_claimed", "automatic_adoption"],
+      "properties": {
+        "repair_grain": {"type": "string", "minLength": 1, "maxLength": 96},
+        "state": {"const": "candidate"},
+        "current_brief_only": {"const": true},
+        "blame_assigned": {"const": false},
+        "person_generalization": {"const": false},
+        "recurrence_claimed": {"const": false},
+        "automatic_adoption": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "exit": {
+      "type": "object",
+      "required": ["action", "state_retained", "history_retained", "standing_created", "authority_created", "closure_created", "publication_created", "follow_up"],
+      "properties": {
+        "action": {"const": "return-or-discard-one-brief"},
+        "state_retained": {"const": false},
+        "history_retained": {"const": false},
+        "standing_created": {"const": false},
+        "authority_created": {"const": false},
+        "closure_created": {"const": false},
+        "publication_created": {"const": false},
+        "follow_up": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}

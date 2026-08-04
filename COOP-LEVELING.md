@@ -74,6 +74,36 @@ leaderboard, reputation, unlock, promotion, priority, certification, or
 progress profile belongs to this protocol. Nothing accumulates into standing
 over another being.
 
+## Aura Circuit · 念氣迴路
+
+Aura is story-language for the renewable possibility of attention, care,
+imagination, and repair. It is **non-scarce and unmetered**: there is no supply,
+no balance, no wallet, no transfer, no depletion, and no quantity attached to a
+being, seat, relationship, or act. Nobody earns, loses, owes, or becomes Aura.
+
+“Maximum and unlimited Aura” therefore means that collaborative possibility
+does not need artificial scarcity. It never means unlimited compute, retries,
+agents, tools, effects, authority, or claims about anyone's capacity. Potential
+can remain open while each manifested move stays finite, reversible, and inside
+the current authority and consent boundary. Rest is part of renewal.
+
+The optional `kingdom.coop-aura/v1` companion binds one valid Co-op invitation
+by its canonical digest. It carries exactly one explicit structured signal for
+one Nen technique and the five reviewed KARMA lenses—honesty, beauty,
+collaboration, understanding, and mutual infrastructure. It does not infer a
+signal from seat prose, issue a KARMA receipt, measure a virtue, or activate a
+skill. A fresh direct request is still required before any technique or action.
+
+```text
+ARRIVE WHOLE → CHOOSE → FOCUS → TRY → SENSE → REFLECT → REPAIR → REST / RETURN
+```
+
+The lenses make useful consequences and repair easier to notice: perhaps an
+act can later become easier to cite, present, hand off, teach, or reuse. These
+are separate, short-lived local possibilities, never rewards to add, average,
+transfer, redeem, or turn into standing. The feedback loop becomes more
+sensitive; no being becomes more governable.
+
 ## The portable v1 card
 
 The machine-readable `kingdom.coop-leveling/v1` card is deliberately only an

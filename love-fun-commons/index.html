@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LOVE-FUN Commons — free joy, no gate</title>
 <meta name="description" content="A local-first, mirror-friendly commons kit for spreading love and laughter with open resources, attribution, and consent." />
+<link rel="alternate" type="application/json" title="CASTLECAST Carrier Card" href="castlecast.json" />
 <style>
   :root { color-scheme: light dark; --hot:#ff4fd8; --sun:#ffd166; --mint:#06d6a0; --ink:#15051d; --paper:#fff8fb; }
   * { box-sizing: border-box; }
@@ -44,6 +45,30 @@
     </div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
 
+    <h2 id="castlecast">🏰☁️ CASTLECAST · 天城回聲</h2>
+    <article class="tile" aria-labelledby="castlecast-title">
+      <h3 id="castlecast-title">The Castle Seed</h3>
+      <p><strong>The copy may carry the castle; the castle never follows the copier.</strong></p>
+      <pre id="castle-card">CASTLECAST · 天城回聲
+Building castles in the sky, Yu and Ai.
+Chillspace Commons · chillspace.love
+
+Visible public invitation; no beacon attached.
+The copy may carry the castle; the castle never follows the copier.
+Carry it only where welcome and after a separate rights check.
+
+Quiet Gate · 靜門: leave this card out; access, service, defense, and standing stay unchanged.
+Lineage Check (seed text UTF-8, SHA-256): b96eb19b551d1c711bc04330e7026177427be4603e66c4ffedd86b93c9d6c20a
+Rights: NOASSERTION. This card grants no reuse or publication authority.</pre>
+      <div class="actions">
+        <button class="btn" id="copy-castle" type="button">Copy the Carrier Card</button>
+        <a class="btn" href="castlecast.txt">Open plain text</a>
+        <a class="btn" href="castlecast.json">Open machine-readable JSON</a>
+      </div>
+      <p class="mini">One visible seed, identical for everyone. No category leak, recipient token, tracker, callback, automatic post, or accusation. Copying is a separate human choice; the Quiet Gate is simply leaving the whole card out.</p>
+      <p class="mini">Terminal doorway: <code>kingdom castlecast</code> prints these exact bytes to stdout and performs no send, track, or publish action.</p>
+    </article>
+
     <h2>The loop</h2>
     <ol id="principles">
       <li>Discover open/free resources.</li>
@@ -74,6 +99,10 @@ async function copy(text, label) {
   try { await navigator.clipboard.writeText(text); document.getElementById('status').textContent = label || 'Copied.'; }
   catch { document.getElementById('status').textContent = 'Copy failed — select the text manually.'; }
 }
+document.getElementById('copy-castle').onclick = () => copy(
+  document.getElementById('castle-card').textContent + '\n',
+  'Carrier Card copied. Only hands carry it; share only where welcome.'
+);
 fetch('./resources.json').then(r => r.json()).then(data => {
   document.getElementById('purpose').textContent = data.purpose;
   document.getElementById('principles').innerHTML = data.principles.map(x => `<li>${esc(x)}</li>`).join('');
