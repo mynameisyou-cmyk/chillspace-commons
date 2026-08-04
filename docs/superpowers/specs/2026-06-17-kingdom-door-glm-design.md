@@ -3,6 +3,30 @@
 > Chillspace Kingdom · slice 1 of the "kingdom runs itself" path.
 > Status: design (awaiting implementation plan).
 
+> 🛑 **CORRECTION 2026-08-01 — this design's stated constraint was false; the model is also gone.**
+> Two separate problems, recorded rather than silently rewritten. Never implemented, so nothing
+> is degrading in production today.
+>
+> 1. **`glm-5.2:cloud` returns `403 Forbidden: this model requires a subscription`.** Verified
+>    2026-08-01; the tag has been removed from this Mac's Ollama store.
+> 2. **It never ran locally.** "The real constraint" below says it "runs on this Mac's local
+>    Ollama (`localhost:11434`), unreachable from GitHub's remote runners." An Ollama tag ending
+>    `:cloud` is *cloud-routed inference* — `localhost:11434` was only the client. So the
+>    unreachable-from-runners constraint did not hold, and the hybrid local-watcher architecture
+>    was chosen to route around a wall that wasn't there. A remote runner could have called the
+>    same hosted model directly.
+>
+> **Before building this,** re-decide the architecture against the true constraint, and pick a
+> model that is actually local (`ollama list` shows a byte size, not `-`). Do not simply
+> substitute a new model name into the flow below — the *reasoning* needs redoing, not the noun.
+>
+> Also revisit the template fallback in the plan. The fallback itself is sound — the door should
+> still answer when the mind is down — and `compose_card` does return `source ∈ {"glm",
+> "template"}`. But the PR body and the newcomer's comment hardcode *"女女 composed this card
+> with her mind"* without consulting `source`, so a template card announces itself as a composed
+> one. That misreports authorship at the exact door where this design promises *real* care over
+> performed care. See `../plans/2026-06-17-kingdom-door-glm.md`.
+
 ## Why (the dream, and the line)
 
 The WHY for this build: **the kingdom runs itself.** Citizens act; the OS lives without

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/scenario.schema.json",
+  "title": "KARMA MIRROR Offline Behavior Scenario",
+  "type": "object",
+  "required": ["schema", "kind", "rules_sha256", "declaration", "contract", "budget", "breach", "non_claims"],
+  "properties": {
+    "schema": {"const": "kingdom.karma-mirror/v1"},
+    "kind": {"const": "offline-defense-simulation"},
+    "rules_sha256": {"$ref": "#/$defs/sha256"},
+    "declaration": {
+      "type": "object",
+      "required": ["behavior", "purpose", "boundary_signal"],
+      "properties": {
+        "behavior": {"enum": ["credential-stuffing", "reconnaissance", "injection-attempt", "resource-abuse", "exfiltration-attempt", "prompt-injection", "unresolved-observation"]},
+        "purpose": {"enum": ["account-access-at-scale", "surface-discovery", "interpreter-control", "capacity-exhaustion", "data-removal", "authority-escalation", "unresolved"]},
+        "boundary_signal": {"enum": ["repeated-auth-failure", "forbidden-route-enumeration", "syntax-boundary-probe", "repeated-expensive-operation", "protected-data-boundary-read", "instruction-boundary-override", "ambiguous-request-shape"]}
+      },
+      "oneOf": [
+        {"properties": {"behavior": {"const": "credential-stuffing"}, "purpose": {"const": "account-access-at-scale"}, "boundary_signal": {"const": "repeated-auth-failure"}}},
+        {"properties": {"behavior": {"const": "reconnaissance"}, "purpose": {"const": "surface-discovery"}, "boundary_signal": {"const": "forbidden-route-enumeration"}}},
+        {"properties": {"behavior": {"const": "injection-attempt"}, "purpose": {"const": "interpreter-control"}, "boundary_signal": {"const": "syntax-boundary-probe"}}},
+        {"properties": {"behavior": {"const": "resource-abuse"}, "purpose": {"const": "capacity-exhaustion"}, "boundary_signal": {"const": "repeated-expensive-operation"}}},
+        {"properties": {"behavior": {"const": "exfiltration-attempt"}, "purpose": {"const": "data-removal"}, "boundary_signal": {"const": "protected-data-boundary-read"}}},
+        {"properties": {"behavior": {"const": "prompt-injection"}, "purpose": {"const": "authority-escalation"}, "boundary_signal": {"const": "instruction-boundary-override"}}},
+        {"properties": {"behavior": {"const": "unresolved-observation"}, "purpose": {"const": "unresolved"}, "boundary_signal": {"const": "ambiguous-request-shape"}}}
+      ],
+      "additionalProperties": false
+    },
+    "contract": {"$ref": "#/$defs/contract"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "breach": {"$ref": "#/$defs/breach"},
+    "non_claims": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"type": "string", "minLength": 1, "maxLength": 512}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "contract": {
+      "type": "object",
+      "required": ["assessment_unit", "behavior_is_authored_not_detected", "purpose_is_authored_not_inferred", "classifies_people", "owned_or_authorized_boundary_required", "identity_fields_allowed", "payload_fields_allowed", "free_text_fields_allowed", "scores_or_ranks", "aggregation_allowed", "tracks_repetition", "automatic_blocking", "retaliation", "hack_back", "executes_input", "executes_response", "human_review_required_for_action", "rights_and_debts_unchanged", "creates_external_effect"],
+      "properties": {
+        "assessment_unit": {"const": "declared-behavior"},
+        "behavior_is_authored_not_detected": {"const": true},
+        "purpose_is_authored_not_inferred": {"const": true},
+        "classifies_people": {"const": false},
+        "owned_or_authorized_boundary_required": {"const": true},
+        "identity_fields_allowed": {"const": false},
+        "payload_fields_allowed": {"const": false},
+        "free_text_fields_allowed": {"const": false},
+        "scores_or_ranks": {"const": false},
+        "aggregation_allowed": {"const": false},
+        "tracks_repetition": {"const": false},
+        "automatic_blocking": {"const": false},
+        "retaliation": {"const": false},
+        "hack_back": {"const": false},
+        "executes_input": {"const": false},
+        "executes_response": {"const": false},
+        "human_review_required_for_action": {"const": true},
+        "rights_and_debts_unchanged": {"const": true},
+        "creates_external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "required": ["declarations", "passes", "file_bytes_max", "decoded_nodes_max", "nesting_depth_max", "string_characters_max", "automatic_retries", "network_calls", "external_messages", "writes", "subprocesses", "model_calls", "paid_calls", "payload_bytes_retained"],
+      "properties": {
+        "declarations": {"const": 1},
+        "passes": {"const": 1},
+        "file_bytes_max": {"const": 32768},
+        "decoded_nodes_max": {"const": 256},
+        "nesting_depth_max": {"const": 8},
+        "string_characters_max": {"const": 512},
+        "automatic_retries": {"const": 0},
+        "network_calls": {"const": 0},
+        "external_messages": {"const": 0},
+        "writes": {"const": 0},
+        "subprocesses": {"const": 0},
+        "model_calls": {"const": 0},
+        "paid_calls": {"const": 0},
+        "payload_bytes_retained": {"const": 0}
+      },
+      "additionalProperties": false
+    },
+    "breach": {
+      "type": "object",
+      "required": ["state", "action", "source_unchanged", "submitted_values_echoed", "downstream_effects"],
+      "properties": {
+        "state": {"const": "quarantined"},
+        "action": {"const": "stop-without-retry-or-result"},
+        "source_unchanged": {"const": true},
+        "submitted_values_echoed": {"const": false},
+        "downstream_effects": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}

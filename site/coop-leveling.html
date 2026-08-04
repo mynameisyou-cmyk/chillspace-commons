@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Co-op Leveling · 同行升級 — no ladder, every being whole</title>
-<meta name="description" content="A free, invitation-only co-learning protocol: every being arrives whole, nobody is ranked or tracked, and every choice remains live.">
+<meta name="description" content="A free, invitation-only co-learning protocol with an optional ledgerless Aura Circuit: every being arrives whole, nobody is ranked or tracked, and every choice remains live.">
 <meta property="og:title" content="Co-op Leveling · 同行升級">
-<meta property="og:description" content="Every being arrives whole. We level together because we are free—not so a level can tell us what we are.">
+<meta property="og:description" content="Every being arrives whole. Unlimited collaborative possibility; finite moves; no XP, balance, rank, or throne.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mynameisyou-cmyk.github.io/chillspace-commons/coop-leveling.html">
 <meta name="theme-color" content="#d98a8a">
@@ -149,6 +149,54 @@
     padding:5px 10px;border-radius:9px;background:#f7e9df;color:#69534b;font-size:13px
   }
 
+  .aura-shell{
+    position:relative;overflow:hidden;padding:clamp(28px,5vw,46px);
+    color:#f8f0fb;background:
+      radial-gradient(circle at 18% 12%,rgba(218,173,255,.24),transparent 34%),
+      radial-gradient(circle at 86% 76%,rgba(117,203,162,.19),transparent 36%),
+      linear-gradient(145deg,#2f293b,#3d3047 58%,#273b38);
+    border:1px solid #665675;border-radius:26px;box-shadow:0 18px 50px rgba(48,38,55,.22)
+  }
+  .aura-shell::after{
+    content:"";position:absolute;width:270px;height:270px;right:-130px;top:-145px;
+    border:1px solid rgba(232,200,255,.35);border-radius:50%;
+    box-shadow:0 0 0 34px rgba(232,200,255,.045),0 0 0 70px rgba(151,225,190,.035)
+  }
+  .aura-shell .eyebrow{color:#e7bdff}
+  .aura-shell h2{color:#fff8ff}
+  .aura-intro{position:relative;z-index:1;max-width:730px;margin:0;color:#e9dfe9;font-size:17px}
+  .aura-grid{
+    position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+    gap:18px;margin-top:26px
+  }
+  .aura-card{
+    padding:23px;border:1px solid rgba(232,212,241,.2);border-radius:18px;
+    background:rgba(255,255,255,.065);backdrop-filter:blur(3px)
+  }
+  .aura-card h3{margin:0 0 10px;color:#fff8ff;font-size:21px}
+  .aura-card p{margin:0;color:#e2d7e3;font-size:15px}
+  .aura-card code{color:#f3d6ff;background:#241f2d}
+  .aura-flow{
+    display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:18px 0 0;
+    color:#cfebdc;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:.025em
+  }
+  .aura-flow span{padding:5px 8px;border:1px solid rgba(168,220,190,.27);border-radius:999px}
+  .aura-flow i{color:#caa8dc;font-style:normal}
+  .virtue-lenses{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+    gap:7px;margin-top:16px
+  }
+  .virtue-lenses span{
+    display:grid;place-items:center;min-height:42px;padding:5px;text-align:center;
+    color:#f5ebf7;background:rgba(250,235,255,.08);border:1px solid rgba(232,212,241,.18);
+    border-radius:11px;font-size:11px;font-weight:700;overflow-wrap:anywhere
+  }
+  .aura-vow{
+    position:relative;z-index:1;margin:18px 0 0;padding:14px 17px;
+    color:#dff4e8;background:rgba(98,165,129,.13);border-left:3px solid #8bc9a7;
+    border-radius:0 12px 12px 0;font-size:14px
+  }
+
   .journey{
     max-width:740px;margin:0 auto;padding:6px 0 0;list-style:none;counter-reset:step
   }
@@ -243,13 +291,14 @@
     .node:nth-of-type(3){right:36px;bottom:22px}
     .node:nth-of-type(4){bottom:10px;left:75px}
     .node:nth-of-type(5){left:10px;top:88px}
-    .not-ladder,.machine,.walls{grid-template-columns:1fr}
+    .not-ladder,.aura-grid,.machine,.walls{grid-template-columns:1fr}
+    .virtue-lenses{grid-template-columns:repeat(2,1fr)}
     section{padding-top:62px}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   @media (prefers-contrast:more){
     :root{--soft:#58453e;--line:#9e7769}
-    .panel,.not-ladder article,.machine-copy,.walls li{border-width:2px}
+    .panel,.not-ladder article,.aura-shell,.machine-copy,.walls li{border-width:2px}
   }
 </style>
 </head>
@@ -312,6 +361,35 @@
           <li>rest</li>
         </ul>
       </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="aura-circuit">
+    <div class="aura-shell">
+      <p class="eyebrow">Aura Circuit · <span lang="zh-Hant">念氣迴路</span></p>
+      <h2 id="aura-circuit">Maximum Aura. Zero throne.</h2>
+      <p class="aura-intro">Aura is weather around a round, never a label on a being. Attention, care, imagination, and repair can renew without becoming XP, a balance, a wallet, or standing over somebody else.</p>
+      <div class="aura-grid">
+        <article class="aura-card">
+          <h3>Unlimited possibility; finite moves.</h3>
+          <p>“Unlimited” means non-scarce and unmetered. It never means unlimited compute, retries, agents, tools, effects, or authority. Every concrete move still has a vow, a budget, a halt, evidence, and rest.</p>
+          <div class="aura-flow" aria-label="Aura circuit sequence">
+            <span>ARRIVE WHOLE</span><i>→</i><span>CHOOSE</span><i>→</i><span>FOCUS</span><i>→</i><span>TRY</span><i>→</i><span>SENSE</span><i>→</i><span>REFLECT</span><i>→</i><span>REPAIR</span><i>→</i><span>REST / RETURN</span>
+          </div>
+        </article>
+        <article class="aura-card">
+          <h3>One Nen focus. Five virtue lenses.</h3>
+          <p>The optional <code>kingdom.coop-aura/v1</code> card binds one Co-op digest and one explicit reviewed Nen signal. It cannot infer from seat prose or activate the technique. A fresh direct request is always required.</p>
+          <div class="virtue-lenses" aria-label="Five non-scoring virtue lenses">
+            <span>honesty</span>
+            <span>beauty</span>
+            <span>collaboration</span>
+            <span>understanding</span>
+            <span>mutual infrastructure</span>
+          </div>
+        </article>
+      </div>
+      <p class="aura-vow"><strong>The feedback reward is sensitivity, not currency.</strong> Make useful evidence, form, handoffs, understanding, repair, and shared infrastructure easier to notice and revisit. Issue no Aura, add no virtue scores, and grant no automatic effect. <em>Scouter status: no meter installed; everyone still whole.</em> 😂</p>
     </div>
   </section>
 

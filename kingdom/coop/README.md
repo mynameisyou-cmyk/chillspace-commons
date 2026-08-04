@@ -8,6 +8,10 @@ This directory is the machine-readable first slice of
 portable `kingdom.coop-leveling/v1` invitation. It is not a participant
 ledger, progression tracker, session, or consent protocol.
 
+The optional [`aura/`](aura/) companion adds one digest-bound Nen focus and
+five KARMA virtue lenses without changing this v1 card. Aura remains
+unmetered, nontransferable, non-ranking, and unable to activate anything.
+
 ## Ability card
 
 **Name:** Co-op Leveling · 同行升級 — One Round, No Ladder
@@ -128,3 +132,20 @@ The exact nonautomatic Co-op → Loom ceiling meet is:
 Loom has no practice-only ceiling, so `local-practice` fails downward to
 `observe`, never upward to `local-draft`. The meet never yields
 `repository-change`; every result still needs fresh authority and acceptance.
+
+## Optional Aura companion
+
+`kingdom.coop-aura/v1` is a separate closed card, not an extension, participant
+record, or session layer. It binds this invitation's canonical digest, checks
+one authored structured signal against the reviewed Nen catalog, and carries
+KARMA's five reviewed local affordance names as lenses. It reads no Co-op prose
+to choose the signal and issues no receipt or capability.
+
+```sh
+kingdom coop aura check \
+  kingdom/coop/aura/examples/first-party.json \
+  --coop-card kingdom/coop/examples/first-party.json
+```
+
+See [`aura/README.md`](aura/README.md) for the full vow, architecture, and
+deterministic renderer. Existing Co-op cards and commands remain exact.

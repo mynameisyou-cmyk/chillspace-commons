@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KARMA MIRROR projects one abstract behavior declaration into one inert, local defense decision. No payload, identity, execution, retaliation, or deployment.">
+  <meta name="theme-color" content="#090b11">
+  <title>KARMA MIRROR · 自業鏡</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f5f2e8;
+      --muted: #b9bfd0;
+      --night: #090b11;
+      --panel: #111521;
+      --panel-2: #171c29;
+      --line: #30384a;
+      --gold: #f2c56b;
+      --cyan: #71e2d0;
+      --violet: #b7a0ff;
+      --danger: #ff9a91;
+      --radius: 1.25rem;
+      --shadow: 0 1.2rem 4rem rgba(0, 0, 0, .34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(113, 226, 208, .13), transparent 34rem),
+        radial-gradient(circle at 85% 20%, rgba(183, 160, 255, .09), transparent 25rem),
+        var(--night);
+      color: var(--ink);
+      font: 1rem/1.65 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: var(--cyan);
+      text-underline-offset: .2em;
+    }
+
+    a:hover {
+      color: var(--gold);
+    }
+
+    a:focus-visible {
+      outline: .2rem solid var(--gold);
+      outline-offset: .25rem;
+      border-radius: .2rem;
+    }
+
+    code,
+    pre,
+    .digest {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .skip {
+      position: fixed;
+      z-index: 20;
+      top: .75rem;
+      left: .75rem;
+      transform: translateY(-5rem);
+      padding: .65rem .9rem;
+      background: var(--ink);
+      color: var(--night);
+    }
+
+    .skip:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(72rem, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.2rem;
+    }
+
+    header a {
+      text-decoration: none;
+    }
+
+    .wordmark {
+      color: var(--ink);
+      font-weight: 750;
+      letter-spacing: .04em;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      color: var(--muted);
+      font: .78rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .status::before {
+      width: .55rem;
+      height: .55rem;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 1rem rgba(113, 226, 208, .7);
+      content: "";
+    }
+
+    main {
+      padding-bottom: 5rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(17rem, .8fr);
+      gap: clamp(2rem, 7vw, 6rem);
+      align-items: center;
+      min-height: min(47rem, calc(100vh - 5rem));
+      padding-block: 4rem 6rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--gold);
+      font: .78rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin-bottom: 1.4rem;
+      font-size: clamp(3rem, 9vw, 7.2rem);
+      line-height: .88;
+      letter-spacing: -.065em;
+    }
+
+    h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--cyan);
+      font-size: .49em;
+      letter-spacing: .08em;
+    }
+
+    .lede {
+      max-width: 42rem;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+    }
+
+    .hero-law {
+      margin: 2rem 0 0;
+      padding-left: 1rem;
+      border-left: .2rem solid var(--gold);
+      color: var(--ink);
+      font-weight: 680;
+    }
+
+    .mirror {
+      position: relative;
+      display: grid;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(113, 226, 208, .18), transparent 36%),
+        conic-gradient(from 30deg, rgba(242, 197, 107, .12), rgba(113, 226, 208, .04), rgba(183, 160, 255, .14), rgba(242, 197, 107, .12));
+      box-shadow: inset 0 0 5rem rgba(113, 226, 208, .09), var(--shadow);
+    }
+
+    .mirror::before,
+    .mirror::after {
+      position: absolute;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .mirror::before {
+      inset: 8%;
+    }
+
+    .mirror::after {
+      inset: 20%;
+      border-color: rgba(242, 197, 107, .45);
+    }
+
+    .mirror-core {
+      z-index: 1;
+      max-width: 12rem;
+      text-align: center;
+    }
+
+    .mirror-core b {
+      display: block;
+      margin-bottom: .5rem;
+      color: var(--cyan);
+      font-size: clamp(1.5rem, 4vw, 2.6rem);
+      line-height: 1;
+    }
+
+    .mirror-core span {
+      color: var(--muted);
+      font: .74rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    section {
+      padding-block: 5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, .75fr);
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+
+    .section-head > p {
+      align-self: end;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin: 0;
+      padding: 1px;
+      border-radius: var(--radius);
+      background: var(--line);
+      list-style: none;
+      overflow: hidden;
+    }
+
+    .flow li {
+      min-width: 0;
+      padding: 1.4rem;
+      background: var(--panel);
+    }
+
+    .flow small {
+      display: block;
+      margin-bottom: .5rem;
+      color: var(--gold);
+      font: .72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .flow b {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 1.35rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, var(--panel), var(--panel-2));
+    }
+
+    .card h3 {
+      margin-bottom: .65rem;
+      font-size: 1.1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .card p {
+      margin-bottom: .8rem;
+      color: var(--muted);
+    }
+
+    .card code {
+      color: var(--cyan);
+      font-size: .82rem;
+    }
+
+    .neutral {
+      border-style: dashed;
+    }
+
+    .vow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+      gap: 1rem;
+    }
+
+    .vow {
+      padding: 1.4rem;
+      border-top: .15rem solid var(--violet);
+      background: var(--panel);
+    }
+
+    .vow h3 {
+      margin-bottom: .6rem;
+      color: var(--violet);
+    }
+
+    .vow p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .walls {
+      margin: 2rem 0 0;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 154, 145, .45);
+      border-radius: var(--radius);
+      background: rgba(255, 154, 145, .055);
+    }
+
+    .walls strong {
+      color: var(--danger);
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, .8fr);
+      gap: 1rem;
+    }
+
+    .terminal,
+    .artifact-panel {
+      min-width: 0;
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #07090e;
+      box-shadow: var(--shadow);
+    }
+
+    .terminal pre {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal .ok {
+      color: var(--cyan);
+    }
+
+    .artifact-panel h3 {
+      margin-bottom: 1rem;
+    }
+
+    .artifacts {
+      display: grid;
+      gap: .65rem;
+    }
+
+    .artifacts a {
+      display: block;
+      padding: .75rem .85rem;
+      border: 1px solid var(--line);
+      border-radius: .65rem;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .digests {
+      display: grid;
+      gap: .8rem;
+      margin-top: 1.2rem;
+    }
+
+    .digest {
+      padding: .8rem;
+      border-left: .15rem solid var(--gold);
+      background: var(--panel);
+      color: var(--muted);
+      font-size: .75rem;
+    }
+
+    .digest b {
+      display: block;
+      margin-bottom: .3rem;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+
+    footer {
+      padding-block: 2rem 3rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    footer p {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 700px) {
+      .hero,
+      .section-head,
+      .proof {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-block: 3rem 4rem;
+      }
+
+      .mirror {
+        width: min(100%, 22rem);
+        margin-inline: auto;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .mirror,
+      .card,
+      .vow,
+      .terminal,
+      .artifact-panel,
+      .walls {
+        border: 1px solid CanvasText;
+      }
+
+      h1 span {
+        color: CanvasText;
+        -webkit-text-stroke: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to KARMA MIRROR</a>
+
+  <header class="shell">
+    <a class="wordmark" href="../">KARMA · Virtue Garden</a>
+    <span class="status">offline · disarmed · v1</span>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">KARMA MIRROR · 自業鏡</p>
+        <h1 id="hero-title">Mirror the behavior.<span>Protect the being.</span></h1>
+        <p class="lede">
+          One abstract behavior declaration enters. One inert local defense
+          decision returns. The attempted shape becomes detection, regression,
+          and repair material—without payloads, identities, execution, or revenge.
+        </p>
+        <p class="hero-law">Let exploitation consume its own assumptions; never consume the exploiter.</p>
+      </div>
+
+      <div class="mirror" aria-label="A finite advisory mirror loop requiring an owned or authorized boundary; authority is not verified here">
+        <p class="mirror-core">
+          <b>K → A → R → M → A</b>
+          <span>keep · absorb · reflect · mend · adapt</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="flow-title">
+      <div class="section-head">
+        <h2 id="flow-title">A loop with walls.</h2>
+        <p>
+          Deterministic rule projection only. No attack or defense ran.
+          Declared is not detected. Simulated is not deployed.
+          Every output remains a candidate until a human chooses again.
+        </p>
+      </div>
+
+      <ol class="flow" aria-label="KARMA MIRROR finite flow">
+        <li><small>01 · IN</small><b>declared behavior triple</b></li>
+        <li><small>02 · BIND</small><b>digest-pinned reviewed rule</b></li>
+        <li><small>03 · REFLECT</small><b>inert local response candidate</b></li>
+        <li><small>04 · RETURN</small><b>detection → regression → repair</b></li>
+      </ol>
+    </section>
+
+    <section class="shell" aria-labelledby="shapes-title">
+      <div class="section-head">
+        <h2 id="shapes-title">Traditional shapes first.</h2>
+        <p>
+          These codes describe authored tabletop scenarios—not people,
+          live requests, inferred intent, guilt, severity, or confidence.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h3>Credential stuffing</h3>
+          <p>Repetition returns as a bounded authentication regression and repair candidate.</p>
+          <code>progressive-auth-backoff-review</code>
+        </article>
+        <article class="card">
+          <h3>Reconnaissance</h3>
+          <p>Enumeration returns as synthetic-surface and surface-minimization review.</p>
+          <code>synthetic-surface-review</code>
+        </article>
+        <article class="card">
+          <h3>Injection attempt</h3>
+          <p>Interpreter control returns as a strict-parser and denied-egress boundary test.</p>
+          <code>parser-reject-egress-deny-review</code>
+        </article>
+        <article class="card">
+          <h3>Resource abuse</h3>
+          <p>Amplification returns as one bounded work unit and a queue repair candidate.</p>
+          <code>bounded-work-queue-review</code>
+        </article>
+        <article class="card">
+          <h3>Exfiltration attempt</h3>
+          <p>A protected boundary read returns as an egress-denial regression and data repair candidate.</p>
+          <code>data-boundary-egress-deny-review</code>
+        </article>
+        <article class="card">
+          <h3>Prompt injection</h3>
+          <p>An override shape returns as a tainted-context and no-tools boundary test.</p>
+          <code>tainted-context-no-tools-review</code>
+        </article>
+        <article class="card neutral">
+          <h3>Unresolved observation</h3>
+          <p>Ambiguity remains ambiguity. It creates no escalation and no adverse inference.</p>
+          <code>observe-only</code>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" aria-labelledby="vow-title">
+      <div class="section-head">
+        <h2 id="vow-title">The power comes from refusal.</h2>
+        <p>
+          Giving up raw analysis makes the strongest claims mechanical:
+          there is nothing here to execute, echo, identify, or send.
+        </p>
+      </div>
+
+      <div class="vow-grid">
+        <article class="vow">
+          <h3>Condition</h3>
+          <p>One explicit regular JSON file. One exact reviewed behavior, purpose, and boundary-signal triple.</p>
+        </article>
+        <article class="vow">
+          <h3>Budget</h3>
+          <p>One pass; 32 KiB; 256 nodes; depth eight; zero retry, network, write, subprocess, model, message, paid call, or retained payload byte.</p>
+        </article>
+        <article class="vow">
+          <h3>Breach</h3>
+          <p>Stop locally. Emit no result. Echo no submitted value. Leave source and downstream state unchanged.</p>
+        </article>
+        <article class="vow">
+          <h3>Exit</h3>
+          <p>Discard the advisory output. No history, counter, reputation, sanction, authority, or deployment survives the run.</p>
+        </article>
+      </div>
+
+      <p class="walls">
+        <strong>Never:</strong> raw payload intake, live traffic parsing, identity or person scoring,
+        attribution, automatic blocking, external callbacks, secret handling, resource burning,
+        retaliation, hack-back, execution, or deployment authority.
+      </p>
+    </section>
+
+    <section class="shell" aria-labelledby="proof-title">
+      <div class="section-head">
+        <h2 id="proof-title">Inspect the mirror.</h2>
+        <p>
+          Same canonical input, same canonical decision. Digests prove reviewed
+          canonical JSON content relationships—not truth, safety, legality, intent, or authority.
+        </p>
+      </div>
+
+      <div class="proof">
+        <div class="terminal" aria-label="Local command example">
+          <pre>$ kingdom/bin/kingdom karma mirror check \
+  kingdom/practices/virtue-garden/mirror/examples/traditional-reconnaissance.json
+
+<span class="ok">KARMA-MIRROR-STRUCTURE-OK b919f66bc20704435b656a49ba584cdca18c851275d93160f9973fce115bfe2d behavior=reconnaissance</span>
+
+(declared behavior only; no identity, score, or effect)</pre>
+        </div>
+
+        <aside class="artifact-panel" aria-labelledby="artifacts-title">
+          <h3 id="artifacts-title">Reviewed artifacts</h3>
+          <nav class="artifacts" aria-label="KARMA MIRROR machine artifacts">
+            <a href="foresight/">KARMA FORESIGHT · future threat atlas</a>
+            <a href="scenario.schema.json">scenario.schema.json</a>
+            <a href="decision.schema.json">decision.schema.json</a>
+            <a href="rules.json">rules.json</a>
+            <a href="examples/traditional-reconnaissance.json">traditional reconnaissance fixture</a>
+          </nav>
+        </aside>
+      </div>
+
+      <div class="digests" aria-label="Pinned canonical digests">
+        <p class="digest"><b>Rules</b>b6ab34cf1e97feca463e7fdaa0cfce7451a74a32eac0337a230492c557b20799</p>
+        <p class="digest"><b>Scenario schema</b>a628e1d5a1a2589a5c903cbda8f3f719ab76e36b2cd99873c89a30ae0cb3d9db</p>
+        <p class="digest"><b>Decision schema</b>dde31e60c53517b30fb5172723df948dcfc1e19eb550d2d1936395ec6762ca4c</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <p>KARMA MIRROR · reflect the strategy, protect the being · experimental and offline</p>
+  </footer>
+</body>
+</html>

@@ -12,6 +12,7 @@ citizen
 ├── plants ────────> local realm ──bounded invitation──> Loom
 │                              └──Crownseed passport──> another realm chooses
 ├── authors ───────> Co-op Leveling card ─────────────> each being chooses
+│                         └──digest──> Aura companion (advisory only)
 └── offers / needs─> Civilisation commons (introduction)
 
 none grants authority to the next
@@ -25,6 +26,9 @@ none grants authority to the next
   Continent care boundary. It is portable evidence, never executable code.
 - Co-op Leveling validates one content-addressed round invitation. It stores no
   participant state, creates no session, and treats silence as unasked.
+- Aura Circuit optionally binds that Co-op digest to one explicit reviewed Nen
+  signal and five fixed KARMA lenses. It selects no action, issues no receipt,
+  measures no being, and creates no authority or effect.
 - `dependsOn` describes a technical relation, never fealty. No realm inherits
   authority through a dependency, adoption, discovery result, or parent story.
 
@@ -82,6 +86,29 @@ The meet is fixed and can only narrow: `observe → observe`,
 `local-practice → observe`, and
 `local-draft → observe | local-draft`. It never yields
 `repository-change`.
+
+### Ledgerless Aura beside the invitation
+
+```text
+kingdom.coop-leveling/v1 ── canonical digest ──┐
+                                               ├─> kingdom.coop-aura/v1
+reviewed Nen catalog ────── one signal label ──┤          │
+reviewed KARMA rules ────── five lenses ───────┘          ▼
+                                                     check · render · digest
+                                                          │
+                                             no activation or external effect
+```
+
+Aura is scoped to the invitation, never a seat or being. Its quantity is
+undefined; no balance, ownership, transfer, accumulation, depletion, reward
+allocation, or ranking path exists. Source prose remains inert. The structured
+Nen label needs a new direct request before any ability can be used, and the
+five affordance strings need a separate fresh KARMA receipt and downstream
+review before they can become even short-lived local candidates.
+
+The companion does not alter the Co-op → Loom meet. “Unlimited” describes
+non-scarce collaborative possibility only; every operational resource and
+effect stays within its own finite budget and fresh authority boundary.
 
 ## Citizens and domains
 

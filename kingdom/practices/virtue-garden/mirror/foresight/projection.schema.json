@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/foresight/projection.schema.json",
+  "title": "KARMA FORESIGHT Deterministic Projection",
+  "type": "object",
+  "required": ["schema", "scenario_sha256", "scenario_schema_sha256", "projection_schema_sha256", "catalog_sha256", "constellation", "purpose_frame", "response", "karma_loop", "exit", "non_claims"],
+  "properties": {
+    "schema": {"const": "kingdom.karma-foresight-projection/v1"},
+    "scenario_sha256": {"$ref": "#/$defs/sha256"},
+    "scenario_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "projection_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "constellation": {
+      "type": "object",
+      "required": ["id", "display_name", "family", "mechanism", "boundary_signal"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "maxLength": 64},
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 96},
+        "family": {"enum": ["authority-boundary", "durable-context-boundary", "tool-boundary", "supply-chain-boundary", "evidence-lineage-boundary", "capacity-graph-boundary", "protocol-boundary", "privacy-purpose-boundary", "recovery-boundary", "unknown"]},
+        "mechanism": {"type": "string", "minLength": 1, "maxLength": 96},
+        "boundary_signal": {"type": "string", "minLength": 1, "maxLength": 96}
+      },
+      "additionalProperties": false
+    },
+    "purpose_frame": {
+      "type": "object",
+      "required": ["scope", "system_effect_hypothesis", "alternative_hypothesis", "effect_established", "person_intent_inferred"],
+      "properties": {
+        "scope": {"const": "possible-system-effect-if-mechanism-succeeds"},
+        "system_effect_hypothesis": {"type": "string", "minLength": 1, "maxLength": 96},
+        "alternative_hypothesis": {"type": "string", "minLength": 1, "maxLength": 96},
+        "effect_established": {"const": false},
+        "person_intent_inferred": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "required": ["rung", "display_name", "candidate", "mode", "recovery_candidate", "advisory_only", "human_review_required", "automatic_enforcement", "executed", "deployment_authorized", "retaliation_authorized", "authority_granted", "person_classified", "external_effect"],
+      "properties": {
+        "rung": {"enum": ["observe", "clarify", "constrain", "isolate", "quarantine"]},
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 96},
+        "candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "mode": {"enum": ["information-only", "authority-or-lineage-review", "scope-or-budget-review", "trust-boundary-separation-review", "adoption-hold-review"]},
+        "recovery_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "advisory_only": {"const": true},
+        "human_review_required": {"const": true},
+        "automatic_enforcement": {"const": false},
+        "executed": {"const": false},
+        "deployment_authorized": {"const": false},
+        "retaliation_authorized": {"const": false},
+        "authority_granted": {"const": false},
+        "person_classified": {"const": false},
+        "external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "karma_loop": {
+      "type": "object",
+      "required": ["keep", "articulate", "reflect", "hypothesis_test_candidate", "negative_control_candidate", "regression_candidate", "repair_candidate", "ask_again", "automatic_rule_update", "model_training", "state_retained", "external_system_contacted", "original_effect_executed", "counter_effect_executed"],
+      "properties": {
+        "keep": {"const": "one-reviewed-category-shape"},
+        "articulate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "reflect": {"type": "string", "minLength": 1, "maxLength": 96},
+        "hypothesis_test_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "negative_control_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "regression_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "repair_candidate": {"type": "string", "minLength": 1, "maxLength": 96},
+        "ask_again": {"type": "string", "minLength": 1, "maxLength": 96},
+        "automatic_rule_update": {"const": false},
+        "model_training": {"const": false},
+        "state_retained": {"const": false},
+        "external_system_contacted": {"const": false},
+        "original_effect_executed": {"const": false},
+        "counter_effect_executed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "exit": {"$ref": "#/$defs/exit"},
+    "non_claims": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "string", "minLength": 1, "maxLength": 512}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "exit": {
+      "type": "object",
+      "required": ["action", "state_retained", "history_retained", "standing_created", "authority_created", "follow_up"],
+      "properties": {
+        "action": {"const": "return-or-discard-one-projection"},
+        "state_retained": {"const": false},
+        "history_retained": {"const": false},
+        "standing_created": {"const": false},
+        "authority_created": {"const": false},
+        "follow_up": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}

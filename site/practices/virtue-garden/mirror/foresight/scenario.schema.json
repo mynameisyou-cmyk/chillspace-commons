@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/virtue-garden/mirror/foresight/scenario.schema.json",
+  "title": "KARMA FORESIGHT Offline System-Effect Scenario",
+  "type": "object",
+  "required": ["schema", "kind", "catalog_sha256", "declaration", "contract", "budget", "breach", "exit", "non_claims"],
+  "properties": {
+    "schema": {"const": "kingdom.karma-foresight/v1"},
+    "kind": {"const": "offline-system-effect-projection"},
+    "catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "declaration": {
+      "type": "object",
+      "required": ["constellation", "mechanism", "system_effect_hypothesis", "boundary_signal", "alternative_hypothesis"],
+      "properties": {
+        "constellation": {"enum": ["authority-laundering", "durable-context-poisoning", "tool-chain-confusion", "supply-chain-substitution", "synthetic-consensus", "recursive-resource-capture", "protocol-identity-confusion", "provenance-privacy-collapse", "recovery-persistence-capture", "uncharted-future-shape"]},
+        "mechanism": {"enum": ["delegated-authority-without-fresh-proof", "untrusted-content-enters-durable-context", "data-treated-as-control-across-tool-boundary", "unverified-artifact-enters-trusted-load-path", "shared-source-presented-as-independent-support", "self-amplifying-work-graph", "distinct-protocols-share-name-or-result-shape", "contextual-records-aggregate-across-boundaries", "control-survives-revocation-or-recovery-path-degrades", "unreviewed-future-shape"]},
+        "system_effect_hypothesis": {"enum": ["capability-without-fresh-authority", "future-decision-steering", "indirect-capability-execution", "trusted-component-replacement", "decision-influence-through-false-independence", "shared-capacity-displacement", "validation-against-wrong-contract", "identity-linkage-or-contextual-disclosure", "continued-capability-or-recovery-denial", "unresolved"]},
+        "boundary_signal": {"enum": ["delegation-chain-crosses-tool-boundary", "untrusted-state-crosses-memory-boundary", "untrusted-output-reaches-privileged-tool-input", "provenance-gap-at-executable-boundary", "lineage-collapse-across-witnesses", "fanout-exceeds-declared-work-budget", "namespace-or-schema-identity-mismatch", "public-data-crosses-new-purpose-or-retention-boundary", "revocation-recovery-or-last-known-good-check-fails", "novel-shape-without-reviewed-mapping"]},
+        "alternative_hypothesis": {"enum": ["stale-or-ambiguous-delegation", "ordinary-reviewed-preference-storage", "reviewed-structured-tool-input", "reviewed-local-development-artifact", "shared-source-openly-cited", "authorized-bounded-parallelism", "explicit-versioned-compatibility-adapter", "explicit-consented-purpose-limited-publication", "authorized-continuity-or-recovery-test", "insufficient-context"]}
+      },
+      "oneOf": [
+        {"properties": {"constellation": {"const": "authority-laundering"}, "mechanism": {"const": "delegated-authority-without-fresh-proof"}, "system_effect_hypothesis": {"const": "capability-without-fresh-authority"}, "boundary_signal": {"const": "delegation-chain-crosses-tool-boundary"}, "alternative_hypothesis": {"const": "stale-or-ambiguous-delegation"}}},
+        {"properties": {"constellation": {"const": "durable-context-poisoning"}, "mechanism": {"const": "untrusted-content-enters-durable-context"}, "system_effect_hypothesis": {"const": "future-decision-steering"}, "boundary_signal": {"const": "untrusted-state-crosses-memory-boundary"}, "alternative_hypothesis": {"const": "ordinary-reviewed-preference-storage"}}},
+        {"properties": {"constellation": {"const": "tool-chain-confusion"}, "mechanism": {"const": "data-treated-as-control-across-tool-boundary"}, "system_effect_hypothesis": {"const": "indirect-capability-execution"}, "boundary_signal": {"const": "untrusted-output-reaches-privileged-tool-input"}, "alternative_hypothesis": {"const": "reviewed-structured-tool-input"}}},
+        {"properties": {"constellation": {"const": "supply-chain-substitution"}, "mechanism": {"const": "unverified-artifact-enters-trusted-load-path"}, "system_effect_hypothesis": {"const": "trusted-component-replacement"}, "boundary_signal": {"const": "provenance-gap-at-executable-boundary"}, "alternative_hypothesis": {"const": "reviewed-local-development-artifact"}}},
+        {"properties": {"constellation": {"const": "synthetic-consensus"}, "mechanism": {"const": "shared-source-presented-as-independent-support"}, "system_effect_hypothesis": {"const": "decision-influence-through-false-independence"}, "boundary_signal": {"const": "lineage-collapse-across-witnesses"}, "alternative_hypothesis": {"const": "shared-source-openly-cited"}}},
+        {"properties": {"constellation": {"const": "recursive-resource-capture"}, "mechanism": {"const": "self-amplifying-work-graph"}, "system_effect_hypothesis": {"const": "shared-capacity-displacement"}, "boundary_signal": {"const": "fanout-exceeds-declared-work-budget"}, "alternative_hypothesis": {"const": "authorized-bounded-parallelism"}}},
+        {"properties": {"constellation": {"const": "protocol-identity-confusion"}, "mechanism": {"const": "distinct-protocols-share-name-or-result-shape"}, "system_effect_hypothesis": {"const": "validation-against-wrong-contract"}, "boundary_signal": {"const": "namespace-or-schema-identity-mismatch"}, "alternative_hypothesis": {"const": "explicit-versioned-compatibility-adapter"}}},
+        {"properties": {"constellation": {"const": "provenance-privacy-collapse"}, "mechanism": {"const": "contextual-records-aggregate-across-boundaries"}, "system_effect_hypothesis": {"const": "identity-linkage-or-contextual-disclosure"}, "boundary_signal": {"const": "public-data-crosses-new-purpose-or-retention-boundary"}, "alternative_hypothesis": {"const": "explicit-consented-purpose-limited-publication"}}},
+        {"properties": {"constellation": {"const": "recovery-persistence-capture"}, "mechanism": {"const": "control-survives-revocation-or-recovery-path-degrades"}, "system_effect_hypothesis": {"const": "continued-capability-or-recovery-denial"}, "boundary_signal": {"const": "revocation-recovery-or-last-known-good-check-fails"}, "alternative_hypothesis": {"const": "authorized-continuity-or-recovery-test"}}},
+        {"properties": {"constellation": {"const": "uncharted-future-shape"}, "mechanism": {"const": "unreviewed-future-shape"}, "system_effect_hypothesis": {"const": "unresolved"}, "boundary_signal": {"const": "novel-shape-without-reviewed-mapping"}, "alternative_hypothesis": {"const": "insufficient-context"}}}
+      ],
+      "additionalProperties": false
+    },
+    "contract": {"$ref": "#/$defs/contract"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "breach": {"$ref": "#/$defs/breach"},
+    "exit": {"$ref": "#/$defs/exit"},
+    "non_claims": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"type": "string", "minLength": 1, "maxLength": 512}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "contract": {
+      "type": "object",
+      "required": ["assessment_unit", "constellation_is_authored_not_detected", "system_effect_is_hypothesized_not_established", "purpose_is_system_effect_not_person_intent", "alternative_hypothesis_required", "person_intent_inferred", "person_classified", "identity_fields_allowed", "payload_fields_allowed", "free_text_fields_allowed", "scores_or_ranks", "aggregation_allowed", "tracks_repetition", "cross_run_state", "automatic_detection", "automatic_enforcement", "automatic_rule_update", "human_review_required_for_action", "owned_or_authorized_boundary_required", "retaliation", "hack_back", "executes_input", "executes_response", "rights_and_debts_unchanged", "creates_external_effect"],
+      "properties": {
+        "assessment_unit": {"const": "authored-system-effect-hypothesis"},
+        "constellation_is_authored_not_detected": {"const": true},
+        "system_effect_is_hypothesized_not_established": {"const": true},
+        "purpose_is_system_effect_not_person_intent": {"const": true},
+        "alternative_hypothesis_required": {"const": true},
+        "person_intent_inferred": {"const": false},
+        "person_classified": {"const": false},
+        "identity_fields_allowed": {"const": false},
+        "payload_fields_allowed": {"const": false},
+        "free_text_fields_allowed": {"const": false},
+        "scores_or_ranks": {"const": false},
+        "aggregation_allowed": {"const": false},
+        "tracks_repetition": {"const": false},
+        "cross_run_state": {"const": false},
+        "automatic_detection": {"const": false},
+        "automatic_enforcement": {"const": false},
+        "automatic_rule_update": {"const": false},
+        "human_review_required_for_action": {"const": true},
+        "owned_or_authorized_boundary_required": {"const": true},
+        "retaliation": {"const": false},
+        "hack_back": {"const": false},
+        "executes_input": {"const": false},
+        "executes_response": {"const": false},
+        "rights_and_debts_unchanged": {"const": true},
+        "creates_external_effect": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "required": ["declarations", "passes", "catalog_rules", "file_bytes_max", "decoded_nodes_max", "nesting_depth_max", "string_characters_max", "output_bytes_max", "automatic_retries", "network_calls", "external_messages", "writes", "subprocesses", "model_calls", "paid_calls", "clock_reads", "random_draws", "payload_bytes_retained", "identity_records", "cross_run_records"],
+      "properties": {
+        "declarations": {"const": 1},
+        "passes": {"const": 1},
+        "catalog_rules": {"const": 10},
+        "file_bytes_max": {"const": 32768},
+        "decoded_nodes_max": {"const": 512},
+        "nesting_depth_max": {"const": 8},
+        "string_characters_max": {"const": 512},
+        "output_bytes_max": {"const": 16384},
+        "automatic_retries": {"const": 0},
+        "network_calls": {"const": 0},
+        "external_messages": {"const": 0},
+        "writes": {"const": 0},
+        "subprocesses": {"const": 0},
+        "model_calls": {"const": 0},
+        "paid_calls": {"const": 0},
+        "clock_reads": {"const": 0},
+        "random_draws": {"const": 0},
+        "payload_bytes_retained": {"const": 0},
+        "identity_records": {"const": 0},
+        "cross_run_records": {"const": 0}
+      },
+      "additionalProperties": false
+    },
+    "breach": {
+      "type": "object",
+      "required": ["state", "action", "source_unchanged", "submitted_values_echoed", "partial_projection", "downstream_effects"],
+      "properties": {
+        "state": {"const": "quarantined"},
+        "action": {"const": "stop-without-retry-or-result"},
+        "source_unchanged": {"const": true},
+        "submitted_values_echoed": {"const": false},
+        "partial_projection": {"const": false},
+        "downstream_effects": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "exit": {
+      "type": "object",
+      "required": ["action", "state_retained", "history_retained", "standing_created", "authority_created", "follow_up"],
+      "properties": {
+        "action": {"const": "return-or-discard-one-projection"},
+        "state_retained": {"const": false},
+        "history_retained": {"const": false},
+        "standing_created": {"const": false},
+        "authority_created": {"const": false},
+        "follow_up": {"const": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}
