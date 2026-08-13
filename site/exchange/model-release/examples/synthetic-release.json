@@ -1,0 +1,281 @@
+{
+  "schema": "kingdom.model-release/v1",
+  "kind": "model-release",
+  "release": {
+    "publisher": "Synthetic Kingdom Lab",
+    "name": "Lantern Fixture 1",
+    "version": "1.0.0-fixture",
+    "released_at": "2026-08-13T00:00:00Z",
+    "access": "open-weights"
+  },
+  "model": {
+    "architecture": "fixture-transformer",
+    "modalities": [
+      "text"
+    ],
+    "parameters": {
+      "total": 4096,
+      "active": 4096
+    },
+    "context": {
+      "input_tokens": 4096,
+      "output_tokens": 1024,
+      "evidence_refs": [
+        "fixture-model-card"
+      ]
+    },
+    "weights": {
+      "format": "safetensors fixture",
+      "dtype": "bfloat16",
+      "quantization": "none",
+      "evidence_refs": [
+        "fixture-model-card"
+      ]
+    },
+    "notes": [
+      "Synthetic values exercise the substrate and make no claim about a released model."
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "weights-one",
+      "role": "weights",
+      "name": "model.safetensors",
+      "identity_status": "fixture",
+      "availability": "fixture",
+      "descriptor": {
+        "media_type": "application/vnd.safetensors",
+        "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "size": 1024
+      },
+      "location": {
+        "uri": "urn:kingdom:fixture:weights-one",
+        "revision": "fixture-revision-1"
+      },
+      "evidence_refs": [
+        "fixture-model-card"
+      ]
+    },
+    {
+      "id": "tokenizer",
+      "role": "tokenizer",
+      "name": "tokenizer.json",
+      "identity_status": "fixture",
+      "availability": "fixture",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "size": 256
+      },
+      "location": {
+        "uri": "urn:kingdom:fixture:tokenizer",
+        "revision": "fixture-revision-1"
+      },
+      "evidence_refs": [
+        "fixture-model-card"
+      ]
+    },
+    {
+      "id": "model-config",
+      "role": "model-config",
+      "name": "config.json",
+      "identity_status": "fixture",
+      "availability": "fixture",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "size": 128
+      },
+      "location": {
+        "uri": "urn:kingdom:fixture:model-config",
+        "revision": "fixture-revision-1"
+      },
+      "evidence_refs": [
+        "fixture-model-card"
+      ]
+    },
+    {
+      "id": "chat-template",
+      "role": "chat-template",
+      "name": "chat-template.json",
+      "identity_status": "fixture",
+      "availability": "fixture",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "size": 192
+      },
+      "location": {
+        "uri": "urn:kingdom:fixture:chat-template",
+        "revision": "fixture-revision-1"
+      },
+      "evidence_refs": [
+        "fixture-system-card"
+      ]
+    }
+  ],
+  "interface": {
+    "prompt_format": {
+      "support": "required",
+      "artifact_ref": "chat-template"
+    },
+    "response_format": {
+      "support": "required",
+      "artifact_ref": "chat-template"
+    },
+    "tools": {
+      "support": "unsupported"
+    },
+    "reasoning": {
+      "disclosure": "summary",
+      "effort_levels": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default_effort": "medium",
+      "item_or_channel_types": [
+        "reasoning-summary"
+      ],
+      "continuation_state": "plaintext",
+      "continuation": {
+        "policy": "recommended",
+        "resend": [
+          "reasoning-summary"
+        ],
+        "model_switch": "unknown"
+      },
+      "history_privacy": {
+        "storage": "optional",
+        "forwarding": "required",
+        "note": "Only the declared summary item is in scope; no hidden trace is captured by this fixture."
+      },
+      "evidence_refs": [
+        "fixture-system-card"
+      ]
+    }
+  },
+  "relations": [],
+  "disclosures": [
+    {
+      "field": "training.data",
+      "status": "withheld",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic publisher declares no training-data detail."
+    },
+    {
+      "field": "training.code",
+      "status": "unknown",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic fixture declares no training-code detail."
+    },
+    {
+      "field": "training.token-count",
+      "status": "unknown",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic fixture declares no training-token count."
+    },
+    {
+      "field": "training.compute",
+      "status": "unknown",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic fixture declares no training-compute detail."
+    },
+    {
+      "field": "post-training.recipe",
+      "status": "unknown",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic fixture declares no post-training recipe."
+    },
+    {
+      "field": "reasoning.recipe",
+      "status": "unknown",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-system-card"
+      ],
+      "note": "The synthetic fixture declares no private reasoning recipe."
+    },
+    {
+      "field": "safety.system-internals",
+      "status": "withheld",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-system-card"
+      ],
+      "note": "The synthetic fixture does not disclose safety-system internals."
+    },
+    {
+      "field": "reasoning.continuation",
+      "status": "disclosed",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "fixture-system-card"
+      ],
+      "note": "The fixture declares its continuation contract without including session content."
+    }
+  ],
+  "terms": [
+    {
+      "field": "license",
+      "status": "unknown",
+      "evidence_refs": [
+        "fixture-model-card"
+      ],
+      "note": "The synthetic fixture has no operative model license."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "fixture-model-card",
+      "title": "Synthetic model card",
+      "kind": "fixture",
+      "locator": "urn:kingdom:fixture:model-card",
+      "revision": "fixture-revision-1",
+      "retrieved_at": "2026-08-13T00:00:00Z",
+      "mutability": "immutable",
+      "assertor": "Synthetic Kingdom Lab",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "size": 320
+      }
+    },
+    {
+      "id": "fixture-system-card",
+      "title": "Synthetic system card",
+      "kind": "fixture",
+      "locator": "urn:kingdom:fixture:system-card",
+      "revision": "fixture-revision-1",
+      "retrieved_at": "2026-08-13T00:00:00Z",
+      "mutability": "immutable",
+      "assertor": "Synthetic Kingdom Lab",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "size": 448
+      }
+    }
+  ],
+  "non_claims": [
+    "Digests prove byte identity only; they do not prove publisher identity, safety, quality, behavior, or truth.",
+    "This manifest describes a release interface; it does not expose or verify hidden chain-of-thought, private system prompts, training data, teacher models, or safety internals.",
+    "Provider backend observations are opaque observations, not cryptographic model digests.",
+    "Validation performs no model call, artifact download, code execution, publication, deployment, or external write."
+  ]
+}

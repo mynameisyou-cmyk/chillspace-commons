@@ -86,12 +86,29 @@ jobs:
           attestation="kingdom/exchange/model-release/examples/synthetic-evaluation.json"
           kingdom/bin/kingdom release check "$release"
           kingdom/bin/kingdom release verify-set "$release" "$profile" "$attestation"
-          kingdom/bin/kingdom release schema-digest
+          schema_digest="$(kingdom/bin/kingdom release schema-digest)"
+          cmp kingdom/exchange/model-release/schema.json \
+            site/exchange/model-release/schema.v1.json
+          for example in synthetic-release synthetic-profile synthetic-evaluation; do
+            cmp "kingdom/exchange/model-release/examples/$example.json" \
+              "site/exchange/model-release/examples/$example.json"
+          done
+          grep -Fq "$schema_digest" site/exchange/model-release/index.html
+          grep -Fq 'Synthetic demonstration · no live model called.' \
+            site/exchange/model-release/index.html
+          grep -Fq 'href="exchange/model-release/"' site/index.html
+          if grep -Eqi '<(script|iframe|form|object|embed)| on[a-z]+="|src="https?://|url\s*\(' \
+            site/exchange/model-release/index.html; then
+            echo "model release room must remain scriptless, formless, and locally sourced" >&2
+            exit 1
+          fi
           bash -n kingdom/bin/kingdom
           test -z "$(git diff --name-only -- \
-            kingdom/exchange/model-release kingdom/bin/kingdom)"
+            kingdom/exchange/model-release kingdom/bin/kingdom \
+            site/exchange/model-release)"
           test -z "$(git ls-files --others --exclude-standard -- \
-            kingdom/exchange/model-release kingdom/bin/kingdom)"
+            kingdom/exchange/model-release kingdom/bin/kingdom \
+            site/exchange/model-release)"
 
       - name: she checks every Lanternhouse window
         run: |

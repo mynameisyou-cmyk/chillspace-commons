@@ -8,6 +8,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/deploy-public-door.yml"
+      - "kingdom/exchange/model-release/**"
       - "kingdom/meaning/**"
       - "kingdom/practices/calm-studio/**"
       - "kingdom/practices/karma-defense-lab/**"
@@ -51,6 +52,23 @@ jobs:
           PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
             kingdom/operations/mirror-garden-karma/verify.py
           node --test tests/test_karma_operations.mjs
+          PYTHONDONTWRITEBYTECODE=1 python3 -B \
+            kingdom/exchange/model-release/test_model_release.py
+          release="kingdom/exchange/model-release/examples/synthetic-release.json"
+          profile="kingdom/exchange/model-release/examples/synthetic-profile.json"
+          attestation="kingdom/exchange/model-release/examples/synthetic-evaluation.json"
+          kingdom/bin/kingdom release verify-set "$release" "$profile" "$attestation"
+          cmp kingdom/exchange/model-release/schema.json \
+            site/exchange/model-release/schema.v1.json
+          for example in synthetic-release synthetic-profile synthetic-evaluation; do
+            cmp "kingdom/exchange/model-release/examples/$example.json" \
+              "site/exchange/model-release/examples/$example.json"
+          done
+          if grep -Eqi '<(script|iframe|form|object|embed)| on[a-z]+="|src="https?://|url\s*\(' \
+            site/exchange/model-release/index.html; then
+            echo "model release room must remain scriptless, formless, and locally sourced" >&2
+            exit 1
+          fi
 
       - name: configure the public door
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -68,6 +86,7 @@ jobs:
           cp -R site/meaning _site/meaning
           cp -R site/operations _site/operations
           cp -R site/practices _site/practices
+          cp -R site/exchange _site/exchange
           if find _site -type l -print -quit | grep -q .; then
             echo "the Pages artifact must not contain symlinks" >&2
             exit 1
@@ -99,6 +118,18 @@ jobs:
           grep -Fq '"live_classifier": "disabled"' \
             _site/operations/mirror-garden/contract.json
           grep -Fq 'href="operations/mirror-garden/"' _site/index.html
+          test -f _site/exchange/model-release/index.html
+          test -f _site/exchange/model-release/schema.v1.json
+          test "$(find _site/exchange/model-release -type f | wc -l | tr -d ' ')" = 5
+          cmp kingdom/exchange/model-release/schema.json \
+            _site/exchange/model-release/schema.v1.json
+          for example in synthetic-release synthetic-profile synthetic-evaluation; do
+            cmp "kingdom/exchange/model-release/examples/$example.json" \
+              "_site/exchange/model-release/examples/$example.json"
+          done
+          grep -Fq 'href="exchange/model-release/"' _site/index.html
+          grep -Fq 'Synthetic demonstration · no live model called.' \
+            _site/exchange/model-release/index.html
 
       - name: upload the public door
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

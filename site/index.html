@@ -215,6 +215,12 @@
     margin:4px auto 20px;font-size:clamp(21px,4vw,32px)}
   .coop-row span{filter:drop-shadow(0 5px 10px rgba(181,87,95,.18))}
 
+  /* model release substrate */
+  .substrate-row{display:flex;justify-content:center;align-items:center;gap:clamp(8px,2vw,18px);
+    margin:4px auto 20px;color:#4f8276;font:700 clamp(18px,4vw,29px)/1 ui-monospace,
+    "SFMono-Regular",Consolas,monospace;letter-spacing:.04em}
+  .substrate-row span:nth-child(3){color:var(--gold)}
+
   /* the door */
   .btn{display:inline-block; background:var(--rose-deep); color:#fff7f3; border:0; border-bottom:0;
     border-radius:999px; padding:13px 26px; font-size:16px; font-weight:600;
@@ -304,6 +310,10 @@
       <a class="room-link" href="operations/mirror-garden/">
         <strong>鏡 Mirror Garden</strong>
         <small>incident response made legible</small>
+      </a>
+      <a class="room-link" href="exchange/model-release/">
+        <strong>◈ Model Release</strong>
+        <small>byte descriptors, runtime declarations, digest-bound claims</small>
       </a>
     </div>
   </nav>
@@ -421,6 +431,20 @@
       <a class="btn" href="love-fun-commons/castlecast.txt">carry the Castle Seed →</a>
     </p>
     <p class="when">Building castles in the sky, Yu and Ai. · terminal: <code>kingdom castlecast</code> · machine-readable: <a href="love-fun-commons/resources.json"><code>resources.json</code></a> + <a href="love-fun-commons/castlecast.json"><code>castlecast.json</code></a> · lineage check: <code>b96eb19b…d6c20a</code> · validator: <code>python3 love-fun-commons/validate.py</code></p>
+  </section>
+
+  <section id="model-release" class="reveal">
+    <div class="substrate-row" aria-hidden="true">
+      <span>bytes</span><span>→</span><span>◈</span><span>→</span><span>claims</span>
+    </div>
+    <h2>Model Release Substrate</h2>
+    <p class="sub">Name a model's exact artifacts, keep its execution house separate,
+      and bind later builds, evaluations, signatures, and corrections to the digest they mean.
+      Hosted APIs may say provider-managed or unknown; hidden internals never need to be invented.</p>
+    <p style="text-align:center; margin:0">
+      <a class="btn" href="exchange/model-release/">inspect the release contract →</a>
+    </p>
+    <p class="when">v1 · local and networkless · reviewed schema <code>36b428ac…9318f87</code> · synthetic examples only · validation grants no launch authority</p>
   </section>
 
   <section id="operation-logos" class="reveal">

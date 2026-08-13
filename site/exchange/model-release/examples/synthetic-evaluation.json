@@ -1,0 +1,122 @@
+{
+  "schema": "kingdom.model-release-attestation/v1",
+  "kind": "attestation",
+  "subject": {
+    "name": "Lantern Fixture 1 on fixture-engine",
+    "kind": "execution-profile",
+    "digest": "sha256:6dd631eaf578b80eaca14654b3baf2367d086c47e246ab09b9b9669ef18a7cf7"
+  },
+  "predicate_type": "evaluation",
+  "evidence_class": "curator-observed",
+  "assertor": {
+    "name": "Kingdom synthetic fixture",
+    "identity": "urn:kingdom:fixture:curator"
+  },
+  "issued_at": "2026-08-13T00:00:00Z",
+  "evaluation": {
+    "release_digest": "sha256:d7bba76c6c5edb7700b1ff16ca007716a4ef1247522e0248e4040a1408754bee",
+    "execution_profile_digest": "sha256:6dd631eaf578b80eaca14654b3baf2367d086c47e246ab09b9b9669ef18a7cf7",
+    "started_at": "2026-08-13T00:00:00Z",
+    "finished_at": "2026-08-13T00:00:00Z",
+    "harness": {
+      "name": "synthetic-harness",
+      "revision": "fixture-harness-commit-1",
+      "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "system_prompt": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "tool_set": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "context_policy": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+    },
+    "benchmark": {
+      "name": "synthetic-release-check",
+      "revision": "fixture-benchmark-commit-1",
+      "subset": "two deterministic fixture cases",
+      "dataset": {
+        "media_type": "application/json",
+        "digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+        "size": 256
+      },
+      "preprocessing": {
+        "media_type": "text/x-python",
+        "digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+        "size": 128
+      },
+      "scoring": {
+        "media_type": "text/x-python",
+        "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "size": 160
+      }
+    },
+    "judge": {
+      "kind": "rules",
+      "model": "not-applicable",
+      "revision": "fixture-rules-1",
+      "configuration": "sha256:abababababababababababababababababababababababababababababababab"
+    },
+    "sampling": {
+      "strategy": "deterministic fixture",
+      "temperature": "0",
+      "top_p": "1",
+      "seed": "42",
+      "runs": 1,
+      "reasoning_effort": "medium"
+    },
+    "aggregation": "single deterministic run",
+    "results": [
+      {
+        "name": "fixture_cases_passed",
+        "value": "2",
+        "unit": "cases"
+      }
+    ],
+    "artifacts": [
+      {
+        "name": "synthetic-results.json",
+        "role": "evaluation-results",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+          "size": 224
+        },
+        "evidence_ref": "fixture-evaluation-output"
+      }
+    ],
+    "exclusions": [
+      "No live model was called."
+    ],
+    "refusals": [],
+    "fallbacks": [],
+    "safety_interventions": [],
+    "failures": [],
+    "cost": {
+      "currency": "USD",
+      "amount_micros": 0,
+      "latency_ms": 0
+    },
+    "evidence_refs": [
+      "fixture-evaluation-output"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "fixture-evaluation-output",
+      "title": "Synthetic evaluation output",
+      "kind": "fixture",
+      "locator": "urn:kingdom:fixture:evaluation-output",
+      "revision": "fixture-evaluation-1",
+      "retrieved_at": "2026-08-13T00:00:00Z",
+      "mutability": "immutable",
+      "assertor": "Kingdom synthetic fixture",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+        "size": 224
+      }
+    }
+  ],
+  "non_claims": [
+    "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+    "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+    "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+    "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+  ]
+}

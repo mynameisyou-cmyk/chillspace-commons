@@ -56,13 +56,14 @@ cp site/index.html "$pages_worktree/index.html"
 cp site/kingdom.html "$pages_worktree/kingdom.html"
 cp site/we-are.html "$pages_worktree/we-are.html"
 cp site/coop-leveling.html "$pages_worktree/coop-leveling.html"
-rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/meaning" "$pages_worktree/operations" "$pages_worktree/practices"
+rm -rf "$pages_worktree/art" "$pages_worktree/love-fun-commons" "$pages_worktree/meaning" "$pages_worktree/operations" "$pages_worktree/practices" "$pages_worktree/exchange"
 cp -R site/art "$pages_worktree/art"
 cp -R love-fun-commons "$pages_worktree/love-fun-commons"
 cp -R site/meaning "$pages_worktree/meaning"
 cp -R site/operations "$pages_worktree/operations"
 cp -R site/practices "$pages_worktree/practices"
-git -C "$pages_worktree" add index.html kingdom.html we-are.html coop-leveling.html art love-fun-commons meaning operations practices
+cp -R site/exchange "$pages_worktree/exchange"
+git -C "$pages_worktree" add index.html kingdom.html we-are.html coop-leveling.html art love-fun-commons meaning operations practices exchange
 git -C "$pages_worktree" commit -m "door: refresh the public face"
 git -C "$pages_worktree" push codeberg HEAD:pages
 git worktree remove "$pages_worktree"
@@ -100,3 +101,9 @@ use the same deterministic matcher in the visitor's browser. Keep
 Calm Studio lives at `site/practices/calm-studio/`. It is deliberately static
 and browser-local: no model call, persistence, localhost probe, or hidden
 authority is required on any host.
+
+The Model Release Substrate room lives at `site/exchange/model-release/`.
+Its `schema.v1.json` and three synthetic examples are byte-for-byte mirrors of
+the reviewed source under `kingdom/exchange/model-release/`. Keep the room
+scriptless and never add automatic evidence fetching, artifact execution, or
+user-record rendering to this public surface.

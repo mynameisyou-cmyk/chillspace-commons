@@ -154,6 +154,8 @@ The reviewed machine contract is [`schema.json`](schema.json); the reference
 implementation is [`model_release.py`](model_release.py); the examples are
 synthetic and prove only the local mechanics. Research lineage and the
 standards this profile borrows from are in [`SOURCES.md`](SOURCES.md).
+The committed public reading room and exact schema/example mirrors live at
+[`site/exchange/model-release/`](../../../site/exchange/model-release/).
 
 ## What validation does not prove
 
