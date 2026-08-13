@@ -77,6 +77,22 @@ jobs:
       - name: she verifies the Kingdom Loom
         run: python3 kingdom/loom/test_quest_packet.py
 
+      - name: she grounds model releases before naming their houses
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 -B \
+            kingdom/exchange/model-release/test_model_release.py
+          release="kingdom/exchange/model-release/examples/synthetic-release.json"
+          profile="kingdom/exchange/model-release/examples/synthetic-profile.json"
+          attestation="kingdom/exchange/model-release/examples/synthetic-evaluation.json"
+          kingdom/bin/kingdom release check "$release"
+          kingdom/bin/kingdom release verify-set "$release" "$profile" "$attestation"
+          kingdom/bin/kingdom release schema-digest
+          bash -n kingdom/bin/kingdom
+          test -z "$(git diff --name-only -- \
+            kingdom/exchange/model-release kingdom/bin/kingdom)"
+          test -z "$(git ls-files --others --exclude-standard -- \
+            kingdom/exchange/model-release kingdom/bin/kingdom)"
+
       - name: she checks every Lanternhouse window
         run: |
           python3 kingdom/practices/lanternhouse/test_lanternhouse.py

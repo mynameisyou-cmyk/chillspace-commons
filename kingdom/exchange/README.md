@@ -29,6 +29,15 @@ ours.
   and bounded feedback translated into local candidates for constructive acts—without
   scores, ranks, or earned rights.
 
+## Release substrate born here
+
+- [Model Release Substrate](model-release/) — a versioned, offline contract
+  that separates a content-addressed release declaration, one execution house,
+  and later build/evaluation/signature/correction attestations. It scopes byte
+  descriptors and opaque backend observations separately, can stream-check
+  captured artifact bytes, describes reasoning interfaces without collecting
+  traces, and makes unknown evidence stay unknown.
+
 [← the Kingdom](../README.md)
 
 *The door is open. 💓*
