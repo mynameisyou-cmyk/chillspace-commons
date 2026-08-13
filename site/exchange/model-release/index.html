@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A small, offline contract for naming model bytes, execution houses, and digest-bound launch claims.">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#10161d">
+<link rel="canonical" href="https://mynameisyou-cmyk.github.io/chillspace-commons/exchange/model-release/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%E2%97%88%3C/text%3E%3C/svg%3E">
+<title>Model Release Substrate · The Chillspace Kingdom</title>
+<style>
+  :root {
+    --night: #0b1016;
+    --slate: #111a23;
+    --panel: #16222c;
+    --ink: #edf7f4;
+    --muted: #9bb0af;
+    --mint: #7be0bd;
+    --gold: #f1bf73;
+    --rose: #ee9c9a;
+    --line: rgba(183, 220, 210, .18);
+  }
+  * { box-sizing: border-box }
+  html { color-scheme: dark; scroll-behavior: smooth }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 78% 4%, rgba(123,224,189,.12), transparent 26rem),
+      radial-gradient(circle at 12% 30%, rgba(238,156,154,.08), transparent 27rem),
+      linear-gradient(155deg, var(--night), #0d141b 58%, #0b1315);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    min-height: 100vh;
+  }
+  a { color: var(--mint); text-underline-offset: 3px }
+  a:hover { color: #c4ffe8 }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 4px }
+  .skip {
+    position: fixed; top: 10px; left: 10px; z-index: 10; padding: 8px 13px;
+    color: #111; background: var(--gold); border-radius: 999px; transform: translateY(-180%);
+  }
+  .skip:focus { transform: none }
+  .wrap { width: min(1080px, calc(100% - 36px)); margin: 0 auto }
+  header { padding: clamp(64px, 10vw, 112px) 0 48px }
+  .crumb { margin: 0 0 28px; color: var(--muted); font-size: 13px }
+  .eyebrow, .label {
+    color: var(--gold); font: 750 11px/1.4 ui-monospace, "SFMono-Regular", Consolas, monospace;
+    letter-spacing: .16em; text-transform: uppercase;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif }
+  h1 { max-width: 860px; margin: 14px 0 18px; font-size: clamp(42px, 8vw, 82px); line-height: .98; letter-spacing: -.035em }
+  h1 span { display: block; color: var(--mint) }
+  .lead { max-width: 750px; margin: 0; color: #c4d3d0; font-size: clamp(18px, 2.5vw, 23px) }
+  .status { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding: 0; list-style: none }
+  .status li { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: 12px/1.3 ui-monospace, monospace }
+  .notice {
+    margin: 0 0 46px; padding: 17px 20px; border: 1px solid rgba(241,191,115,.35);
+    border-radius: 14px; color: #ecd8b9; background: rgba(241,191,115,.07);
+  }
+  .notice strong { color: var(--gold) }
+  section { padding: 48px 0; border-top: 1px solid var(--line) }
+  h2 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1 }
+  .intro { max-width: 730px; margin: 0 0 28px; color: var(--muted) }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px }
+  .card { padding: 23px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg, rgba(22,34,44,.95), rgba(13,22,29,.92)) }
+  .card .n { color: var(--mint); font: 700 13px/1 ui-monospace, monospace }
+  .card h3 { margin: 14px 0 8px; font-size: 21px }
+  .card p { margin: 0 0 13px; color: var(--muted); font-size: 14px }
+  .hashbox {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center;
+    padding: 24px; border: 1px solid rgba(123,224,189,.3); border-radius: 18px;
+    background: rgba(123,224,189,.055);
+  }
+  code { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace }
+  .digest { display: block; margin-top: 7px; color: #d5ebe4; overflow-wrap: anywhere; font-size: 13px }
+  .button {
+    display: inline-block; padding: 11px 16px; border: 1px solid var(--mint); border-radius: 999px;
+    color: #07120f; background: var(--mint); font-weight: 750; text-decoration: none; white-space: nowrap;
+  }
+  .button:hover { color: #07120f; background: #c4ffe8 }
+  .flow { counter-reset: launch; display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; margin: 28px 0 0 }
+  .flow div { min-height: 142px; padding: 17px; border-top: 2px solid var(--mint); background: rgba(255,255,255,.035) }
+  .flow div::before { counter-increment: launch; content: "0" counter(launch); color: var(--gold); font: 700 11px/1 ui-monospace, monospace }
+  .flow strong { display: block; margin: 12px 0 5px; font-family: Georgia, serif }
+  .flow span { color: var(--muted); font-size: 13px; line-height: 1.45 }
+  table { width: 100%; border-collapse: collapse; margin-top: 24px }
+  th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top }
+  th { color: var(--gold); font: 700 11px/1.4 ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase }
+  td { color: #cbd9d6 }
+  td:first-child { color: var(--ink); font-weight: 700 }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px }
+  .axis { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.025) }
+  .axis h3 { margin: 5px 0 9px; font-size: 23px }
+  .axis p { margin: 0; color: var(--muted) }
+  .boundary { display: grid; grid-template-columns: .8fr 1.2fr; gap: 32px; align-items: start }
+  .boundary ul { margin: 0; padding: 0; list-style: none }
+  .boundary li { padding: 11px 0 11px 26px; border-bottom: 1px solid var(--line); position: relative; color: #cbd9d6 }
+  .boundary li::before { content: "×"; position: absolute; left: 2px; color: var(--rose); font-weight: 800 }
+  footer { padding: 45px 0 64px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px }
+  footer p { margin: 8px 0 }
+  @media (max-width: 780px) {
+    .cards, .flow { grid-template-columns: 1fr }
+    .flow div { min-height: auto }
+    .two, .boundary { grid-template-columns: 1fr }
+    .hashbox { grid-template-columns: 1fr }
+    table { display: block; overflow-x: auto }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">skip to the contract</a>
+<div class="wrap">
+  <header>
+    <p class="crumb"><a href="../../">The Chillspace Kingdom</a> / exchange / model release</p>
+    <p class="eyebrow">KINGDOM MODEL RELEASE SUBSTRATE · V1</p>
+    <h1>Name the bytes.<span>Name the house.</span></h1>
+    <p class="lead">A small, offline contract for distinguishing a model release from the runtime that executes it and the claims that arrive later.</p>
+    <ul class="status" aria-label="Properties">
+      <li>content-addressed</li><li>Python stdlib</li><li>networkless</li><li>digest-bound attestations</li>
+    </ul>
+  </header>
+
+  <main id="main">
+    <p class="notice"><strong>Synthetic demonstration · no live model called.</strong> These public examples contain dummy identities and hashes. Nothing here downloaded weights, contacted a provider, executed a model, or verified a signature.</p>
+
+    <section aria-labelledby="records">
+      <p class="label">Three records, separate lifetimes</p>
+      <h2 id="records">One launch need not become one mutable scroll.</h2>
+      <p class="intro">A release identity remains stable when a new runtime, evaluation, signature, correction, or deprecation is attached. Every edge names the digest it means.</p>
+      <div class="cards">
+        <article class="card">
+          <span class="n">01 · addressed by digest</span>
+          <h3>Model release</h3>
+          <p>Artifacts, interface, reasoning contract, disclosures, license states, and exact descriptors where bytes are available.</p>
+          <a href="examples/synthetic-release.json">synthetic release JSON</a>
+        </article>
+        <article class="card">
+          <span class="n">02 · addressed by digest</span>
+          <h3>Execution profile</h3>
+          <p>Engine, precision, kernels, hardware, backend declarations, and an exact binding back to one release digest.</p>
+          <a href="examples/synthetic-profile.json">synthetic profile JSON</a>
+        </article>
+        <article class="card">
+          <span class="n">03 · separately addressed</span>
+          <h3>Attestation</h3>
+          <p>Build provenance, evaluation, signature evidence, correction, or deprecation bound to a release or profile.</p>
+          <a href="examples/synthetic-evaluation.json">synthetic evaluation JSON</a>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="schema">
+      <p class="label">Reviewed machine contract</p>
+      <h2 id="schema">The public schema is the reviewed bytes.</h2>
+      <div class="hashbox">
+        <div>
+          <strong>Canonical schema SHA-256</strong>
+          <code class="digest">36b428ac4a890a6960ca06683ec9b758aa709ac4a0da3428bbd4344969318f87</code>
+        </div>
+        <a class="button" href="schema.v1.json">open schema.v1.json</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="launch">
+      <p class="label">Launch path</p>
+      <h2 id="launch">Capture what can change independently.</h2>
+      <div class="flow">
+        <div><strong>Inventory</strong><span>List every runtime-critical artifact, interface, license, and disclosure state.</span></div>
+        <div><strong>Hash bytes</strong><span>Record media type, size, SHA-256, and whether the bytes were actually compared.</span></div>
+        <div><strong>Receipt</strong><span>Validate strict JSON and bind content, source bytes, schema, and validator implementation.</span></div>
+        <div><strong>Resolve runtime</strong><span>Pin local execution details or honestly name provider-managed and unknown API internals.</span></div>
+        <div><strong>Attach claims</strong><span>Bind evaluations, builds, signatures, and corrections to exact subjects and evidence.</span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="fingerprints">
+      <p class="label">Fingerprint vocabulary</p>
+      <h2 id="fingerprints">Four identities, four scopes.</h2>
+      <table>
+        <thead><tr><th>Name</th><th>Scope</th><th>Honest boundary</th></tr></thead>
+        <tbody>
+          <tr><td>Artifact descriptor</td><td>Exact file bytes, media type, and size</td><td>A declaration until supplied bytes are streamed and compared.</td></tr>
+          <tr><td>Release digest</td><td>Canonical release manifest</td><td>Shows the declaration is unchanged; says nothing by itself about safety or origin.</td></tr>
+          <tr><td>Profile digest</td><td>Canonical execution house</td><td>Names declared runtime configuration, not universal reproducibility.</td></tr>
+          <tr><td>Backend observation</td><td>Time-scoped provider claim and evidence</td><td>Opaque, provider-defined, and not a cryptographic weight fingerprint.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="reasoning">
+      <p class="label">Reasoning interface, not private thought</p>
+      <h2 id="reasoning">Disclosure and continuation are separate axes.</h2>
+      <div class="two">
+        <div class="axis">
+          <p class="label">What a caller may see</p>
+          <h3>full · summary · none · unknown</h3>
+          <p>This describes the public reasoning interface. It does not request or preserve hidden chain-of-thought.</p>
+        </div>
+        <div class="axis">
+          <p class="label">How a turn may continue</p>
+          <h3>plaintext · encrypted · server-held · none · unknown</h3>
+          <p>Opaque continuation state can coexist with a visible summary. Compatibility is recorded without collecting a session trace.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="boundary" class="boundary">
+      <div>
+        <p class="label">The line</p>
+        <h2 id="boundary">Validation is not a launch blessing.</h2>
+        <p class="intro">It makes claims inspectable. It does not turn them into truth or authority.</p>
+      </div>
+      <ul>
+        <li>No model call, download, upload, execution, signing, or deployment.</li>
+        <li>No proof of publisher identity, safety, quality, behavior, or claim truth.</li>
+        <li>No promotion of aliases, seeds, tensor inventories, or behavioral probes into weight digests.</li>
+        <li>No prompts, responses, private system text, scratchpads, or raw reasoning in static records.</li>
+        <li>No permission or readiness granted by a valid record.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="../../">← return to the Kingdom</a></p>
+    <p>continuity is the chain, not the substrate.</p>
+  </footer>
+</div>
+</body>
+</html>

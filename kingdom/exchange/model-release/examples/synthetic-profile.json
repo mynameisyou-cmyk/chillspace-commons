@@ -1,0 +1,114 @@
+{
+  "schema": "kingdom.model-execution-profile/v1",
+  "kind": "execution-profile",
+  "subject": {
+    "release_digest": "sha256:d7bba76c6c5edb7700b1ff16ca007716a4ef1247522e0248e4040a1408754bee"
+  },
+  "engine": {
+    "name": "fixture-engine",
+    "version": "1.0.0",
+    "implementation": "fixture-transformers",
+    "loader": "safetensors fixture loader",
+    "source_revision": "fixture-engine-commit-1",
+    "custom_code_revision": "fixture-model-code-commit-1",
+    "package": {
+      "media_type": "application/vnd.python.wheel",
+      "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "size": 512
+    },
+    "kernels": [
+      {
+        "name": "fixture-attention",
+        "version": "1.0.0",
+        "source_revision": "fixture-kernel-commit-1"
+      }
+    ],
+    "evidence_refs": [
+      "fixture-runtime-docs"
+    ]
+  },
+  "resolved": {
+    "dtype": "bfloat16",
+    "weight_quantization": "none",
+    "kv_cache_dtype": "float16",
+    "load_format": "safetensors",
+    "context_tokens": 4096,
+    "parallelism": {
+      "tensor": 1,
+      "pipeline": 1,
+      "data": 1,
+      "expert": 1
+    },
+    "attention_backend": "fixture-attention-1.0.0",
+    "speculative_decoding": "disabled",
+    "rope_overrides": "none"
+  },
+  "hardware": {
+    "visibility": "declared",
+    "accelerators": [
+      {
+        "model": "Synthetic Accelerator",
+        "count": 1
+      }
+    ],
+    "driver": "fixture-driver-1.0",
+    "compute_stack": "fixture-compute-1.0",
+    "interconnect": "single-device",
+    "topology": "one declared accelerator"
+  },
+  "backend": {
+    "kind": "local-open-weights",
+    "provider": "Synthetic Kingdom Lab",
+    "endpoint_family": "fixture-local-runtime",
+    "observations": [
+      {
+        "name": "system_fingerprint",
+        "value": "fixture-backend-2026-08",
+        "semantics": "opaque-provider-observation",
+        "observed_at": "2026-08-13T00:00:00Z",
+        "evidence_refs": [
+          "fixture-runtime-docs"
+        ]
+      }
+    ]
+  },
+  "determinism": {
+    "seed": "42",
+    "deterministic_algorithms": true,
+    "known_nondeterminism": [
+      "The fixture makes no cross-hardware reproducibility claim."
+    ]
+  },
+  "privacy": {
+    "environment_capture": "allowlisted-fields",
+    "excluded": [
+      "credentials",
+      "hostnames",
+      "private paths",
+      "raw environment"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "fixture-runtime-docs",
+      "title": "Synthetic runtime documentation",
+      "kind": "fixture",
+      "locator": "urn:kingdom:fixture:runtime-docs",
+      "revision": "fixture-runtime-docs-1",
+      "retrieved_at": "2026-08-13T00:00:00Z",
+      "mutability": "immutable",
+      "assertor": "Synthetic Kingdom Lab",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "size": 384
+      }
+    }
+  ],
+  "non_claims": [
+    "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+    "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+    "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+    "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+  ]
+}

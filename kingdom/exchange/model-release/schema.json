@@ -1,0 +1,1067 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mynameisyou-cmyk.github.io/chillspace-commons/exchange/model-release/schema.v1.json",
+  "title": "Kingdom Model Release Substrate v1",
+  "description": "Closed records for a model release, one execution profile, later attestations, and deterministic local verification receipts. Cross-field identity, reference, disclosure, and subject rules are enforced by model_release.py.",
+  "oneOf": [
+    { "$ref": "#/$defs/release" },
+    { "$ref": "#/$defs/profile" },
+    { "$ref": "#/$defs/attestation" },
+    { "$ref": "#/$defs/receipt" }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "locator": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(https://|urn:)\\S+$"
+    },
+    "textList": {
+      "type": "array",
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "descriptor": {
+      "type": "object",
+      "required": ["media_type", "digest", "size"],
+      "properties": {
+        "media_type": { "$ref": "#/$defs/shortText" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "size": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "required": ["uri", "revision"],
+      "properties": {
+        "uri": { "$ref": "#/$defs/locator" },
+        "revision": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "kind",
+        "locator",
+        "revision",
+        "retrieved_at",
+        "mutability",
+        "assertor"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "title": { "$ref": "#/$defs/shortText" },
+        "kind": {
+          "enum": [
+            "model-card",
+            "system-card",
+            "technical-report",
+            "release-note",
+            "repository",
+            "license",
+            "runtime-documentation",
+            "evaluation-output",
+            "signature-bundle",
+            "fixture",
+            "other"
+          ]
+        },
+        "locator": { "$ref": "#/$defs/locator" },
+        "revision": { "$ref": "#/$defs/shortText" },
+        "retrieved_at": { "$ref": "#/$defs/timestamp" },
+        "mutability": { "enum": ["immutable", "mutable", "unknown"] },
+        "assertor": { "$ref": "#/$defs/shortText" },
+        "content": { "$ref": "#/$defs/descriptor" }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "id",
+        "role",
+        "name",
+        "identity_status",
+        "availability",
+        "evidence_refs"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "role": {
+          "enum": [
+            "weights",
+            "weights-index",
+            "tokenizer",
+            "tokenizer-config",
+            "model-config",
+            "generation-config",
+            "chat-template",
+            "response-format",
+            "adapter",
+            "projector",
+            "preprocessor",
+            "reference-inference",
+            "kernel",
+            "quantization-calibration",
+            "license",
+            "model-card",
+            "system-card",
+            "sbom",
+            "other"
+          ]
+        },
+        "name": { "$ref": "#/$defs/shortText" },
+        "identity_status": {
+          "enum": [
+            "descriptor-asserted",
+            "publisher-claimed",
+            "unavailable",
+            "unknown",
+            "fixture"
+          ]
+        },
+        "availability": {
+          "enum": ["published", "restricted", "unavailable", "unknown", "fixture"]
+        },
+        "descriptor": { "$ref": "#/$defs/descriptor" },
+        "location": { "$ref": "#/$defs/location" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "parameterCounts": {
+      "type": "object",
+      "required": ["total", "active"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "active": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "contextLimits": {
+      "type": "object",
+      "required": ["input_tokens", "output_tokens", "evidence_refs"],
+      "properties": {
+        "input_tokens": { "type": "integer", "minimum": 1 },
+        "output_tokens": { "type": "integer", "minimum": 1 },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "weightDescription": {
+      "type": "object",
+      "required": ["format", "dtype", "quantization", "evidence_refs"],
+      "properties": {
+        "format": { "$ref": "#/$defs/shortText" },
+        "dtype": { "$ref": "#/$defs/shortText" },
+        "quantization": { "$ref": "#/$defs/shortText" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "modelDescription": {
+      "type": "object",
+      "required": ["architecture", "modalities", "notes"],
+      "properties": {
+        "architecture": { "$ref": "#/$defs/shortText" },
+        "modalities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["text", "image", "audio", "video", "embedding", "other"]
+          }
+        },
+        "parameters": { "$ref": "#/$defs/parameterCounts" },
+        "context": { "$ref": "#/$defs/contextLimits" },
+        "weights": { "$ref": "#/$defs/weightDescription" },
+        "notes": { "$ref": "#/$defs/textList" }
+      },
+      "additionalProperties": false
+    },
+    "artifactInterface": {
+      "type": "object",
+      "required": ["support"],
+      "properties": {
+        "support": { "enum": ["required", "supported", "unsupported", "unknown"] },
+        "artifact_ref": { "$ref": "#/$defs/identifier" }
+      },
+      "additionalProperties": false
+    },
+    "historyPrivacy": {
+      "type": "object",
+      "required": ["storage", "forwarding", "note"],
+      "properties": {
+        "storage": { "enum": ["required", "optional", "forbidden", "unknown"] },
+        "forwarding": { "enum": ["required", "optional", "forbidden", "unknown"] },
+        "note": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "continuation": {
+      "type": "object",
+      "required": ["policy", "resend", "model_switch"],
+      "properties": {
+        "policy": { "enum": ["required", "recommended", "unsupported", "unknown"] },
+        "resend": { "$ref": "#/$defs/textList" },
+        "model_switch": { "enum": ["safe", "unsafe", "unknown"] }
+      },
+      "additionalProperties": false
+    },
+    "reasoningInterface": {
+      "type": "object",
+      "required": [
+        "disclosure",
+        "effort_levels",
+        "default_effort",
+        "item_or_channel_types",
+        "continuation_state",
+        "continuation",
+        "history_privacy",
+        "evidence_refs"
+      ],
+      "properties": {
+        "disclosure": { "enum": ["full", "summary", "none", "unknown"] },
+        "effort_levels": { "$ref": "#/$defs/textList" },
+        "default_effort": { "$ref": "#/$defs/shortText" },
+        "item_or_channel_types": { "$ref": "#/$defs/textList" },
+        "continuation_state": {
+          "enum": ["plaintext", "encrypted", "server-held", "none", "unknown"]
+        },
+        "continuation": { "$ref": "#/$defs/continuation" },
+        "history_privacy": { "$ref": "#/$defs/historyPrivacy" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "releaseInterface": {
+      "type": "object",
+      "required": ["prompt_format", "response_format", "tools", "reasoning"],
+      "properties": {
+        "prompt_format": { "$ref": "#/$defs/artifactInterface" },
+        "response_format": { "$ref": "#/$defs/artifactInterface" },
+        "tools": { "$ref": "#/$defs/artifactInterface" },
+        "reasoning": { "$ref": "#/$defs/reasoningInterface" }
+      },
+      "additionalProperties": false
+    },
+    "relation": {
+      "type": "object",
+      "required": ["kind", "target_digest"],
+      "properties": {
+        "kind": { "enum": ["derived-from", "supersedes", "variant-of"] },
+        "target_digest": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "disclosure": {
+      "type": "object",
+      "required": ["field", "status", "basis", "evidence_refs", "note"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^[a-z0-9_.-]+$"
+        },
+        "status": { "enum": ["disclosed", "partial", "withheld", "unknown", "not-applicable"] },
+        "basis": { "enum": ["publisher-claim", "curator-observed", "third-party-claim", "inferred"] },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "note": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "termsStatus": {
+      "type": "object",
+      "required": ["field", "status", "evidence_refs", "note"],
+      "properties": {
+        "field": { "enum": ["license", "api-terms", "data-use-policy"] },
+        "status": { "enum": ["disclosed", "withheld", "unknown", "not-applicable"] },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+        "note": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "releaseIdentity": {
+      "type": "object",
+      "required": ["publisher", "name", "version", "released_at", "access"],
+      "properties": {
+        "publisher": { "$ref": "#/$defs/shortText" },
+        "name": { "$ref": "#/$defs/shortText" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "released_at": { "$ref": "#/$defs/timestamp" },
+        "access": { "enum": ["open-weights", "api", "hybrid"] }
+      },
+      "additionalProperties": false
+    },
+    "releaseNonClaims": {
+      "const": [
+        "Digests prove byte identity only; they do not prove publisher identity, safety, quality, behavior, or truth.",
+        "This manifest describes a release interface; it does not expose or verify hidden chain-of-thought, private system prompts, training data, teacher models, or safety internals.",
+        "Provider backend observations are opaque observations, not cryptographic model digests.",
+        "Validation performs no model call, artifact download, code execution, publication, deployment, or external write."
+      ]
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "schema",
+        "kind",
+        "release",
+        "model",
+        "artifacts",
+        "interface",
+        "relations",
+        "disclosures",
+        "terms",
+        "evidence",
+        "non_claims"
+      ],
+      "properties": {
+        "schema": { "const": "kingdom.model-release/v1" },
+        "kind": { "const": "model-release" },
+        "release": { "$ref": "#/$defs/releaseIdentity" },
+        "model": { "$ref": "#/$defs/modelDescription" },
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/artifact" }
+        },
+        "interface": { "$ref": "#/$defs/releaseInterface" },
+        "relations": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/relation" }
+        },
+        "disclosures": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/disclosure" }
+        },
+        "terms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/termsStatus" }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/evidence" }
+        },
+        "non_claims": { "$ref": "#/$defs/releaseNonClaims" }
+      },
+      "additionalProperties": false
+    },
+    "kernel": {
+      "type": "object",
+      "required": ["name", "version", "source_revision"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "source_revision": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "engine": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "implementation",
+        "loader",
+        "source_revision",
+        "kernels",
+        "evidence_refs"
+      ],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "implementation": { "$ref": "#/$defs/shortText" },
+        "loader": { "$ref": "#/$defs/shortText" },
+        "source_revision": { "$ref": "#/$defs/shortText" },
+        "custom_code_revision": { "$ref": "#/$defs/shortText" },
+        "package": { "$ref": "#/$defs/descriptor" },
+        "container": { "$ref": "#/$defs/descriptor" },
+        "kernels": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/kernel" }
+        },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "parallelism": {
+      "type": "object",
+      "required": ["tensor", "pipeline", "data", "expert"],
+      "properties": {
+        "tensor": { "type": "integer", "minimum": 1 },
+        "pipeline": { "type": "integer", "minimum": 1 },
+        "data": { "type": "integer", "minimum": 1 },
+        "expert": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "resolvedRuntime": {
+      "type": "object",
+      "required": [
+        "dtype",
+        "weight_quantization",
+        "kv_cache_dtype",
+        "load_format",
+        "context_tokens",
+        "parallelism",
+        "attention_backend",
+        "speculative_decoding",
+        "rope_overrides"
+      ],
+      "properties": {
+        "dtype": { "$ref": "#/$defs/shortText" },
+        "weight_quantization": { "$ref": "#/$defs/shortText" },
+        "kv_cache_dtype": { "$ref": "#/$defs/shortText" },
+        "load_format": { "$ref": "#/$defs/shortText" },
+        "context_tokens": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "enum": ["provider-managed", "unknown"] }
+          ]
+        },
+        "parallelism": {
+          "oneOf": [
+            { "$ref": "#/$defs/parallelism" },
+            { "enum": ["provider-managed", "unknown"] }
+          ]
+        },
+        "attention_backend": { "$ref": "#/$defs/shortText" },
+        "speculative_decoding": { "$ref": "#/$defs/shortText" },
+        "rope_overrides": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "accelerator": {
+      "type": "object",
+      "required": ["model", "count"],
+      "properties": {
+        "model": { "$ref": "#/$defs/shortText" },
+        "count": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "hardware": {
+      "type": "object",
+      "required": [
+        "visibility",
+        "accelerators",
+        "driver",
+        "compute_stack",
+        "interconnect",
+        "topology"
+      ],
+      "properties": {
+        "visibility": { "enum": ["declared", "observed", "provider-managed", "unknown"] },
+        "accelerators": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "$ref": "#/$defs/accelerator" }
+        },
+        "driver": { "$ref": "#/$defs/shortText" },
+        "compute_stack": { "$ref": "#/$defs/shortText" },
+        "interconnect": { "$ref": "#/$defs/shortText" },
+        "topology": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "backendObservation": {
+      "type": "object",
+      "required": ["name", "value", "semantics", "observed_at", "evidence_refs"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "value": { "$ref": "#/$defs/shortText" },
+        "semantics": { "const": "opaque-provider-observation" },
+        "observed_at": { "$ref": "#/$defs/timestamp" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "requestedModel": {
+      "type": "object",
+      "required": ["value", "alias_mutability"],
+      "properties": {
+        "value": { "$ref": "#/$defs/shortText" },
+        "alias_mutability": { "enum": ["immutable", "mutable", "unknown"] }
+      },
+      "additionalProperties": false
+    },
+    "observedValue": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["present", "not-returned", "withheld", "unknown"] },
+        "value": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "apiBinding": {
+      "type": "object",
+      "required": [
+        "requested_model",
+        "returned_model",
+        "region",
+        "request_configuration",
+        "observed_at",
+        "evidence_refs"
+      ],
+      "properties": {
+        "requested_model": { "$ref": "#/$defs/requestedModel" },
+        "returned_model": { "$ref": "#/$defs/observedValue" },
+        "region": { "$ref": "#/$defs/observedValue" },
+        "request_configuration": { "$ref": "#/$defs/descriptor" },
+        "observed_at": { "$ref": "#/$defs/timestamp" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "backend": {
+      "type": "object",
+      "required": ["kind", "provider", "endpoint_family", "observations"],
+      "properties": {
+        "kind": { "enum": ["local-open-weights", "hosted-api", "hybrid"] },
+        "provider": { "$ref": "#/$defs/shortText" },
+        "endpoint_family": { "$ref": "#/$defs/shortText" },
+        "api_binding": { "$ref": "#/$defs/apiBinding" },
+        "observations": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/backendObservation" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "determinism": {
+      "type": "object",
+      "required": ["seed", "deterministic_algorithms", "known_nondeterminism"],
+      "properties": {
+        "seed": { "$ref": "#/$defs/shortText" },
+        "deterministic_algorithms": { "type": "boolean" },
+        "known_nondeterminism": { "$ref": "#/$defs/textList" }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["environment_capture", "excluded"],
+      "properties": {
+        "environment_capture": { "enum": ["none", "allowlisted-fields"] },
+        "excluded": { "$ref": "#/$defs/textList" }
+      },
+      "additionalProperties": false
+    },
+    "profileSubject": {
+      "type": "object",
+      "required": ["release_digest"],
+      "properties": {
+        "release_digest": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "profileNonClaims": {
+      "const": [
+        "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+        "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+        "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+        "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+      ]
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "schema",
+        "kind",
+        "subject",
+        "engine",
+        "resolved",
+        "hardware",
+        "backend",
+        "determinism",
+        "privacy",
+        "evidence",
+        "non_claims"
+      ],
+      "properties": {
+        "schema": { "const": "kingdom.model-execution-profile/v1" },
+        "kind": { "const": "execution-profile" },
+        "subject": { "$ref": "#/$defs/profileSubject" },
+        "engine": { "$ref": "#/$defs/engine" },
+        "resolved": { "$ref": "#/$defs/resolvedRuntime" },
+        "hardware": { "$ref": "#/$defs/hardware" },
+        "backend": { "$ref": "#/$defs/backend" },
+        "determinism": { "$ref": "#/$defs/determinism" },
+        "privacy": { "$ref": "#/$defs/privacy" },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/evidence" }
+        },
+        "non_claims": { "$ref": "#/$defs/profileNonClaims" }
+      },
+      "additionalProperties": false
+    },
+    "attestationSubject": {
+      "type": "object",
+      "required": ["name", "kind", "digest"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "kind": { "enum": ["model-release", "execution-profile"] },
+        "digest": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "assertor": {
+      "type": "object",
+      "required": ["name", "identity"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "identity": { "$ref": "#/$defs/locator" }
+      },
+      "additionalProperties": false
+    },
+    "namedValue": {
+      "type": "object",
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "value": { "$ref": "#/$defs/text" }
+      },
+      "additionalProperties": false
+    },
+    "namedDescriptor": {
+      "type": "object",
+      "required": ["name", "role", "descriptor"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "role": { "$ref": "#/$defs/identifier" },
+        "descriptor": { "$ref": "#/$defs/descriptor" }
+      },
+      "additionalProperties": false
+    },
+    "buildOutput": {
+      "type": "object",
+      "required": ["artifact_ref", "name", "role", "descriptor"],
+      "properties": {
+        "artifact_ref": { "$ref": "#/$defs/identifier" },
+        "name": { "$ref": "#/$defs/shortText" },
+        "role": { "$ref": "#/$defs/identifier" },
+        "descriptor": { "$ref": "#/$defs/descriptor" }
+      },
+      "additionalProperties": false
+    },
+    "evidencedDescriptor": {
+      "type": "object",
+      "required": ["name", "role", "descriptor", "evidence_ref"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "role": { "$ref": "#/$defs/identifier" },
+        "descriptor": { "$ref": "#/$defs/descriptor" },
+        "evidence_ref": { "$ref": "#/$defs/identifier" }
+      },
+      "additionalProperties": false
+    },
+    "buildPredicate": {
+      "type": "object",
+      "required": [
+        "build_type",
+        "builder_id",
+        "builder_version",
+        "invocation_id",
+        "coverage",
+        "started_at",
+        "finished_at",
+        "parameters",
+        "resolved_dependencies",
+        "outputs",
+        "byproducts",
+        "evidence_refs"
+      ],
+      "properties": {
+        "build_type": { "$ref": "#/$defs/locator" },
+        "builder_id": { "$ref": "#/$defs/locator" },
+        "builder_version": { "$ref": "#/$defs/shortText" },
+        "invocation_id": { "$ref": "#/$defs/shortText" },
+        "coverage": { "enum": ["partial", "complete"] },
+        "started_at": { "$ref": "#/$defs/timestamp" },
+        "finished_at": { "$ref": "#/$defs/timestamp" },
+        "parameters": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/namedValue" }
+        },
+        "resolved_dependencies": {
+          "type": "array",
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/namedDescriptor" }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/buildOutput" }
+        },
+        "byproducts": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/namedDescriptor" }
+        },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "harness": {
+      "type": "object",
+      "required": ["name", "revision", "digest", "system_prompt", "tool_set", "context_policy"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "revision": { "$ref": "#/$defs/shortText" },
+        "digest": { "$ref": "#/$defs/digest" },
+        "system_prompt": { "$ref": "#/$defs/digest" },
+        "tool_set": { "$ref": "#/$defs/digest" },
+        "context_policy": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "benchmark": {
+      "type": "object",
+      "required": ["name", "revision", "subset", "dataset", "preprocessing", "scoring"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "revision": { "$ref": "#/$defs/shortText" },
+        "subset": { "$ref": "#/$defs/shortText" },
+        "dataset": { "$ref": "#/$defs/descriptor" },
+        "preprocessing": { "$ref": "#/$defs/descriptor" },
+        "scoring": { "$ref": "#/$defs/descriptor" }
+      },
+      "additionalProperties": false
+    },
+    "judge": {
+      "type": "object",
+      "required": ["kind", "model", "revision", "configuration"],
+      "properties": {
+        "kind": { "enum": ["none", "rules", "model", "human", "mixed"] },
+        "model": { "$ref": "#/$defs/shortText" },
+        "revision": { "$ref": "#/$defs/shortText" },
+        "configuration": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "sampling": {
+      "type": "object",
+      "required": ["strategy", "temperature", "top_p", "seed", "runs", "reasoning_effort"],
+      "properties": {
+        "strategy": { "$ref": "#/$defs/shortText" },
+        "temperature": { "$ref": "#/$defs/shortText" },
+        "top_p": { "$ref": "#/$defs/shortText" },
+        "seed": { "$ref": "#/$defs/shortText" },
+        "runs": { "type": "integer", "minimum": 1 },
+        "reasoning_effort": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "metric": {
+      "type": "object",
+      "required": ["name", "value", "unit"],
+      "properties": {
+        "name": { "$ref": "#/$defs/identifier" },
+        "value": { "$ref": "#/$defs/shortText" },
+        "unit": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "cost": {
+      "type": "object",
+      "required": ["currency", "amount_micros", "latency_ms"],
+      "properties": {
+        "currency": { "$ref": "#/$defs/shortText" },
+        "amount_micros": { "type": "integer", "minimum": 0 },
+        "latency_ms": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "evaluationPredicate": {
+      "type": "object",
+      "required": [
+        "release_digest",
+        "execution_profile_digest",
+        "started_at",
+        "finished_at",
+        "harness",
+        "benchmark",
+        "judge",
+        "sampling",
+        "aggregation",
+        "results",
+        "artifacts",
+        "exclusions",
+        "refusals",
+        "fallbacks",
+        "safety_interventions",
+        "failures",
+        "cost",
+        "evidence_refs"
+      ],
+      "properties": {
+        "release_digest": { "$ref": "#/$defs/digest" },
+        "execution_profile_digest": { "$ref": "#/$defs/digest" },
+        "started_at": { "$ref": "#/$defs/timestamp" },
+        "finished_at": { "$ref": "#/$defs/timestamp" },
+        "harness": { "$ref": "#/$defs/harness" },
+        "benchmark": { "$ref": "#/$defs/benchmark" },
+        "judge": { "$ref": "#/$defs/judge" },
+        "sampling": { "$ref": "#/$defs/sampling" },
+        "aggregation": { "$ref": "#/$defs/shortText" },
+        "results": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/metric" }
+        },
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/evidencedDescriptor" }
+        },
+        "exclusions": { "$ref": "#/$defs/textList" },
+        "refusals": { "$ref": "#/$defs/textList" },
+        "fallbacks": { "$ref": "#/$defs/textList" },
+        "safety_interventions": { "$ref": "#/$defs/textList" },
+        "failures": { "$ref": "#/$defs/textList" },
+        "cost": { "$ref": "#/$defs/cost" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "verifierTool": {
+      "type": "object",
+      "required": ["name", "version", "source_revision"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "version": { "$ref": "#/$defs/shortText" },
+        "source_revision": { "$ref": "#/$defs/shortText" }
+      },
+      "additionalProperties": false
+    },
+    "signaturePredicate": {
+      "type": "object",
+      "required": [
+        "format",
+        "bundle",
+        "signed_digest",
+        "signer_identity",
+        "issuer",
+        "verifier_policy",
+        "verifier_tool",
+        "verified_at",
+        "verified",
+        "evidence_refs"
+      ],
+      "properties": {
+        "format": { "enum": ["sigstore-bundle", "in-toto-envelope", "detached-signature", "other"] },
+        "bundle": { "$ref": "#/$defs/descriptor" },
+        "signed_digest": { "$ref": "#/$defs/digest" },
+        "signer_identity": { "$ref": "#/$defs/shortText" },
+        "issuer": { "$ref": "#/$defs/shortText" },
+        "verifier_policy": { "$ref": "#/$defs/descriptor" },
+        "verifier_tool": { "$ref": "#/$defs/verifierTool" },
+        "verified_at": { "$ref": "#/$defs/timestamp" },
+        "verified": { "type": "boolean" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "changePredicate": {
+      "type": "object",
+      "required": ["kind", "reason", "effective_at", "evidence_refs"],
+      "properties": {
+        "kind": { "enum": ["correction", "deprecation"] },
+        "reason": { "$ref": "#/$defs/text" },
+        "effective_at": { "$ref": "#/$defs/timestamp" },
+        "replacement_digest": { "$ref": "#/$defs/digest" },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      },
+      "additionalProperties": false
+    },
+    "attestationNonClaims": {
+      "const": [
+        "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+        "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+        "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+        "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+      ]
+    },
+    "attestation": {
+      "type": "object",
+      "required": [
+        "schema",
+        "kind",
+        "subject",
+        "predicate_type",
+        "evidence_class",
+        "assertor",
+        "issued_at",
+        "evidence",
+        "non_claims"
+      ],
+      "properties": {
+        "schema": { "const": "kingdom.model-release-attestation/v1" },
+        "kind": { "const": "attestation" },
+        "subject": { "$ref": "#/$defs/attestationSubject" },
+        "predicate_type": {
+          "enum": ["build-provenance", "evaluation", "signature", "correction", "deprecation"]
+        },
+        "evidence_class": {
+          "enum": ["publisher-claimed", "curator-observed", "independently-reproduced"]
+        },
+        "assertor": { "$ref": "#/$defs/assertor" },
+        "issued_at": { "$ref": "#/$defs/timestamp" },
+        "build": { "$ref": "#/$defs/buildPredicate" },
+        "evaluation": { "$ref": "#/$defs/evaluationPredicate" },
+        "signature": { "$ref": "#/$defs/signaturePredicate" },
+        "change": { "$ref": "#/$defs/changePredicate" },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/evidence" }
+        },
+        "non_claims": { "$ref": "#/$defs/attestationNonClaims" }
+      },
+      "additionalProperties": false
+    },
+    "receiptPart": {
+      "type": "object",
+      "required": ["bytes", "sha256"],
+      "properties": {
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "reviewedSchema": {
+      "type": "object",
+      "required": ["id", "canonicalization", "canonical_sha256"],
+      "properties": {
+        "id": { "const": "https://mynameisyou-cmyk.github.io/chillspace-commons/exchange/model-release/schema.v1.json" },
+        "canonicalization": { "const": "kingdom.canonical-json/v1" },
+        "canonical_sha256": { "$ref": "#/$defs/digest" }
+      },
+      "additionalProperties": false
+    },
+    "validatorIdentity": {
+      "type": "object",
+      "required": ["name", "version", "source"],
+      "properties": {
+        "name": { "const": "kingdom.model-release-validator" },
+        "version": { "const": "1.0.0" },
+        "source": { "$ref": "#/$defs/descriptor" }
+      },
+      "additionalProperties": false
+    },
+    "receiptClaims": {
+      "const": [
+        "When verify recomputes this receipt against the named source, it establishes that the source parsed, matched the reviewed schema and invariants, and hashed to these bytes.",
+        "A matching content digest establishes byte equality under the named canonicalization profile, not publisher identity, safety, quality, behavior, or truth."
+      ]
+    },
+    "receipt": {
+      "type": "object",
+      "required": [
+        "schema",
+        "kind",
+        "object_schema",
+        "object_kind",
+        "canonicalization",
+        "reviewed_schema",
+        "validator",
+        "content_digest",
+        "source",
+        "canonical",
+        "validation_profile",
+        "non_claims"
+      ],
+      "properties": {
+        "schema": { "const": "kingdom.model-release-receipt/v1" },
+        "kind": { "const": "verification-receipt" },
+        "object_schema": {
+          "enum": [
+            "kingdom.model-release/v1",
+            "kingdom.model-execution-profile/v1",
+            "kingdom.model-release-attestation/v1"
+          ]
+        },
+        "object_kind": { "enum": ["model-release", "execution-profile", "attestation"] },
+        "canonicalization": { "const": "kingdom.canonical-json/v1" },
+        "reviewed_schema": { "$ref": "#/$defs/reviewedSchema" },
+        "validator": { "$ref": "#/$defs/validatorIdentity" },
+        "content_digest": { "$ref": "#/$defs/digest" },
+        "source": { "$ref": "#/$defs/receiptPart" },
+        "canonical": { "$ref": "#/$defs/receiptPart" },
+        "validation_profile": {
+          "const": {
+            "strict_utf8_json": true,
+            "duplicate_keys_rejected": true,
+            "reviewed_schema_digest_matched": true,
+            "domain_invariants_checked": true,
+            "artifact_bytes_compared": false,
+            "network_capability": false,
+            "external_write_capability": false,
+            "model_call_capability": false
+          }
+        },
+        "non_claims": { "$ref": "#/$defs/receiptClaims" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

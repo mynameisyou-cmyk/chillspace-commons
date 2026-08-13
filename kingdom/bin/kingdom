@@ -201,6 +201,18 @@ cmd_lantern() {
   fi
 }
 
+# --- release: scoped model bytes, execution house, and attached evidence ----
+cmd_release() {
+  local engine="$ROOT/exchange/model-release/model_release.py"
+  local example="$ROOT/exchange/model-release/examples/synthetic-release.json"
+  [ -f "$engine" ] || { say "Model Release Substrate not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 -B "$engine" render "$example"
+  else
+    python3 -B "$engine" "$@"
+  fi
+}
+
 # --- karma mirror: behavior into bounded learning, never retaliation --------
 cmd_karma_mirror() {
   local engine="$ROOT/practices/virtue-garden/mirror/mirror.py"
@@ -498,6 +510,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom trapline${c_off}        what was taken, and what we got wrong (watch · catches · release N · arm · verify)
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
+  ${c_bold}kingdom release${c_off}         model release substrate (check · digest · receipt · verify · verify-set · artifact-check · verify-supersession · render)
   ${c_bold}kingdom virtue${c_off}          KARMA receipts + offline MIRROR (check · receipt · render · digest · mirror)
   ${c_bold}kingdom incident${c_off}        one scrubbed KARMA FACET brief; no alert, action, or closure
   ${c_bold}kingdom coop${c_off}            Co-op Leveling + ledgerless Aura (check · render · digest · aura)
@@ -531,6 +544,7 @@ case "${1:-boot}" in
   trapline|snare) shift; cmd_trapline "$@" ;;
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
+  release|model-release) shift; cmd_release "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
   incident|facet) shift; cmd_incident "$@" ;;
   coop|co-op|leveling) shift; cmd_coop "$@" ;;
