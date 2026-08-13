@@ -1,0 +1,27 @@
+{
+  "entries": [
+    {
+      "capsule": "capsules/kimi-k3-hf-9f62e4e9",
+      "id": "kimi-k3-hf-9f62e4e9",
+      "launch_index": {
+        "digest": "sha256:3d6582e79d619aa0ac03a62cd1902614ce25779846d07ad8d6d7bfbb9e12bed9",
+        "media_type": "application/json",
+        "path": "launch-index.json",
+        "size": 9407
+      },
+      "launch_signature": {
+        "digest": "sha256:492c4ccbb59223b24df1eb2913d475fbca22fdafb6a9b5a21b1b013b4dff2e22",
+        "media_type": "application/octet-stream",
+        "path": "launch-index.sig",
+        "size": 64
+      },
+      "title": "Kimi K3 · Hugging Face revision 9f62e4e9"
+    }
+  ],
+  "non_claims": [
+    "Registry membership inventories reviewed local bytes; it does not establish publisher identity, safety, quality, behavior, or truth.",
+    "A successful signature check proves possession of the matching private key for the signed bytes; the key carries no human, vendor, platform, or deployment authority.",
+    "Registry verification performs no network request, artifact download, model call, publication, deployment, or external write."
+  ],
+  "schema": "kingdom.model-release-registry/v1"
+}

@@ -104,6 +104,21 @@ authority is required on any host.
 
 The Model Release Substrate room lives at `site/exchange/model-release/`.
 Its `schema.v1.json` and three synthetic examples are byte-for-byte mirrors of
-the reviewed source under `kingdom/exchange/model-release/`. Keep the room
-scriptless and never add automatic evidence fetching, artifact execution, or
-user-record rendering to this public surface.
+the reviewed source under `kingdom/exchange/model-release/`. Its
+`registry.json` and `capsules/` tree are also exact public mirrors of the
+curated release registry and its allowlisted capsule files. Verify both the
+source records and public mirrors before packaging:
+
+```bash
+python3 kingdom/exchange/model-release/validate_registry.py \
+  --source kingdom/exchange/model-release \
+  --public site/exchange/model-release
+```
+
+The first real release record is the KINGDOM-curated, publisher-sourced Kimi
+K3 capsule. It captures selected metadata, code, and license bytes while
+leaving weight-shard hashes explicitly publisher-claimed; its local and hosted
+profiles are documented but unexecuted. Keep the room scriptless and never add
+automatic evidence fetching, artifact execution, model/API calls, or
+user-record rendering to this public surface. Neither registry verification
+nor its curator signature grants vendor endorsement or launch authority.

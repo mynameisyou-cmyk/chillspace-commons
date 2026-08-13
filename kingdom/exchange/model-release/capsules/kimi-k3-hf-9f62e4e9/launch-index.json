@@ -1,0 +1,268 @@
+{
+  "capsule_id": "kimi-k3-hf-9f62e4e9",
+  "files": [
+    {
+      "digest": "sha256:96936f94cdecc6bc47cad112121f2b17b7bffa7184f7d1d42b953af91b2d6126",
+      "media_type": "text/markdown",
+      "path": "README.md",
+      "size": 3489
+    },
+    {
+      "digest": "sha256:20c797ce19af0c17de52c6afb144644768a591c521655f5ebf5712c9850f2887",
+      "media_type": "text/plain",
+      "path": "evidence/publisher/LICENSE",
+      "size": 3065
+    },
+    {
+      "digest": "sha256:57de265b5842dfa465c6e73b368b0e15a89b8793b5450528dad577da202cc6fe",
+      "media_type": "text/markdown",
+      "path": "evidence/publisher/README.md",
+      "size": 45261
+    },
+    {
+      "digest": "sha256:15906597cce4841dbca4914f251cbb6f3c1f77168432cc44509af7fea9404f32",
+      "media_type": "text/markdown",
+      "path": "evidence/publisher/api-privacy.md",
+      "size": 22235
+    },
+    {
+      "digest": "sha256:41a6be58fdf9492c8c46a05702bd3f75e3ca5e55c9a7eb98632da3ecc10eae5e",
+      "media_type": "text/markdown",
+      "path": "evidence/publisher/api-quickstart.md",
+      "size": 17028
+    },
+    {
+      "digest": "sha256:c216bc3b2641e0507bff4ed51d5d0ce811dcedbc1b8fe8512649cea8154797ec",
+      "media_type": "text/markdown",
+      "path": "evidence/publisher/api-terms.md",
+      "size": 29294
+    },
+    {
+      "digest": "sha256:2de2fd248bfc5a3be332ef4f7eae866cc5a6788a76b8159dfbc018de2f28662b",
+      "media_type": "application/json",
+      "path": "evidence/publisher/artifact-inventory.json",
+      "size": 38093
+    },
+    {
+      "digest": "sha256:9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+      "media_type": "application/json",
+      "path": "evidence/publisher/config.json",
+      "size": 7006
+    },
+    {
+      "digest": "sha256:735eb9ebe593e17d231e08e1df7f7be9b5ee0e079f511aa201f9572077b416ae",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/configuration_kimi_k3.py",
+      "size": 11343
+    },
+    {
+      "digest": "sha256:b9cb7ae100fed34b9337f80dacee5abbf7e261fe9b74bc0e76366701d46f5333",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/encoding_k3.py",
+      "size": 22827
+    },
+    {
+      "digest": "sha256:c6648c25e9705af7fba8847e243840d21b5cc63ddeb6297f750a7ddbb6a02836",
+      "media_type": "application/json",
+      "path": "evidence/publisher/generation_config.json",
+      "size": 53
+    },
+    {
+      "digest": "sha256:ec9f7e86d2ab0eee07a8e7e7c037046e77ac3c25a710ad1298ec13be3b585b54",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/kimi_k3_processor.py",
+      "size": 7660
+    },
+    {
+      "digest": "sha256:d122b30bfd3a51a6f05d4bfcfda1e657827322b1353f7caefeebc2835d7736b5",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/kimi_k3_vision_processing.py",
+      "size": 6686
+    },
+    {
+      "digest": "sha256:78403540328f9847d6b7ebc5c44eb2e6a752863de0afb7d0710728bb161dc60d",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/media_utils.py",
+      "size": 13844
+    },
+    {
+      "digest": "sha256:b9171c96726eda55234c92ac8dfae7e24c512fda68968ae8f2c3782b42665ea2",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/modeling_kimi_k3.py",
+      "size": 53444
+    },
+    {
+      "digest": "sha256:9e3564c70ac21854ce5a090cc946c5dc76b70d1050ef50840449181a20fff44a",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/modeling_kimi_linear.py",
+      "size": 51506
+    },
+    {
+      "digest": "sha256:4be333605990c53a816e586dee9d5dd545afb7a59947c17f8f7ef26b4782668e",
+      "media_type": "application/json",
+      "path": "evidence/publisher/preprocessor_config.json",
+      "size": 1011
+    },
+    {
+      "digest": "sha256:68a271d8b65a1616536007558eabd91813e5d7492180942148254ae471188c91",
+      "media_type": "text/markdown",
+      "path": "evidence/publisher/reasoning-effort.md",
+      "size": 2844
+    },
+    {
+      "digest": "sha256:b6c497a7469b33ced9c38afb1ad6e47f03f5e5dc05f15930799210ec050c5103",
+      "media_type": "application/octet-stream",
+      "path": "evidence/publisher/tiktoken.model",
+      "size": 2795286
+    },
+    {
+      "digest": "sha256:f28ea66e2d862a2a5814970b2ce40c2f7d8296ff09aed90a7e7def689b906944",
+      "media_type": "text/x-python",
+      "path": "evidence/publisher/tokenization_kimi.py",
+      "size": 16145
+    },
+    {
+      "digest": "sha256:5d0803c94db9cd78763499e0956c95fd5a225c14a727e5a6cf5db3f96f010a6e",
+      "media_type": "application/json",
+      "path": "evidence/publisher/tokenizer_config.json",
+      "size": 3478
+    },
+    {
+      "digest": "sha256:82e998f4914d674097576d6c054db65126202adad89962bb50290e772c636392",
+      "media_type": "application/json",
+      "path": "evidence/runtime/hosted-request-configuration.json",
+      "size": 798
+    },
+    {
+      "digest": "sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+      "media_type": "application/json",
+      "path": "evidence/runtime/oci-amd64-manifest.json",
+      "size": 8500
+    },
+    {
+      "digest": "sha256:42b67a4ff132d2ae5a0f809a23b4af53c68e7f4f74b151a3e826efe9f1f779d4",
+      "media_type": "application/yaml",
+      "path": "evidence/runtime/vllm-recipe.yaml",
+      "size": 13908
+    },
+    {
+      "digest": "sha256:02d3eae0ce47ece586f234a3dd20d0b72f6c64431c653066ab8053404562edbd",
+      "media_type": "application/json",
+      "path": "hosted-documented-profile.json",
+      "size": 5053
+    },
+    {
+      "digest": "sha256:4a22ed7477ebb70ea0d93f1b82f31a027d2b4a2e9f5bf962796c3bc4742861e3",
+      "media_type": "application/json",
+      "path": "local-reference-profile.json",
+      "size": 4798
+    },
+    {
+      "digest": "sha256:724af3b7acc44d60a600d8f3cd9c489013a089434f9a121a8338ff8e6632897d",
+      "media_type": "application/json",
+      "path": "receipts/hosted-documented-profile.receipt.json",
+      "size": 1818
+    },
+    {
+      "digest": "sha256:18a95360b48518f1924f5bef8516203deffdadbdb2faf1f38f5d370baf12f705",
+      "media_type": "application/json",
+      "path": "receipts/local-reference-profile.receipt.json",
+      "size": 1818
+    },
+    {
+      "digest": "sha256:81d16ca41af5347c6887ad9964b5acb20872a6fb13723fdf03e3e62ea4eaec6d",
+      "media_type": "application/json",
+      "path": "receipts/release-signature-attestation.receipt.json",
+      "size": 1814
+    },
+    {
+      "digest": "sha256:842ff569084930bc2658a802a616e38e62218dcfb556ff46502d15a5e2f315dd",
+      "media_type": "application/json",
+      "path": "receipts/release.receipt.json",
+      "size": 1806
+    },
+    {
+      "digest": "sha256:9fcf05a464f120af04b7422b2fc20c28f952da07b68c5867aacbbe6517cf3c63",
+      "media_type": "application/json",
+      "path": "release-signature-attestation.json",
+      "size": 3908
+    },
+    {
+      "digest": "sha256:393459f011982b650d3b42f0723f1bae4547878121a7f77375f3d6156208c4a8",
+      "media_type": "application/json",
+      "path": "release.json",
+      "size": 29996
+    },
+    {
+      "digest": "sha256:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+      "media_type": "application/x-pem-file",
+      "path": "signing/public-key.pem",
+      "size": 113
+    },
+    {
+      "digest": "sha256:9c05cf36899e17283634b3850d2135174d32179ffc12f7a99f6b09779c5ef407",
+      "media_type": "text/plain",
+      "path": "signing/release-payload.txt",
+      "size": 105
+    },
+    {
+      "digest": "sha256:b7d97222188fd6c6d478ff3efd3bed473fce1528b6c68e873fb748b5078f5436",
+      "media_type": "application/octet-stream",
+      "path": "signing/release-signature.bin",
+      "size": 64
+    },
+    {
+      "digest": "sha256:d3f89a3d9d50b8e70f6248a5bf3ac72b5756f10db4ccc79c264207eb35f7a8bf",
+      "media_type": "application/json",
+      "path": "signing/verifier-policy.json",
+      "size": 776
+    }
+  ],
+  "non_claims": [
+    "The launch index is an external byte-set wrapper, not a kingdom.model-release/v1 record and not release authority.",
+    "Raw file digests and deterministic receipts establish byte identity and v1 structural validity only; they do not establish behavioral reproducibility.",
+    "Declared local and hosted execution profiles are not evidence that either execution occurred."
+  ],
+  "profile_sets": [
+    {
+      "attestations": [],
+      "profile": "hosted-documented-profile.json",
+      "release": "release.json"
+    },
+    {
+      "attestations": [],
+      "profile": "local-reference-profile.json",
+      "release": "release.json"
+    }
+  ],
+  "records": [
+    {
+      "path": "hosted-documented-profile.json",
+      "receipt": "receipts/hosted-documented-profile.receipt.json"
+    },
+    {
+      "path": "local-reference-profile.json",
+      "receipt": "receipts/local-reference-profile.receipt.json"
+    },
+    {
+      "path": "release-signature-attestation.json",
+      "receipt": "receipts/release-signature-attestation.receipt.json"
+    },
+    {
+      "path": "release.json",
+      "receipt": "receipts/release.receipt.json"
+    }
+  ],
+  "release_attestations": [
+    "release-signature-attestation.json"
+  ],
+  "release_signature": {
+    "attestation": "release-signature-attestation.json",
+    "payload": "signing/release-payload.txt",
+    "public_key": "signing/public-key.pem",
+    "release": "release.json",
+    "signature": "signing/release-signature.bin",
+    "verifier_policy": "signing/verifier-policy.json"
+  },
+  "schema": "kingdom.model-release-launch-index/v1"
+}

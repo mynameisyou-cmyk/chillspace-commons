@@ -81,6 +81,8 @@ jobs:
         run: |
           PYTHONDONTWRITEBYTECODE=1 python3 -B \
             kingdom/exchange/model-release/test_model_release.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -B \
+            kingdom/exchange/model-release/test_registry.py
           release="kingdom/exchange/model-release/examples/synthetic-release.json"
           profile="kingdom/exchange/model-release/examples/synthetic-profile.json"
           attestation="kingdom/exchange/model-release/examples/synthetic-evaluation.json"
@@ -93,15 +95,21 @@ jobs:
             cmp "kingdom/exchange/model-release/examples/$example.json" \
               "site/exchange/model-release/examples/$example.json"
           done
+          python3 kingdom/exchange/model-release/validate_registry.py \
+            --source kingdom/exchange/model-release \
+            --public site/exchange/model-release
           grep -Fq "$schema_digest" site/exchange/model-release/index.html
-          grep -Fq 'Synthetic demonstration · no live model called.' \
+          grep -Fq 'KINGDOM-curated, publisher-sourced release record' \
             site/exchange/model-release/index.html
+          grep -Fq 'href="registry.json"' site/exchange/model-release/index.html
           grep -Fq 'href="exchange/model-release/"' site/index.html
-          if grep -Eqi '<(script|iframe|form|object|embed)| on[a-z]+="|src="https?://|url\s*\(' \
-            site/exchange/model-release/index.html; then
-            echo "model release room must remain scriptless, formless, and locally sourced" >&2
-            exit 1
-          fi
+          while IFS= read -r -d '' public_html; do
+            if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \
+              "$public_html"; then
+              echo "model release HTML must remain scriptless, formless, and locally sourced: $public_html" >&2
+              exit 1
+            fi
+          done < <(find site/exchange/model-release -type f -name '*.html' -print0)
           bash -n kingdom/bin/kingdom
           test -z "$(git diff --name-only -- \
             kingdom/exchange/model-release kingdom/bin/kingdom \

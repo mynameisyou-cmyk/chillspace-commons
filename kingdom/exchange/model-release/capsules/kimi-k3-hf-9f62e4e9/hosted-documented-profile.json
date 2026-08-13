@@ -1,0 +1,142 @@
+{
+  "schema": "kingdom.model-execution-profile/v1",
+  "kind": "execution-profile",
+  "subject": {
+    "release_digest": "sha256:8bcd75586ee4446155caf8a25e49fff680d3918424e1b0ceaf313990c9f303ea"
+  },
+  "engine": {
+    "name": "Moonshot AI Kimi Open Platform",
+    "version": "provider-managed",
+    "implementation": "provider-managed",
+    "loader": "provider-managed",
+    "source_revision": "provider-managed",
+    "kernels": [],
+    "evidence_refs": [
+      "publisher-api-quickstart",
+      "publisher-reasoning-effort"
+    ]
+  },
+  "resolved": {
+    "dtype": "provider-managed",
+    "weight_quantization": "provider-managed",
+    "kv_cache_dtype": "provider-managed",
+    "load_format": "provider-managed",
+    "context_tokens": "provider-managed",
+    "parallelism": "provider-managed",
+    "attention_backend": "provider-managed",
+    "speculative_decoding": "provider-managed",
+    "rope_overrides": "provider-managed"
+  },
+  "hardware": {
+    "visibility": "provider-managed",
+    "accelerators": [],
+    "driver": "provider-managed",
+    "compute_stack": "provider-managed",
+    "interconnect": "provider-managed",
+    "topology": "provider-managed"
+  },
+  "backend": {
+    "kind": "hosted-api",
+    "provider": "Moonshot AI",
+    "endpoint_family": "https://api.moonshot.cn/v1/chat/completions",
+    "api_binding": {
+      "requested_model": {
+        "value": "kimi-k3",
+        "alias_mutability": "mutable"
+      },
+      "returned_model": {
+        "status": "unknown"
+      },
+      "region": {
+        "status": "unknown"
+      },
+      "request_configuration": {
+        "media_type": "application/json",
+        "digest": "sha256:82e998f4914d674097576d6c054db65126202adad89962bb50290e772c636392",
+        "size": 798
+      },
+      "observed_at": "2026-08-13T18:11:16Z",
+      "evidence_refs": [
+        "sanitized-request-configuration"
+      ]
+    },
+    "observations": []
+  },
+  "determinism": {
+    "seed": "not sent",
+    "deterministic_algorithms": false,
+    "known_nondeterminism": [
+      "KINGDOM did not send the declared request configuration and received no response, returned model value, region, or provider fingerprint.",
+      "The requested model name is a mutable provider alias and is not evidence of equivalence to the pinned open-weight revision.",
+      "All effective engine, precision, hardware, and backend fields remain provider-managed."
+    ]
+  },
+  "privacy": {
+    "environment_capture": "allowlisted-fields",
+    "excluded": [
+      "credentials",
+      "hostnames",
+      "private paths",
+      "raw environment",
+      "prompts",
+      "responses",
+      "request identifiers",
+      "account identifiers",
+      "region",
+      "tenancy"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "sanitized-request-configuration",
+      "title": "Not-sent, allowlisted hosted request configuration",
+      "kind": "other",
+      "locator": "urn:kingdom:kimi-k3:hosted-request-configuration",
+      "revision": "sha256:82e998f4914d674097576d6c054db65126202adad89962bb50290e772c636392",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:82e998f4914d674097576d6c054db65126202adad89962bb50290e772c636392",
+        "size": 798
+      }
+    },
+    {
+      "id": "publisher-api-quickstart",
+      "title": "Kimi K3 API quickstart",
+      "kind": "runtime-documentation",
+      "locator": "https://platform.kimi.com/docs/guide/kimi-k3-quickstart.md",
+      "revision": "sha256:41a6be58fdf9492c8c46a05702bd3f75e3ca5e55c9a7eb98632da3ecc10eae5e",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:41a6be58fdf9492c8c46a05702bd3f75e3ca5e55c9a7eb98632da3ecc10eae5e",
+        "size": 17028
+      }
+    },
+    {
+      "id": "publisher-reasoning-effort",
+      "title": "Kimi K3 reasoning-effort guide",
+      "kind": "runtime-documentation",
+      "locator": "https://platform.kimi.com/docs/guide/use-reasoning-effort.md",
+      "revision": "sha256:68a271d8b65a1616536007558eabd91813e5d7492180942148254ae471188c91",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:68a271d8b65a1616536007558eabd91813e5d7492180942148254ae471188c91",
+        "size": 2844
+      }
+    }
+  ],
+  "non_claims": [
+    "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+    "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+    "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+    "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+  ]
+}

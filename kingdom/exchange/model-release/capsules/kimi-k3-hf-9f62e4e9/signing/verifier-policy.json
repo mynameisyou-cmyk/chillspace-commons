@@ -1,0 +1,16 @@
+{
+  "schema": "kingdom.ed25519-verifier-policy/v1",
+  "algorithm": "Ed25519",
+  "public_key": {
+    "media_type": "application/x-pem-file",
+    "digest": "sha256:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+    "size": 113
+  },
+  "signer_identity": "urn:kingdom:ed25519:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+  "release_domain": "KINGDOM MODEL RELEASE SUBJECT v1",
+  "launch_index_domain": "KINGDOM MODEL RELEASE LAUNCH INDEX v1",
+  "signed_value": "UTF-8 domain, LF, lowercase sha256 digest, LF",
+  "identity_claim": "Ephemeral public-key possession only; no human, publisher, vendor, or platform identity is claimed.",
+  "authority_claim": "none",
+  "issuer": "self-issued one-use Ed25519 key; no external identity claim"
+}

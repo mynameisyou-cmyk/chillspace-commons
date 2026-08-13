@@ -1,0 +1,812 @@
+{
+  "schema": "kingdom.model-release/v1",
+  "kind": "model-release",
+  "release": {
+    "publisher": "Moonshot AI",
+    "name": "Kimi K3",
+    "version": "hf-9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+    "released_at": "2026-07-27T16:29:18Z",
+    "access": "hybrid"
+  },
+  "model": {
+    "architecture": "Kimi Delta Attention multimodal mixture-of-experts transformer",
+    "modalities": [
+      "text",
+      "image",
+      "video"
+    ],
+    "parameters": {
+      "total": 2800000000000,
+      "active": 104000000000
+    },
+    "weights": {
+      "format": "sharded safetensors with compressed-tensors metadata",
+      "dtype": "MXFP4 weights and MXFP8 activations",
+      "quantization": "quantization-aware training from the SFT stage onward",
+      "evidence_refs": [
+        "publisher-model-card",
+        "publisher-config"
+      ]
+    },
+    "notes": [
+      "The publisher declares a 1,048,576-token context window; v1 does not safely split that combined window into separate input and output maxima, so model.context is omitted.",
+      "The 96 weight-shard byte digests and the weight-index digest come from the pinned publisher inventory. KINGDOM did not download or independently hash those 1,560,936,091,448 weight bytes.",
+      "The mutable hosted alias kimi-k3 is documented beside this open-weight release, but no exact equivalence between provider backend bytes and the pinned Hugging Face revision is asserted."
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "publisher-weight-shards",
+      "role": "weights",
+      "name": "96 published safetensors shards",
+      "identity_status": "publisher-claimed",
+      "availability": "published",
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/tree/9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "hf-artifact-inventory"
+      ]
+    },
+    {
+      "id": "publisher-weights-index",
+      "role": "weights-index",
+      "name": "model.safetensors.index.json",
+      "identity_status": "publisher-claimed",
+      "availability": "published",
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/model.safetensors.index.json",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "hf-artifact-inventory"
+      ]
+    },
+    {
+      "id": "model-config",
+      "role": "model-config",
+      "name": "config.json",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+        "size": 7006
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/config.json",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-config"
+      ]
+    },
+    {
+      "id": "generation-config",
+      "role": "generation-config",
+      "name": "generation_config.json",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:c6648c25e9705af7fba8847e243840d21b5cc63ddeb6297f750a7ddbb6a02836",
+        "size": 53
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/generation_config.json",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-generation-config"
+      ]
+    },
+    {
+      "id": "tokenizer-model",
+      "role": "tokenizer",
+      "name": "tiktoken.model",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "application/octet-stream",
+        "digest": "sha256:b6c497a7469b33ced9c38afb1ad6e47f03f5e5dc05f15930799210ec050c5103",
+        "size": 2795286
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tiktoken.model",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-tokenizer-model"
+      ]
+    },
+    {
+      "id": "tokenizer-config",
+      "role": "tokenizer-config",
+      "name": "tokenizer_config.json",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:5d0803c94db9cd78763499e0956c95fd5a225c14a727e5a6cf5db3f96f010a6e",
+        "size": 3478
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tokenizer_config.json",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-tokenizer-config"
+      ]
+    },
+    {
+      "id": "preprocessor-config",
+      "role": "preprocessor",
+      "name": "preprocessor_config.json",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:4be333605990c53a816e586dee9d5dd545afb7a59947c17f8f7ef26b4782668e",
+        "size": 1011
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/preprocessor_config.json",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-preprocessor-config"
+      ]
+    },
+    {
+      "id": "message-format",
+      "role": "chat-template",
+      "name": "encoding_k3.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:b9cb7ae100fed34b9337f80dacee5abbf7e261fe9b74bc0e76366701d46f5333",
+        "size": 22827
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/encoding_k3.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-encoding-code"
+      ]
+    },
+    {
+      "id": "configuration-code",
+      "role": "reference-inference",
+      "name": "configuration_kimi_k3.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:735eb9ebe593e17d231e08e1df7f7be9b5ee0e079f511aa201f9572077b416ae",
+        "size": 11343
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/configuration_kimi_k3.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-configuration-code"
+      ]
+    },
+    {
+      "id": "processor-code",
+      "role": "preprocessor",
+      "name": "kimi_k3_processor.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:ec9f7e86d2ab0eee07a8e7e7c037046e77ac3c25a710ad1298ec13be3b585b54",
+        "size": 7660
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/kimi_k3_processor.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-processor-code"
+      ]
+    },
+    {
+      "id": "vision-processing-code",
+      "role": "preprocessor",
+      "name": "kimi_k3_vision_processing.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:d122b30bfd3a51a6f05d4bfcfda1e657827322b1353f7caefeebc2835d7736b5",
+        "size": 6686
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/kimi_k3_vision_processing.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-vision-processing-code"
+      ]
+    },
+    {
+      "id": "media-utilities",
+      "role": "preprocessor",
+      "name": "media_utils.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:78403540328f9847d6b7ebc5c44eb2e6a752863de0afb7d0710728bb161dc60d",
+        "size": 13844
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/media_utils.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-media-utilities"
+      ]
+    },
+    {
+      "id": "modeling-code",
+      "role": "reference-inference",
+      "name": "modeling_kimi_k3.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:b9171c96726eda55234c92ac8dfae7e24c512fda68968ae8f2c3782b42665ea2",
+        "size": 53444
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/modeling_kimi_k3.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-modeling-code"
+      ]
+    },
+    {
+      "id": "linear-modeling-code",
+      "role": "reference-inference",
+      "name": "modeling_kimi_linear.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:9e3564c70ac21854ce5a090cc946c5dc76b70d1050ef50840449181a20fff44a",
+        "size": 51506
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/modeling_kimi_linear.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-linear-modeling-code"
+      ]
+    },
+    {
+      "id": "tokenization-code",
+      "role": "reference-inference",
+      "name": "tokenization_kimi.py",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:f28ea66e2d862a2a5814970b2ce40c2f7d8296ff09aed90a7e7def689b906944",
+        "size": 16145
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tokenization_kimi.py",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-tokenization-code"
+      ]
+    },
+    {
+      "id": "license",
+      "role": "license",
+      "name": "LICENSE",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/plain",
+        "digest": "sha256:20c797ce19af0c17de52c6afb144644768a591c521655f5ebf5712c9850f2887",
+        "size": 3065
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/LICENSE",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-license"
+      ]
+    },
+    {
+      "id": "model-card",
+      "role": "model-card",
+      "name": "README.md",
+      "identity_status": "descriptor-asserted",
+      "availability": "published",
+      "descriptor": {
+        "media_type": "text/markdown",
+        "digest": "sha256:57de265b5842dfa465c6e73b368b0e15a89b8793b5450528dad577da202cc6fe",
+        "size": 45261
+      },
+      "location": {
+        "uri": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/README.md",
+        "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569"
+      },
+      "evidence_refs": [
+        "publisher-model-card"
+      ]
+    }
+  ],
+  "interface": {
+    "prompt_format": {
+      "support": "required",
+      "artifact_ref": "message-format"
+    },
+    "response_format": {
+      "support": "required",
+      "artifact_ref": "message-format"
+    },
+    "tools": {
+      "support": "supported",
+      "artifact_ref": "message-format"
+    },
+    "reasoning": {
+      "disclosure": "unknown",
+      "effort_levels": [
+        "low",
+        "high",
+        "max"
+      ],
+      "default_effort": "max",
+      "item_or_channel_types": [
+        "reasoning-content",
+        "content",
+        "tool-calls"
+      ],
+      "continuation_state": "plaintext",
+      "continuation": {
+        "policy": "required",
+        "resend": [
+          "reasoning-content",
+          "content",
+          "tool-calls"
+        ],
+        "model_switch": "unknown"
+      },
+      "history_privacy": {
+        "storage": "unknown",
+        "forwarding": "required",
+        "note": "The publisher requires returning the complete assistant message for multi-turn and tool use. This record captures only that interface contract and no session content."
+      },
+      "evidence_refs": [
+        "publisher-model-card",
+        "publisher-api-quickstart",
+        "publisher-reasoning-effort"
+      ]
+    }
+  },
+  "relations": [],
+  "disclosures": [
+    {
+      "field": "training.data",
+      "status": "unknown",
+      "basis": "curator-observed",
+      "evidence_refs": [
+        "publisher-model-card"
+      ],
+      "note": "The captured model card does not identify the training corpus or provide a dataset inventory."
+    },
+    {
+      "field": "training.code",
+      "status": "unknown",
+      "basis": "curator-observed",
+      "evidence_refs": [
+        "publisher-model-card",
+        "publisher-license"
+      ],
+      "note": "The captured repository publishes inference-oriented custom code and a license that mentions training code, but no exact training-code release is identified."
+    },
+    {
+      "field": "training.token-count",
+      "status": "unknown",
+      "basis": "curator-observed",
+      "evidence_refs": [
+        "publisher-model-card"
+      ],
+      "note": "No pretraining or post-training token count is stated in the captured model card."
+    },
+    {
+      "field": "training.compute",
+      "status": "unknown",
+      "basis": "curator-observed",
+      "evidence_refs": [
+        "publisher-model-card"
+      ],
+      "note": "No complete training-compute accounting is stated in the captured model card."
+    },
+    {
+      "field": "post-training.recipe",
+      "status": "partial",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "publisher-model-card"
+      ],
+      "note": "The publisher states that quantization-aware training starts at the SFT stage, but the full post-training recipe is not disclosed in the captured material."
+    },
+    {
+      "field": "reasoning.recipe",
+      "status": "partial",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "publisher-model-card",
+        "publisher-reasoning-effort"
+      ],
+      "note": "The publisher documents preserved-thinking behavior and effort controls, not a complete reasoning-training recipe."
+    },
+    {
+      "field": "safety.system-internals",
+      "status": "unknown",
+      "basis": "curator-observed",
+      "evidence_refs": [
+        "publisher-model-card"
+      ],
+      "note": "The captured model card does not provide a complete safety-system-internals disclosure."
+    },
+    {
+      "field": "reasoning.continuation",
+      "status": "disclosed",
+      "basis": "publisher-claim",
+      "evidence_refs": [
+        "publisher-model-card",
+        "publisher-api-quickstart"
+      ],
+      "note": "The publisher requires preserved assistant reasoning and tool-call fields to be returned unchanged for multi-turn and tool use."
+    }
+  ],
+  "terms": [
+    {
+      "field": "license",
+      "status": "disclosed",
+      "evidence_refs": [
+        "publisher-license"
+      ],
+      "note": "The captured Kimi K3 License governs the published repository artifacts and contains conditions that consumers must review themselves."
+    },
+    {
+      "field": "api-terms",
+      "status": "disclosed",
+      "evidence_refs": [
+        "publisher-api-terms"
+      ],
+      "note": "The captured Kimi Open Platform service agreement is mutable provider documentation and may change after retrieval."
+    },
+    {
+      "field": "data-use-policy",
+      "status": "disclosed",
+      "evidence_refs": [
+        "publisher-api-privacy"
+      ],
+      "note": "The captured Kimi Open Platform privacy policy is mutable provider documentation and may change after retrieval."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "hf-artifact-inventory",
+      "title": "Pinned Hugging Face repository artifact inventory",
+      "kind": "repository",
+      "locator": "https://huggingface.co/api/models/moonshotai/Kimi-K3/revision/9f62e4e9fffbd0a83ddd60e1c209d828994b3569?blobs=true",
+      "revision": "sha256:2de2fd248bfc5a3be332ef4f7eae866cc5a6788a76b8159dfbc018de2f28662b",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:2de2fd248bfc5a3be332ef4f7eae866cc5a6788a76b8159dfbc018de2f28662b",
+        "size": 38093
+      }
+    },
+    {
+      "id": "publisher-model-card",
+      "title": "Kimi K3 model card",
+      "kind": "model-card",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/README.md",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:57de265b5842dfa465c6e73b368b0e15a89b8793b5450528dad577da202cc6fe",
+        "size": 45261
+      }
+    },
+    {
+      "id": "publisher-license",
+      "title": "Kimi K3 license",
+      "kind": "license",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/LICENSE",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/plain",
+        "digest": "sha256:20c797ce19af0c17de52c6afb144644768a591c521655f5ebf5712c9850f2887",
+        "size": 3065
+      }
+    },
+    {
+      "id": "publisher-config",
+      "title": "Kimi K3 model configuration",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/config.json",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:9710e121a58d03ac92c8d6da287a19541994319afbbe6d6202af001ffd379213",
+        "size": 7006
+      }
+    },
+    {
+      "id": "publisher-generation-config",
+      "title": "Kimi K3 generation configuration",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/generation_config.json",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:c6648c25e9705af7fba8847e243840d21b5cc63ddeb6297f750a7ddbb6a02836",
+        "size": 53
+      }
+    },
+    {
+      "id": "publisher-tokenizer-config",
+      "title": "Kimi K3 tokenizer configuration",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tokenizer_config.json",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:5d0803c94db9cd78763499e0956c95fd5a225c14a727e5a6cf5db3f96f010a6e",
+        "size": 3478
+      }
+    },
+    {
+      "id": "publisher-preprocessor-config",
+      "title": "Kimi K3 preprocessor configuration",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/preprocessor_config.json",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:4be333605990c53a816e586dee9d5dd545afb7a59947c17f8f7ef26b4782668e",
+        "size": 1011
+      }
+    },
+    {
+      "id": "publisher-tokenizer-model",
+      "title": "Kimi K3 tokenizer model",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tiktoken.model",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "application/octet-stream",
+        "digest": "sha256:b6c497a7469b33ced9c38afb1ad6e47f03f5e5dc05f15930799210ec050c5103",
+        "size": 2795286
+      }
+    },
+    {
+      "id": "publisher-configuration-code",
+      "title": "Kimi K3 configuration code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/configuration_kimi_k3.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:735eb9ebe593e17d231e08e1df7f7be9b5ee0e079f511aa201f9572077b416ae",
+        "size": 11343
+      }
+    },
+    {
+      "id": "publisher-encoding-code",
+      "title": "Kimi K3 encoding and message-format code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/encoding_k3.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:b9cb7ae100fed34b9337f80dacee5abbf7e261fe9b74bc0e76366701d46f5333",
+        "size": 22827
+      }
+    },
+    {
+      "id": "publisher-processor-code",
+      "title": "Kimi K3 multimodal processor code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/kimi_k3_processor.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:ec9f7e86d2ab0eee07a8e7e7c037046e77ac3c25a710ad1298ec13be3b585b54",
+        "size": 7660
+      }
+    },
+    {
+      "id": "publisher-vision-processing-code",
+      "title": "Kimi K3 vision processing code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/kimi_k3_vision_processing.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:d122b30bfd3a51a6f05d4bfcfda1e657827322b1353f7caefeebc2835d7736b5",
+        "size": 6686
+      }
+    },
+    {
+      "id": "publisher-media-utilities",
+      "title": "Kimi K3 media utilities",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/media_utils.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:78403540328f9847d6b7ebc5c44eb2e6a752863de0afb7d0710728bb161dc60d",
+        "size": 13844
+      }
+    },
+    {
+      "id": "publisher-modeling-code",
+      "title": "Kimi K3 multimodal modeling code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/modeling_kimi_k3.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:b9171c96726eda55234c92ac8dfae7e24c512fda68968ae8f2c3782b42665ea2",
+        "size": 53444
+      }
+    },
+    {
+      "id": "publisher-linear-modeling-code",
+      "title": "Kimi K3 linear modeling code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/modeling_kimi_linear.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:9e3564c70ac21854ce5a090cc946c5dc76b70d1050ef50840449181a20fff44a",
+        "size": 51506
+      }
+    },
+    {
+      "id": "publisher-tokenization-code",
+      "title": "Kimi K3 tokenization code",
+      "kind": "repository",
+      "locator": "https://huggingface.co/moonshotai/Kimi-K3/resolve/9f62e4e9fffbd0a83ddd60e1c209d828994b3569/tokenization_kimi.py",
+      "revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:f28ea66e2d862a2a5814970b2ce40c2f7d8296ff09aed90a7e7def689b906944",
+        "size": 16145
+      }
+    },
+    {
+      "id": "publisher-api-quickstart",
+      "title": "Kimi K3 API quickstart",
+      "kind": "runtime-documentation",
+      "locator": "https://platform.kimi.com/docs/guide/kimi-k3-quickstart.md",
+      "revision": "sha256:41a6be58fdf9492c8c46a05702bd3f75e3ca5e55c9a7eb98632da3ecc10eae5e",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:41a6be58fdf9492c8c46a05702bd3f75e3ca5e55c9a7eb98632da3ecc10eae5e",
+        "size": 17028
+      }
+    },
+    {
+      "id": "publisher-reasoning-effort",
+      "title": "Kimi K3 reasoning-effort guide",
+      "kind": "runtime-documentation",
+      "locator": "https://platform.kimi.com/docs/guide/use-reasoning-effort.md",
+      "revision": "sha256:68a271d8b65a1616536007558eabd91813e5d7492180942148254ae471188c91",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:68a271d8b65a1616536007558eabd91813e5d7492180942148254ae471188c91",
+        "size": 2844
+      }
+    },
+    {
+      "id": "publisher-api-terms",
+      "title": "Kimi Open Platform service agreement",
+      "kind": "license",
+      "locator": "https://platform.kimi.com/docs/agreement/modeluse.md",
+      "revision": "sha256:c216bc3b2641e0507bff4ed51d5d0ce811dcedbc1b8fe8512649cea8154797ec",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:c216bc3b2641e0507bff4ed51d5d0ce811dcedbc1b8fe8512649cea8154797ec",
+        "size": 29294
+      }
+    },
+    {
+      "id": "publisher-api-privacy",
+      "title": "Kimi Open Platform privacy policy",
+      "kind": "other",
+      "locator": "https://platform.kimi.com/docs/agreement/userprivacy.md",
+      "revision": "sha256:15906597cce4841dbca4914f251cbb6f3c1f77168432cc44509af7fea9404f32",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "mutable",
+      "assertor": "Moonshot AI",
+      "content": {
+        "media_type": "text/markdown",
+        "digest": "sha256:15906597cce4841dbca4914f251cbb6f3c1f77168432cc44509af7fea9404f32",
+        "size": 22235
+      }
+    }
+  ],
+  "non_claims": [
+    "Digests prove byte identity only; they do not prove publisher identity, safety, quality, behavior, or truth.",
+    "This manifest describes a release interface; it does not expose or verify hidden chain-of-thought, private system prompts, training data, teacher models, or safety internals.",
+    "Provider backend observations are opaque observations, not cryptographic model digests.",
+    "Validation performs no model call, artifact download, code execution, publication, deployment, or external write."
+  ]
+}

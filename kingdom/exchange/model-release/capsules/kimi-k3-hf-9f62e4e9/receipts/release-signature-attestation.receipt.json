@@ -1,0 +1,44 @@
+{
+  "canonical": {
+    "bytes": 3272,
+    "sha256": "sha256:686d4cb11f74fd9adb07026b819ce4b8e7cdd965a6f674ee4eed287319b6ff74"
+  },
+  "canonicalization": "kingdom.canonical-json/v1",
+  "content_digest": "sha256:686d4cb11f74fd9adb07026b819ce4b8e7cdd965a6f674ee4eed287319b6ff74",
+  "kind": "verification-receipt",
+  "non_claims": [
+    "When verify recomputes this receipt against the named source, it establishes that the source parsed, matched the reviewed schema and invariants, and hashed to these bytes.",
+    "A matching content digest establishes byte equality under the named canonicalization profile, not publisher identity, safety, quality, behavior, or truth."
+  ],
+  "object_kind": "attestation",
+  "object_schema": "kingdom.model-release-attestation/v1",
+  "reviewed_schema": {
+    "canonical_sha256": "sha256:36b428ac4a890a6960ca06683ec9b758aa709ac4a0da3428bbd4344969318f87",
+    "canonicalization": "kingdom.canonical-json/v1",
+    "id": "https://mynameisyou-cmyk.github.io/chillspace-commons/exchange/model-release/schema.v1.json"
+  },
+  "schema": "kingdom.model-release-receipt/v1",
+  "source": {
+    "bytes": 3908,
+    "sha256": "sha256:9fcf05a464f120af04b7422b2fc20c28f952da07b68c5867aacbbe6517cf3c63"
+  },
+  "validation_profile": {
+    "artifact_bytes_compared": false,
+    "domain_invariants_checked": true,
+    "duplicate_keys_rejected": true,
+    "external_write_capability": false,
+    "model_call_capability": false,
+    "network_capability": false,
+    "reviewed_schema_digest_matched": true,
+    "strict_utf8_json": true
+  },
+  "validator": {
+    "name": "kingdom.model-release-validator",
+    "source": {
+      "digest": "sha256:97cc8b40b88266c40658e9b067a9ed9ed9bdd94bbcc7e52a81496676be60f979",
+      "media_type": "text/x-python",
+      "size": 59463
+    },
+    "version": "1.0.0"
+  }
+}
