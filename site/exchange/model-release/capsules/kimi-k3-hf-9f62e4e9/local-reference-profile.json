@@ -1,0 +1,119 @@
+{
+  "schema": "kingdom.model-execution-profile/v1",
+  "kind": "execution-profile",
+  "subject": {
+    "release_digest": "sha256:8bcd75586ee4446155caf8a25e49fff680d3918424e1b0ceaf313990c9f303ea"
+  },
+  "engine": {
+    "name": "vLLM Kimi K3 reference container",
+    "version": "OCI manifest fb16b180bd97",
+    "implementation": "vLLM OpenAI-compatible server; exact source commit not established by this capsule",
+    "loader": "fastsafetensors with publisher custom code",
+    "source_revision": "oci-manifest-sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+    "custom_code_revision": "9f62e4e9fffbd0a83ddd60e1c209d828994b3569",
+    "container": {
+      "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+      "digest": "sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+      "size": 8500
+    },
+    "kernels": [],
+    "evidence_refs": [
+      "vllm-reference-recipe",
+      "vllm-container-manifest"
+    ]
+  },
+  "resolved": {
+    "dtype": "MXFP8 activations",
+    "weight_quantization": "MXFP4 quantization-aware-trained weights",
+    "kv_cache_dtype": "fp8",
+    "load_format": "fastsafetensors",
+    "context_tokens": 1048576,
+    "parallelism": {
+      "tensor": 8,
+      "pipeline": 1,
+      "data": 1,
+      "expert": 1
+    },
+    "attention_backend": "FlashInfer MLA prefill declaration; full effective kernel set unobserved",
+    "speculative_decoding": "disabled in this selected reference declaration",
+    "rope_overrides": "none"
+  },
+  "hardware": {
+    "visibility": "declared",
+    "accelerators": [
+      {
+        "model": "NVIDIA B300",
+        "count": 8
+      }
+    ],
+    "driver": "NVIDIA r580 or newer per reference recipe",
+    "compute_stack": "CUDA 13 container declaration",
+    "interconnect": "eight-device fabric required; exact fabric not observed",
+    "topology": "single-node tensor parallel 8 reference declaration; not provisioned"
+  },
+  "backend": {
+    "kind": "local-open-weights",
+    "provider": "vLLM project reference recipe",
+    "endpoint_family": "local OpenAI-compatible v1 server; not started",
+    "observations": []
+  },
+  "determinism": {
+    "seed": "not specified by reference recipe",
+    "deterministic_algorithms": false,
+    "known_nondeterminism": [
+      "KINGDOM did not provision hardware, download weights, load this container, or execute the profile.",
+      "The pinned OCI manifest identifies container bytes; this capsule does not establish the image's source commit.",
+      "The reference recipe leaves some backend selection to vLLM and hardware; this declaration is not an effective-runtime observation."
+    ]
+  },
+  "privacy": {
+    "environment_capture": "allowlisted-fields",
+    "excluded": [
+      "credentials",
+      "hostnames",
+      "private paths",
+      "raw environment",
+      "prompts",
+      "responses",
+      "reasoning traces"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "vllm-reference-recipe",
+      "title": "vLLM Kimi K3 reference recipe",
+      "kind": "runtime-documentation",
+      "locator": "https://raw.githubusercontent.com/vllm-project/recipes/9bbf5f90636963e63dce6ddbcbdcb4451a7abb7c/models/moonshotai/Kimi-K3.yaml",
+      "revision": "9bbf5f90636963e63dce6ddbcbdcb4451a7abb7c",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "vLLM project",
+      "content": {
+        "media_type": "application/yaml",
+        "digest": "sha256:42b67a4ff132d2ae5a0f809a23b4af53c68e7f4f74b151a3e826efe9f1f779d4",
+        "size": 13908
+      }
+    },
+    {
+      "id": "vllm-container-manifest",
+      "title": "vLLM Kimi K3 linux-amd64 OCI manifest",
+      "kind": "repository",
+      "locator": "https://registry-1.docker.io/v2/vllm/vllm-openai/manifests/sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+      "revision": "sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+      "retrieved_at": "2026-08-13T18:11:16Z",
+      "mutability": "immutable",
+      "assertor": "vLLM project Docker Hub repository",
+      "content": {
+        "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+        "digest": "sha256:fb16b180bd9727600067e16fcd6a6de43fb4db1baf4298ef20b4dbdf6bfa5a0e",
+        "size": 8500
+      }
+    }
+  ],
+  "non_claims": [
+    "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+    "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+    "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+    "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+  ]
+}

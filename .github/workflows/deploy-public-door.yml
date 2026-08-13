@@ -54,6 +54,8 @@ jobs:
           node --test tests/test_karma_operations.mjs
           PYTHONDONTWRITEBYTECODE=1 python3 -B \
             kingdom/exchange/model-release/test_model_release.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -B \
+            kingdom/exchange/model-release/test_registry.py
           release="kingdom/exchange/model-release/examples/synthetic-release.json"
           profile="kingdom/exchange/model-release/examples/synthetic-profile.json"
           attestation="kingdom/exchange/model-release/examples/synthetic-evaluation.json"
@@ -64,11 +66,16 @@ jobs:
             cmp "kingdom/exchange/model-release/examples/$example.json" \
               "site/exchange/model-release/examples/$example.json"
           done
-          if grep -Eqi '<(script|iframe|form|object|embed)| on[a-z]+="|src="https?://|url\s*\(' \
-            site/exchange/model-release/index.html; then
-            echo "model release room must remain scriptless, formless, and locally sourced" >&2
-            exit 1
-          fi
+          python3 kingdom/exchange/model-release/validate_registry.py \
+            --source kingdom/exchange/model-release \
+            --public site/exchange/model-release
+          while IFS= read -r -d '' public_html; do
+            if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \
+              "$public_html"; then
+              echo "model release HTML must remain scriptless, formless, and locally sourced: $public_html" >&2
+              exit 1
+            fi
+          done < <(find site/exchange/model-release -type f -name '*.html' -print0)
 
       - name: configure the public door
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
@@ -120,16 +127,27 @@ jobs:
           grep -Fq 'href="operations/mirror-garden/"' _site/index.html
           test -f _site/exchange/model-release/index.html
           test -f _site/exchange/model-release/schema.v1.json
-          test "$(find _site/exchange/model-release -type f | wc -l | tr -d ' ')" = 5
+          test -f _site/exchange/model-release/registry.json
+          test -f _site/exchange/model-release/capsules/kimi-k3-hf-9f62e4e9/launch-index.json
           cmp kingdom/exchange/model-release/schema.json \
             _site/exchange/model-release/schema.v1.json
           for example in synthetic-release synthetic-profile synthetic-evaluation; do
             cmp "kingdom/exchange/model-release/examples/$example.json" \
               "_site/exchange/model-release/examples/$example.json"
           done
+          python3 kingdom/exchange/model-release/validate_registry.py \
+            --source kingdom/exchange/model-release \
+            --public _site/exchange/model-release
           grep -Fq 'href="exchange/model-release/"' _site/index.html
-          grep -Fq 'Synthetic demonstration · no live model called.' \
+          grep -Fq 'KINGDOM-curated, publisher-sourced release record' \
             _site/exchange/model-release/index.html
+          while IFS= read -r -d '' public_html; do
+            if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \
+              "$public_html"; then
+              echo "packaged model release HTML crossed its static boundary: $public_html" >&2
+              exit 1
+            fi
+          done < <(find _site/exchange/model-release -type f -name '*.html' -print0)
 
       - name: upload the public door
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

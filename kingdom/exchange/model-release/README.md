@@ -118,6 +118,36 @@ signature. `artifact-check` only reads and
 streams the explicitly supplied regular file; it does not mutate the release
 or silently upgrade `descriptor-asserted` into a stronger persisted claim.
 
+## Curated capsule registry
+
+[`registry.json`](registry.json) names the finite set of curated release
+capsules published from this directory. The first entry,
+[`capsules/kimi-k3-hf-9f62e4e9/`](capsules/kimi-k3-hf-9f62e4e9/), is a real
+KINGDOM-curated, publisher-sourced Kimi K3 release record. It captures selected
+official metadata, code, and license bytes. The weight-shard digests remain
+`publisher-claimed`: the capsule did not download the weights. Its local
+reference and hosted documented profiles are explicit declarations and were
+not executed; no model/API call, evaluation, or build was performed.
+
+The capsule's signed `launch-index.json` is a set-level verification wrapper,
+not a fourth v1 substrate record. Its task-key signature makes the indexed
+bytes cryptographically checkable but does not establish publisher identity,
+vendor endorsement, a trusted timestamp, safety, readiness, or launch
+authority.
+
+Validate the registry, its receipts and signatures, its finite file set, and
+the exact public mirrors with:
+
+```bash
+python3 kingdom/exchange/model-release/validate_registry.py \
+  --source kingdom/exchange/model-release \
+  --public site/exchange/model-release
+```
+
+The public registry and capsule tree at
+[`site/exchange/model-release/`](../../../site/exchange/model-release/) must
+remain byte-for-byte mirrors of their source counterparts.
+
 ## Launch process
 
 1. Inventory every runtime-critical artifact: weights and index, tokenizer,
@@ -154,7 +184,8 @@ The reviewed machine contract is [`schema.json`](schema.json); the reference
 implementation is [`model_release.py`](model_release.py); the examples are
 synthetic and prove only the local mechanics. Research lineage and the
 standards this profile borrows from are in [`SOURCES.md`](SOURCES.md).
-The committed public reading room and exact schema/example mirrors live at
+The committed public reading room and exact schema, example, registry, and
+capsule mirrors live at
 [`site/exchange/model-release/`](../../../site/exchange/model-release/).
 
 ## What validation does not prove

@@ -1,0 +1,29 @@
+{
+  "schema": "kingdom.sanitized-api-request-configuration/v1",
+  "execution_status": "not-sent",
+  "endpoint_family": "https://api.moonshot.cn/v1/chat/completions",
+  "request_fields": {
+    "model": "kimi-k3",
+    "reasoning_effort": "max",
+    "stream": false
+  },
+  "provider_documented_defaults": {
+    "temperature": "1.0",
+    "top_p": "0.95",
+    "n": "1",
+    "presence_penalty": "0",
+    "frequency_penalty": "0"
+  },
+  "excluded": [
+    "authorization",
+    "credentials",
+    "messages",
+    "prompts",
+    "responses",
+    "request identifiers",
+    "account identifiers",
+    "region",
+    "tenancy"
+  ],
+  "note": "This is an allowlisted configuration declaration, not a sent request or captured response. Provider-documented defaults were not transmitted or observed by KINGDOM."
+}

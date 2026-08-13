@@ -63,6 +63,16 @@
   section { padding: 48px 0; border-top: 1px solid var(--line) }
   h2 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1 }
   .intro { max-width: 730px; margin: 0 0 28px; color: var(--muted) }
+  .capsule {
+    display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; padding: 26px;
+    border: 1px solid rgba(123,224,189,.3); border-radius: 18px;
+    background: linear-gradient(145deg, rgba(22,34,44,.95), rgba(13,22,29,.92));
+  }
+  .capsule h3 { margin: 5px 0 10px; font-size: 25px }
+  .capsule p { margin: 0; color: var(--muted) }
+  .capsule-links { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 18px; margin: 0; padding: 0; list-style: none }
+  .capsule-links li { min-width: 0 }
+  .capsule-links a { overflow-wrap: anywhere }
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px }
   .card { padding: 23px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg, rgba(22,34,44,.95), rgba(13,22,29,.92)) }
   .card .n { color: var(--mint); font: 700 13px/1 ui-monospace, monospace }
@@ -103,7 +113,8 @@
   @media (max-width: 780px) {
     .cards, .flow { grid-template-columns: 1fr }
     .flow div { min-height: auto }
-    .two, .boundary { grid-template-columns: 1fr }
+    .two, .boundary, .capsule { grid-template-columns: 1fr }
+    .capsule-links { grid-template-columns: 1fr }
     .hashbox { grid-template-columns: 1fr }
     table { display: block; overflow-x: auto }
   }
@@ -123,12 +134,34 @@
   </header>
 
   <main id="main">
-    <p class="notice"><strong>Synthetic demonstration · no live model called.</strong> These public examples contain dummy identities and hashes. Nothing here downloaded weights, contacted a provider, executed a model, or verified a signature.</p>
+    <p class="notice"><strong>Two evidence classes.</strong> The synthetic examples contain dummy identities and hashes. The Kimi K3 capsule is a real KINGDOM-curated, publisher-sourced release record: selected metadata, code, and license bytes were captured, while weight-shard hashes remain publisher-claimed. No model or API call, evaluation, build, or runtime execution was performed.</p>
+
+    <section aria-labelledby="capsule">
+      <p class="label">Curated release capsule · not a launch</p>
+      <h2 id="capsule">Kimi K3, pinned to one publisher revision.</h2>
+      <p class="intro">The local and hosted profiles are documented reference configurations and are explicitly unexecuted. The signed launch index makes this capsule's exact files checkable under a task key; it is not a vendor signature, endorsement, trusted timestamp, or grant of launch authority.</p>
+      <div class="capsule">
+        <div>
+          <p class="label">kimi-k3-hf-9f62e4e9</p>
+          <h3>Read the evidence boundary before the claims.</h3>
+          <p>Captured bytes and publisher-claimed hashes keep their different states. No weight shard was downloaded, and no local or hosted backend was observed.</p>
+        </div>
+        <ul class="capsule-links">
+          <li><a href="registry.json">capsule registry</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/README.md">capsule README</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/release.json">release record</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/local-reference-profile.json">local reference profile</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/hosted-documented-profile.json">hosted documented profile</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/release-signature-attestation.json">signature attestation</a></li>
+          <li><a href="capsules/kimi-k3-hf-9f62e4e9/launch-index.json">signed launch index</a></li>
+        </ul>
+      </div>
+    </section>
 
     <section aria-labelledby="records">
-      <p class="label">Three records, separate lifetimes</p>
+      <p class="label">Synthetic mechanics · three separate lifetimes</p>
       <h2 id="records">One launch need not become one mutable scroll.</h2>
-      <p class="intro">A release identity remains stable when a new runtime, evaluation, signature, correction, or deprecation is attached. Every edge names the digest it means.</p>
+      <p class="intro">These three dummy records exercise the contract without making real-world claims. A release identity remains stable when a new runtime, evaluation, signature, correction, or deprecation is attached. Every edge names the digest it means.</p>
       <div class="cards">
         <article class="card">
           <span class="n">01 · addressed by digest</span>
@@ -213,11 +246,12 @@
         <p class="intro">It makes claims inspectable. It does not turn them into truth or authority.</p>
       </div>
       <ul>
-        <li>No model call, download, upload, execution, signing, or deployment.</li>
-        <li>No proof of publisher identity, safety, quality, behavior, or claim truth.</li>
+        <li>The Kimi K3 capsule made no model or API call, downloaded no weight shards, and ran no inference, evaluation, or build.</li>
+        <li>Captured metadata, code, and license bytes are not the same evidence state as publisher-claimed weight-shard hashes.</li>
+        <li>A curator signature proves control of its task key, not publisher identity, vendor endorsement, safety, quality, behavior, or claim truth.</li>
         <li>No promotion of aliases, seeds, tensor inventories, or behavioral probes into weight digests.</li>
-        <li>No prompts, responses, private system text, scratchpads, or raw reasoning in static records.</li>
-        <li>No permission or readiness granted by a valid record.</li>
+        <li>No user or KINGDOM session content in curated JSON records; captured publisher documents retain their public illustrative examples.</li>
+        <li>No launch, deployment, permission, or readiness authority is granted by a valid record, receipt, registry, or signature.</li>
       </ul>
     </section>
   </main>

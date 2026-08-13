@@ -36,7 +36,11 @@ ours.
   and later build/evaluation/signature/correction attestations. It scopes byte
   descriptors and opaque backend observations separately, can stream-check
   captured artifact bytes, describes reasoning interfaces without collecting
-  traces, and makes unknown evidence stay unknown.
+  traces, and makes unknown evidence stay unknown. Its finite registry now
+  carries one real KINGDOM-curated, publisher-sourced Kimi K3 capsule with
+  captured metadata/code/license bytes, publisher-claimed weight-shard hashes,
+  and documented but unexecuted local and hosted profiles. The capsule grants
+  no vendor endorsement or launch authority.
 
 [← the Kingdom](../README.md)
 

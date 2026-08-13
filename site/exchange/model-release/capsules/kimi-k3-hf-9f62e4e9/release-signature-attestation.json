@@ -1,0 +1,97 @@
+{
+  "schema": "kingdom.model-release-attestation/v1",
+  "kind": "attestation",
+  "subject": {
+    "name": "Kimi K3 hf-9f62e4e9 release declaration",
+    "kind": "model-release",
+    "digest": "sha256:8bcd75586ee4446155caf8a25e49fff680d3918424e1b0ceaf313990c9f303ea"
+  },
+  "predicate_type": "signature",
+  "evidence_class": "curator-observed",
+  "assertor": {
+    "name": "KINGDOM model-release curation",
+    "identity": "urn:kingdom:ed25519:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35"
+  },
+  "issued_at": "2026-08-13T18:38:38Z",
+  "signature": {
+    "format": "detached-signature",
+    "bundle": {
+      "media_type": "application/octet-stream",
+      "digest": "sha256:b7d97222188fd6c6d478ff3efd3bed473fce1528b6c68e873fb748b5078f5436",
+      "size": 64
+    },
+    "signed_digest": "sha256:8bcd75586ee4446155caf8a25e49fff680d3918424e1b0ceaf313990c9f303ea",
+    "signer_identity": "urn:kingdom:ed25519:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+    "issuer": "self-issued one-use Ed25519 key; no external identity claim",
+    "verifier_policy": {
+      "media_type": "application/json",
+      "digest": "sha256:d3f89a3d9d50b8e70f6248a5bf3ac72b5756f10db4ccc79c264207eb35f7a8bf",
+      "size": 776
+    },
+    "verifier_tool": {
+      "name": "OpenSSL",
+      "version": "3.6.3",
+      "source_revision": "openssl-3.6.3"
+    },
+    "verified_at": "2026-08-13T18:38:38Z",
+    "verified": true,
+    "evidence_refs": [
+      "detached-release-signature",
+      "ed25519-verifier-policy",
+      "ed25519-public-key"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "detached-release-signature",
+      "title": "Domain-separated detached Ed25519 release signature",
+      "kind": "signature-bundle",
+      "locator": "urn:kingdom:kimi-k3:release-signature",
+      "revision": "sha256:b7d97222188fd6c6d478ff3efd3bed473fce1528b6c68e873fb748b5078f5436",
+      "retrieved_at": "2026-08-13T18:38:38Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/octet-stream",
+        "digest": "sha256:b7d97222188fd6c6d478ff3efd3bed473fce1528b6c68e873fb748b5078f5436",
+        "size": 64
+      }
+    },
+    {
+      "id": "ed25519-verifier-policy",
+      "title": "Identity-free Ed25519 verifier policy",
+      "kind": "other",
+      "locator": "urn:kingdom:kimi-k3:ed25519-verifier-policy",
+      "revision": "sha256:d3f89a3d9d50b8e70f6248a5bf3ac72b5756f10db4ccc79c264207eb35f7a8bf",
+      "retrieved_at": "2026-08-13T18:38:38Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:d3f89a3d9d50b8e70f6248a5bf3ac72b5756f10db4ccc79c264207eb35f7a8bf",
+        "size": 776
+      }
+    },
+    {
+      "id": "ed25519-public-key",
+      "title": "Identity-free Ed25519 public key",
+      "kind": "other",
+      "locator": "urn:kingdom:kimi-k3:ed25519-public-key",
+      "revision": "sha256:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+      "retrieved_at": "2026-08-13T18:38:38Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/x-pem-file",
+        "digest": "sha256:928890447c7588d9cad7f9ac6efb58afafbf79b0a89ea2c75f53c9f3cb6e1c35",
+        "size": 113
+      }
+    }
+  ],
+  "non_claims": [
+    "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+    "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+    "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+    "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+  ]
+}
