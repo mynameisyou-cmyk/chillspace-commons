@@ -40,10 +40,16 @@ target, verify the static bytes still match, then promote that prebuild:
 
 ```bash
 vercel build --prod --cwd site --yes
+test -f site/.vercel/output/static/_worker.js
+unlink site/.vercel/output/static/_worker.js
+test ! -e site/.vercel/output/static/_worker.js
 vercel deploy --prebuilt --prod --cwd site --yes
 ```
 
-This is also a publishing operation and requires explicit authorization.
+The removal is deliberate: Cloudflare consumes `_worker.js`, while Vercel uses
+the separately built `api/meaning/echo.mjs` function and must not publish the
+Cloudflare adapter as a static source file. This is also a publishing operation
+and requires explicit authorization.
 
 To refresh the Codeberg Pages door manually:
 
@@ -118,7 +124,22 @@ python3 kingdom/exchange/model-release/validate_registry.py \
 The first real release record is the KINGDOM-curated, publisher-sourced Kimi
 K3 capsule. It captures selected metadata, code, and license bytes while
 leaving weight-shard hashes explicitly publisher-claimed; its local and hosted
-profiles are documented but unexecuted. Keep the room scriptless and never add
-automatic evidence fetching, artifact execution, model/API calls, or
-user-record rendering to this public surface. Neither registry verification
-nor its curator signature grants vendor endorsement or launch authority.
+profiles are documented but unexecuted.
+
+The Qwen3-0.6B capsule is a separate curator-observed local CPU witness. All
+ten files in its pinned publisher snapshot were streamed locally through
+SHA-256. The 1.5 GB weights and 11.4 MB tokenizer JSON are deliberately not
+bundled. One thinking attempt truncated at 128 tokens without closing or
+producing a final segment; two non-thinking controls had identical
+continuation-token and decoded-output SHA-256 values and matched the private
+expected integer under the last-numeric rule but failed
+strict formatting. No raw prompt, expected value, decoded output, or generated
+deliberation is public. This is one synthetic witness, not a benchmark, safety
+test, quality assessment, or broad reasoning claim.
+
+Keep the room scriptless and never add automatic evidence fetching, artifact
+execution, model/API calls, or user-record rendering to this public surface.
+Offline registry verification checks the signed published graph; it does not
+reexecute inference or independently prove which local artifact path the
+loader consumed. Neither registry verification nor a curator signature grants
+vendor endorsement or launch authority.

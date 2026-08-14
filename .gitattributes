@@ -1,4 +1,8 @@
 # Captured model-release evidence is preserved byte-for-byte. Upstream trailing
 # spaces are evidence bytes, not locally authored whitespace errors.
+kingdom/exchange/model-release/registry.json -text
+site/exchange/model-release/registry.json -text
+kingdom/exchange/model-release/capsules/** -text
+site/exchange/model-release/capsules/** -text
 kingdom/exchange/model-release/capsules/*/evidence/** whitespace=-trailing-space
 site/exchange/model-release/capsules/*/evidence/** whitespace=-trailing-space

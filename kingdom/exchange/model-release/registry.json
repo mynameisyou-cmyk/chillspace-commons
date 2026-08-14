@@ -16,6 +16,23 @@
         "size": 64
       },
       "title": "Kimi K3 · Hugging Face revision 9f62e4e9"
+    },
+    {
+      "id": "qwen3-0.6b-hf-c1899de2",
+      "title": "Qwen3-0.6B · executed CPU witness · Hugging Face revision c1899de2",
+      "capsule": "capsules/qwen3-0.6b-hf-c1899de2",
+      "launch_index": {
+        "path": "launch-index.json",
+        "media_type": "application/json",
+        "digest": "sha256:efa50b06d297a92b3760320a85aea0a965f74b0dd74a29d56d4a9d0856402bc1",
+        "size": 8228
+      },
+      "launch_signature": {
+        "path": "launch-index.sig",
+        "media_type": "application/octet-stream",
+        "digest": "sha256:22921bd3a55734c91eba2155e94582015300af8d3f796e81acaa23ded385614f",
+        "size": 64
+      }
     }
   ],
   "non_claims": [

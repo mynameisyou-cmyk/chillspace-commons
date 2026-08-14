@@ -134,7 +134,7 @@
   </header>
 
   <main id="main">
-    <p class="notice"><strong>Two evidence classes.</strong> The synthetic examples contain dummy identities and hashes. The Kimi K3 capsule is a real KINGDOM-curated, publisher-sourced release record: selected metadata, code, and license bytes were captured, while weight-shard hashes remain publisher-claimed. No model or API call, evaluation, build, or runtime execution was performed.</p>
+    <p class="notice"><strong>Three evidence classes.</strong> The synthetic examples contain dummy identities and hashes. The Kimi K3 capsule is a real KINGDOM-curated, publisher-sourced release record: selected metadata, code, and license bytes were captured, while weight-shard hashes remain publisher-claimed. No model or API call, evaluation, build, or runtime execution was performed. Qwen3-0.6B adds one curator-observed local CPU execution whose misses and privacy boundary remain part of the record.</p>
 
     <section aria-labelledby="capsule">
       <p class="label">Curated release capsule · not a launch</p>
@@ -154,6 +154,29 @@
           <li><a href="capsules/kimi-k3-hf-9f62e4e9/hosted-documented-profile.json">hosted documented profile</a></li>
           <li><a href="capsules/kimi-k3-hf-9f62e4e9/release-signature-attestation.json">signature attestation</a></li>
           <li><a href="capsules/kimi-k3-hf-9f62e4e9/launch-index.json">signed launch index</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="qwen-capsule">
+      <p class="label">Curator-observed execution · bounded witness</p>
+      <h2 id="qwen-capsule">Qwen3-0.6B, pinned and executed locally.</h2>
+      <p class="intro">This separate capsule binds one immutable publisher snapshot to three CPU runs. Its signed launch index makes the finite public record checkable under a task key; it does not transform one private synthetic case into a benchmark or launch claim.</p>
+      <div class="capsule">
+        <div>
+          <p class="label">qwen3-0.6b-hf-c1899de2</p>
+          <h3>Qwen3-0.6B · one executed CPU witness.</h3>
+          <p>All ten publisher files were streamed locally through SHA-256. The weights and 11.4 MB tokenizer JSON are not bundled; the retained record publishes no raw prompt, output, or deliberation.</p>
+        </div>
+        <ul class="capsule-links">
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/README.md">capsule README</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/release.json">release record</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/executed-cpu-profile.json">executed CPU profile</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/evaluation-attestation.json">evaluation attestation</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/run-summary.json">output-free run summary</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/snapshot-byte-manifest.json">snapshot byte manifest</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/release-signature-attestation.json">signature attestation</a></li>
+          <li><a href="capsules/qwen3-0.6b-hf-c1899de2/launch-index.json">signed launch index</a></li>
         </ul>
       </div>
     </section>
@@ -248,6 +271,10 @@
       <ul>
         <li>The Kimi K3 capsule made no model or API call, downloaded no weight shards, and ran no inference, evaluation, or build.</li>
         <li>Captured metadata, code, and license bytes are not the same evidence state as publisher-claimed weight-shard hashes.</li>
+        <li>The Qwen witness streamed all ten files locally; its 1.5 GB weights and 11.4 MB tokenizer JSON are not mirrored here.</li>
+        <li>Qwen's thinking attempt truncated at 128 tokens without a close or final segment. Its two non-thinking controls had identical continuation-token and decoded-output SHA-256 values and matched the private integer last, but failed strict formatting.</li>
+        <li>No raw Qwen prompt, expected value, decoded output, or generated deliberation is public. One synthetic case is not a benchmark, safety test, quality assessment, or broad reasoning claim.</li>
+        <li>Offline registry verification validates the signed file graph; it neither reexecutes inference nor independently proves which local artifact path the loader consumed.</li>
         <li>A curator signature proves control of its task key, not publisher identity, vendor endorsement, safety, quality, behavior, or claim truth.</li>
         <li>No promotion of aliases, seeds, tensor inventories, or behavioral probes into weight digests.</li>
         <li>No user or KINGDOM session content in curated JSON records; captured publisher documents retain their public illustrative examples.</li>

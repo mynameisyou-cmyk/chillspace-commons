@@ -1,0 +1,235 @@
+{
+  "schema": "kingdom.model-release-launch-index/v1",
+  "capsule_id": "qwen3-0.6b-hf-c1899de2",
+  "files": [
+    {
+      "path": "README.md",
+      "media_type": "text/markdown",
+      "digest": "sha256:0cea84c91b5eb3f493636b5bf36d527694847a40ddc28b5f86ea09853aae63e7",
+      "size": 4205
+    },
+    {
+      "path": "evaluation-attestation.json",
+      "media_type": "application/json",
+      "digest": "sha256:b4cef9e3bb44afab14d5738e25dc69ecc82f8244bf96a65092fc7e26fbcf7af0",
+      "size": 11389
+    },
+    {
+      "path": "evidence/execution/nonthinking-repeat-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:294fcea06ce0441bf96651c783e1aaa13e2d0d1bc3b462684e6acc254f886f6c",
+      "size": 4463
+    },
+    {
+      "path": "evidence/execution/nonthinking-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:62c539a08d59dde3a7c33df9a723b784233359893728649cedb0ad5b69fe6489",
+      "size": 4464
+    },
+    {
+      "path": "evidence/execution/run-summary.json",
+      "media_type": "application/json",
+      "digest": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+      "size": 2368
+    },
+    {
+      "path": "evidence/execution/runtime-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+      "size": 2783
+    },
+    {
+      "path": "evidence/execution/snapshot-byte-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:7737c6ead8a527a78e0fad5dd4c708fc4da69acdb89600f2d8bbe9576eeb322b",
+      "size": 4078
+    },
+    {
+      "path": "evidence/execution/thinking-truncated-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:a6fec615eed9516c25dbead19506ce88b5ef99f99e086d0386b1b5d6b4c5047f",
+      "size": 4470
+    },
+    {
+      "path": "evidence/harness/benchmark-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:e0429851cb361484baf4e52dd53d2155bd96ba39639638686c7990e8743314b9",
+      "size": 1172
+    },
+    {
+      "path": "evidence/harness/run_qwen_probe.py",
+      "media_type": "text/x-python",
+      "digest": "sha256:5deeef8285a4945238ee1fa223522ede49c5ee5fa908ed710c5ab370e2655854",
+      "size": 13520
+    },
+    {
+      "path": "evidence/harness/scoring-policy.json",
+      "media_type": "application/json",
+      "digest": "sha256:2e1fde5fe6fec6c31719a198b55ae62431058f21552b211b67bb4cf9f4e77293",
+      "size": 1088
+    },
+    {
+      "path": "evidence/publisher/LICENSE",
+      "media_type": "text/plain",
+      "digest": "sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "size": 11343
+    },
+    {
+      "path": "evidence/publisher/README.md",
+      "media_type": "text/markdown",
+      "digest": "sha256:1ab64a26fcb3b461423b89a433a8c858f1bf8d4086f979cbb3ff878d47cf20e9",
+      "size": 13965
+    },
+    {
+      "path": "evidence/publisher/artifact-inventory.json",
+      "media_type": "application/json",
+      "digest": "sha256:336673cbec487bc1963d6e9ec7ea5bfbd411c735b6c0c29ffbc0bd6bc986d1e1",
+      "size": 2497
+    },
+    {
+      "path": "evidence/publisher/config.json",
+      "media_type": "application/json",
+      "digest": "sha256:660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "size": 726
+    },
+    {
+      "path": "evidence/publisher/dot-gitattributes.txt",
+      "media_type": "text/plain",
+      "digest": "sha256:34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+      "size": 1570
+    },
+    {
+      "path": "evidence/publisher/generation_config.json",
+      "media_type": "application/json",
+      "digest": "sha256:2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+      "size": 239
+    },
+    {
+      "path": "evidence/publisher/merges.txt",
+      "media_type": "text/plain",
+      "digest": "sha256:8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "size": 1671853
+    },
+    {
+      "path": "evidence/publisher/tokenizer_config.json",
+      "media_type": "application/json",
+      "digest": "sha256:d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "size": 9732
+    },
+    {
+      "path": "evidence/publisher/vocab.json",
+      "media_type": "application/json",
+      "digest": "sha256:ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "size": 2776833
+    },
+    {
+      "path": "executed-cpu-profile.json",
+      "media_type": "application/json",
+      "digest": "sha256:ba691287c9ed3acff6425adbf2a22d002d78589fe6dccfebe59b215e84ccd889",
+      "size": 6182
+    },
+    {
+      "path": "receipts/evaluation-attestation.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:32e7b297eda454139248fdfd851520442441332d798248ab6d6f8fb2df10e1b6",
+      "size": 1815
+    },
+    {
+      "path": "receipts/executed-cpu-profile.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:e43d2aee41339740cfce039d5b0b895d016bb90c2886ef4d13b7204eedac3b06",
+      "size": 1818
+    },
+    {
+      "path": "receipts/release-signature-attestation.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:76aac703116eb3620fd7ef5965c87267bc8ac75c5fe26f84c1af216337d31333",
+      "size": 1814
+    },
+    {
+      "path": "receipts/release.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:bdad75e021235f83b4ecfb35737efb241c251c1eece8c100bf3cbe5b243ee894",
+      "size": 1806
+    },
+    {
+      "path": "release-signature-attestation.json",
+      "media_type": "application/json",
+      "digest": "sha256:e896ab91f1c015c1e11308e55ee339f795face761f20b6356dd4cc7ecc90ab95",
+      "size": 3956
+    },
+    {
+      "path": "release.json",
+      "media_type": "application/json",
+      "digest": "sha256:7c7b289edd6da71d8e86da2e010776d534302a0646e88a97f03b987d5b7ed026",
+      "size": 16971
+    },
+    {
+      "path": "signing/public-key.pub",
+      "media_type": "application/x-pem-file",
+      "digest": "sha256:c8ca43de4ae5fd9222c381eb7c76b66f9f88318e4e0166bd02eb46992af56200",
+      "size": 113
+    },
+    {
+      "path": "signing/release-payload.txt",
+      "media_type": "text/plain",
+      "digest": "sha256:ae085ed2f9f53108b85e67c2173e3233f52bd32a23fc4677d134b2b87a8a20e7",
+      "size": 105
+    },
+    {
+      "path": "signing/release-signature.bin",
+      "media_type": "application/octet-stream",
+      "digest": "sha256:5fa124145a5eae49cb595aa51ad75108e834ab66be00f6761f48367be27b0fad",
+      "size": 64
+    },
+    {
+      "path": "signing/verifier-policy.json",
+      "media_type": "application/json",
+      "digest": "sha256:90d5617eea3dcdb16e9a4ff71d5576dc3623b59c58d7dfe9d4fd78fbc5904f83",
+      "size": 776
+    }
+  ],
+  "records": [
+    {
+      "path": "evaluation-attestation.json",
+      "receipt": "receipts/evaluation-attestation.receipt.json"
+    },
+    {
+      "path": "executed-cpu-profile.json",
+      "receipt": "receipts/executed-cpu-profile.receipt.json"
+    },
+    {
+      "path": "release-signature-attestation.json",
+      "receipt": "receipts/release-signature-attestation.receipt.json"
+    },
+    {
+      "path": "release.json",
+      "receipt": "receipts/release.receipt.json"
+    }
+  ],
+  "profile_sets": [
+    {
+      "release": "release.json",
+      "profile": "executed-cpu-profile.json",
+      "attestations": [
+        "evaluation-attestation.json"
+      ]
+    }
+  ],
+  "release_attestations": [
+    "release-signature-attestation.json"
+  ],
+  "release_signature": {
+    "release": "release.json",
+    "attestation": "release-signature-attestation.json",
+    "payload": "signing/release-payload.txt",
+    "signature": "signing/release-signature.bin",
+    "public_key": "signing/public-key.pub",
+    "verifier_policy": "signing/verifier-policy.json"
+  },
+  "non_claims": [
+    "The launch index is an external byte-set wrapper, not a kingdom.model-release/v1 record and not release authority.",
+    "Raw file digests and deterministic receipts establish byte identity and v1 structural validity only; they do not establish behavioral reproducibility.",
+    "Declared local and hosted execution profiles are not evidence that either execution occurred."
+  ]
+}

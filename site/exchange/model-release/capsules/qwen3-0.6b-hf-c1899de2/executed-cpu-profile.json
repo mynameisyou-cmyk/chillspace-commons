@@ -1,0 +1,156 @@
+{
+  "backend": {
+    "endpoint_family": "in-process Transformers generation",
+    "kind": "local-open-weights",
+    "observations": [],
+    "provider": "KINGDOM local witness"
+  },
+  "determinism": {
+    "deterministic_algorithms": true,
+    "known_nondeterminism": [
+      "No cross-version, cross-hardware, or cross-platform bitwise equivalence is claimed.",
+      "The loaded configuration reports 40,960 positions while the publisher advertises 32,768 supported context tokens; this short probe exercised neither limit.",
+      "Wall-clock latency differed between identical non-thinking repeats even though their token and decoded-output digests matched."
+    ],
+    "seed": "20260814"
+  },
+  "engine": {
+    "custom_code_revision": "not-used-qwen3-built-in-transformers-4.57.6",
+    "evidence_refs": [
+      "runtime-manifest",
+      "transformers-wheel",
+      "torch-wheel"
+    ],
+    "implementation": "transformers.models.qwen3.modeling_qwen3.Qwen3ForCausalLM",
+    "kernels": [
+      {
+        "name": "PyTorch eager CPU attention",
+        "source_revision": "pypi-torch-2.8.0",
+        "version": "2.8.0"
+      }
+    ],
+    "loader": "safetensors 0.7.0 local-only loader with trust_remote_code disabled",
+    "name": "Transformers Qwen3ForCausalLM",
+    "package": {
+      "digest": "sha256:4c9e9de11333ddfe5114bc872c9f370509198acf0b87a832a0ab9458e2bd0550",
+      "media_type": "application/vnd.python.wheel",
+      "size": 11993498
+    },
+    "source_revision": "pypi-transformers-4.57.6",
+    "version": "4.57.6"
+  },
+  "evidence": [
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+        "media_type": "application/json",
+        "size": 2783
+      },
+      "id": "runtime-manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/runtime-manifest.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:42:57Z",
+      "revision": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+      "title": "Sanitized local CPU runtime manifest"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+        "media_type": "application/json",
+        "size": 2368
+      },
+      "id": "run-summary",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/run-summary.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:42:57Z",
+      "revision": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+      "title": "Output-free three-run summary"
+    },
+    {
+      "assertor": "Python Packaging Authority infrastructure",
+      "content": {
+        "digest": "sha256:4c9e9de11333ddfe5114bc872c9f370509198acf0b87a832a0ab9458e2bd0550",
+        "media_type": "application/vnd.python.wheel",
+        "size": 11993498
+      },
+      "id": "transformers-wheel",
+      "kind": "runtime-documentation",
+      "locator": "https://files.pythonhosted.org/packages/03/b8/e484ef633af3887baeeb4b6ad12743363af7cce68ae51e938e00aaa0529d/transformers-4.57.6-py3-none-any.whl",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:01:05Z",
+      "revision": "sha256:4c9e9de11333ddfe5114bc872c9f370509198acf0b87a832a0ab9458e2bd0550",
+      "title": "Transformers 4.57.6 PyPI wheel"
+    },
+    {
+      "assertor": "Python Packaging Authority infrastructure",
+      "content": {
+        "digest": "sha256:619c2869db3ada2c0105487ba21b5008defcc472d23f8b80ed91ac4a380283b0",
+        "media_type": "application/vnd.python.wheel",
+        "size": 73630478
+      },
+      "id": "torch-wheel",
+      "kind": "runtime-documentation",
+      "locator": "https://files.pythonhosted.org/packages/be/66/5c9a321b325aaecb92d4d1855421e3a055abd77903b7dab6575ca07796db/torch-2.8.0-cp312-none-macosx_11_0_arm64.whl",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:01:05Z",
+      "revision": "sha256:619c2869db3ada2c0105487ba21b5008defcc472d23f8b80ed91ac4a380283b0",
+      "title": "PyTorch 2.8.0 macOS arm64 CPython 3.12 wheel"
+    }
+  ],
+  "hardware": {
+    "accelerators": [
+      {
+        "count": 1,
+        "model": "Apple M3 CPU"
+      }
+    ],
+    "compute_stack": "CPython 3.12.12 and PyTorch 2.8.0 CPU eager",
+    "driver": "macOS 15.7.3 build 24G419",
+    "interconnect": "single Apple silicon package with unified memory",
+    "topology": "one process, one intra-op thread, one inter-op thread",
+    "visibility": "observed"
+  },
+  "kind": "execution-profile",
+  "non_claims": [
+    "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+    "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+    "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+    "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+  ],
+  "privacy": {
+    "environment_capture": "allowlisted-fields",
+    "excluded": [
+      "credentials",
+      "hostnames",
+      "private paths",
+      "raw environment",
+      "prompts",
+      "responses",
+      "generated deliberation"
+    ]
+  },
+  "resolved": {
+    "attention_backend": "PyTorch eager CPU attention 2.8.0",
+    "context_tokens": 40960,
+    "dtype": "float32 widened exactly from bfloat16 source values",
+    "kv_cache_dtype": "float32",
+    "load_format": "safetensors",
+    "parallelism": {
+      "data": 1,
+      "expert": 1,
+      "pipeline": 1,
+      "tensor": 1
+    },
+    "rope_overrides": "none",
+    "speculative_decoding": "disabled",
+    "weight_quantization": "none"
+  },
+  "schema": "kingdom.model-execution-profile/v1",
+  "subject": {
+    "release_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4"
+  }
+}

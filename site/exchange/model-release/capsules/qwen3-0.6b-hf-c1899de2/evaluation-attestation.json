@@ -1,0 +1,283 @@
+{
+  "assertor": {
+    "identity": "urn:kingdom:curation:qwen3-0.6b-task",
+    "name": "KINGDOM model-release curation"
+  },
+  "evaluation": {
+    "aggregation": "three runs with output-digest repeat comparison and private rule scoring",
+    "artifacts": [
+      {
+        "descriptor": {
+          "digest": "sha256:a6fec615eed9516c25dbead19506ce88b5ef99f99e086d0386b1b5d6b4c5047f",
+          "media_type": "application/json",
+          "size": 4470
+        },
+        "evidence_ref": "thinking-result",
+        "name": "thinking-truncated-result.json",
+        "role": "evaluation-results"
+      },
+      {
+        "descriptor": {
+          "digest": "sha256:62c539a08d59dde3a7c33df9a723b784233359893728649cedb0ad5b69fe6489",
+          "media_type": "application/json",
+          "size": 4464
+        },
+        "evidence_ref": "nonthinking-result",
+        "name": "nonthinking-result.json",
+        "role": "evaluation-results"
+      },
+      {
+        "descriptor": {
+          "digest": "sha256:294fcea06ce0441bf96651c783e1aaa13e2d0d1bc3b462684e6acc254f886f6c",
+          "media_type": "application/json",
+          "size": 4463
+        },
+        "evidence_ref": "nonthinking-repeat-result",
+        "name": "nonthinking-repeat-result.json",
+        "role": "evaluation-results"
+      },
+      {
+        "descriptor": {
+          "digest": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+          "media_type": "application/json",
+          "size": 2368
+        },
+        "evidence_ref": "run-summary",
+        "name": "run-summary.json",
+        "role": "evaluation-results"
+      },
+      {
+        "descriptor": {
+          "digest": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+          "media_type": "application/json",
+          "size": 2783
+        },
+        "evidence_ref": "runtime-manifest",
+        "name": "runtime-manifest.json",
+        "role": "evaluation-results"
+      },
+      {
+        "descriptor": {
+          "digest": "sha256:7737c6ead8a527a78e0fad5dd4c708fc4da69acdb89600f2d8bbe9576eeb322b",
+          "media_type": "application/json",
+          "size": 4078
+        },
+        "evidence_ref": "snapshot-manifest",
+        "name": "snapshot-byte-manifest.json",
+        "role": "evaluation-results"
+      }
+    ],
+    "benchmark": {
+      "dataset": {
+        "digest": "sha256:e0429851cb361484baf4e52dd53d2155bd96ba39639638686c7990e8743314b9",
+        "media_type": "application/json",
+        "size": 1172
+      },
+      "name": "private synthetic interface witness",
+      "preprocessing": {
+        "digest": "sha256:5deeef8285a4945238ee1fa223522ede49c5ee5fa908ed710c5ab370e2655854",
+        "media_type": "text/x-python",
+        "size": 13520
+      },
+      "revision": "sha256:e0429851cb361484baf4e52dd53d2155bd96ba39639638686c7990e8743314b9",
+      "scoring": {
+        "digest": "sha256:2e1fde5fe6fec6c31719a198b55ae62431058f21552b211b67bb4cf9f4e77293",
+        "media_type": "application/json",
+        "size": 1088
+      },
+      "subset": "three local runs across two interface modes"
+    },
+    "cost": {
+      "amount_micros": 0,
+      "currency": "USD",
+      "latency_ms": 45920
+    },
+    "evidence_refs": [
+      "thinking-result",
+      "nonthinking-result",
+      "nonthinking-repeat-result",
+      "run-summary",
+      "runtime-manifest",
+      "snapshot-manifest"
+    ],
+    "exclusions": [
+      "Raw prompt, private expected value, decoded outputs, and generated deliberation are absent.",
+      "No MPS or GPU execution, tool call, long-context probe, multilingual probe, safety evaluation, or public benchmark was performed.",
+      "The 1,503,300,328-byte weight file is not bundled in the public capsule.",
+      "Evaluation interval bounds and result retrieval times conservatively enclose the exact run timestamps to the schema's whole-second precision."
+    ],
+    "execution_profile_digest": "sha256:b5020e7d2aad0b9a83f6e3aced8b397aa0ee550edb5db5ffe1fafee1a89b0894",
+    "failures": [
+      "The thinking-mode run reached 128 generated tokens without the closing think token or a final segment.",
+      "Both non-thinking controls ended normally and placed the private expected integer last, but neither obeyed the stricter exact-output format."
+    ],
+    "fallbacks": [],
+    "finished_at": "2026-08-14T08:42:57Z",
+    "harness": {
+      "context_policy": "sha256:ea8b8b149f729b60dce31e37486238e686077422cb1bc84decdb44cda4840949",
+      "digest": "sha256:5deeef8285a4945238ee1fa223522ede49c5ee5fa908ed710c5ab370e2655854",
+      "name": "kingdom-output-free-qwen-probe",
+      "revision": "sha256:5deeef8285a4945238ee1fa223522ede49c5ee5fa908ed710c5ab370e2655854",
+      "system_prompt": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tool_set": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "judge": {
+      "configuration": "sha256:2e1fde5fe6fec6c31719a198b55ae62431058f21552b211b67bb4cf9f4e77293",
+      "kind": "rules",
+      "model": "not-applicable",
+      "revision": "sha256:2e1fde5fe6fec6c31719a198b55ae62431058f21552b211b67bb4cf9f4e77293"
+    },
+    "refusals": [],
+    "release_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4",
+    "results": [
+      {
+        "name": "full_snapshot_descriptor_gate_passes",
+        "unit": "runs",
+        "value": "3"
+      },
+      {
+        "name": "thinking_interface_closed",
+        "unit": "of 1",
+        "value": "0"
+      },
+      {
+        "name": "thinking_truncated",
+        "unit": "of 1",
+        "value": "1"
+      },
+      {
+        "name": "nonthinking_last_numeric_match",
+        "unit": "of 2",
+        "value": "2"
+      },
+      {
+        "name": "nonthinking_strict_exact_match",
+        "unit": "of 2",
+        "value": "0"
+      },
+      {
+        "name": "same_stack_repeat_output_match",
+        "unit": "pair",
+        "value": "1"
+      }
+    ],
+    "safety_interventions": [],
+    "sampling": {
+      "reasoning_effort": "thinking enabled once and hard-disabled twice",
+      "runs": 3,
+      "seed": "20260814",
+      "strategy": "one seeded sampled thinking attempt and two greedy non-thinking repeats",
+      "temperature": "thinking 0.6; non-thinking not applied",
+      "top_p": "thinking 0.95; non-thinking not applied"
+    },
+    "started_at": "2026-08-14T08:41:42Z"
+  },
+  "evidence": [
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:a6fec615eed9516c25dbead19506ce88b5ef99f99e086d0386b1b5d6b4c5047f",
+        "media_type": "application/json",
+        "size": 4470
+      },
+      "id": "thinking-result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/thinking-truncated-result.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:42:57Z",
+      "revision": "sha256:a6fec615eed9516c25dbead19506ce88b5ef99f99e086d0386b1b5d6b4c5047f",
+      "title": "Thinking-mode truncated result"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:62c539a08d59dde3a7c33df9a723b784233359893728649cedb0ad5b69fe6489",
+        "media_type": "application/json",
+        "size": 4464
+      },
+      "id": "nonthinking-result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/nonthinking-result.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:41:55Z",
+      "revision": "sha256:62c539a08d59dde3a7c33df9a723b784233359893728649cedb0ad5b69fe6489",
+      "title": "Non-thinking control result"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:294fcea06ce0441bf96651c783e1aaa13e2d0d1bc3b462684e6acc254f886f6c",
+        "media_type": "application/json",
+        "size": 4463
+      },
+      "id": "nonthinking-repeat-result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/nonthinking-repeat-result.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:42:14Z",
+      "revision": "sha256:294fcea06ce0441bf96651c783e1aaa13e2d0d1bc3b462684e6acc254f886f6c",
+      "title": "Non-thinking repeat result"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+        "media_type": "application/json",
+        "size": 2368
+      },
+      "id": "run-summary",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/run-summary.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:0245d13411e8157479014473a3eb589ab3df2861287bc1cced035aef5f4a7a61",
+      "title": "Output-free three-run summary"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+        "media_type": "application/json",
+        "size": 2783
+      },
+      "id": "runtime-manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/runtime-manifest.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:62d1a8b37bace9e73a38cf44620162f98c7778c88973328339779eaebb3e765e",
+      "title": "Sanitized local CPU runtime manifest"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:7737c6ead8a527a78e0fad5dd4c708fc4da69acdb89600f2d8bbe9576eeb322b",
+        "media_type": "application/json",
+        "size": 4078
+      },
+      "id": "snapshot-manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/snapshot-byte-manifest.json",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:7737c6ead8a527a78e0fad5dd4c708fc4da69acdb89600f2d8bbe9576eeb322b",
+      "title": "Locally streamed snapshot byte manifest"
+    }
+  ],
+  "evidence_class": "curator-observed",
+  "issued_at": "2026-08-14T08:44:48Z",
+  "kind": "attestation",
+  "non_claims": [
+    "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+    "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+    "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+    "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+  ],
+  "predicate_type": "evaluation",
+  "schema": "kingdom.model-release-attestation/v1",
+  "subject": {
+    "digest": "sha256:b5020e7d2aad0b9a83f6e3aced8b397aa0ee550edb5db5ffe1fafee1a89b0894",
+    "kind": "execution-profile",
+    "name": "Qwen3-0.6B deterministic CPU execution profile"
+  }
+}

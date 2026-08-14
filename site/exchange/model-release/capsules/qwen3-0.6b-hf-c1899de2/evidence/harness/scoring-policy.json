@@ -1,0 +1,26 @@
+{
+  "format": "kingdom.private-output-scoring-policy/v1",
+  "rules": [
+    {
+      "name": "last-numeric-answer-match",
+      "definition": "The last signed decimal integer found in the decoded final segment equals the private expected value."
+    },
+    {
+      "name": "strict-final-exact-match",
+      "definition": "The stripped decoded final segment equals the private expected value and nothing else."
+    },
+    {
+      "name": "thinking-interface-closed",
+      "definition": "The generated continuation contains the publisher-declared closing think token before the token ceiling."
+    },
+    {
+      "name": "repeat-output-match",
+      "definition": "Two same-stack non-thinking runs have identical continuation-token and decoded-final SHA-256 values."
+    }
+  ],
+  "privacy": "Only booleans, counts, and cryptographic digests leave the private workshop.",
+  "non_claims": [
+    "The public capsule cannot recompute private-input or private-output scoring.",
+    "These rules measure one synthetic case only and do not establish general correctness, safety, or quality."
+  ]
+}

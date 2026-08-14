@@ -1,0 +1,128 @@
+{
+  "format": "kingdom.private-output-free-model-run/v1",
+  "claim_boundary": {
+    "class": "curator-observed-local-execution",
+    "raw_prompt_retained_publicly": false,
+    "raw_output_retained_publicly": false,
+    "raw_deliberation_retained_publicly": false,
+    "offline_verifier_reexecutes_model": false,
+    "offline_verifier_proves_loaded_weight_path": false
+  },
+  "model": {
+    "repository": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "weight_file": {
+      "media_type": "application/vnd.safetensors",
+      "digest": "sha256:f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+      "size": 1503300328
+    },
+    "snapshot_verification": {
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "file_count": 10,
+      "total_bytes": 1519209243,
+      "descriptor_set": {
+        "media_type": "application/json",
+        "digest": "sha256:5dd961d30a021973ba06bbd44d75227cc9afd78a39af26e9413170272ac4afb5",
+        "size": 1683
+      },
+      "checked_before_loader_sequence": true
+    },
+    "loader_class": "Qwen3ForCausalLM",
+    "tokenizer_class": "Qwen2TokenizerFast",
+    "stored_tensor_count": 311,
+    "unique_parameter_count": 596049920,
+    "dtype": "float32 widened exactly from bfloat16 source values",
+    "trust_remote_code": false
+  },
+  "runtime": {
+    "python": "3.12.12",
+    "packages": {
+      "accelerate": "1.10.1",
+      "huggingface-hub": "0.36.2",
+      "numpy": "2.5.2",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.8.0",
+      "transformers": "4.57.6"
+    },
+    "os": "macOS 15.7.3 build 24G419",
+    "architecture": "arm64",
+    "processor": "Apple M3 CPU",
+    "device": "cpu",
+    "attention": "PyTorch eager",
+    "intraop_threads": 1,
+    "interop_threads": 1,
+    "deterministic_algorithms": true,
+    "python_hash_seed": "0",
+    "offline_loading_flags": {
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1"
+    }
+  },
+  "probe": {
+    "case_id": "private-synthetic-case-v1",
+    "private_spec": {
+      "media_type": "application/json",
+      "digest": "sha256:34f0c1e6f819a1efb0e1738c391d00edc8cd0ae0d87af7bde10246627e38e0a0",
+      "size": 410
+    },
+    "message_json_sha256": "sha256:c714d5ced6ddf5b9c6b8c79f4e65ee01ff2dfece750b356f89c570f82f3c9231",
+    "rendered_template": {
+      "digest": "sha256:5878299b185c5ecc1d4eb10adb146ef87b76b41f16df09da7e899dd272cd6552",
+      "size": 132
+    },
+    "input_tokens": {
+      "digest": "sha256:f26bbee004f56aa6693d8e1c6fa5d0d9c9362e07557cf3e1d3dd1e7a80509932",
+      "count": 29,
+      "canonical_size": 132
+    },
+    "continuation_tokens": {
+      "digest": "sha256:60de1f792de6b47c38f693117795de32dbd06ab6a0d67ecc5cb076a3bfea8fe2",
+      "count": 128,
+      "canonical_size": 529
+    },
+    "private_segment_tokens": {
+      "digest": "sha256:60de1f792de6b47c38f693117795de32dbd06ab6a0d67ecc5cb076a3bfea8fe2",
+      "count": 128,
+      "canonical_size": 529
+    },
+    "private_segment_closed": false,
+    "final_segment_tokens": {
+      "digest": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "count": 0,
+      "canonical_size": 3
+    },
+    "decoded_final": {
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "stop_reason": "max-new-tokens"
+  },
+  "sampling": {
+    "strategy": "seeded multinomial",
+    "do_sample": true,
+    "temperature": "0.6",
+    "top_p": "0.95",
+    "top_k": 20,
+    "max_new_tokens": 128,
+    "seed": "20260814",
+    "enable_thinking": true
+  },
+  "observation": {
+    "started_at": "2026-08-14T08:42:30.792869Z",
+    "finished_at": "2026-08-14T08:42:56.023817Z",
+    "latency_ms": 25229,
+    "max_resident_set_bytes": 2608513024,
+    "strict_final_exact_match": false,
+    "sole_numeric_answer_match": false,
+    "last_numeric_answer_match": false,
+    "numeric_answer_count": 0,
+    "cases": 1
+  },
+  "non_claims": [
+    "This sanitized record is a curator observation, not independently reproduced execution evidence.",
+    "The public capsule does not contain the prompt, decoded output, generated deliberation, or model weight bytes.",
+    "A signature binds this record to a task key; it does not prove the model loaded the named local path or establish safety, quality, publisher identity, endorsement, or broad capability.",
+    "One private synthetic case is not a benchmark or a general model evaluation."
+  ]
+}

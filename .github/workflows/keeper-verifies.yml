@@ -98,10 +98,28 @@ jobs:
           python3 kingdom/exchange/model-release/validate_registry.py \
             --source kingdom/exchange/model-release \
             --public site/exchange/model-release
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          for root in (
+              Path("kingdom/exchange/model-release"),
+              Path("site/exchange/model-release"),
+          ):
+              registry = json.loads((root / "registry.json").read_text(encoding="utf-8"))
+              for entry in registry["entries"]:
+                  launch_index = root / entry["capsule"] / entry["launch_index"]["path"]
+                  if not launch_index.is_file():
+                      raise SystemExit(f"missing registered launch index: {launch_index}")
+          PY
           grep -Fq "$schema_digest" site/exchange/model-release/index.html
           grep -Fq 'KINGDOM-curated, publisher-sourced release record' \
             site/exchange/model-release/index.html
           grep -Fq 'href="registry.json"' site/exchange/model-release/index.html
+          grep -Fq 'capsules/kimi-k3-hf-9f62e4e9/launch-index.json' \
+            site/exchange/model-release/index.html
+          grep -Fq 'capsules/qwen3-0.6b-hf-c1899de2/launch-index.json' \
+            site/exchange/model-release/index.html
           grep -Fq 'href="exchange/model-release/"' site/index.html
           while IFS= read -r -d '' public_html; do
             if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \
