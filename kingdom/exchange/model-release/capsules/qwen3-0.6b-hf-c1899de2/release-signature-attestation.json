@@ -1,0 +1,97 @@
+{
+  "assertor": {
+    "identity": "urn:kingdom:ed25519:c8ca43de4ae5fd9222c381eb7c76b66f9f88318e4e0166bd02eb46992af56200",
+    "name": "KINGDOM model-release curation"
+  },
+  "evidence": [
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:5fa124145a5eae49cb595aa51ad75108e834ab66be00f6761f48367be27b0fad",
+        "media_type": "application/octet-stream",
+        "size": 64
+      },
+      "id": "detached-release-signature",
+      "kind": "signature-bundle",
+      "locator": "urn:kingdom:qwen3-0.6b-hf-c1899de2:release-signature",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:5fa124145a5eae49cb595aa51ad75108e834ab66be00f6761f48367be27b0fad",
+      "title": "Domain-separated detached Ed25519 release signature"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:90d5617eea3dcdb16e9a4ff71d5576dc3623b59c58d7dfe9d4fd78fbc5904f83",
+        "media_type": "application/json",
+        "size": 776
+      },
+      "id": "ed25519-verifier-policy",
+      "kind": "other",
+      "locator": "urn:kingdom:qwen3-0.6b-hf-c1899de2:ed25519-verifier-policy",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:90d5617eea3dcdb16e9a4ff71d5576dc3623b59c58d7dfe9d4fd78fbc5904f83",
+      "title": "Identity-free Ed25519 verifier policy"
+    },
+    {
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "digest": "sha256:c8ca43de4ae5fd9222c381eb7c76b66f9f88318e4e0166bd02eb46992af56200",
+        "media_type": "application/x-pem-file",
+        "size": 113
+      },
+      "id": "ed25519-public-key",
+      "kind": "other",
+      "locator": "urn:kingdom:qwen3-0.6b-hf-c1899de2:ed25519-public-key",
+      "mutability": "immutable",
+      "retrieved_at": "2026-08-14T08:44:48Z",
+      "revision": "sha256:c8ca43de4ae5fd9222c381eb7c76b66f9f88318e4e0166bd02eb46992af56200",
+      "title": "Identity-free Ed25519 public key"
+    }
+  ],
+  "evidence_class": "curator-observed",
+  "issued_at": "2026-08-14T08:44:48Z",
+  "kind": "attestation",
+  "non_claims": [
+    "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+    "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+    "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+    "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+  ],
+  "predicate_type": "signature",
+  "schema": "kingdom.model-release-attestation/v1",
+  "signature": {
+    "bundle": {
+      "digest": "sha256:5fa124145a5eae49cb595aa51ad75108e834ab66be00f6761f48367be27b0fad",
+      "media_type": "application/octet-stream",
+      "size": 64
+    },
+    "evidence_refs": [
+      "detached-release-signature",
+      "ed25519-verifier-policy",
+      "ed25519-public-key"
+    ],
+    "format": "detached-signature",
+    "issuer": "self-issued one-use Ed25519 key; no external identity claim",
+    "signed_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4",
+    "signer_identity": "urn:kingdom:ed25519:c8ca43de4ae5fd9222c381eb7c76b66f9f88318e4e0166bd02eb46992af56200",
+    "verified": true,
+    "verified_at": "2026-08-14T08:44:48Z",
+    "verifier_policy": {
+      "digest": "sha256:90d5617eea3dcdb16e9a4ff71d5576dc3623b59c58d7dfe9d4fd78fbc5904f83",
+      "media_type": "application/json",
+      "size": 776
+    },
+    "verifier_tool": {
+      "name": "OpenSSL",
+      "source_revision": "openssl-3.6.3",
+      "version": "3.6.3"
+    }
+  },
+  "subject": {
+    "digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4",
+    "kind": "model-release",
+    "name": "Qwen3-0.6B hf-c1899de2 release declaration"
+  }
+}

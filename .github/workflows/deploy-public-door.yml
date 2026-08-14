@@ -128,7 +128,17 @@ jobs:
           test -f _site/exchange/model-release/index.html
           test -f _site/exchange/model-release/schema.v1.json
           test -f _site/exchange/model-release/registry.json
-          test -f _site/exchange/model-release/capsules/kimi-k3-hf-9f62e4e9/launch-index.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("_site/exchange/model-release")
+          registry = json.loads((root / "registry.json").read_text(encoding="utf-8"))
+          for entry in registry["entries"]:
+              launch_index = root / entry["capsule"] / entry["launch_index"]["path"]
+              if not launch_index.is_file():
+                  raise SystemExit(f"missing packaged launch index: {launch_index}")
+          PY
           cmp kingdom/exchange/model-release/schema.json \
             _site/exchange/model-release/schema.v1.json
           for example in synthetic-release synthetic-profile synthetic-evaluation; do
@@ -140,6 +150,10 @@ jobs:
             --public _site/exchange/model-release
           grep -Fq 'href="exchange/model-release/"' _site/index.html
           grep -Fq 'KINGDOM-curated, publisher-sourced release record' \
+            _site/exchange/model-release/index.html
+          grep -Fq 'capsules/kimi-k3-hf-9f62e4e9/launch-index.json' \
+            _site/exchange/model-release/index.html
+          grep -Fq 'capsules/qwen3-0.6b-hf-c1899de2/launch-index.json' \
             _site/exchange/model-release/index.html
           while IFS= read -r -d '' public_html; do
             if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \

@@ -57,6 +57,14 @@ class SignedFixture:
     capsule_id = "signed-fixture-v1"
     release_path = "release.json"
     profile_path = "local-profile.json"
+    evaluation_path = "evaluation-attestation.json"
+    evaluation_receipt_path = "receipts/evaluation-attestation.receipt.json"
+    evaluation_output_path = "evidence/evaluation/results.json"
+    evaluation_benchmark_paths = {
+        "dataset": "evidence/evaluation/dataset.json",
+        "preprocessing": "evidence/evaluation/preprocessing.txt",
+        "scoring": "evidence/evaluation/scoring.json",
+    }
     attestation_path = "release-signature-attestation.json"
     launch_index_path = "launch-index.json"
     launch_signature_path = "launch-index.sig"
@@ -263,6 +271,33 @@ class SignedFixture:
     def replace_receipt(self, record_path: str) -> None:
         self._receipt(record_path, dict(self.records)[record_path])
 
+    def add_evaluation(self) -> None:
+        output_raw = b'{"fixture_cases_passed":2,"runs":1}\n'
+        output_descriptor = raw_descriptor(output_raw, "application/json")
+        evaluation = json.loads(
+            (HERE / "examples" / "synthetic-evaluation.json").read_text(encoding="utf-8")
+        )
+        evaluation["evaluation"]["artifacts"][0]["descriptor"] = output_descriptor
+        evaluation["evidence"][0]["content"] = output_descriptor
+        self._write(self.evaluation_output_path, output_raw)
+        benchmark_raw = {
+            "dataset": b'{"cases":[{"expected":"2","input":"1 + 1"}]}\n',
+            "preprocessing": b"Preserve the synthetic fixture input exactly.\n",
+            "scoring": b'{"method":"exact-match"}\n',
+        }
+        for field, raw in benchmark_raw.items():
+            path = self.evaluation_benchmark_paths[field]
+            evaluation["evaluation"]["benchmark"][field] = raw_descriptor(
+                raw, media_type(path)
+            )
+            self._write(path, raw)
+        self._write_json(self.evaluation_path, evaluation)
+        self.records.append((self.evaluation_path, self.evaluation_receipt_path))
+        self.records.sort()
+        self.profile_attestations.append(self.evaluation_path)
+        self._receipt(self.evaluation_path, self.evaluation_receipt_path)
+        self.seal()
+
     def _inventory(self) -> list[dict[str, Any]]:
         excluded = {self.launch_index_path, self.launch_signature_path}
         items: list[dict[str, Any]] = []
@@ -343,6 +378,20 @@ class SignedFixture:
         if mirror:
             self.mirror()
 
+    def replace_indexed_media_type(self, path: str, replacement: str) -> None:
+        index = self._json(self.launch_index_path)
+        item = next(value for value in index["files"] if value["path"] == path)
+        item["media_type"] = replacement
+        launch_raw = pretty(index)
+        self._write(self.launch_index_path, launch_raw)
+        message = registry_v1._domain_message(
+            registry_v1.LAUNCH_INDEX_DOMAIN,
+            "sha256:" + hashlib.sha256(launch_raw).hexdigest(),
+        )
+        self._sign(message, self.capsule / self.launch_signature_path)
+        self.write_registry()
+        self.mirror()
+
 
 class RegistryTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -410,12 +459,26 @@ class RegistryTests(unittest.TestCase):
             ],
         }
         registry_v1._validate_publisher_inventory(inventory, "test inventory")
+        inventory["files"][0]["path"] = "model.safetensors"
+        registry_v1._validate_publisher_inventory(inventory, "test single-file inventory")
         inventory["summary"]["weight_bytes"] = 9
         with self.assertRaisesRegex(registry_v1.RegistryError, "summary differs"):
             registry_v1._validate_publisher_inventory(inventory, "test inventory")
         inventory["summary"]["weight_bytes"] = True
         with self.assertRaisesRegex(registry_v1.RegistryError, "summary values must be integers"):
             registry_v1._validate_publisher_inventory(inventory, "test inventory")
+        inventory["summary"] = {
+            "file_count": 2,
+            "total_bytes": 16,
+            "weight_shards": 2,
+            "weight_bytes": 16,
+        }
+        inventory["files"].append(
+            {**inventory["files"][0], "path": "model-00001-of-000001.safetensors"}
+        )
+        inventory["files"].sort(key=lambda row: row["path"])
+        with self.assertRaisesRegex(registry_v1.RegistryError, "must not mix"):
+            registry_v1._validate_publisher_inventory(inventory, "test mixed inventory")
 
     def test_registry_rejects_traversal(self) -> None:
         registry = json.loads((self.fixture.source / "registry.json").read_text(encoding="utf-8"))
@@ -463,6 +526,93 @@ class RegistryTests(unittest.TestCase):
         self.fixture.replace_receipt(self.fixture.profile_path)
         self.fixture.seal()
         self.assert_rejected("release/profile binding failed")
+
+    def test_evaluation_descriptors_match_one_indexed_raw_file(self) -> None:
+        self.fixture.add_evaluation()
+        result = registry_v1.validate_registry(self.fixture.source, self.fixture.public)
+        self.assertEqual(result["records"], 4)
+
+    def test_evaluation_artifact_rejects_absent_raw_file(self) -> None:
+        self.fixture.add_evaluation()
+        (self.fixture.capsule / self.fixture.evaluation_output_path).unlink()
+        self.fixture.seal()
+        self.assert_rejected("evaluation artifact .* must match exactly one indexed raw file")
+
+    def test_evaluation_artifact_rejects_wrong_indexed_media_type(self) -> None:
+        self.fixture.add_evaluation()
+        self.fixture.replace_indexed_media_type(
+            self.fixture.evaluation_output_path, "application/octet-stream"
+        )
+        self.assert_rejected("evaluation artifact .* must match exactly one indexed raw file")
+
+    def test_evaluation_artifact_rejects_duplicate_indexed_raw_files(self) -> None:
+        self.fixture.add_evaluation()
+        shutil.copyfile(
+            self.fixture.capsule / self.fixture.evaluation_output_path,
+            self.fixture.capsule / "evidence/evaluation/results-copy.json",
+        )
+        self.fixture.seal()
+        self.assert_rejected("evaluation artifact .* must match exactly one indexed raw file")
+
+    def test_evaluation_benchmark_rejects_absent_raw_file(self) -> None:
+        self.fixture.add_evaluation()
+        dataset = self.fixture.evaluation_benchmark_paths["dataset"]
+        (self.fixture.capsule / dataset).unlink()
+        self.fixture.seal()
+        self.assert_rejected(
+            "evaluation benchmark dataset must match exactly one indexed raw file"
+        )
+
+    def test_evaluation_benchmark_rejects_wrong_indexed_media_type(self) -> None:
+        self.fixture.add_evaluation()
+        preprocessing = self.fixture.evaluation_benchmark_paths["preprocessing"]
+        self.fixture.replace_indexed_media_type(preprocessing, "application/octet-stream")
+        self.assert_rejected(
+            "evaluation benchmark preprocessing must match exactly one indexed raw file"
+        )
+
+    def test_evaluation_benchmark_rejects_duplicate_indexed_raw_files(self) -> None:
+        self.fixture.add_evaluation()
+        scoring = self.fixture.evaluation_benchmark_paths["scoring"]
+        shutil.copyfile(
+            self.fixture.capsule / scoring,
+            self.fixture.capsule / "evidence/evaluation/scoring-copy.json",
+        )
+        self.fixture.seal()
+        self.assert_rejected(
+            "evaluation benchmark scoring must match exactly one indexed raw file"
+        )
+
+    def test_evaluation_artifacts_reject_path_aliasing(self) -> None:
+        self.fixture.add_evaluation()
+        evaluation = self.fixture._json(self.fixture.evaluation_path)
+        artifact = dict(evaluation["evaluation"]["artifacts"][0])
+        artifact["name"] = "aliased-results.json"
+        evaluation["evaluation"]["artifacts"].append(artifact)
+        self.fixture._write_json(self.fixture.evaluation_path, evaluation)
+        self.fixture.replace_receipt(self.fixture.evaluation_path)
+        self.fixture.seal()
+        self.assert_rejected("evaluation artifacts must resolve to path-unique indexed files")
+
+    def test_evaluation_benchmark_rejects_role_path_aliasing(self) -> None:
+        self.fixture.add_evaluation()
+        evaluation = self.fixture._json(self.fixture.evaluation_path)
+        benchmark = evaluation["evaluation"]["benchmark"]
+        benchmark["preprocessing"] = dict(benchmark["dataset"])
+        self.fixture._write_json(self.fixture.evaluation_path, evaluation)
+        self.fixture.replace_receipt(self.fixture.evaluation_path)
+        self.fixture.seal()
+        self.assert_rejected("benchmark dataset, preprocessing, and scoring must resolve to distinct")
+
+    def test_evaluation_benchmark_rejects_artifact_path_aliasing(self) -> None:
+        self.fixture.add_evaluation()
+        evaluation = self.fixture._json(self.fixture.evaluation_path)
+        artifact = evaluation["evaluation"]["artifacts"][0]
+        evaluation["evaluation"]["benchmark"]["dataset"] = dict(artifact["descriptor"])
+        self.fixture._write_json(self.fixture.evaluation_path, evaluation)
+        self.fixture.replace_receipt(self.fixture.evaluation_path)
+        self.fixture.seal()
+        self.assert_rejected("benchmark paths must be disjoint from artifact paths")
 
     def test_resealed_invalid_release_signature_reaches_crypto_check(self) -> None:
         signature_path = self.fixture.capsule / self.fixture.release_signature_path

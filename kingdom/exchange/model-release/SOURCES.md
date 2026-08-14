@@ -34,6 +34,17 @@ conformance or endorsement.
 - [OpenAI gpt-oss](https://github.com/openai/gpt-oss/tree/7b583341fe16729127f6d5b94a7b09ccae97e1a1): release components include weights, tokenizer/configuration, response format, reference implementations, reasoning channels, and configurable effort.
 - [OpenAI reproducible-output example](https://cookbook.openai.com/examples/reproducible_outputs_with_the_seed_parameter): `system_fingerprint` is a best-effort backend signal, not a cryptographic weight digest, and seeds alone do not guarantee determinism.
 
+## Qwen3 executed-capsule sources
+
+Read for the Qwen3-0.6B companion capsule on 2026-08-14. The pinned model
+snapshot governs artifact identity; the family report supplies research
+context rather than a checkpoint-specific byte claim.
+
+- [Qwen3-0.6B snapshot at `c1899de289a04d12100db370d81485cdf75e47ca`](https://huggingface.co/Qwen/Qwen3-0.6B/tree/c1899de289a04d12100db370d81485cdf75e47ca): the official immutable tree used to inventory and locally stream all ten publisher files.
+- [Pinned Qwen3-0.6B model card](https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/README.md): publisher guidance for the checkpoint architecture, Transformers support, thinking/non-thinking switch, parsing boundary, and generation settings. The capsule records its exact bytes.
+- [Pinned Qwen3-0.6B Apache 2.0 license](https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/LICENSE): license text captured from the same immutable snapshot.
+- [Qwen3 Technical Report, arXiv v1](https://arxiv.org/abs/2505.09388v1): the immutable first version of the official family report describes the dense and MoE family and its unified thinking/non-thinking design. It is not treated as evidence of the local run's result.
+
 ## Local precedent
 
 The [Kimi K3 exchange scroll](../kimi-k3-2026-07.md) already keeps pinned source

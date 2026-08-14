@@ -1,0 +1,34 @@
+{
+  "format": "kingdom.private-input-benchmark-manifest/v1",
+  "name": "Qwen3-0.6B private synthetic interface witness",
+  "case_id": "private-synthetic-case-v1",
+  "cases": [
+    {
+      "variant_id": "thinking-v1",
+      "mode": "thinking enabled",
+      "private_input": {
+        "media_type": "application/json",
+        "digest": "sha256:34f0c1e6f819a1efb0e1738c391d00edc8cd0ae0d87af7bde10246627e38e0a0",
+        "size": 410
+      },
+      "raw_input_public": false,
+      "raw_expected_value_public": false
+    },
+    {
+      "variant_id": "nonthinking-v1",
+      "mode": "thinking disabled; two repeats",
+      "private_input": {
+        "media_type": "application/json",
+        "digest": "sha256:9c8e26da4a6226945b143c6445733c0a657543f0b30489e0989fb25b8112f1e9",
+        "size": 411
+      },
+      "raw_input_public": false,
+      "raw_expected_value_public": false
+    }
+  ],
+  "scope": "One private synthetic input, two interface modes, three total runs.",
+  "non_claims": [
+    "The raw prompt and expected answer are deliberately absent.",
+    "This private-input manifest is not a public benchmark dataset and cannot independently reproduce scoring."
+  ]
+}

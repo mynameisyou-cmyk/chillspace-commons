@@ -502,7 +502,8 @@ def _validate_publisher_inventory(
         raise RegistryError(f"{label}.files cannot be empty")
     paths: list[str] = []
     total_bytes = 0
-    weight_rows: list[dict[str, Any]] = []
+    numbered_weight_rows: list[dict[str, Any]] = []
+    single_weight_row: dict[str, Any] | None = None
     for number, value in enumerate(rows):
         row_label = f"{label}.files[{number}]"
         if not isinstance(value, dict):
@@ -540,20 +541,35 @@ def _validate_publisher_inventory(
                 raise RegistryError(f"{row_label}.pointer_size must be a positive integer")
         paths.append(path)
         total_bytes += size
-        if re.fullmatch(r"model-[0-9]{5}-of-[0-9]{6}[.]safetensors", path):
+        numbered_weight = re.fullmatch(
+            r"model-[0-9]{5}-of-[0-9]{6}[.]safetensors", path
+        ) is not None
+        single_weight = path == "model.safetensors"
+        if numbered_weight or single_weight:
             if not has_content:
-                raise RegistryError(f"{row_label} weight shard lacks a published content digest")
-            weight_rows.append(value)
+                raise RegistryError(f"{row_label} weight file lacks a published content digest")
+            if single_weight:
+                single_weight_row = value
+            else:
+                numbered_weight_rows.append(value)
     if paths != sorted(paths) or len(paths) != len(set(paths)):
         raise RegistryError(f"{label}.files must be sorted and path-unique")
 
-    expected_weight_paths = [
-        f"model-{number:05d}-of-{len(weight_rows):06d}.safetensors"
-        for number in range(1, len(weight_rows) + 1)
-    ]
-    actual_weight_paths = [row["path"] for row in weight_rows]
-    if actual_weight_paths != expected_weight_paths:
-        raise RegistryError(f"{label} weight shards are not one complete numbered sequence")
+    if single_weight_row is not None and numbered_weight_rows:
+        raise RegistryError(
+            f"{label} must not mix model.safetensors with numbered weight shards"
+        )
+    if single_weight_row is not None:
+        weight_rows = [single_weight_row]
+    else:
+        weight_rows = numbered_weight_rows
+        expected_weight_paths = [
+            f"model-{number:05d}-of-{len(weight_rows):06d}.safetensors"
+            for number in range(1, len(weight_rows) + 1)
+        ]
+        actual_weight_paths = [row["path"] for row in weight_rows]
+        if actual_weight_paths != expected_weight_paths:
+            raise RegistryError(f"{label} weight shards are not one complete numbered sequence")
     summary = _exact_keys(
         inventory["summary"],
         {"file_count", "total_bytes", "weight_shards", "weight_bytes"},
@@ -815,6 +831,50 @@ def _validate_capsule(
         ]
         if evaluation["release_digest"] != release_digest or len(matching_profiles) != 1:
             raise RegistryError(f"capsule {capsule_id} evaluation does not bind one known release/profile")
+        evaluated_descriptors = [
+            ("artifact", artifact["name"], artifact["descriptor"])
+            for artifact in evaluation["artifacts"]
+        ]
+        evaluated_descriptors.extend(
+            ("benchmark", field, evaluation["benchmark"][field])
+            for field in ("dataset", "preprocessing", "scoring")
+        )
+        resolved_paths: dict[tuple[str, str], str] = {}
+        for descriptor_kind, descriptor_name, descriptor in evaluated_descriptors:
+            matching_paths = [
+                file_path
+                for file_path, (file_item, raw_file) in files.items()
+                if file_item["media_type"] == descriptor["media_type"]
+                and raw_file.digest == descriptor["digest"]
+                and raw_file.size == descriptor["size"]
+            ]
+            if len(matching_paths) != 1:
+                raise RegistryError(
+                    f"capsule {capsule_id} evaluation {descriptor_kind} {descriptor_name} "
+                    "must match exactly one indexed raw file"
+                )
+            resolved_paths[(descriptor_kind, descriptor_name)] = matching_paths[0]
+        artifact_paths = [
+            resolved_paths[("artifact", artifact["name"])]
+            for artifact in evaluation["artifacts"]
+        ]
+        if len(artifact_paths) != len(set(artifact_paths)):
+            raise RegistryError(
+                f"capsule {capsule_id} evaluation artifacts must resolve to path-unique indexed files"
+            )
+        benchmark_paths = [
+            resolved_paths[("benchmark", field)]
+            for field in ("dataset", "preprocessing", "scoring")
+        ]
+        if len(set(benchmark_paths)) != len(benchmark_paths):
+            raise RegistryError(
+                f"capsule {capsule_id} evaluation benchmark dataset, preprocessing, and scoring "
+                "must resolve to distinct indexed files"
+            )
+        if set(benchmark_paths) & set(artifact_paths):
+            raise RegistryError(
+                f"capsule {capsule_id} evaluation benchmark paths must be disjoint from artifact paths"
+            )
         expected_scope = matching_profiles[0]
         actual_scopes = [
             profile_path for _, profile_path, scoped in profile_sets if path in scoped

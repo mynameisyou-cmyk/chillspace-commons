@@ -129,11 +129,29 @@ official metadata, code, and license bytes. The weight-shard digests remain
 reference and hosted documented profiles are explicit declarations and were
 not executed; no model/API call, evaluation, or build was performed.
 
-The capsule's signed `launch-index.json` is a set-level verification wrapper,
+The second entry,
+[`capsules/qwen3-0.6b-hf-c1899de2/`](capsules/qwen3-0.6b-hf-c1899de2/), binds
+Qwen3-0.6B at one immutable Hugging Face revision to a curator-observed local
+CPU execution. All ten publisher files were downloaded and streamed through
+SHA-256 locally. The 1.5 GB weight file and 11.4 MB `tokenizer.json` are not
+bundled in this repository; the other eight publisher files and an output-free
+execution record are retained.
+
+That bounded witness contains three runs. One thinking attempt reached its
+128-token ceiling without a closing think marker or final segment. Two
+non-thinking controls produced identical continuation-token and decoded-output
+SHA-256 values, and both matched the private expected integer under the last-numeric
+rule while failing the stricter exact-output format. No raw prompt, expected
+value, decoded output, or generated deliberation is published. This is not a
+benchmark, safety test, quality assessment, or broad reasoning claim.
+
+Each capsule's signed `launch-index.json` is a set-level verification wrapper,
 not a fourth v1 substrate record. Its task-key signature makes the indexed
 bytes cryptographically checkable but does not establish publisher identity,
 vendor endorsement, a trusted timestamp, safety, readiness, or launch
-authority.
+authority. Offline registry verification checks the signed public file graph;
+it does not re-stream the remote snapshot, reexecute inference, or
+independently prove which local byte path the model loader consumed.
 
 Validate the registry, its receipts and signatures, its finite file set, and
 the exact public mirrors with:
@@ -157,7 +175,8 @@ remain byte-for-byte mirrors of their source counterparts.
    `descriptor-asserted` for a curator-declared tuple and run `artifact-check`
    against captured bytes. If bytes were not obtained, use an explicit
    `publisher-claimed`, `unavailable`, or `unknown` state instead of inventing
-   a hash.
+   a hash. A later curator-observed byte-streaming or execution attestation can
+   add evidence without rewriting the original release declaration.
 3. Record the reasoning and continuation interface without recording any
    session trace. Keep disclosed reasoning separate from encrypted or
    server-held continuation state.
@@ -196,6 +215,8 @@ capsule mirrors live at
   does not prove the signed assertions.
 - A provider observation is not a cryptographic model fingerprint.
 - A descriptor declaration is not evidence that anyone recomputed the bytes.
+- An offline registry check does not rerun inference or independently prove
+  which local artifact path a prior loader consumed.
 - A seed does not guarantee reproducibility.
 - A safe weight container does not make repository custom code safe.
 - A valid record grants no permission, consent, deployment authority, or
