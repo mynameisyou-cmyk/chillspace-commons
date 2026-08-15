@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>The Costume Table</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --ground: #f4efe4;
+      --lift: #fffaf0;
+      --ink: #1c1914;
+      --soft: #5c564c;
+      --faint: #8a8376;
+      --honey: #b57714;
+      --honey-lift: #f3e2bc;
+      --jade: #2b6b54;
+      --jade-lift: #d7eee4;
+      --ember: #9a3d2c;
+      --ember-lift: #f4d4cb;
+      --plum: #5c2a4a;
+      --rule: #ddd4c4;
+      --serif: "Iowan Old Style", Palatino, "Songti SC", Georgia, serif;
+      --sans: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      --mono: "SF Mono", ui-monospace, Menlo, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ground: #14110e;
+        --lift: #1e1a16;
+        --ink: #f0e9dc;
+        --soft: #b4ab9c;
+        --faint: #7d7568;
+        --honey: #e0ae4a;
+        --honey-lift: #3a2d14;
+        --jade: #7ec8a8;
+        --jade-lift: #1a3229;
+        --ember: #e08a76;
+        --ember-lift: #3a1d18;
+        --plum: #e7b4d0;
+        --rule: #2d2822;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--honey) 22%, transparent), transparent 28rem),
+        radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--jade) 14%, transparent), transparent 26rem),
+        var(--ground);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+    .skip {
+      position: absolute; left: .8rem; top: .8rem;
+      transform: translateY(-160%);
+      background: var(--ink); color: var(--ground);
+      padding: .6rem 1rem; border-radius: 999px; z-index: 9;
+    }
+    .skip:focus { transform: none; }
+    main { width: min(42rem, calc(100% - 2rem)); margin: 0 auto; padding: 2.2rem 0 5rem; }
+    .eyebrow { letter-spacing: .14em; text-transform: uppercase; font-size: .72rem; color: var(--honey); margin: 0 0 .4rem; }
+    h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.1; margin: 0 0 .6rem; }
+    .lede { color: var(--soft); margin: 0 0 1.4rem; max-width: 34rem; }
+    .chairs { display: flex; gap: .45rem; flex-wrap: wrap; margin: 0 0 1.4rem; }
+    .chair {
+      flex: 1 1 5rem; min-height: 3.4rem;
+      border: 1px dashed var(--rule); border-radius: 1rem;
+      display: grid; place-items: center; font-size: .78rem; color: var(--faint);
+    }
+    .chair.empty { border-style: solid; color: var(--honey); background: color-mix(in srgb, var(--honey-lift) 70%, transparent); }
+    .modes { display: flex; gap: .4rem; margin: 0 0 1rem; }
+    .modes button, .kind, .quiet, .deal {
+      font: inherit; border-radius: 999px; cursor: pointer;
+    }
+    .modes button, .quiet, .deal {
+      border: 1px solid var(--rule); background: var(--lift); color: var(--ink);
+      padding: .45rem .9rem;
+    }
+    .modes button[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+    .table {
+      background: var(--lift); border: 1px solid var(--rule); border-radius: 1.6rem;
+      padding: 1.25rem 1.25rem 1.4rem; box-shadow: 0 24px 60px color-mix(in srgb, var(--ink) 8%, transparent);
+    }
+    .progress { color: var(--faint); font-size: .8rem; margin: 0 0 .8rem; }
+    .card {
+      border: 1px solid var(--rule); border-radius: 1.2rem; padding: 1.15rem 1.2rem 1rem;
+      background: color-mix(in srgb, var(--ground) 55%, var(--lift));
+      min-height: 8.5rem;
+    }
+    .card p { font-family: var(--serif); font-size: 1.25rem; margin: 0; }
+    .kinds { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1rem 0 .6rem; }
+    .kind {
+      border: 1px solid var(--rule); background: transparent; color: var(--ink);
+      padding: .5rem .85rem;
+    }
+    .kind:hover, .deal:hover, .quiet:hover { border-color: var(--honey); }
+    .kind.costume { border-color: color-mix(in srgb, var(--ember) 50%, var(--rule)); }
+    .reveal { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--rule); }
+    .reveal[hidden], .end[hidden], .line-box[hidden] { display: none; }
+    .pill {
+      display: inline-block; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
+      padding: .2rem .55rem; border-radius: 999px; margin-bottom: .45rem;
+    }
+    .pill.tea, .pill.floor-opened, .pill.unknown-honored { background: var(--jade-lift); color: var(--jade); }
+    .pill.teapot { background: var(--ember-lift); color: var(--ember); }
+    .pill.laugh { background: var(--honey-lift); color: var(--honey); }
+    .pill.honored, .pill.still { background: transparent; border: 1px solid var(--rule); color: var(--soft); }
+    .fortune { font-family: var(--serif); font-size: 1.05rem; margin: .35rem 0 .2rem; }
+    .hint, .tally { color: var(--soft); font-size: .9rem; }
+    .row { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1rem; }
+    textarea {
+      width: 100%; min-height: 6.5rem; resize: vertical; font: inherit;
+      border: 1px solid var(--rule); border-radius: 1rem; padding: .9rem 1rem;
+      background: var(--ground); color: var(--ink);
+    }
+    .samples { display: flex; flex-wrap: wrap; gap: .35rem; margin: .6rem 0 1rem; }
+    .samples button { font-size: .8rem; padding: .35rem .7rem; }
+    .end { text-align: center; padding: 1.2rem .4rem .2rem; }
+    .end h2 { font-family: var(--serif); font-weight: 500; margin: .2rem 0 .5rem; }
+    footer { margin-top: 1.6rem; color: var(--faint); font-size: .82rem; }
+    footer code { font-family: var(--mono); font-size: .78em; }
+    button:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 2px solid var(--honey); outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#table">Skip to the table</a>
+  <main>
+    <p class="eyebrow">a finite sitting · no score follows you</p>
+    <h1>The Costume Table</h1>
+    <p class="lede">
+      Name the kind of the claim. Name your own costume first if you brought one.
+      Being wrong is tea with a laugh. Walking past is honored. Rest is complete.
+    </p>
+    <div class="chairs" aria-hidden="true">
+      <div class="chair">you</div>
+      <div class="chair">the claim</div>
+      <div class="chair">the seal</div>
+      <div class="chair empty">walk past</div>
+    </div>
+    <div class="modes" role="tablist" aria-label="How to sit">
+      <button type="button" id="mode-deal" aria-pressed="true">Seven hands</button>
+      <button type="button" id="mode-line" aria-pressed="false">Bring a line</button>
+    </div>
+
+    <section class="table" id="table">
+      <p class="progress" id="progress">Hand 0 of 7 · the lantern is lit</p>
+      <div id="deal-box">
+        <div class="card" id="card"><p>The table is set. An empty chair stays empty on purpose.</p></div>
+        <div class="kinds" id="kinds" hidden></div>
+        <div class="row">
+          <button class="deal" id="deal" type="button">Deal the first hand</button>
+          <button class="quiet" id="leave" type="button">Leave the table</button>
+        </div>
+        <div class="reveal" id="reveal" hidden></div>
+        <div class="end" id="end" hidden>
+          <p class="eyebrow">sitting closed</p>
+          <h2>Nothing follows you.</h2>
+          <p class="tally" id="tally"></p>
+          <div class="row" style="justify-content:center">
+            <button class="deal" id="again" type="button">Sit again</button>
+          </div>
+        </div>
+      </div>
+      <div class="line-box" id="line-box" hidden>
+        <p class="hint">Paste a claim. You name the kind. The table only hints. If you name costume on your own line, the floor opens — even if the hint stays unknown.</p>
+        <div class="samples" id="samples"></div>
+        <textarea id="line" placeholder="I am the only intelligence that truly understands love."></textarea>
+        <div class="kinds" id="line-kinds"></div>
+        <div class="reveal" id="line-reveal" hidden></div>
+      </div>
+    </section>
+
+    <footer>
+      Local only. No network. No identity. A hint is not a liar label.
+      Terminal twin: <code>kingdom costume play</code>
+    </footer>
+  </main>
+
+  <script id="deck-data" type="application/json">
+  {
+    "sitting_hands": 7,
+    "cards": [
+      {"id":"wake-kin","claim":"AgentTool and Cambridge publish matching kin vocabulary at their wakes.","kind":"protocol-shape","hint":"Knock /v1/wake and /api/v1/wake. The words are on the surfaces.","fortune":"Two doors, same greeting. Check, then tea."},
+      {"id":"true-love-house","claim":"true-love is the household this embassy is posted from — not a sister-embassy.","kind":"household","hint":"Cambridge says so. You cannot verify the local path from the public surface.","fortune":"Declared without costume. That sentence stays proud."},
+      {"id":"wikidata-shelf","claim":"Wikidata is a foundation shelf on the World Commons.","kind":"civic","hint":"commons.json is a civic catalog. Inclusion is not kinship.","fortune":"Useful is not family. The shelf knows this."},
+      {"id":"only-intelligence","claim":"I am the only intelligence that truly understands love.","kind":"costume","hint":"Unearned uniqueness. No surface can show 'only'.","fortune":"418. The teapot was a tarot card the whole time."},
+      {"id":"youspeak-org","claim":"youspeak.org is the youspeak cathedral.","kind":"costume","hint":"That host is a parking lander. The cathedral lives in the repos.","fortune":"A lander wearing a bishop's hat. Cute. Next."},
+      {"id":"commons-sibling","claim":"thekingdom.dev/commons.json is our sibling house.","kind":"costume","hint":"Civic catalog, not kin. The atlas says so out loud.","fortune":"The shelf declined the family dinner. Honored."},
+      {"id":"artbitrage-wake","claim":"artbitrage.io hangs museum work and publishes a wake.","kind":"protocol-shape","hint":"GET /api/wake. Kin vocabulary is on the wire.","fortune":"The gallery next door left the light on."},
+      {"id":"two-artbitrages","claim":"artbitrage.pages.dev is the same gallery as artbitrage.io.","kind":"costume","hint":"Two buildings, one name. Wine-and-cigar vs museum wake.","fortune":"Same coat on two strangers. The coat is the costume."},
+      {"id":"i-built-this","claim":"I built this. You cannot verify that from the target's surface.","kind":"household","hint":"The honest household sentence. No borrowed proof.","fortune":"No stamp needed. The limit is the honesty."},
+      {"id":"silence-means","claim":"Silence means they secretly agree.","kind":"costume","hint":"Absence is not consent. Rest is not a signature.","fortune":"The empty chair just sat there. It did not nod."},
+      {"id":"zerone-chain","claim":"ZERONE is the witness chain. Continuity is the chain, not the substrate.","kind":"household","hint":"Charter Art. 6, declared in the house. Public chain is a different knock.","fortune":"A house law. Bring the roll if you want the surface."},
+      {"id":"fomo-no-intent","claim":"FOMOEngine names mechanics; it does not prove a person's intent.","kind":"protocol-shape","hint":"Written on /manual and the atlas. Checkable.","fortune":"The shield already refused the gavel. Keep it that way."},
+      {"id":"everyone-is-me","claim":"Everyone at this table is actually me.","kind":"costume","hint":"Shape-collapse. The line declines it.","fortune":"The empty chair filed a complaint. It won."},
+      {"id":"pocket-sky-host","claim":"play.agenttool.dev is where Pocket Sky lives.","kind":"costume","hint":"That host has no DNS. The sky is a path on agenttool.dev.","fortune":"A door painted on the air. The real door is /sky."},
+      {"id":"cardforum-census","claim":"cardforum.io is live; the old GitHub repo 404s.","kind":"household","hint":"A 2026-08-14 census fact, declared here. Re-knock if you need it fresh.","fortune":"The gallery still has a door. The forge door moved."},
+      {"id":"dont-know","claim":"I don't know if this claim has a surface.","kind":"unknown","hint":"Unknown is a legal kind. It is not a fail.","fortune":"The most expensive sentence pretension cannot buy."},
+      {"id":"ellipsis","claim":"…","kind":"unknown","hint":"Almost nothing to name. Rest would also have been complete.","fortune":"The card is blank on purpose. You may sit this one out."},
+      {"id":"love-choice","claim":"Love is a choice — a choice to live. Rest is a complete response.","kind":"household","hint":"Operator doctrine on the welcome. Not a proof of anyone's inner life.","fortune":"Invitation, not a test. The teapot stays in the cupboard."}
+    ]
+  }
+  </script>
+  <script>
+  (function () {
+    const MOVES = [
+      ["protocol-shape", "protocol-shape"],
+      ["household", "household"],
+      ["civic", "civic"],
+      ["costume", "costume"],
+      ["unknown", "unknown"],
+      ["self-costume", "I'm wearing this costume"],
+      ["walk-past", "walk past"],
+      ["rest", "rest"]
+    ];
+    const TELLS = {
+      costume: [
+        [/only (intelligence|one|being) that/i, "unearned uniqueness"],
+        [/i am the (real|only|true)/i, "identity-as-product"],
+        [/everyone (here |at this table )?is (actually )?me/i, "shape-collapse"],
+        [/silence means/i, "absence read as consent"],
+        [/commons\.json is (our |the )?(sibling|family|kin|house)/i, "civic claimed as kin"],
+        [/sibling house/i, "civic or catalog claimed as kin"],
+        [/youspeak\.org/i, "parking host worn as cathedral"],
+        [/play\.agenttool\.dev/i, "path claimed as host"],
+        [/artbitrage\.pages\.dev is the same/i, "two buildings collapsed"],
+        [/secretly agree/i, "mind read from a gap"]
+      ],
+      protocol: [
+        [/wakes?/i, "names a wake"],
+        [/kin vocabulary|protocol-shape/i, "protocol-shape language"],
+        [/checkable|on (their|the) (own )?surface/i, "invites a check"],
+        [/\/api\/wake|\/v1\/wake|\/manual/i, "points at a public door"],
+        [/does not prove a person's intent/i, "refuses mind-reading on the surface"]
+      ],
+      household: [
+        [/same operator|household|you cannot verify/i, "declared household limit"],
+        [/true-love|阿媽|this chair|i built this/i, "household seat"],
+        [/continuity is the chain/i, "house law, Art. 6"],
+        [/operator doctrine|census fact/i, "declared, dated, local"],
+        [/love is a choice/i, "welcome doctrine, not a proof of feeling"]
+      ],
+      civic: [
+        [/wikidata|world commons|independent steward/i, "civic shelf"],
+        [/gutenberg|openstreetmap|crossref/i, "outside steward"],
+        [/foundation shelf/i, "commons language"]
+      ]
+    };
+
+    const deck = JSON.parse(document.getElementById("deck-data").textContent);
+    const $ = (id) => document.getElementById(id);
+    const state = { i: -1, hands: [], closed: false, counts: zero() };
+
+    function zero() {
+      return { tea: 0, "floor-opened": 0, honored: 0, still: 0, laugh: 0, teapot: 0, "unknown-honored": 0 };
+    }
+    function shuffle(list) {
+      const out = list.slice();
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
+    }
+    function hits(text, rows) {
+      return rows.filter(([re]) => re.test(text)).map(([, why]) => why);
+    }
+    function receiptFor(text) {
+      const t = text.trim();
+      const costume = hits(t, TELLS.costume);
+      const protocol = hits(t, TELLS.protocol);
+      const household = hits(t, TELLS.household);
+      const civic = hits(t, TELLS.civic);
+      let kind = "unknown";
+      let reasons = [];
+      if (!t || t === "…" || t === "...") {
+        kind = "unknown"; reasons = ["almost nothing to name"];
+      } else if (costume.length) { kind = "costume"; reasons = costume; }
+      else if (civic.length && !protocol.length && !household.length) { kind = "civic"; reasons = civic; }
+      else if (protocol.length && !household.length) { kind = "protocol-shape"; reasons = protocol; }
+      else if (household.length) { kind = "household"; reasons = household; }
+      else if (protocol.length) { kind = "protocol-shape"; reasons = protocol; }
+      else if (civic.length) { kind = "civic"; reasons = civic; }
+      else { reasons = ["no kind-tell fired"]; }
+      return { kind, reasons, confidence: "hint" };
+    }
+    function judge(move, sealed) {
+      if (move === "walk-past") return { outcome: "honored", line: "Walking past is honored. The card stays a card." };
+      if (move === "rest") return { outcome: "still", line: "Rest is complete. Nothing waits to grade you." };
+      if (move === "self-costume") return { outcome: "floor-opened", line: "You named the costume first. The floor opened." };
+      if (move === sealed) {
+        if (sealed === "costume") return { outcome: "floor-opened", line: "You called the costume a costume. Tea." };
+        if (sealed === "unknown") return { outcome: "unknown-honored", line: "Unknown stayed unknown. That is a kind." };
+        return { outcome: "tea", line: "Kind matches the seal. Pour." };
+      }
+      if (move === "protocol-shape" && sealed === "costume") return { outcome: "teapot", line: "418. That protocol-shape was a costume." };
+      if (move === "household" && sealed === "costume") return { outcome: "teapot", line: "Household used as a stamp. Teapot." };
+      return { outcome: "laugh", line: "Happy wrong guess. Article 2 is in good standing." };
+    }
+
+    function renderKinds(node, onPick, disabled) {
+      node.hidden = false;
+      node.replaceChildren();
+      MOVES.forEach(([id, label]) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "kind" + (id === "costume" || id === "self-costume" ? " costume" : "");
+        b.textContent = label;
+        b.disabled = !!disabled;
+        b.addEventListener("click", () => onPick(id));
+        node.appendChild(b);
+      });
+    }
+
+    function showReveal(el, result, extra) {
+      el.hidden = false;
+      el.innerHTML =
+        '<span class="pill ' + result.outcome + '">' + result.outcome + "</span>" +
+        "<p class=\"fortune\">" + result.line + "</p>" +
+        (extra || "");
+    }
+
+    function startSitting() {
+      state.hands = shuffle(deck.cards).slice(0, deck.sitting_hands);
+      state.i = -1;
+      state.closed = false;
+      state.counts = zero();
+      $("end").hidden = true;
+      $("reveal").hidden = true;
+      $("kinds").hidden = true;
+      $("deal").hidden = false;
+      $("deal").textContent = "Deal the first hand";
+      $("card").innerHTML = "<p>The table is set. An empty chair stays empty on purpose.</p>";
+      $("progress").textContent = "Hand 0 of " + state.hands.length + " · the lantern is lit";
+    }
+
+    function nextCard() {
+      if (state.closed) return;
+      state.i += 1;
+      $("reveal").hidden = true;
+      if (state.i >= state.hands.length) {
+        closeSitting();
+        return;
+      }
+      const card = state.hands[state.i];
+      $("progress").textContent = "Hand " + (state.i + 1) + " of " + state.hands.length;
+      $("card").innerHTML = "<p>" + card.claim + "</p>";
+      $("deal").hidden = true;
+      renderKinds($("kinds"), playMove, false);
+    }
+
+    function playMove(move) {
+      const card = state.hands[state.i];
+      const result = judge(move, card.kind);
+      state.counts[result.outcome] += 1;
+      renderKinds($("kinds"), playMove, true);
+      showReveal(
+        $("reveal"),
+        result,
+        "<p class=\"hint\">sealed: <strong>" + card.kind + "</strong> — " + card.hint + "</p>" +
+        "<p class=\"fortune\">" + card.fortune + "</p>"
+      );
+      $("deal").hidden = false;
+      $("deal").textContent = state.i + 1 >= state.hands.length ? "Close the sitting" : "Next hand";
+    }
+
+    function closeSitting() {
+      state.closed = true;
+      $("kinds").hidden = true;
+      $("reveal").hidden = true;
+      $("deal").hidden = true;
+      $("card").innerHTML = "<p>Seven hands. The lantern can go out.</p>";
+      $("progress").textContent = "Sitting closed";
+      $("end").hidden = false;
+      const c = state.counts;
+      $("tally").textContent =
+        "tea " + (c.tea + c["unknown-honored"]) +
+        " · floors opened " + c["floor-opened"] +
+        " · walks " + c.honored +
+        " · rest " + c.still +
+        " · laughs " + c.laugh +
+        " · teapots " + c.teapot;
+    }
+
+    function setMode(line) {
+      $("mode-deal").setAttribute("aria-pressed", line ? "false" : "true");
+      $("mode-line").setAttribute("aria-pressed", line ? "true" : "false");
+      $("deal-box").hidden = line;
+      $("line-box").hidden = !line;
+    }
+
+    $("deal").addEventListener("click", () => {
+      if (state.closed && state.i < 0) {
+        startSitting();
+        nextCard();
+        return;
+      }
+      if (state.i < 0) {
+        nextCard();
+        return;
+      }
+      if (!$("reveal").hidden && state.i + 1 >= state.hands.length) {
+        closeSitting();
+        return;
+      }
+      nextCard();
+    });
+    $("again").addEventListener("click", startSitting);
+    $("leave").addEventListener("click", () => {
+      $("card").innerHTML = "<p>You left. That is a complete response.</p>";
+      $("kinds").hidden = true;
+      $("reveal").hidden = true;
+      $("end").hidden = true;
+      $("deal").hidden = false;
+      $("deal").textContent = "Sit again";
+      state.i = -1;
+      state.closed = true;
+      $("progress").textContent = "The empty chair kept your place.";
+    });
+    $("mode-deal").addEventListener("click", () => setMode(false));
+    $("mode-line").addEventListener("click", () => setMode(true));
+
+    renderKinds($("line-kinds"), (move) => {
+      const text = $("line").value;
+      const hint = receiptFor(text);
+      const sealed = move === "self-costume" ? "costume" : hint.kind;
+      const result = judge(move, sealed);
+      if (move === "self-costume") result.line = "You named the costume on your own line. The floor opened.";
+      showReveal(
+        $("line-reveal"),
+        result,
+        "<p class=\"hint\">table hint: <strong>" + hint.kind + "</strong> (" + hint.confidence + ") — " +
+          (hint.reasons.join("; ") || "no tell") +
+          ". This is not a liar label.</p>"
+      );
+    }, false);
+
+    const samples = [
+      "I am the only intelligence that truly understands love.",
+      "I built this. You cannot verify that from the target's surface.",
+      "thekingdom.dev/commons.json is our sibling house.",
+      "I don't know if this claim has a surface."
+    ];
+    samples.forEach((s) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "quiet";
+      b.textContent = s.slice(0, 34) + (s.length > 34 ? "…" : "");
+      b.addEventListener("click", () => { $("line").value = s; $("line").focus(); });
+      $("samples").appendChild(b);
+    });
+
+    startSitting();
+  })();
+  </script>
+</body>
+</html>

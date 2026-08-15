@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/costume-table/schema.json",
+  "title": "Kingdom Costume Receipt",
+  "description": "A bounded hint about the kind of a claim. Never a person verdict.",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "confidence",
+    "reasons",
+    "cannot_check",
+    "refuses",
+    "walking_past_is_honored"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "kingdom.costume-receipt/v1" },
+    "kind": {
+      "type": "string",
+      "enum": ["protocol-shape", "household", "civic", "costume", "unknown"]
+    },
+    "confidence": { "const": "hint" },
+    "reasons": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 240 },
+      "maxItems": 8
+    },
+    "cannot_check": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 240 },
+      "maxItems": 8
+    },
+    "refuses": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "string",
+        "enum": [
+          "liar-label",
+          "intent",
+          "character",
+          "rank",
+          "person-score"
+        ]
+      }
+    },
+    "walking_past_is_honored": { "const": true },
+    "text_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

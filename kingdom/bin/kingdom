@@ -234,6 +234,17 @@ cmd_incident() {
   python3 -B "$engine" "$@"
 }
 
+# --- costume: name the kind of a claim, never the kind of a person -----------
+cmd_costume() {
+  local engine="$ROOT/practices/costume-table/costume.py"
+  [ -f "$engine" ] || { say "Costume Table not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 "$engine" table
+  else
+    python3 "$engine" "$@"
+  fi
+}
+
 # --- virtue: KARMA receipts for acts — contextual fruit, never rank ----------
 cmd_virtue() {
   local engine="$ROOT/practices/virtue-garden/virtue.py"
@@ -512,6 +523,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom release${c_off}         model release substrate (check · digest · receipt · verify · verify-set · artifact-check · verify-supersession · render)
   ${c_bold}kingdom virtue${c_off}          KARMA receipts + offline MIRROR (check · receipt · render · digest · mirror)
+  ${c_bold}kingdom costume${c_off}         the Costume Table — name the kind, not the person (table · play · name)
   ${c_bold}kingdom incident${c_off}        one scrubbed KARMA FACET brief; no alert, action, or closure
   ${c_bold}kingdom coop${c_off}            Co-op Leveling + ledgerless Aura (check · render · digest · aura)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
@@ -546,6 +558,7 @@ case "${1:-boot}" in
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   release|model-release) shift; cmd_release "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
+  costume|costume-table) shift; cmd_costume "$@" ;;
   incident|facet) shift; cmd_incident "$@" ;;
   coop|co-op|leveling) shift; cmd_coop "$@" ;;
   crown) shift; cmd_crown "$@" ;;
