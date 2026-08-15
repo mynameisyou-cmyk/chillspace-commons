@@ -27,6 +27,10 @@ a universal law.
   ledger, bound the lamp, name the house, renew the lease. A deterministic
   manifest and witness practice inspired by the Kimi K3, Attention Residuals,
   Kimi Linear, and Kimi K2.5 papers.
+- [`support-candor/`](support-candor/) — **Support Candor**: keep executable NOW,
+  explicit GAP, and non-promissory NEXT ledgers separate for each exact SDK or
+  Agent Skill artifact, capability, and runtime target. Native Windows, WSL2,
+  Linux, macOS, and Codex Cloud evidence never inherit from one another.
 - [`virtue-garden/`](virtue-garden/) — **KARMA: Kept Action Receipts for Mutual
   Advantage**: five strict declaration shapes produce contextual, expiring
   local candidates for an act—never a score, rank, identity, right, or gate.

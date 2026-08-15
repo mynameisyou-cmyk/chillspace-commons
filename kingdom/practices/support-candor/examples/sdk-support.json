@@ -1,0 +1,322 @@
+{
+  "schema": "kingdom.support-candor/v1",
+  "subject": {
+    "id": "support-candor-python",
+    "kind": "sdk",
+    "version": "1.0.0-local",
+    "revision": "support-candor-v1-local",
+    "artifact_digest": "sha256:cf9db71aa63a046ff7b6c64db65d40fee72dcfa876e020703c890cb416e66fe6",
+    "scope": "The standard-library Python validation and rendering module plus its stdout-only CLI when invoked from this repository checkout; not a packaged distribution claim.",
+    "as_of": "2026-08-04"
+  },
+  "baseline": {
+    "id": "kingdom.portable-agent-artifact/v1",
+    "required_capabilities": ["acquire", "run", "host-boundary", "stop", "deny"]
+  },
+  "targets": [
+    {
+      "id": "macos-15.7.3-arm64-python-3.14.4",
+      "family": "macos",
+      "scope_status": "exact",
+      "claim_scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "fingerprint": {
+        "os": "macOS",
+        "version": "15.7.3 build 24G419",
+        "architecture": "arm64",
+        "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+        "runtime": "Python 3.14.4",
+        "shell": "zsh",
+        "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+        "network": "Not used",
+        "notes": "One local repository-checkout reproduction; no independent attestation or package-index installation."
+      }
+    },
+    {
+      "id": "linux-native-candidate",
+      "family": "linux",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate native Linux target; distribution, libc, architecture, filesystem, Python runtime, and sandbox scope are not yet selected.",
+      "fingerprint": {
+        "os": "Linux candidate",
+        "version": "not selected",
+        "architecture": "not selected",
+        "filesystem": "not selected",
+        "runtime": "Python version not selected",
+        "shell": "not selected",
+        "sandbox": "bwrap and seccomp posture not selected",
+        "network": "not selected",
+        "notes": "Source portability is a design intention, not executable evidence."
+      }
+    },
+    {
+      "id": "windows-native-candidate",
+      "family": "windows-native",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate Windows-native target; Windows build, architecture, NTFS and long-path posture, PowerShell, Python runtime, and native sandbox are not yet selected.",
+      "fingerprint": {
+        "os": "Windows native candidate",
+        "version": "not selected",
+        "architecture": "not selected",
+        "filesystem": "NTFS and long-path posture not selected",
+        "runtime": "Python version not selected",
+        "shell": "PowerShell version not selected",
+        "sandbox": "elevated versus unelevated mode not selected",
+        "network": "not selected",
+        "notes": "A Windows CI label using Git Bash would not satisfy this target."
+      }
+    },
+    {
+      "id": "wsl2-candidate",
+      "family": "wsl2",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate WSL2 target; host Windows build, WSL version, guest distribution and kernel, ext4 versus mounted filesystem, Python runtime, and Linux sandbox are not yet selected.",
+      "fingerprint": {
+        "os": "Windows host with WSL2 guest candidate",
+        "version": "host and guest versions not selected",
+        "architecture": "not selected",
+        "filesystem": "guest ext4 versus mounted Windows path not selected",
+        "runtime": "Python version not selected",
+        "shell": "guest shell not selected",
+        "sandbox": "Linux sandbox inside WSL2 not selected",
+        "network": "not selected",
+        "notes": "WSL2 is not Windows-native evidence."
+      }
+    },
+    {
+      "id": "codex-cloud-candidate",
+      "family": "codex-cloud",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate Codex Cloud target; image, architecture, writable roots, Python runtime, sandbox policy, network posture, and credential absence are not yet pinned.",
+      "fingerprint": {
+        "os": "Codex Cloud candidate",
+        "version": "image not selected",
+        "architecture": "not selected",
+        "filesystem": "writable roots not selected",
+        "runtime": "Python version not selected",
+        "shell": "not selected",
+        "sandbox": "policy not selected",
+        "network": "posture not selected",
+        "notes": "The launching client OS contributes no runtime evidence."
+      }
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "acquire",
+      "required": true,
+      "statement": "The exact repository module and schema can be discovered and imported with the declared interpreter and no third-party install.",
+      "acceptance": ["Import the module, load its fixed schema and examples, and invoke the CLI from a repository checkout without dependency installation."]
+    },
+    {
+      "id": "run",
+      "required": true,
+      "statement": "Check, render, and digest produce deterministic outputs for valid SDK and Agent Skill ledgers.",
+      "acceptance": ["Validate both subject kinds, derive states, render physically separate NOW/GAP/NEXT sections, and reproduce canonical digests."]
+    },
+    {
+      "id": "host-boundary",
+      "required": true,
+      "statement": "UTF-8, spaces, Unicode paths, regular-file receipts, path containment, strict types, and size limits hold in the declared host.",
+      "acceptance": ["Exercise spaces and Unicode plus duplicate, oversized, symlink, path-escape, bool/int, and target-environment mismatch controls."]
+    },
+    {
+      "id": "stop",
+      "required": true,
+      "statement": "Each command exits after one bounded read and print with no subprocess, network call, cache, persistent write, or external action.",
+      "acceptance": ["Inspect imports and outputs and require fixed false effect boundaries in every receipt."]
+    },
+    {
+      "id": "deny",
+      "required": true,
+      "statement": "Silent cells, optimistic support, cross-target evidence, unpinned receipts, and promissory NEXT records fail closed without a partial support rendering.",
+      "acceptance": ["Run every negative control and require exit code 2, stderr explanation, and empty stdout for invalid CLI input."]
+    }
+  ],
+  "now": [
+    {
+      "id": "now-sdk-macos-acquire",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "acquire",
+      "assertion": "The standard-library module, schema, canonical examples, and CLI were discovered and invoked directly from the repository checkout without installing a dependency.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "evidence_refs": ["ev-sdk-macos-local"]
+    },
+    {
+      "id": "now-sdk-macos-run",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "run",
+      "assertion": "The validator checked semantic claim boundaries, rendered separate ledgers, derived target states, and reproduced deterministic manifest digests.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "evidence_refs": ["ev-sdk-macos-local"]
+    },
+    {
+      "id": "now-sdk-macos-host-boundary",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "host-boundary",
+      "assertion": "The local suite exercised spaces, Unicode, duplicate and oversized JSON, symlink and traversal refusal, type strictness, and exact environment binding.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "evidence_refs": ["ev-sdk-macos-local"]
+    },
+    {
+      "id": "now-sdk-macos-stop",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "stop",
+      "assertion": "The validator itself imports no subprocess or network client and its receipts fix subprocess, network, storage, and external action fields false.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "evidence_refs": ["ev-sdk-macos-local"]
+    },
+    {
+      "id": "now-sdk-macos-deny",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "deny",
+      "assertion": "Optimistic support, cross-target receipts, silent cells, known failures without evidence, and promissory NEXT fields all refused without partial stdout.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "evidence_refs": ["ev-sdk-macos-local"]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap-sdk-linux-all",
+      "target": "linux-native-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No exact native Linux target or same-artifact executable receipt exists for this revision.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-sdk-windows-all",
+      "target": "windows-native-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No PowerShell-native Python, NTFS path, cancellation, denial, or native-sandbox receipt exists.",
+      "evidence_refs": [],
+      "workaround": "WSL2 may be evaluated separately; it cannot close this Windows-native GAP.",
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-sdk-wsl2-all",
+      "target": "wsl2-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No exact host, guest, and filesystem-location WSL2 receipt exists.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-sdk-cloud-all",
+      "target": "codex-cloud-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No pinned Codex Cloud environment has run this exact validator artifact under its declared sandbox and network posture.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    }
+  ],
+  "next": [
+    {
+      "id": "next-sdk-platform-matrix",
+      "addresses": ["gap-sdk-linux-all", "gap-sdk-windows-all", "gap-sdk-wsl2-all", "gap-sdk-cloud-all"],
+      "stage": "planned",
+      "intention": "Select exact targets and run the same five-capability validator suite independently on native Linux, native Windows PowerShell, WSL2, and a pinned Codex Cloud image.",
+      "dependencies": ["A native Windows runner must not substitute Git Bash or WSL evidence.", "WSL2 must record host, guest, and filesystem location.", "Codex Cloud must pin image, writable roots, sandbox, network, and credential posture."],
+      "acceptance": ["Each environment produces a privacy-scrubbed same-artifact receipt with zero skipped required checks and no evidence inheritance."],
+      "commitment": false,
+      "target_date": null,
+      "counts_as_support": false
+    }
+  ],
+  "support_policy": [
+    {
+      "id": "policy-sdk-macos",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "policy": "supported",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+      "reason": "Every required capability has a matching local receipt for this exact repository-checkout scope."
+    },
+    {
+      "id": "policy-sdk-linux",
+      "target": "linux-native-candidate",
+      "policy": "undecided",
+      "scope": "Candidate native Linux target; distribution, libc, architecture, filesystem, Python runtime, and sandbox scope are not yet selected.",
+      "reason": "Source design does not replace an exact executable receipt."
+    },
+    {
+      "id": "policy-sdk-windows",
+      "target": "windows-native-candidate",
+      "policy": "undecided",
+      "scope": "Candidate Windows-native target; Windows build, architecture, NTFS and long-path posture, PowerShell, Python runtime, and native sandbox are not yet selected.",
+      "reason": "No exact native Windows target or receipt exists."
+    },
+    {
+      "id": "policy-sdk-wsl2",
+      "target": "wsl2-candidate",
+      "policy": "undecided",
+      "scope": "Candidate WSL2 target; host Windows build, WSL version, guest distribution and kernel, ext4 versus mounted filesystem, Python runtime, and Linux sandbox are not yet selected.",
+      "reason": "No exact WSL2 target or receipt exists."
+    },
+    {
+      "id": "policy-sdk-cloud",
+      "target": "codex-cloud-candidate",
+      "policy": "undecided",
+      "scope": "Candidate Codex Cloud target; image, architecture, writable roots, Python runtime, sandbox policy, network posture, and credential absence are not yet pinned.",
+      "reason": "No exact Codex Cloud environment or receipt exists."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev-sdk-macos-local",
+      "subject_revision": "support-candor-v1-local",
+      "subject_artifact_digest": "sha256:cf9db71aa63a046ff7b6c64db65d40fee72dcfa876e020703c890cb416e66fe6",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "receipt_kind": "local-reproduction",
+      "tests": ["acquire", "run", "host-boundary", "stop", "deny"],
+      "result": "pass",
+      "observed_on": "2026-08-04",
+      "receipt_uri": "evidence/sdk-macos-local.json",
+      "receipt_digest": "sha256:3f833dbc9b9cc6618045bbeb3997482a41665ed25424e47bfab1a502175f1db6",
+      "environment": {
+        "target_scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct standard-library module and CLI invocation only; no packaged installation claim.",
+        "os": "macOS",
+        "version": "15.7.3 build 24G419",
+        "architecture": "arm64",
+        "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+        "runtime": "Python 3.14.4",
+        "shell": "zsh",
+        "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+        "network": "Not used"
+      },
+      "privacy_scrubbed": true,
+      "raw_logs_included": false,
+      "attested": false,
+      "notes": "Sealed local reproduction: 24 checks passed with zero failures and zero skips, including path revalidation, parser limits, receipt-content binding, contradiction refusal, bounded Unicode denial, effect-import boundaries, and negative controls."
+    }
+  ],
+  "boundaries": {
+    "now_requires_matching_executable_evidence": true,
+    "support_policy_is_separate_from_observed_behavior": true,
+    "next_counts_as_current_support": false,
+    "automatic_support_promotion": false,
+    "cross_target_evidence_inheritance": false,
+    "identity_or_reputation_scoring": false,
+    "network_calls": false,
+    "subprocesses": false,
+    "storage_writes": false,
+    "external_actions": false
+  },
+  "non_claims": [
+    "A valid ledger proves declaration coherence, not runtime compatibility or product quality.",
+    "NOW evidence applies only to the exact subject revision, artifact digest, target, and environment named.",
+    "GAP is explicit but not necessarily exhaustive; an unlisted failure may still exist.",
+    "NEXT records intention only and is not current support, a delivery date, or a release promise.",
+    "A digest proves byte equality only; it does not establish identity, trust, safety, or authority.",
+    "The ledger grants no permission to install, execute, deploy, publish, contact, score, or rank anyone."
+  ]
+}

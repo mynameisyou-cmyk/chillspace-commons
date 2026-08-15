@@ -1,0 +1,31 @@
+{
+  "schema": "kingdom.support-candor.evidence/v1",
+  "subject": "interpret-dark-continent-nen",
+  "subject_revision": "repository-skill-tree-2026-08-04",
+  "subject_artifact_digest": "sha256:83af6d6099350105cdee4e230ee1e4506606932f1a939b924ad8e118ab7500cf",
+  "target": "macos-15.7.3-arm64-python-3.14.4",
+  "observed_on": "2026-08-04",
+  "receipt_kind": "local-reproduction",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/nen/test_interpretation.py",
+  "result": "pass",
+  "tests_passed": 20,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "capabilities_observed": ["run", "host-boundary", "stop", "deny"],
+  "gap_preserved": "Isolated Codex-host installation and discovery were not exercised.",
+  "environment": {
+    "os": "macOS",
+    "version": "15.7.3 build 24G419",
+    "architecture": "arm64",
+    "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+    "runtime": "Python 3.14.4",
+    "shell": "zsh",
+    "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+    "network": "Not used"
+  },
+  "privacy_scrubbed": true,
+  "raw_logs_included": false,
+  "attested": false,
+  "action_executed": false,
+  "authority_granted": false
+}

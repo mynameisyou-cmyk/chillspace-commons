@@ -1,0 +1,31 @@
+{
+  "schema": "kingdom.support-candor.evidence/v1",
+  "subject": "support-candor-python",
+  "subject_revision": "support-candor-v1-local",
+  "subject_artifact_digest": "sha256:cf9db71aa63a046ff7b6c64db65d40fee72dcfa876e020703c890cb416e66fe6",
+  "target": "macos-15.7.3-arm64-python-3.14.4",
+  "observed_on": "2026-08-04",
+  "receipt_kind": "local-reproduction",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/practices/support-candor/test_support_candor.py",
+  "result": "pass",
+  "tests_passed": 24,
+  "tests_failed": 0,
+  "tests_skipped": 0,
+  "verification_note": "The sealed SDK example, path-revalidating module interface, parser limits, receipt-content and contradiction rules, non-symlink and Unicode boundaries, effect-import boundary, and negative controls all passed.",
+  "capabilities_observed": ["acquire", "run", "host-boundary", "stop", "deny"],
+  "environment": {
+    "os": "macOS",
+    "version": "15.7.3 build 24G419",
+    "architecture": "arm64",
+    "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+    "runtime": "Python 3.14.4",
+    "shell": "zsh",
+    "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+    "network": "Not used"
+  },
+  "privacy_scrubbed": true,
+  "raw_logs_included": false,
+  "attested": false,
+  "action_executed": false,
+  "authority_granted": false
+}

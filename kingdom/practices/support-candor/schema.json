@@ -1,0 +1,378 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kingdom:schema:support-candor:v1",
+  "$comment": "Structural schema only. support_candor.validate_manifest is also required for matrix completeness, exact evidence binding, target isolation, derived status, and receipt-byte verification.",
+  "title": "Support Candor v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "subject",
+    "baseline",
+    "targets",
+    "capabilities",
+    "now",
+    "gaps",
+    "next",
+    "support_policy",
+    "evidence",
+    "boundaries",
+    "non_claims"
+  ],
+  "properties": {
+    "schema": {"const": "kingdom.support-candor/v1"},
+    "subject": {"$ref": "#/$defs/subject"},
+    "baseline": {"$ref": "#/$defs/baseline"},
+    "targets": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/target"}
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 24,
+      "items": {"$ref": "#/$defs/capability"}
+    },
+    "now": {
+      "type": "array",
+      "maxItems": 120,
+      "items": {"$ref": "#/$defs/now"}
+    },
+    "gaps": {
+      "type": "array",
+      "maxItems": 120,
+      "items": {"$ref": "#/$defs/gap"}
+    },
+    "next": {
+      "type": "array",
+      "maxItems": 120,
+      "items": {"$ref": "#/$defs/next"}
+    },
+    "support_policy": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {"$ref": "#/$defs/policy"}
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 120,
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "now_requires_matching_executable_evidence",
+        "support_policy_is_separate_from_observed_behavior",
+        "next_counts_as_current_support",
+        "automatic_support_promotion",
+        "cross_target_evidence_inheritance",
+        "identity_or_reputation_scoring",
+        "network_calls",
+        "subprocesses",
+        "storage_writes",
+        "external_actions"
+      ],
+      "properties": {
+        "now_requires_matching_executable_evidence": {"const": true},
+        "support_policy_is_separate_from_observed_behavior": {"const": true},
+        "next_counts_as_current_support": {"const": false},
+        "automatic_support_promotion": {"const": false},
+        "cross_target_evidence_inheritance": {"const": false},
+        "identity_or_reputation_scoring": {"const": false},
+        "network_calls": {"const": false},
+        "subprocesses": {"const": false},
+        "storage_writes": {"const": false},
+        "external_actions": {"const": false}
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": false,
+      "prefixItems": [
+        {"const": "A valid ledger proves declaration coherence, not runtime compatibility or product quality."},
+        {"const": "NOW evidence applies only to the exact subject revision, artifact digest, target, and environment named."},
+        {"const": "GAP is explicit but not necessarily exhaustive; an unlisted failure may still exist."},
+        {"const": "NEXT records intention only and is not current support, a delivery date, or a release promise."},
+        {"const": "A digest proves byte equality only; it does not establish identity, trust, safety, or authority."},
+        {"const": "The ledger grants no permission to install, execute, deploy, publish, contact, score, or rank anyone."}
+      ]
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800,
+      "pattern": "^[^\\u0000-\\u001f]+$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "idList": {
+      "type": "array",
+      "maxItems": 24,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/id"}
+    },
+    "textList": {
+      "type": "array",
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/text"}
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "version", "revision", "artifact_digest", "scope", "as_of"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["sdk", "agent-skill"]},
+        "version": {"$ref": "#/$defs/text"},
+        "revision": {"$ref": "#/$defs/text"},
+        "artifact_digest": {"$ref": "#/$defs/digest"},
+        "scope": {"$ref": "#/$defs/text"},
+        "as_of": {"$ref": "#/$defs/date"}
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "required_capabilities"],
+      "properties": {
+        "id": {"const": "kingdom.portable-agent-artifact/v1"},
+        "required_capabilities": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": false,
+          "prefixItems": [
+            {"const": "acquire"},
+            {"const": "run"},
+            {"const": "host-boundary"},
+            {"const": "stop"},
+            {"const": "deny"}
+          ]
+        }
+      }
+    },
+    "fingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "version", "architecture", "filesystem", "runtime", "shell", "sandbox", "network", "notes"],
+      "properties": {
+        "os": {"$ref": "#/$defs/text"},
+        "version": {"$ref": "#/$defs/text"},
+        "architecture": {"$ref": "#/$defs/text"},
+        "filesystem": {"$ref": "#/$defs/text"},
+        "runtime": {"$ref": "#/$defs/text"},
+        "shell": {"$ref": "#/$defs/text"},
+        "sandbox": {"$ref": "#/$defs/text"},
+        "network": {"$ref": "#/$defs/text"},
+        "notes": {"$ref": "#/$defs/text"}
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "family", "scope_status", "claim_scope", "fingerprint"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "family": {"enum": ["macos", "linux", "windows-native", "wsl2", "codex-cloud"]},
+        "scope_status": {"enum": ["exact", "candidate"]},
+        "claim_scope": {"$ref": "#/$defs/text"},
+        "fingerprint": {"$ref": "#/$defs/fingerprint"}
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "required", "statement", "acceptance"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "required": {"type": "boolean"},
+        "statement": {"$ref": "#/$defs/text"},
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_scope", "os", "version", "architecture", "filesystem", "runtime", "shell", "sandbox", "network"],
+      "properties": {
+        "target_scope": {"$ref": "#/$defs/text"},
+        "os": {"$ref": "#/$defs/text"},
+        "version": {"$ref": "#/$defs/text"},
+        "architecture": {"$ref": "#/$defs/text"},
+        "filesystem": {"$ref": "#/$defs/text"},
+        "runtime": {"$ref": "#/$defs/text"},
+        "shell": {"$ref": "#/$defs/text"},
+        "sandbox": {"$ref": "#/$defs/text"},
+        "network": {"$ref": "#/$defs/text"}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject_revision",
+        "subject_artifact_digest",
+        "target",
+        "receipt_kind",
+        "tests",
+        "result",
+        "observed_on",
+        "receipt_uri",
+        "receipt_digest",
+        "environment",
+        "privacy_scrubbed",
+        "raw_logs_included",
+        "attested",
+        "notes"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "subject_revision": {"$ref": "#/$defs/text"},
+        "subject_artifact_digest": {"$ref": "#/$defs/digest"},
+        "target": {"$ref": "#/$defs/id"},
+        "receipt_kind": {"enum": ["ci-run", "local-reproduction"]},
+        "tests": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 24,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "result": {"enum": ["pass", "fail", "mixed"]},
+        "observed_on": {"$ref": "#/$defs/date"},
+        "receipt_uri": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"
+        },
+        "receipt_digest": {"$ref": "#/$defs/digest"},
+        "environment": {"$ref": "#/$defs/environment"},
+        "privacy_scrubbed": {"const": true},
+        "raw_logs_included": {"const": false},
+        "attested": {"const": false},
+        "notes": {"$ref": "#/$defs/text"}
+      }
+    },
+    "now": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "target", "capability", "assertion", "scope", "evidence_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/id"},
+        "capability": {"$ref": "#/$defs/id"},
+        "assertion": {"$ref": "#/$defs/text"},
+        "scope": {"$ref": "#/$defs/text"},
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "target", "capability", "kind", "impact", "statement", "evidence_refs", "workaround", "completeness_claimed"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/id"},
+        "capability": {
+          "oneOf": [
+            {"$ref": "#/$defs/id"},
+            {"const": "*"}
+          ]
+        },
+        "kind": {"enum": ["limitation", "known-failure", "unknown", "excluded"]},
+        "impact": {"enum": ["narrows", "blocks", "unknown", "excluded"]},
+        "statement": {"$ref": "#/$defs/text"},
+        "evidence_refs": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "workaround": {
+          "oneOf": [
+            {"$ref": "#/$defs/text"},
+            {"type": "null"}
+          ]
+        },
+        "completeness_claimed": {"const": false}
+      }
+    },
+    "next": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "addresses", "stage", "intention", "dependencies", "acceptance", "commitment", "target_date", "counts_as_support"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "addresses": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "stage": {"enum": ["considering", "planned", "in-progress"]},
+        "intention": {"$ref": "#/$defs/text"},
+        "dependencies": {"$ref": "#/$defs/textList"},
+        "acceptance": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/text"}
+        },
+        "commitment": {"const": false},
+        "target_date": {"type": "null"},
+        "counts_as_support": {"const": false}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "target", "policy", "scope", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "target": {"$ref": "#/$defs/id"},
+        "policy": {"enum": ["supported", "best-effort", "not-supported", "undecided"]},
+        "scope": {"$ref": "#/$defs/text"},
+        "reason": {"$ref": "#/$defs/text"}
+      }
+    }
+  }
+}
