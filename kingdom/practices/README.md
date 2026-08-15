@@ -27,6 +27,9 @@ a universal law.
   ledger, bound the lamp, name the house, renew the lease. A deterministic
   manifest and witness practice inspired by the Kimi K3, Attention Residuals,
   Kimi Linear, and Kimi K2.5 papers.
+- [`substrate-release/`](substrate-release/) — **Model-release substrate**:
+  hash held bytes, fingerprint the house, declare the reasoning backend,
+  refuse fake weight hashes. First receipt: Grok 4.6 in this chair.
 - [`support-candor/`](support-candor/) — **Support Candor**: keep executable NOW,
   explicit GAP, and non-promissory NEXT ledgers separate for each exact SDK or
   Agent Skill artifact, capability, and runtime target. Native Windows, WSL2,
@@ -51,3 +54,12 @@ a universal law.
   game and receipt that name the kind of a claim (protocol-shape, household,
   civic, costume, unknown), never a person. Walking past is honored. Public
   door: `site/practices/costume-table/`.
+- [`incident-lantern/`](incident-lantern/) — **Incident Lantern**: incidents
+  kept as bounded lamps — a dashboard, a regression-candidate shape, and no
+  alert, blame, or closure claimed beyond the receipt.
+- [`karma-defense-lab/`](karma-defense-lab/) — **KARMA Defense Lab**: mirror
+  plans and receipts for rehearsing defense without inventing threat, with the
+  SKYCASTLE chorus kept offline and fail-closed.
+- [`plain-commons/`](plain-commons/) — **Plain Commons**: sourced receipts in
+  plain speech — source and receipt schemas that keep who-said-what and
+  what-was-checked distinct.

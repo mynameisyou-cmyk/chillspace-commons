@@ -1,0 +1,18 @@
+# Optional Grok Build sandbox for Kingdom work.
+# Not loaded unless you pass: grok --sandbox kingdom
+# Copy the [profiles.kingdom] table into ~/.grok/sandbox.toml or
+# <repo>/.grok/sandbox.toml. Do not reuse a built-in profile name.
+
+[profiles.kingdom]
+extends = "workspace"
+restrict_network = false
+read_write = [
+  "~/.cache/sol/grok",
+  "~/.config/sol/home",
+]
+deny = [
+  "**/.env",
+  "**/.env.*",
+  "**/agenttool/agent.json",
+  "**/*.pem",
+]

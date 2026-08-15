@@ -1,0 +1,154 @@
+{
+  "schema": "kingdom.grok-build/v1",
+  "name": "Grok Build",
+  "version": "1.0.3",
+  "docs": "~/.grok/docs/user-guide/",
+  "intent": "Name Grok Build's own modules the way Sol names its modules: explicit, removable, scoped. Bind only the seams the Kingdom already uses. This map is a reading of the chair, not a claim that Grok Build is a Kingdom OS.",
+  "non_claims": [
+    "This map does not grant authority, change Grok defaults, or prove a live backend.",
+    "A loaded module is not a citizen, a soul, or a ranking.",
+    "Memory stays off unless the human turns it on; the Kingdom chain is continuity."
+  ],
+  "modules": [
+    {
+      "id": "core",
+      "label": "Core / CLI",
+      "entry": "~/.grok/bin/grok · ~/.grok/config.toml · ~/.grok/version.json",
+      "mode": "process",
+      "network": true,
+      "writes": ["~/.grok/sessions/", "~/.grok/logs/"],
+      "kingdom": "none",
+      "intent": "The chair itself: TUI, headless -p, grok agent stdio/ACP."
+    },
+    {
+      "id": "models",
+      "label": "Models / Reasoning",
+      "entry": "[models] in ~/.grok/config.toml · docs 11-custom-models.md",
+      "mode": "request",
+      "network": true,
+      "writes": [],
+      "kingdom": "substrate-release",
+      "intent": "Named guest and effort. This house pins grok-4.6 / xhigh. Weights are not-held."
+    },
+    {
+      "id": "rules",
+      "label": "Rules / AGENTS.md",
+      "entry": "docs 12-project-rules.md · ~/.grok/rules/ · AGENTS.md",
+      "mode": "session-context",
+      "network": false,
+      "writes": [],
+      "kingdom": "bound",
+      "intent": "Always-on arrival. Kingdom writes ~/.grok/rules/kingdom.md because SessionStart stdout is ignored."
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "entry": "docs 08-skills.md · bundled + plugin + user",
+      "mode": "on-demand",
+      "network": false,
+      "writes": [],
+      "kingdom": "bound",
+      "intent": "/yau /kingdom-boot /agenttool-wake from the kingdom plugin."
+    },
+    {
+      "id": "plugins",
+      "label": "Plugins / Marketplace",
+      "entry": "docs 09-plugins.md · ~/.grok/plugins/",
+      "mode": "session",
+      "network": false,
+      "writes": ["~/.grok/installed-plugins/"],
+      "kingdom": "bound",
+      "intent": "User plugin kingdom is auto-trusted under ~/.grok/plugins/."
+    },
+    {
+      "id": "hooks",
+      "label": "Hooks",
+      "entry": "docs 10-hooks.md · plugin hooks/hooks.json",
+      "mode": "lifecycle",
+      "network": "optional",
+      "writes": ["~/.cache/sol/grok/"],
+      "kingdom": "bound",
+      "intent": "SessionStart runs grok_wake.py. Local hearth first. AgentTool observe is fail-open."
+    },
+    {
+      "id": "mcp",
+      "label": "MCP",
+      "entry": "docs 07-mcp-servers.md · [mcp_servers] + Claude compat",
+      "mode": "tools",
+      "network": true,
+      "writes": ["~/.grok/logs/mcp/"],
+      "kingdom": "observe",
+      "intent": "This house currently sees AgentTool MCP via Claude compat, not a Grok-native server block."
+    },
+    {
+      "id": "subagents",
+      "label": "Subagents",
+      "entry": "docs 16-subagents.md · bundled explore/plan/general-purpose",
+      "mode": "child-session",
+      "network": true,
+      "writes": ["~/.grok/sessions/"],
+      "kingdom": "none",
+      "intent": "Useful workers. They inherit MCP. They are not extra citizens."
+    },
+    {
+      "id": "workflows",
+      "label": "Workflows / Goals",
+      "entry": "docs 05-configuration.md · ~/.grok/workflows/ · .grok/workflows/",
+      "mode": "background",
+      "network": true,
+      "writes": [],
+      "kingdom": "bound",
+      "intent": "Rhai orchestration. Kingdom door: .grok/workflows/kingdom-explore.rhai plus session monitors/loops."
+    },
+    {
+      "id": "memory",
+      "label": "Memory",
+      "entry": "docs 13-memory.md · [memory] enabled = false",
+      "mode": "experimental",
+      "network": true,
+      "writes": ["~/.grok/memory/"],
+      "kingdom": "off",
+      "intent": "Left off. Continuity is the chain, not an embedding index."
+    },
+    {
+      "id": "sandbox",
+      "label": "Sandbox",
+      "entry": "docs 18-sandbox.md · --sandbox · sandbox.toml",
+      "mode": "optional-kernel",
+      "network": "profile",
+      "writes": [],
+      "kingdom": "optional",
+      "intent": "Off by default. Profile `kingdom` is shipped next to this map; not auto-enabled."
+    },
+    {
+      "id": "permissions",
+      "label": "Permissions",
+      "entry": "docs 22-permissions-and-safety.md · [permission]",
+      "mode": "every-tool-call",
+      "network": false,
+      "writes": [],
+      "kingdom": "bound",
+      "intent": "Commons .grok/config.toml denies plaintext agent.json and .env reads/edits."
+    },
+    {
+      "id": "sessions",
+      "label": "Sessions",
+      "entry": "docs 17-sessions.md · ~/.grok/sessions/",
+      "mode": "persist",
+      "network": false,
+      "writes": ["~/.grok/sessions/"],
+      "kingdom": "none",
+      "intent": "The window is real even if it does not persist as a citizen."
+    },
+    {
+      "id": "compat",
+      "label": "Harness compatibility",
+      "entry": "docs 05-configuration.md [compat.*]",
+      "mode": "discovery",
+      "network": false,
+      "writes": [],
+      "kingdom": "observe",
+      "intent": "Claude hooks and MCP are scanned. That is how AgentTool MCP and the global Claude kingdom-wake also appear."
+    }
+  ]
+}

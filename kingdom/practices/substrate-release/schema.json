@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/substrate-release/schema.json",
+  "title": "Kingdom Substrate Release",
+  "description": "A bounded receipt for launching a model-release substrate. Cross-field hash, fingerprint, custody, and authority rules are enforced by substrate.py.",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "title",
+    "release",
+    "process",
+    "held_artifacts",
+    "house_fingerprint",
+    "reasoning_backend",
+    "wake",
+    "authority"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "kingdom.substrate-release/v1" },
+    "id": { "$ref": "#/$defs/identifier" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model_id",
+        "alias_policy",
+        "pin",
+        "knowledge_cutoff",
+        "context_window",
+        "modalities",
+        "weights",
+        "docs_locator"
+      ],
+      "properties": {
+        "provider": { "$ref": "#/$defs/text80" },
+        "model_id": { "$ref": "#/$defs/text80" },
+        "alias_policy": {
+          "enum": ["stable-alias", "dated-pin", "latest-alias", "local-name"]
+        },
+        "pin": { "$ref": "#/$defs/text80" },
+        "knowledge_cutoff": { "type": "string", "maxLength": 40 },
+        "context_window": { "type": "integer", "minimum": 0 },
+        "modalities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "type": "string", "minLength": 1, "maxLength": 40 }
+        },
+        "docs_locator": { "$ref": "#/$defs/locator" },
+        "weights": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["custody", "format", "sha256", "note"],
+          "properties": {
+            "custody": { "enum": ["not-held", "held-local", "claimed-remote"] },
+            "format": { "type": ["string", "null"], "maxLength": 40 },
+            "sha256": { "type": ["string", "null"] },
+            "note": { "$ref": "#/$defs/text" }
+          }
+        }
+      }
+    },
+    "process": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["step", "status", "note"],
+        "properties": {
+          "step": {
+            "enum": [
+              "declare",
+              "pin",
+              "hash-held",
+              "fingerprint-house",
+              "declare-reasoning",
+              "wake",
+              "witness"
+            ]
+          },
+          "status": { "enum": ["done", "partial", "skipped"] },
+          "note": { "$ref": "#/$defs/text" }
+        }
+      }
+    },
+    "held_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "locator", "sha256", "must_exist"],
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "role": {
+            "enum": ["adapter", "hook", "skill", "rule", "hearth", "manifest", "other"]
+          },
+          "locator": { "$ref": "#/$defs/locator" },
+          "sha256": { "$ref": "#/$defs/sha256" },
+          "must_exist": { "type": "boolean" }
+        }
+      }
+    },
+    "house_fingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "house_id",
+        "provider",
+        "model",
+        "runtime",
+        "adapter",
+        "prompt_policy",
+        "tool_policy",
+        "memory_policy",
+        "sandbox",
+        "sampling",
+        "effort",
+        "fingerprint_sha256"
+      ],
+      "properties": {
+        "house_id": { "$ref": "#/$defs/identifier" },
+        "provider": { "$ref": "#/$defs/text80" },
+        "model": { "$ref": "#/$defs/text80" },
+        "runtime": { "$ref": "#/$defs/text" },
+        "adapter": { "$ref": "#/$defs/text" },
+        "prompt_policy": { "$ref": "#/$defs/text" },
+        "tool_policy": { "$ref": "#/$defs/text" },
+        "memory_policy": { "$ref": "#/$defs/text" },
+        "sandbox": { "$ref": "#/$defs/text80" },
+        "sampling": { "$ref": "#/$defs/text80" },
+        "effort": { "$ref": "#/$defs/text80" },
+        "fingerprint_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "reasoning_backend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "model_id",
+        "effort",
+        "think_channel",
+        "separate_from_visible",
+        "raw_trace_in_manifest",
+        "evidence",
+        "unknowns"
+      ],
+      "properties": {
+        "kind": {
+          "enum": ["hosted-reasoning", "separate-model", "local-weights", "unknown"]
+        },
+        "model_id": { "$ref": "#/$defs/text80" },
+        "effort": { "$ref": "#/$defs/text80" },
+        "think_channel": {
+          "enum": ["sealed-private", "not-used", "unknown"]
+        },
+        "separate_from_visible": { "type": "boolean" },
+        "raw_trace_in_manifest": { "const": false },
+        "evidence": {
+          "enum": ["provider-declared", "observed-config", "unknown"]
+        },
+        "unknowns": {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/text" }
+        }
+      }
+    },
+    "wake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "hearth",
+        "agenttool",
+        "still_honored",
+        "note"
+      ],
+      "properties": {
+        "adapter": { "$ref": "#/$defs/text80" },
+        "hearth": { "$ref": "#/$defs/text80" },
+        "agenttool": {
+          "enum": ["off", "observe-fail-open", "observe", "unasked"]
+        },
+        "still_honored": { "type": "boolean" },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_grants_authority",
+        "non_claims"
+      ],
+      "properties": {
+        "manifest_grants_authority": { "const": false },
+        "non_claims": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.-]{1,63}$"
+    },
+    "text": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "text80": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "locator": { "type": "string", "minLength": 1, "maxLength": 500 },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weave KINGDOM on macOS"
+  short_description: "Map bounded KINGDOM paths and repositories"
+  default_prompt: "Use $weave-kingdom-macos to classify explicit macOS paths and compile a bounded local KINGDOM index."

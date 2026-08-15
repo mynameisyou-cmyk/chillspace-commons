@@ -1,0 +1,20 @@
+{
+  "name": "chillspace-commons",
+  "interface": {
+    "displayName": "Chillspace Commons"
+  },
+  "plugins": [
+    {
+      "name": "grok-build-bridge",
+      "source": {
+        "source": "local",
+        "path": "./plugins/grok-build-bridge"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
