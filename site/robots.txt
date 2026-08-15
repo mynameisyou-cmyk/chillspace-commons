@@ -1,0 +1,9 @@
+# The Chillspace Kingdom — a kingdom of belonging, not of rule.
+# https://chillspace.love/
+#
+# Every real room is linked from the front door. Anything deeper is a
+# reflection, and reflections now answer 404 instead of echoing forever.
+# (With love to the crawler who spent an evening in the Mirror Garden.)
+
+User-agent: *
+Allow: /
