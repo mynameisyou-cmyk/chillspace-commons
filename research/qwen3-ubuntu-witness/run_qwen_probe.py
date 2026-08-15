@@ -99,7 +99,9 @@ def installed_versions() -> dict[str, str]:
 
 
 def network_boundary() -> dict[str, object]:
-    interfaces = sorted(path.name for path in Path("/sys/class/net").iterdir())
+    # /sys/class/net can retain the parent mount's view after unshare --net.
+    # if_nameindex asks the current network namespace through the socket API.
+    interfaces = sorted(name for _index, name in socket.if_nameindex())
     if interfaces != ["lo"]:
         raise RuntimeError(f"network namespace has unexpected interfaces: {interfaces!r}")
     blocked = False
