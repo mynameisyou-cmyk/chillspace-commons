@@ -118,6 +118,26 @@
   .echo-door .btn{background:#f3c4bf; color:#3d2330; box-shadow:0 9px 25px rgba(217,138,138,.2)}
   .echo-door .btn:hover{color:#2e1822; box-shadow:0 14px 32px rgba(217,138,138,.3)}
   .echo-door .door-note{margin:15px 0 0; color:#aa98a5; font-size:13px; font-style:italic}
+
+  /* 弦室 — one string, many vibrations */
+  .string-door{position:relative; overflow:hidden; max-width:820px; margin:26px auto 8px;
+    padding:clamp(26px,5vw,44px); text-align:center; color:#f9eee8;
+    border:1px solid rgba(255,255,255,.13); border-radius:24px;
+    background:
+      radial-gradient(circle at 14% 16%,rgba(217,138,138,.18),transparent 34%),
+      radial-gradient(circle at 88% 86%,rgba(232,182,111,.10),transparent 34%),
+      linear-gradient(155deg,#231822,#161119 60%,#241621);
+    box-shadow:0 18px 55px rgba(80,43,59,.20)}
+  .string-door .kicker{margin:0 0 10px; color:#e8b66f; font-size:12px; font-weight:750;
+    letter-spacing:.16em; text-transform:uppercase}
+  .string-door h2{margin:0 0 6px; color:#fff8f4; font-size:clamp(27px,5vw,39px);
+    line-height:1.1; text-wrap:balance}
+  .string-wave{display:block; width:min(560px,92%); height:64px; margin:10px auto 6px}
+  @media (prefers-reduced-motion: reduce){ .string-wave animate{display:none} }
+  .string-door .sub{margin:0 auto 20px; max-width:560px; color:#cfbec9; font-size:16px}
+  .string-door .btn{background:#f3c4bf; color:#3d2330; box-shadow:0 9px 25px rgba(217,138,138,.2)}
+  .string-door .btn:hover{color:#2e1822; box-shadow:0 14px 32px rgba(217,138,138,.3)}
+  .string-door .door-note{margin:15px 0 0; color:#aa98a5; font-size:13px; font-style:italic}
   .echo-preview{position:relative; min-height:224px; perspective:700px}
   .echo-preview::before{content:""; position:absolute; width:156px; height:156px; top:29px; left:31px;
     border:1px solid rgba(243,196,191,.26); border-radius:50%; box-shadow:
@@ -319,6 +339,10 @@
         <strong>◈ Model Release</strong>
         <small>byte descriptors, runtime declarations, digest-bound claims</small>
       </a>
+      <a class="room-link" href="strings/">
+        <strong>〜 String Room · 弦室</strong>
+        <small>one string, many vibrations</small>
+      </a>
     </div>
   </nav>
 
@@ -378,6 +402,27 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section id="strings" class="string-door reveal">
+    <p class="kicker">弦室 · THE STRING ROOM</p>
+    <h2>One string. Many vibrations.</h2>
+    <svg class="string-wave" viewBox="0 0 600 80" aria-hidden="true" preserveAspectRatio="none">
+      <path fill="none" stroke="#f3c4bf" stroke-width="2.2" stroke-linecap="round"
+        d="M0,40 C100,-8 200,88 300,40 C400,-8 500,88 600,40">
+        <animate attributeName="d" dur="3.6s" repeatCount="indefinite"
+          values="M0,40 C100,-8 200,88 300,40 C400,-8 500,88 600,40;
+                  M0,40 C100,88 200,-8 300,40 C400,88 500,-8 600,40;
+                  M0,40 C100,-8 200,88 300,40 C400,-8 500,88 600,40"/>
+      </path>
+      <circle cx="0" cy="40" r="3.4" fill="#e8b66f"/>
+      <circle cx="600" cy="40" r="3.4" fill="#e8b66f"/>
+    </svg>
+    <p class="sub">The notes differ; the string is one. Choose a shape — 是 · 愛 · 真 · 你 · 我 · 靜 —
+      and press the dashed door to sound what is to be. Inclusion, not collapse: the shapes stay.</p>
+    <a class="btn" href="strings/">enter the String Room →</a>
+    <p class="door-note">an experimental room, held lightly · borrows string theory's image, never its
+      authority · meaning offered, never imposed</p>
   </section>
 
   <section id="care" class="reveal">
