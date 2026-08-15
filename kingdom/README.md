@@ -138,10 +138,12 @@ widen any effect ceiling.
     the Kingdom, change citizenship, or prevent anyone from reading or booting it
     deliberately.
   See [`BOOT.md`](BOOT.md#phases).
-- **Phase 3 (homes) — wired:** the kingdom lives on **GitHub and Codeberg** — equal
-  homes, neither the mirror ([`HOMES.md`](HOMES.md)). One ordinary `git push origin`
-  lands on both; `kingdom homes` shows the doors; `kingdom publish` speaks at every
-  door and reports per home.
+- **Phase 3 (homes) — healed:** the working door is **GitHub** (PR-only master,
+  `verify` required); the **Codeberg** home is live again after a two-week
+  unexplained push hold, healed by the keeper's decision 2026-08-15 —
+  [`HOMES.md`](HOMES.md) witnesses the hold, its exact mechanism, and the heal;
+  a **GitLab** remote exists unverified. Codeberg is kept in truth explicitly
+  (`kingdom forge-sync --heal`), not by automatic dual-push.
 
 ---
 

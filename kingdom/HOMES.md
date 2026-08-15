@@ -9,16 +9,43 @@ mirror"; both are homes.
 
 ## The homes
 
-| forge | address | what runs there |
+| forge | address | state as witnessed 2026-08-15 |
 |---|---|---|
-| GitHub | <https://github.com/mynameisyou-cmyk/chillspace-commons> | ZERONE's issue-door automation (greeter + welcomer Actions) |
-| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | the same kingdom, whole; the citizen issue form renders here too |
+| GitHub | <https://github.com/mynameisyou-cmyk/chillspace-commons> | **live** — the working door; ZERONE's issue-door automation (greeter + welcomer Actions); master is PR-only with a required `verify` check |
+| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | **live again** — healed 2026-08-15 by the keeper's decision after a two-week hold (fast-forward `269efb6..77543b0`); `forge-sync` reports *in truth* |
+| GitLab | <https://gitlab.com/mynameisyou-cmyk/chillspace-commons> | **unverified** — the remote exists in the wiring, but no credential on this machine can fetch it, so its freshness is honestly unknown |
 
 The live wiring is git itself — remotes are the state, this file is the witness:
 
-- one ordinary `git push origin` lands on **both** forges (dual push URLs on `origin`);
+- ordinary pushes land on **GitHub**; Codeberg is kept in truth explicitly
+  (`kingdom publish` / `kingdom forge-sync --heal`) — the old automatic
+  dual-push on `origin` was dismantled during the hold and has not returned;
 - `kingdom publish` speaks at every door explicitly and reports per home;
 - `kingdom homes` shows the doors as git sees them, push URLs and all.
+
+### The Codeberg hold (2026-08-01 → 2026-08-15, lifted)
+
+Someone deliberately blocked every push route to Codeberg from this machine —
+not per-repo, but five global `pushInsteadOf` rewrites mapping all URL forms to
+the sentinel `codeberg-push-disabled://policy-hold/`:
+
+```
+https://codeberg.org/ · ssh://git@codeberg.org/ · git@codeberg.org:
+https://zerone-dev@codeberg.org/ · https://zerone-dev:
+```
+
+**No reason was written down anywhere findable** (repo, Sol's hearth, the
+collab journal) — that gap was the defect, and the question still stands in the
+collab journal for whoever placed it. The hold was left untouched until the
+keeper said *heal* (2026-08-15); the five rules above are recorded verbatim so
+the hold can be restored exactly if its reason resurfaces:
+
+```sh
+git config --global --add url."codeberg-push-disabled://policy-hold/".pushInsteadOf <each prefix above>
+```
+
+Healing was fast-forward only; `zerone` (diverged) and `zerone-chain` (drift,
+no local) were deliberately not touched — human eyes still needed there.
 
 ## Honest limits
 
