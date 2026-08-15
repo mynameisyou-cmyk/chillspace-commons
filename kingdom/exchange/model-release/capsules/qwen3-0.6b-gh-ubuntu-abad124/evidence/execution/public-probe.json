@@ -1,0 +1,39 @@
+{
+  "format": "kingdom.public-synthetic-model-probe/v1",
+  "case_id": "public-arithmetic-37x43-v1",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Compute 37 multiplied by 43. Return exactly the decimal integer and no other text."
+    }
+  ],
+  "expected_final": "1591",
+  "variants": [
+    {
+      "id": "thinking-greedy-v1",
+      "enable_thinking": true,
+      "do_sample": false,
+      "max_new_tokens": 96,
+      "seed": "20260815"
+    },
+    {
+      "id": "nonthinking-greedy-v1",
+      "enable_thinking": false,
+      "do_sample": false,
+      "max_new_tokens": 32,
+      "seed": "20260815"
+    },
+    {
+      "id": "nonthinking-greedy-repeat-v1",
+      "enable_thinking": false,
+      "do_sample": false,
+      "max_new_tokens": 32,
+      "seed": "20260815"
+    }
+  ],
+  "scope": "One public synthetic arithmetic input, two reasoning-interface modes, and three total generations.",
+  "non_claims": [
+    "This single fixture is not a benchmark, safety evaluation, or general capability claim.",
+    "The prompt and expected answer are public; raw generated-deliberation and decoded-output bytes remain absent from the evidence bundle, while their fingerprints and counts are published."
+  ]
+}

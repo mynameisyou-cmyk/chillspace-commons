@@ -1,0 +1,206 @@
+{
+  "schema": "kingdom.model-execution-profile/v1",
+  "kind": "execution-profile",
+  "subject": {
+    "release_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4"
+  },
+  "engine": {
+    "name": "Transformers Qwen3ForCausalLM",
+    "version": "4.57.6",
+    "implementation": "transformers.models.qwen3.modeling_qwen3.Qwen3ForCausalLM",
+    "loader": "safetensors 0.7.0 local-only loader with trust_remote_code disabled",
+    "source_revision": "pypi-transformers-4.57.6",
+    "custom_code_revision": "not-used-qwen3-built-in-transformers-4.57.6",
+    "package": {
+      "media_type": "application/vnd.python.wheel",
+      "digest": "sha256:4c9e9de11333ddfe5114bc872c9f370509198acf0b87a832a0ab9458e2bd0550",
+      "size": 11993498
+    },
+    "kernels": [
+      {
+        "name": "PyTorch eager CPU attention",
+        "version": "2.8.0+cpu",
+        "source_revision": "sha256:cb9a8ba8137ab24e36bf1742cb79a1294bd374db570f09fc15a5e1318160db4e"
+      }
+    ],
+    "evidence_refs": [
+      "runtime-manifest",
+      "wheel-lock"
+    ]
+  },
+  "resolved": {
+    "dtype": "float32 widened exactly from bfloat16 source values",
+    "weight_quantization": "none",
+    "kv_cache_dtype": "float32",
+    "load_format": "safetensors",
+    "context_tokens": 40960,
+    "parallelism": {
+      "tensor": 1,
+      "pipeline": 1,
+      "data": 1,
+      "expert": 1
+    },
+    "attention_backend": "PyTorch eager CPU attention 2.8.0+cpu",
+    "speculative_decoding": "disabled",
+    "rope_overrides": "none"
+  },
+  "hardware": {
+    "visibility": "observed",
+    "accelerators": [
+      {
+        "model": "Intel Xeon Platinum 8370C CPU",
+        "count": 1
+      }
+    ],
+    "driver": "Linux 6.17.0-1022-azure on Ubuntu 24.04.4 LTS",
+    "compute_stack": "CPython 3.12.12 and PyTorch 2.8.0+cpu eager",
+    "interconnect": "single GitHub-hosted x64 virtual machine; no accelerator interconnect used",
+    "topology": "four logical CPUs visible; one process, one intra-op thread, one inter-op thread"
+  },
+  "backend": {
+    "kind": "local-open-weights",
+    "provider": "KINGDOM workflow on a GitHub-hosted runner",
+    "endpoint_family": "in-process Transformers generation inside a Linux network namespace",
+    "observations": [
+      {
+        "name": "github-run-id",
+        "value": "31873241774",
+        "semantics": "opaque-provider-observation",
+        "observed_at": "2026-08-15T07:58:16Z",
+        "evidence_refs": [
+          "runtime-manifest"
+        ]
+      },
+      {
+        "name": "github-runner-image",
+        "value": "ubuntu24 20260810.271.1",
+        "semantics": "opaque-provider-observation",
+        "observed_at": "2026-08-15T07:58:16Z",
+        "evidence_refs": [
+          "runtime-manifest"
+        ]
+      }
+    ]
+  },
+  "determinism": {
+    "seed": "20260815",
+    "deterministic_algorithms": true,
+    "known_nondeterminism": [
+      "No cross-version, cross-hardware, or cross-platform bitwise equivalence is claimed.",
+      "A GitHub-hosted runner label and image version do not identify a timeless physical host or guarantee identical future hardware.",
+      "Wall-clock latency differed between the two identical non-thinking continuations even though their token-list and decoded-output digests matched.",
+      "The workflow's deterministic-algorithm request does not independently prove that every transitive native operation is bitwise deterministic."
+    ]
+  },
+  "privacy": {
+    "environment_capture": "allowlisted-fields",
+    "excluded": [
+      "credentials",
+      "hostnames",
+      "private paths",
+      "raw environment",
+      "raw decoded-output bytes",
+      "raw generated-deliberation bytes",
+      "model weights",
+      "tokenizer bytes"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "runtime-manifest",
+      "title": "Sanitized GitHub-hosted Ubuntu x64 runtime manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/runtime-manifest.json",
+      "revision": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+        "size": 2865
+      }
+    },
+    {
+      "id": "snapshot-manifest",
+      "title": "Workflow-produced Qwen3 snapshot byte manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/snapshot-byte-manifest.json",
+      "revision": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+        "size": 2850
+      }
+    },
+    {
+      "id": "wheel-lock",
+      "title": "Digest-pinned inference wheel lock",
+      "kind": "runtime-documentation",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/wheel-lock.txt",
+      "revision": "sha256:895b0bbf5f20bbfb979ccfdb0fea0cef64eb6a4e0a6359513bfcad7c43ee14b8",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "text/plain",
+        "digest": "sha256:895b0bbf5f20bbfb979ccfdb0fea0cef64eb6a4e0a6359513bfcad7c43ee14b8",
+        "size": 6615
+      }
+    },
+    {
+      "id": "run-summary",
+      "title": "Public-input output-free three-run summary",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/run-summary.json",
+      "revision": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+        "size": 2544
+      }
+    },
+    {
+      "id": "github-attestation-bundle",
+      "title": "GitHub artifact attestation bundle for the sanitized evidence tar",
+      "kind": "signature-bundle",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/github-attestation-bundle.jsonl",
+      "revision": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "GitHub Actions artifact attestation service",
+      "content": {
+        "media_type": "application/jsonl",
+        "digest": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+        "size": 12560
+      }
+    },
+    {
+      "id": "offline-attestation-verification",
+      "title": "Pinned-input offline GitHub attestation verification receipt",
+      "kind": "other",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/offline-verification-receipt.json",
+      "revision": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+        "size": 2099
+      }
+    }
+  ],
+  "non_claims": [
+    "An execution-profile digest identifies declared configuration, not reproducibility across different runtimes or hardware.",
+    "Requested settings are not effective settings; every field under resolved is a declaration by the profile author.",
+    "Provider backend observations are opaque observations, not cryptographic model or weight digests.",
+    "Validation captures no raw environment, hostname, credential, private path, prompt, response, or reasoning trace."
+  ]
+}

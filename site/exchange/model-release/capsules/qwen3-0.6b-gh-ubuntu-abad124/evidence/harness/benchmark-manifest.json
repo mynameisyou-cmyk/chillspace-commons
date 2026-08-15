@@ -1,0 +1,33 @@
+{
+  "format": "kingdom.public-synthetic-benchmark-manifest/v1",
+  "name": "Qwen3-0.6B public arithmetic interface witness",
+  "revision": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+  "subset": "one public arithmetic case, one thinking run, and two non-thinking greedy repeats",
+  "dataset": {
+    "path": "evidence/execution/public-probe.json",
+    "media_type": "application/json",
+    "digest": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+    "size": 1215
+  },
+  "preprocessing": {
+    "path": "evidence/execution/run_qwen_probe.py",
+    "media_type": "text/x-python",
+    "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+    "size": 21866
+  },
+  "scoring": {
+    "path": "evidence/harness/scoring-policy.json",
+    "media_type": "application/json",
+    "digest": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+    "size": 1381
+  },
+  "release": {
+    "repository": "Qwen/Qwen3-0.6B",
+    "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "canonical_release_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4"
+  },
+  "non_claims": [
+    "This public fixture differs from the earlier sealed capsule's private fixture and cannot establish cross-machine exact-output equivalence to it.",
+    "One synthetic arithmetic case is not a public benchmark, safety evaluation, quality ranking, or broad reasoning claim."
+  ]
+}

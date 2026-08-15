@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Verify closed, mirrored model-release capsules without network access.
 
-This verifier intentionally sits outside the frozen v1 model-release schema.  A
-launch index inventories the exact raw bytes in one capsule, binds every v1
-record to its deterministic receipt, checks release/profile/attestation graph
-edges with ``model_release.py``, and verifies two domain-separated Ed25519
-signatures with OpenSSL.  It does not turn a curator key into publisher,
-platform, human, safety, or deployment authority.
+This verifier intentionally sits outside the frozen v1 model-release schema.
+A release launch index or a release-referring execution-witness index inventories
+the exact raw bytes in one capsule, binds every v1 record to its deterministic
+receipt, checks release/profile/attestation graph edges with ``model_release.py``,
+and verifies domain-separated signatures and provenance.  It does not turn a
+curator or workflow key into publisher, platform, human, safety, or deployment
+authority.
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import re
@@ -20,6 +22,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import tarfile
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -35,15 +38,22 @@ import model_release as release_v1  # noqa: E402
 
 REGISTRY_SCHEMA = "kingdom.model-release-registry/v1"
 LAUNCH_INDEX_SCHEMA = "kingdom.model-release-launch-index/v1"
+WITNESS_INDEX_SCHEMA = "kingdom.model-release-witness-index/v1"
 VERIFIER_POLICY_SCHEMA = "kingdom.ed25519-verifier-policy/v1"
+WITNESS_VERIFIER_POLICY_SCHEMA = "kingdom.ed25519-witness-verifier-policy/v1"
 PUBLISHER_INVENTORY_SCHEMA = "kingdom.publisher-artifact-inventory/v1"
 
 RELEASE_DOMAIN = "KINGDOM MODEL RELEASE SUBJECT v1"
 LAUNCH_INDEX_DOMAIN = "KINGDOM MODEL RELEASE LAUNCH INDEX v1"
+WITNESS_INDEX_DOMAIN = "KINGDOM MODEL RELEASE WITNESS INDEX v1"
 SIGNED_VALUE = "UTF-8 domain, LF, lowercase sha256 digest, LF"
 IDENTITY_CLAIM = (
     "Ephemeral public-key possession only; no human, publisher, vendor, or "
     "platform identity is claimed."
+)
+WITNESS_IDENTITY_CLAIM = (
+    "Ephemeral public-key possession only; no human, publisher, vendor, platform, "
+    "or independent-reproducer identity is claimed."
 )
 AUTHORITY_CLAIM = "none"
 ISSUER = "self-issued one-use Ed25519 key; no external identity claim"
@@ -58,6 +68,37 @@ LAUNCH_INDEX_NON_CLAIMS = [
     "Raw file digests and deterministic receipts establish byte identity and v1 structural validity only; they do not establish behavioral reproducibility.",
     "Declared local and hosted execution profiles are not evidence that either execution occurred.",
 ]
+WITNESS_INDEX_NON_CLAIMS = [
+    "This witness index refers to the sealed qwen3-0.6b-hf-c1899de2 release; it is not a new model release or a mutation of that capsule.",
+    "The successful run was curated by the same KINGDOM operator on a GitHub-managed runner; it is not an independent human, vendor, publisher, or laboratory reproduction.",
+    "GitHub artifact attestation authenticates the workflow-produced tar and bound workflow identity; it does not establish model semantics, claim truth, or the inode consumed by the loader.",
+    "The pinned trusted-root snapshot supports this offline verification receipt at the recorded time; it is not a timeless statement about later trust-root state.",
+    "The public arithmetic fixture differs from the earlier capsule's private synthetic probe, so cross-machine exact-output equivalence to that run is not claimed.",
+    "Digests, signatures, and deterministic receipts identify bytes and structural validity; they do not prove safety, quality, broad reproducibility, or publisher identity.",
+    "One failed pre-inference attempt is retained; it produced no model inference, evidence tar, or artifact attestation.",
+]
+
+GH_ATTESTATION_MINIMUM_VERSION = "2.86.0"
+GH_ATTESTATION_SOURCE_REVISION = "github/cli/v2.86.0"
+GH_TRUSTED_ROOT_DIGEST = "sha256:65ca537f6ed8a47fd0e560c421baa1f6c1efb8b25fc200d8c5c02c0e92eb2b9c"
+SLSA_PROVENANCE_V1 = "https://slsa.dev/provenance/v1"
+GITHUB_ACTIONS_BUILD_TYPE_V1 = "https://actions.github.io/buildtypes/workflow/v1"
+
+QWEN_UBUNTU_WITNESS_ID = "qwen3-0.6b-gh-ubuntu-abad124"
+QWEN_UBUNTU_BASE_CAPSULE_ID = "qwen3-0.6b-hf-c1899de2"
+QWEN_UBUNTU_BASE_LAUNCH_DIGEST = (
+    "sha256:efa50b06d297a92b3760320a85aea0a965f74b0dd74a29d56d4a9d0856402bc1"
+)
+QWEN_UBUNTU_BASE_RELEASE_DIGEST = (
+    "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4"
+)
+QWEN_UBUNTU_REPOSITORY = "mynameisyou-cmyk/chillspace-commons"
+QWEN_UBUNTU_SIGNER_WORKFLOW = (
+    "mynameisyou-cmyk/chillspace-commons/.github/workflows/qwen3-ubuntu-witness.yml"
+)
+QWEN_UBUNTU_SOURCE_DIGEST = "abad1246268ebeadcbc4dc99571f84beadfd030f"
+QWEN_UBUNTU_SOURCE_REF = "refs/heads/research/qwen3-06b-ubuntu-witness-20260815"
+QWEN_UBUNTU_RUN_ID = "31873241774"
 
 MAX_CONTROL_BYTES = 8 * 1024 * 1024
 MAX_FILE_BYTES = 64 * 1024 * 1024
@@ -70,7 +111,11 @@ SUBSTRATE_SCHEMAS = {
     release_v1.ATTESTATION_SCHEMA,
     release_v1.RECEIPT_SCHEMA,
 }
-CONTROL_SCHEMAS = SUBSTRATE_SCHEMAS | {PUBLISHER_INVENTORY_SCHEMA}
+CONTROL_SCHEMAS = SUBSTRATE_SCHEMAS | {
+    PUBLISHER_INVENTORY_SCHEMA,
+    WITNESS_INDEX_SCHEMA,
+    WITNESS_VERIFIER_POLICY_SCHEMA,
+}
 
 
 class RegistryError(ValueError):
@@ -96,6 +141,7 @@ class CapsuleResult:
     records: int
     files: int
     crypto_checks: int
+    signing_key_digest: str
 
 
 def _pairs_without_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -414,6 +460,24 @@ def _verify_ed25519(executable: str, public_key: Path, signature: Path, message:
         raise RegistryError(f"{label} Ed25519 signature is invalid: {detail}")
 
 
+def _public_key_fingerprint(executable: str, public_key: Path, label: str) -> str:
+    """Fingerprint canonical SubjectPublicKeyInfo DER, not PEM presentation bytes."""
+
+    try:
+        result = subprocess.run(
+            [executable, "pkey", "-pubin", "-in", str(public_key), "-outform", "DER"],
+            check=False,
+            capture_output=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise RegistryError(f"{label} public-key fingerprinting failed: {error}") from error
+    if result.returncode != 0 or not result.stdout:
+        detail = (result.stderr or result.stdout).decode("utf-8", errors="replace").strip()[:300]
+        raise RegistryError(f"{label} public-key fingerprinting failed: {detail}")
+    return "sha256:" + hashlib.sha256(result.stdout).hexdigest()
+
+
 def _verify_policy(policy: dict[str, Any], public_key: RawFile, label: str) -> None:
     required = {
         "schema",
@@ -448,6 +512,418 @@ def _verify_policy(policy: dict[str, Any], public_key: RawFile, label: str) -> N
     expected_identity = "urn:kingdom:ed25519:" + public_key.digest.removeprefix("sha256:")
     if policy["signer_identity"] != expected_identity:
         raise RegistryError(f"{label}.signer_identity does not fingerprint the exact PEM bytes")
+
+
+def _verify_witness_policy(policy: dict[str, Any], public_key: RawFile, label: str) -> None:
+    required = {
+        "schema",
+        "algorithm",
+        "public_key",
+        "signer_identity",
+        "witness_index_domain",
+        "signed_value",
+        "identity_claim",
+        "authority_claim",
+        "issuer",
+    }
+    _exact_keys(policy, required, label)
+    expected_scalars = {
+        "schema": WITNESS_VERIFIER_POLICY_SCHEMA,
+        "algorithm": "Ed25519",
+        "witness_index_domain": WITNESS_INDEX_DOMAIN,
+        "signed_value": SIGNED_VALUE,
+        "identity_claim": WITNESS_IDENTITY_CLAIM,
+        "authority_claim": AUTHORITY_CLAIM,
+        "issuer": ISSUER,
+    }
+    for field, expected in expected_scalars.items():
+        if policy[field] != expected:
+            raise RegistryError(f"{label}.{field} differs from the reviewed witness policy")
+    public_descriptor = _descriptor(policy["public_key"], f"{label}.public_key", with_path=False)
+    if public_descriptor["media_type"] != "application/x-pem-file":
+        raise RegistryError(f"{label}.public_key must declare application/x-pem-file")
+    _match_raw(public_descriptor, public_key, f"{label}.public_key")
+    expected_identity = "urn:kingdom:ed25519:" + public_key.digest.removeprefix("sha256:")
+    if policy["signer_identity"] != expected_identity:
+        raise RegistryError(f"{label}.signer_identity does not fingerprint the exact PEM bytes")
+
+
+def _semantic_version(value: str, label: str) -> tuple[int, int, int]:
+    match = re.fullmatch(r"(0|[1-9][0-9]*)[.](0|[1-9][0-9]*)[.](0|[1-9][0-9]*)", value)
+    if match is None:
+        raise RegistryError(f"{label} must be a three-part semantic version")
+    return tuple(int(part) for part in match.groups())
+
+
+def _isolated_gh_environment(state_root: Path) -> dict[str, str]:
+    """Return a secretless gh environment whose persistent roots are disposable."""
+
+    state_paths = {
+        "HOME": state_root / "home",
+        "GH_CONFIG_DIR": state_root / "gh-config",
+        "XDG_CONFIG_HOME": state_root / "xdg-config",
+        "XDG_STATE_HOME": state_root / "xdg-state",
+        "XDG_DATA_HOME": state_root / "xdg-data",
+        "XDG_CACHE_HOME": state_root / "xdg-cache",
+    }
+    for path in state_paths.values():
+        path.mkdir(parents=True, mode=0o700, exist_ok=False)
+    return {
+        "PATH": os.defpath,
+        **{name: str(path) for name, path in state_paths.items()},
+        "GH_PROMPT_DISABLED": "1",
+        "GIT_TERMINAL_PROMPT": "0",
+        "GH_TELEMETRY": "false",
+        "DO_NOT_TRACK": "true",
+        "GH_NO_UPDATE_NOTIFIER": "1",
+        "HTTP_PROXY": "http://127.0.0.1:9",
+        "HTTPS_PROXY": "http://127.0.0.1:9",
+        "ALL_PROXY": "http://127.0.0.1:9",
+        "NO_PROXY": "",
+        "http_proxy": "http://127.0.0.1:9",
+        "https_proxy": "http://127.0.0.1:9",
+        "all_proxy": "http://127.0.0.1:9",
+        "no_proxy": "",
+    }
+
+
+def _gh_version(executable: str, minimum: str, environment: dict[str, str]) -> str:
+    try:
+        result = subprocess.run(
+            [executable, "version"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+            env=environment,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise RegistryError(f"cannot execute gh: {error}") from error
+    first_line = result.stdout.splitlines()[0] if result.stdout else ""
+    match = re.fullmatch(r"gh version ([0-9]+[.][0-9]+[.][0-9]+)(?: .*)?", first_line)
+    if result.returncode != 0 or match is None:
+        detail = (result.stderr or result.stdout).strip()[:300]
+        raise RegistryError(f"gh version check failed: {detail}")
+    version = match.group(1)
+    if _semantic_version(version, "gh version") < _semantic_version(minimum, "minimum gh version"):
+        raise RegistryError(f"gh {minimum} or newer is required for offline attestation verification")
+    return version
+
+
+def _validate_gh_verified_identity(value: Any, signer_workflow: str, label: str) -> None:
+    """Accept the two exact SAN-regex spellings emitted by reviewed gh versions."""
+
+    identity = _exact_keys(
+        value,
+        {"subjectAlternativeName", "issuer", "runnerEnvironment"},
+        f"{label} verified identity",
+    )
+    subject = _exact_keys(
+        identity["subjectAlternativeName"],
+        {"subjectAlternativeName", "regexp"},
+        f"{label} verified identity subject",
+    )
+    issuer = _exact_keys(
+        identity["issuer"], {"issuer", "regexp"}, f"{label} verified identity issuer"
+    )
+    legacy_regexp = f"^https://github.com/{signer_workflow}"
+    literal_dot_regexp = legacy_regexp.replace(".", r"\.")
+    if (
+        subject.get("subjectAlternativeName") != ""
+        or subject.get("regexp") not in {legacy_regexp, literal_dot_regexp}
+        or issuer != {"issuer": "", "regexp": ".*"}
+        or identity["runnerEnvironment"] != "github-hosted"
+    ):
+        observed = json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+        raise RegistryError(f"{label} gh verified identity constraints differ: {observed}")
+
+
+def _load_json_array(raw: bytes, label: str) -> list[Any]:
+    if len(raw) > MAX_CONTROL_BYTES:
+        raise RegistryError(f"{label} exceeds {MAX_CONTROL_BYTES} bytes")
+    try:
+        value = json.loads(
+            raw.decode("utf-8", errors="strict"),
+            object_pairs_hook=_pairs_without_duplicates,
+            parse_float=_reject_float,
+            parse_constant=_reject_constant,
+        )
+    except RegistryError:
+        raise
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError, RecursionError) as error:
+        raise RegistryError(f"{label} is not strict UTF-8 JSON: {error}") from error
+    if not isinstance(value, list):
+        raise RegistryError(f"{label} must be a JSON array")
+    return value
+
+
+def _verify_archive_members(
+    archive: RawFile,
+    mappings: list[tuple[str, str]],
+    files: dict[str, tuple[dict[str, Any], RawFile]],
+    label: str,
+) -> None:
+    """Verify the deterministic GNU tar and its indexed, extracted byte copies."""
+
+    if len(archive.raw) < 1024 or len(archive.raw) % 512 or not archive.raw.endswith(b"\0" * 1024):
+        raise RegistryError(f"{label} is not a complete uncompressed tar stream")
+    try:
+        with tarfile.open(fileobj=io.BytesIO(archive.raw), mode="r:") as handle:
+            members = handle.getmembers()
+            expected_names = ["."] + [f"./{name}" for name, _ in mappings]
+            if [member.name for member in members] != expected_names:
+                raise RegistryError(f"{label} members differ from the sorted witness mapping")
+            root = members[0]
+            if (
+                not root.isdir()
+                or root.mode != 0o755
+                or root.uid != 0
+                or root.gid != 0
+                or root.mtime != 0
+                or root.uname != ""
+                or root.gname != ""
+                or root.linkname != ""
+                or root.size != 0
+                or root.pax_headers
+            ):
+                raise RegistryError(f"{label} root metadata is not deterministic")
+            for member, (member_name, indexed_path) in zip(members[1:], mappings, strict=True):
+                if (
+                    not member.isfile()
+                    or member.name != f"./{member_name}"
+                    or member.mode != 0o644
+                    or member.uid != 0
+                    or member.gid != 0
+                    or member.mtime != 0
+                    or member.uname != ""
+                    or member.gname != ""
+                    or member.linkname != ""
+                    or member.pax_headers
+                ):
+                    raise RegistryError(f"{label} member metadata is not deterministic: {member_name}")
+                extracted = handle.extractfile(member)
+                if extracted is None:
+                    raise RegistryError(f"{label} member cannot be read: {member_name}")
+                member_raw = extracted.read(MAX_FILE_BYTES + 1)
+                if len(member_raw) > MAX_FILE_BYTES or member_raw != files[indexed_path][1].raw:
+                    raise RegistryError(
+                        f"{label} member bytes differ from indexed extracted evidence: {member_name}"
+                    )
+            for number, member in enumerate(members):
+                data_end = member.offset_data + member.size
+                next_offset = (
+                    members[number + 1].offset
+                    if number + 1 < len(members)
+                    else ((data_end + 511) // 512) * 512
+                )
+                if any(archive.raw[data_end:next_offset]):
+                    raise RegistryError(f"{label} contains non-zero member padding")
+            final_end = ((members[-1].offset_data + members[-1].size + 511) // 512) * 512
+            if any(archive.raw[final_end:]):
+                raise RegistryError(f"{label} contains non-zero trailing tar bytes")
+    except RegistryError:
+        raise
+    except (tarfile.TarError, EOFError, OSError) as error:
+        raise RegistryError(f"{label} cannot be parsed as a bounded uncompressed tar: {error}") from error
+
+
+def _verify_github_attestation(
+    gh: str,
+    artifact: RawFile,
+    bundle: RawFile,
+    trusted_root: RawFile,
+    policy: dict[str, Any],
+    label: str,
+) -> None:
+    verifier = _exact_keys(policy["verifier"], {"name", "minimum_version", "source_revision"}, f"{label}.verifier")
+    if verifier != {
+        "name": "gh",
+        "minimum_version": GH_ATTESTATION_MINIMUM_VERSION,
+        "source_revision": GH_ATTESTATION_SOURCE_REVISION,
+    }:
+        raise RegistryError(f"{label}.verifier differs from the reviewed offline verifier policy")
+    repository = policy["repository"]
+    signer_workflow = policy["signer_workflow"]
+    source_digest = policy["source_digest"]
+    source_ref = policy["source_ref"]
+    run_id = policy["run_id"]
+    run_attempt = policy["run_attempt"]
+    if not isinstance(repository, str) or re.fullmatch(r"[a-z0-9_.-]+/[a-z0-9_.-]+", repository) is None:
+        raise RegistryError(f"{label}.repository must be one normalized GitHub owner/repository")
+    expected_workflow_prefix = repository + "/.github/workflows/"
+    if (
+        not isinstance(signer_workflow, str)
+        or not signer_workflow.startswith(expected_workflow_prefix)
+        or PurePosixPath(signer_workflow).name not in {
+            "qwen3-ubuntu-witness.yml",
+            "qwen3-ubuntu-witness.yaml",
+        }
+    ):
+        raise RegistryError(f"{label}.signer_workflow differs from the bounded witness workflow")
+    if not isinstance(source_digest, str) or re.fullmatch(r"[0-9a-f]{40}", source_digest) is None:
+        raise RegistryError(f"{label}.source_digest must be one lowercase Git commit id")
+    if not isinstance(source_ref, str) or not source_ref.startswith("refs/heads/"):
+        raise RegistryError(f"{label}.source_ref must be one full branch ref")
+    if not isinstance(run_id, str) or re.fullmatch(r"[1-9][0-9]*", run_id) is None:
+        raise RegistryError(f"{label}.run_id must be a positive decimal string")
+    if isinstance(run_attempt, bool) or not isinstance(run_attempt, int) or run_attempt <= 0:
+        raise RegistryError(f"{label}.run_attempt must be a positive integer")
+    if policy["predicate_type"] != SLSA_PROVENANCE_V1:
+        raise RegistryError(f"{label}.predicate_type differs from SLSA provenance v1")
+    if policy["runner_environment"] != "github-hosted":
+        raise RegistryError(f"{label}.runner_environment must be github-hosted")
+    if trusted_root.digest != GH_TRUSTED_ROOT_DIGEST:
+        raise RegistryError(f"{label}.trusted_root differs from the pinned raw trusted-root digest")
+
+    with tempfile.TemporaryDirectory(prefix="kingdom-gh-state-") as state_directory:
+        environment = _isolated_gh_environment(Path(state_directory))
+        _gh_version(gh, verifier["minimum_version"], environment)
+        command = [
+            gh,
+            "attestation",
+            "verify",
+            str(artifact.path),
+            "--repo",
+            repository,
+            "--signer-workflow",
+            signer_workflow,
+            "--source-digest",
+            source_digest,
+            "--source-ref",
+            source_ref,
+            "--predicate-type",
+            policy["predicate_type"],
+            "--deny-self-hosted-runners",
+            "--bundle",
+            str(bundle.path),
+            "--custom-trusted-root",
+            str(trusted_root.path),
+            "--format=json",
+        ]
+        try:
+            result = subprocess.run(
+                command,
+                check=False,
+                capture_output=True,
+                timeout=30,
+                env=environment,
+            )
+        except (OSError, subprocess.TimeoutExpired) as error:
+            raise RegistryError(f"{label} offline gh verification failed to run: {error}") from error
+    if result.returncode != 0:
+        detail_raw = result.stderr or result.stdout
+        detail = detail_raw.decode("utf-8", errors="replace").strip()[:500]
+        raise RegistryError(f"{label} offline gh verification failed: {detail}")
+    verified = _load_json_array(result.stdout, f"{label} gh verification output")
+    if len(verified) != 1:
+        raise RegistryError(f"{label} must verify exactly one bundled attestation")
+    verification = _exact_keys(
+        verified[0], {"attestation", "verificationResult"}, f"{label} verified attestation"
+    )["verificationResult"]
+    verification = _exact_keys(
+        verification,
+        {"mediaType", "signature", "statement", "verifiedIdentity", "verifiedTimestamps"},
+        f"{label} verificationResult",
+    )
+    if verification["mediaType"] != (
+        "application/vnd.dev.sigstore.verificationresult+json;version=0.1"
+    ):
+        raise RegistryError(f"{label} gh verification-result media type differs")
+    _validate_gh_verified_identity(verification["verifiedIdentity"], signer_workflow, label)
+    statement = _exact_keys(
+        verification["statement"],
+        {"_type", "subject", "predicateType", "predicate"},
+        f"{label} verified statement",
+    )
+    expected_subject = [
+        {
+            "name": artifact.path.name,
+            "digest": {"sha256": artifact.digest.removeprefix("sha256:")},
+        }
+    ]
+    if (
+        statement["_type"] != "https://in-toto.io/Statement/v1"
+        or statement["subject"] != expected_subject
+        or statement["predicateType"] != policy["predicate_type"]
+    ):
+        raise RegistryError(f"{label} verified statement subject or predicate differs")
+    predicate = _exact_keys(
+        statement["predicate"], {"buildDefinition", "runDetails"}, f"{label} SLSA predicate"
+    )
+    build_definition = _exact_keys(
+        predicate["buildDefinition"],
+        {"buildType", "externalParameters", "internalParameters", "resolvedDependencies"},
+        f"{label} SLSA build definition",
+    )
+    run_details = _exact_keys(
+        predicate["runDetails"], {"builder", "metadata"}, f"{label} SLSA run details"
+    )
+    workflow_path = signer_workflow.removeprefix(repository + "/")
+    workflow_url = f"https://github.com/{repository}"
+    expected_builder = f"{workflow_url}/{workflow_path}@{source_ref}"
+    expected_invocation = f"{workflow_url}/actions/runs/{run_id}/attempts/{run_attempt}"
+    external = _exact_keys(
+        build_definition["externalParameters"], {"workflow"}, f"{label} external parameters"
+    )
+    internal = _exact_keys(
+        build_definition["internalParameters"], {"github"}, f"{label} internal parameters"
+    )
+    github_parameters = _exact_keys(
+        internal["github"],
+        {"event_name", "repository_id", "repository_owner_id", "runner_environment"},
+        f"{label} internal GitHub parameters",
+    )
+    dependencies = build_definition["resolvedDependencies"]
+    if (
+        build_definition["buildType"] != GITHUB_ACTIONS_BUILD_TYPE_V1
+        or external["workflow"]
+        != {"path": workflow_path, "ref": source_ref, "repository": workflow_url}
+        or github_parameters["event_name"] != "push"
+        or github_parameters["runner_environment"] != "github-hosted"
+        or any(
+            not isinstance(github_parameters[field], str)
+            or re.fullmatch(r"[1-9][0-9]*", github_parameters[field]) is None
+            for field in ("repository_id", "repository_owner_id")
+        )
+        or dependencies
+        != [{"digest": {"gitCommit": source_digest}, "uri": f"git+{workflow_url}@{source_ref}"}]
+        or run_details["builder"] != {"id": expected_builder}
+        or run_details["metadata"] != {"invocationId": expected_invocation}
+    ):
+        raise RegistryError(f"{label} verified workflow provenance constraints differ")
+    signature = _exact_keys(
+        verification["signature"], {"certificate"}, f"{label} verified signature"
+    )
+    certificate = signature["certificate"]
+    if not isinstance(certificate, dict) or any(
+        certificate.get(field) != expected
+        for field, expected in {
+            "issuer": "https://token.actions.githubusercontent.com",
+            "subjectAlternativeName": expected_builder,
+            "githubWorkflowTrigger": "push",
+            "githubWorkflowSHA": source_digest,
+            "githubWorkflowRepository": repository,
+            "githubWorkflowRef": source_ref,
+            "buildSignerURI": expected_builder,
+            "buildSignerDigest": source_digest,
+            "buildTrigger": "push",
+            "runnerEnvironment": "github-hosted",
+            "sourceRepositoryURI": workflow_url,
+            "sourceRepositoryDigest": source_digest,
+            "sourceRepositoryRef": source_ref,
+            "runInvocationURI": expected_invocation,
+            "sourceRepositoryVisibilityAtSigning": "public",
+        }.items()
+    ):
+        raise RegistryError(f"{label} verified certificate provenance constraints differ")
+    timestamps = _array(
+        verification["verifiedTimestamps"], f"{label} verified timestamps", maximum=32
+    )
+    if not timestamps or not any(
+        isinstance(item, dict) and item.get("type") in {"Tlog", "TSA"}
+        for item in timestamps
+    ):
+        raise RegistryError(f"{label} lacks a verified transparency-log or timestamp witness")
 
 
 def _record_path(item: Any, label: str) -> tuple[str, str]:
@@ -587,10 +1063,421 @@ def _validate_publisher_inventory(
         raise RegistryError(f"{label}.summary differs from its file rows")
 
 
+def _validate_witness_capsule(
+    source_root: Path,
+    entry: dict[str, Any],
+    openssl: str,
+    capsule_id: str,
+    capsule: Path,
+    launch_descriptor: dict[str, Any],
+    signature_descriptor: dict[str, Any],
+    launch_raw: RawFile,
+    launch_signature_raw: RawFile,
+    index: dict[str, Any],
+    entries_by_id: dict[str, dict[str, Any]],
+) -> CapsuleResult:
+    label = f"capsule {capsule_id} witness index"
+    _exact_keys(
+        index,
+        {
+            "schema",
+            "capsule_id",
+            "base_release",
+            "files",
+            "records",
+            "profile_sets",
+            "archive_evidence",
+            "github_attestation",
+            "witness_signature",
+            "non_claims",
+        },
+        label,
+    )
+    if index["schema"] != WITNESS_INDEX_SCHEMA or index["capsule_id"] != capsule_id:
+        raise RegistryError(f"capsule {capsule_id} witness index identity differs")
+    if index["non_claims"] != WITNESS_INDEX_NON_CLAIMS:
+        raise RegistryError(f"capsule {capsule_id} witness-index non-claims changed")
+
+    file_items = _array(index["files"], f"capsule {capsule_id} files")
+    if not file_items:
+        raise RegistryError(f"capsule {capsule_id} files cannot be empty")
+    files: dict[str, tuple[dict[str, Any], RawFile]] = {}
+    for number, value in enumerate(file_items):
+        item = _descriptor(value, f"capsule {capsule_id} files[{number}]")
+        path = item["path"]
+        if any(existing.casefold() == path.casefold() for existing in files):
+            raise RegistryError(f"capsule {capsule_id} contains a duplicate or case-folded path: {path}")
+        if path in {launch_descriptor["path"], signature_descriptor["path"]}:
+            raise RegistryError(f"capsule {capsule_id} files must exclude witness index and its signature")
+        raw_file = _safe_file(capsule, path, f"capsule {capsule_id}/{path}")
+        _match_raw(item, raw_file, f"capsule {capsule_id}/{path}")
+        files[path] = (item, raw_file)
+    if list(files) != sorted(files):
+        raise RegistryError(f"capsule {capsule_id} files must be sorted by path")
+    all_paths = list(files) + [launch_descriptor["path"], signature_descriptor["path"]]
+    if len({path.casefold() for path in all_paths}) != len(all_paths):
+        raise RegistryError(f"capsule {capsule_id} contains case-folded control/file paths")
+    expected_files = set(files) | {launch_descriptor["path"], signature_descriptor["path"]}
+    actual_files = _walk_files(capsule, f"capsule {capsule_id}")
+    if actual_files != expected_files:
+        missing = ", ".join(sorted(expected_files - actual_files)) or "none"
+        extra = ", ".join(sorted(actual_files - expected_files)) or "none"
+        raise RegistryError(
+            f"capsule {capsule_id} file inventory differs (missing: {missing}; extra: {extra})"
+        )
+
+    record_items = _array(index["records"], f"capsule {capsule_id} records", maximum=2)
+    if len(record_items) != 2:
+        raise RegistryError(f"capsule {capsule_id} witness must enumerate exactly two v1 records")
+    record_pairs = [
+        _record_path(value, f"capsule {capsule_id} records[{number}]")
+        for number, value in enumerate(record_items)
+    ]
+    if record_pairs != sorted(record_pairs):
+        raise RegistryError(f"capsule {capsule_id} records must be sorted by path")
+    record_paths = [path for path, _ in record_pairs]
+    receipt_paths = [receipt for _, receipt in record_pairs]
+    if (
+        len(set(record_paths)) != 2
+        or len(set(receipt_paths)) != 2
+        or set(record_paths) & set(receipt_paths)
+        or not (set(record_paths) | set(receipt_paths)) <= set(files)
+    ):
+        raise RegistryError(f"capsule {capsule_id} record/receipt graph is not closed and path-unique")
+    records: dict[str, dict[str, Any]] = {}
+    record_digests: dict[str, str] = {}
+    for record_path, receipt_path in record_pairs:
+        record_loaded = release_v1.read_document(
+            files[record_path][1].path, f"capsule record {record_path}"
+        )
+        try:
+            record_digest = release_v1.validate_document(record_loaded.value)
+            receipt_loaded = release_v1.read_document(
+                files[receipt_path][1].path, f"capsule receipt {receipt_path}"
+            )
+            release_v1.verify_receipt(record_loaded, receipt_loaded.value)
+        except release_v1.ReleaseError as error:
+            raise RegistryError(f"capsule {capsule_id} v1 verification failed: {error}") from error
+        records[record_path] = record_loaded.value
+        record_digests[record_path] = record_digest
+
+    substrate_paths: set[str] = set()
+    witness_policy_paths: set[str] = set()
+    for path, (_, raw_file) in files.items():
+        candidate = _probe_control_json(raw_file.raw, f"capsule {capsule_id}/{path}")
+        if candidate is None:
+            continue
+        if candidate.get("schema") in SUBSTRATE_SCHEMAS:
+            substrate_paths.add(path)
+        elif candidate.get("schema") == WITNESS_VERIFIER_POLICY_SCHEMA:
+            witness_policy_paths.add(path)
+        elif candidate.get("schema") == WITNESS_INDEX_SCHEMA:
+            raise RegistryError(f"capsule {capsule_id} embeds an unregistered witness index: {path}")
+    expected_substrate_paths = set(record_paths) | set(receipt_paths)
+    if substrate_paths != expected_substrate_paths:
+        missing = ", ".join(sorted(expected_substrate_paths - substrate_paths)) or "none"
+        extra = ", ".join(sorted(substrate_paths - expected_substrate_paths)) or "none"
+        raise RegistryError(
+            f"capsule {capsule_id} v1 record enumeration differs (missing: {missing}; extra: {extra})"
+        )
+    profiles = [path for path, value in records.items() if value["schema"] == release_v1.PROFILE_SCHEMA]
+    evaluations = [
+        path
+        for path, value in records.items()
+        if value["schema"] == release_v1.ATTESTATION_SCHEMA
+        and value.get("predicate_type") == "evaluation"
+    ]
+    if len(profiles) != 1 or len(evaluations) != 1 or len(profiles) + len(evaluations) != 2:
+        raise RegistryError(
+            f"capsule {capsule_id} witness must contain one profile and one evaluation attestation"
+        )
+    profile_path = profiles[0]
+    evaluation_path = evaluations[0]
+    profile = records[profile_path]
+    evaluation_record = records[evaluation_path]
+    if evaluation_record.get("evidence_class") != "curator-observed":
+        raise RegistryError(f"capsule {capsule_id} evaluation must be curator-observed")
+    if (
+        profile.get("backend", {}).get("provider")
+        != "KINGDOM workflow on a GitHub-hosted runner"
+        or profile.get("hardware", {}).get("visibility") != "observed"
+    ):
+        raise RegistryError(f"capsule {capsule_id} profile is not the bounded remote GitHub witness")
+
+    base = _exact_keys(
+        index["base_release"],
+        {"capsule_id", "launch_index_digest", "release_path", "release_canonical_digest"},
+        f"capsule {capsule_id} base_release",
+    )
+    if capsule_id == QWEN_UBUNTU_WITNESS_ID and base != {
+        "capsule_id": QWEN_UBUNTU_BASE_CAPSULE_ID,
+        "launch_index_digest": QWEN_UBUNTU_BASE_LAUNCH_DIGEST,
+        "release_path": "release.json",
+        "release_canonical_digest": QWEN_UBUNTU_BASE_RELEASE_DIGEST,
+    }:
+        raise RegistryError(f"capsule {capsule_id} differs from its reviewed Qwen base anchor")
+    base_id = _identifier(base["capsule_id"], f"capsule {capsule_id} base_release.capsule_id")
+    if base_id == capsule_id or base_id not in entries_by_id:
+        raise RegistryError(f"capsule {capsule_id} base release must name another registered capsule")
+    if not isinstance(base["launch_index_digest"], str) or DIGEST.fullmatch(base["launch_index_digest"]) is None:
+        raise RegistryError(f"capsule {capsule_id} base launch-index digest is invalid")
+    if not isinstance(base["release_canonical_digest"], str) or DIGEST.fullmatch(base["release_canonical_digest"]) is None:
+        raise RegistryError(f"capsule {capsule_id} base release canonical digest is invalid")
+    base_release_path = _relative_path(
+        base["release_path"], f"capsule {capsule_id} base_release.release_path"
+    )
+    base_entry = entries_by_id[base_id]
+    base_capsule_relative = _relative_path(
+        base_entry["capsule"], f"capsule {capsule_id} referenced base capsule"
+    )
+    if PurePosixPath(base_capsule_relative).parts != ("capsules", base_id):
+        raise RegistryError(f"capsule {capsule_id} referenced base capsule path differs")
+    base_capsule = _safe_dir(source_root, base_capsule_relative, f"base capsule {base_id}")
+    base_launch_descriptor = _descriptor(
+        base_entry["launch_index"], f"capsule {capsule_id} referenced base launch index"
+    )
+    if base_launch_descriptor["digest"] != base["launch_index_digest"]:
+        raise RegistryError(f"capsule {capsule_id} base launch-index digest differs from registry")
+    base_launch_raw = _safe_file(
+        base_capsule,
+        base_launch_descriptor["path"],
+        f"capsule {capsule_id} referenced base launch index",
+    )
+    _match_raw(
+        base_launch_descriptor,
+        base_launch_raw,
+        f"capsule {capsule_id} referenced base launch index",
+    )
+    base_index = _parse_json(base_launch_raw.raw, f"capsule {capsule_id} referenced base launch index")
+    if base_index.get("schema") != LAUNCH_INDEX_SCHEMA or base_index.get("capsule_id") != base_id:
+        raise RegistryError(f"capsule {capsule_id} base anchor is not a registered release launch index")
+    base_file_rows = [
+        _descriptor(value, f"capsule {capsule_id} referenced base files[{number}]")
+        for number, value in enumerate(_array(base_index.get("files"), "referenced base files"))
+    ]
+    base_release_rows = [row for row in base_file_rows if row["path"] == base_release_path]
+    base_record_pairs = [
+        _record_path(value, f"capsule {capsule_id} referenced base records[{number}]")
+        for number, value in enumerate(_array(base_index.get("records"), "referenced base records"))
+    ]
+    if len(base_release_rows) != 1 or base_release_path not in {path for path, _ in base_record_pairs}:
+        raise RegistryError(f"capsule {capsule_id} base release path is not one indexed v1 record")
+    base_release_raw = _safe_file(
+        base_capsule, base_release_path, f"capsule {capsule_id} referenced base release"
+    )
+    _match_raw(base_release_rows[0], base_release_raw, f"capsule {capsule_id} referenced base release")
+    base_release_loaded = release_v1.read_document(
+        base_release_raw.path, f"capsule {capsule_id} referenced base release"
+    )
+    try:
+        base_release_digest = release_v1.validate_document(base_release_loaded.value)
+    except release_v1.ReleaseError as error:
+        raise RegistryError(f"capsule {capsule_id} base release verification failed: {error}") from error
+    if base_release_loaded.value.get("schema") != release_v1.RELEASE_SCHEMA:
+        raise RegistryError(f"capsule {capsule_id} base release path is not a model release")
+    if base_release_digest != base["release_canonical_digest"]:
+        raise RegistryError(f"capsule {capsule_id} base release canonical digest differs")
+
+    profile_sets = _array(index["profile_sets"], f"capsule {capsule_id} profile_sets", maximum=1)
+    if len(profile_sets) != 1:
+        raise RegistryError(f"capsule {capsule_id} witness must have exactly one profile set")
+    profile_set = _exact_keys(
+        profile_sets[0], {"profile", "attestations"}, f"capsule {capsule_id} profile_sets[0]"
+    )
+    set_profile = _relative_path(profile_set["profile"], "witness profile-set profile")
+    set_attestations = _array(
+        profile_set["attestations"], "witness profile-set attestations", maximum=1
+    )
+    if set_profile != profile_path or set_attestations != [evaluation_path]:
+        raise RegistryError(f"capsule {capsule_id} witness profile set differs from its exact records")
+    try:
+        release_v1.verify_set(base_release_loaded.value, profile, [evaluation_record])
+    except release_v1.ReleaseError as error:
+        raise RegistryError(f"capsule {capsule_id} base/profile/evaluation binding failed: {error}") from error
+
+    evaluated = evaluation_record["evaluation"]
+    if (
+        evaluated["release_digest"] != base_release_digest
+        or evaluated["execution_profile_digest"] != record_digests[profile_path]
+    ):
+        raise RegistryError(f"capsule {capsule_id} evaluation does not bind its exact base release/profile")
+    evaluated_descriptors = [
+        ("artifact", artifact["name"], artifact["descriptor"])
+        for artifact in evaluated["artifacts"]
+    ]
+    evaluated_descriptors.extend(
+        ("benchmark", field, evaluated["benchmark"][field])
+        for field in ("dataset", "preprocessing", "scoring")
+    )
+    resolved_paths: dict[tuple[str, str], str] = {}
+    for descriptor_kind, descriptor_name, descriptor in evaluated_descriptors:
+        matching_paths = [
+            file_path
+            for file_path, (file_item, raw_file) in files.items()
+            if file_item["media_type"] == descriptor["media_type"]
+            and raw_file.digest == descriptor["digest"]
+            and raw_file.size == descriptor["size"]
+        ]
+        if len(matching_paths) != 1:
+            raise RegistryError(
+                f"capsule {capsule_id} evaluation {descriptor_kind} {descriptor_name} "
+                "must match exactly one indexed raw file"
+            )
+        resolved_paths[(descriptor_kind, descriptor_name)] = matching_paths[0]
+    artifact_paths = [
+        resolved_paths[("artifact", artifact["name"])] for artifact in evaluated["artifacts"]
+    ]
+    benchmark_paths = [
+        resolved_paths[("benchmark", field)] for field in ("dataset", "preprocessing", "scoring")
+    ]
+    if len(artifact_paths) != len(set(artifact_paths)):
+        raise RegistryError(f"capsule {capsule_id} evaluation artifacts must resolve to path-unique files")
+    if len(set(benchmark_paths)) != 3:
+        raise RegistryError(f"capsule {capsule_id} evaluation benchmark roles must resolve to distinct files")
+    if set(artifact_paths) & set(benchmark_paths):
+        raise RegistryError(f"capsule {capsule_id} evaluation artifact and benchmark paths must be disjoint")
+
+    archive_evidence = _exact_keys(
+        index["archive_evidence"], {"archive", "members"}, f"capsule {capsule_id} archive_evidence"
+    )
+    archive_path = _relative_path(
+        archive_evidence["archive"], f"capsule {capsule_id} archive_evidence.archive"
+    )
+    if archive_path not in files or files[archive_path][0]["media_type"] != "application/x-tar":
+        raise RegistryError(f"capsule {capsule_id} evidence archive must be one indexed application/x-tar")
+    member_items = _array(
+        archive_evidence["members"], f"capsule {capsule_id} archive members", maximum=11
+    )
+    if len(member_items) != 11:
+        raise RegistryError(f"capsule {capsule_id} evidence archive must map exactly eleven members")
+    mappings: list[tuple[str, str]] = []
+    for number, value in enumerate(member_items):
+        member = _exact_keys(
+            value, {"member", "path"}, f"capsule {capsule_id} archive members[{number}]"
+        )
+        member_name = _relative_path(member["member"], "archive member")
+        indexed_path = _relative_path(member["path"], "archive extracted evidence path")
+        if PurePosixPath(member_name).name != member_name:
+            raise RegistryError(f"capsule {capsule_id} archive member names must be root-level basenames")
+        if indexed_path != f"evidence/execution/{member_name}" or indexed_path not in files:
+            raise RegistryError(f"capsule {capsule_id} archive member path is outside exact extracted evidence")
+        mappings.append((member_name, indexed_path))
+    if mappings != sorted(mappings) or len({name.casefold() for name, _ in mappings}) != len(mappings):
+        raise RegistryError(f"capsule {capsule_id} archive member mapping must be sorted and case-unique")
+    _verify_archive_members(
+        files[archive_path][1], mappings, files, f"capsule {capsule_id} evidence archive"
+    )
+
+    attestation = _exact_keys(
+        index["github_attestation"],
+        {
+            "artifact",
+            "bundle",
+            "trusted_root",
+            "repository",
+            "signer_workflow",
+            "source_digest",
+            "source_ref",
+            "run_id",
+            "run_attempt",
+            "predicate_type",
+            "runner_environment",
+            "verifier",
+        },
+        f"capsule {capsule_id} github_attestation",
+    )
+    if capsule_id == QWEN_UBUNTU_WITNESS_ID:
+        expected_provenance = {
+            "repository": QWEN_UBUNTU_REPOSITORY,
+            "signer_workflow": QWEN_UBUNTU_SIGNER_WORKFLOW,
+            "source_digest": QWEN_UBUNTU_SOURCE_DIGEST,
+            "source_ref": QWEN_UBUNTU_SOURCE_REF,
+            "run_id": QWEN_UBUNTU_RUN_ID,
+            "run_attempt": 1,
+            "predicate_type": SLSA_PROVENANCE_V1,
+            "runner_environment": "github-hosted",
+            "verifier": {
+                "name": "gh",
+                "minimum_version": GH_ATTESTATION_MINIMUM_VERSION,
+                "source_revision": GH_ATTESTATION_SOURCE_REVISION,
+            },
+        }
+        if any(attestation[field] != expected for field, expected in expected_provenance.items()):
+            raise RegistryError(f"capsule {capsule_id} differs from its reviewed GitHub provenance")
+    attestation_paths = {
+        field: _relative_path(attestation[field], f"capsule {capsule_id} github_attestation.{field}")
+        for field in ("artifact", "bundle", "trusted_root")
+    }
+    if attestation_paths["artifact"] != archive_path:
+        raise RegistryError(f"capsule {capsule_id} GitHub attestation names a different artifact")
+    for field in ("bundle", "trusted_root"):
+        if attestation_paths[field] not in files:
+            raise RegistryError(f"capsule {capsule_id} GitHub attestation {field} is outside files")
+        if files[attestation_paths[field]][0]["media_type"] != "application/jsonl":
+            raise RegistryError(f"capsule {capsule_id} GitHub attestation {field} must use application/jsonl")
+    gh = shutil.which("gh")
+    if gh is None:
+        raise RegistryError("gh is required for offline GitHub attestation verification")
+    _verify_github_attestation(
+        gh,
+        files[archive_path][1],
+        files[attestation_paths["bundle"]][1],
+        files[attestation_paths["trusted_root"]][1],
+        attestation,
+        f"capsule {capsule_id} GitHub attestation",
+    )
+
+    witness_signature = _exact_keys(
+        index["witness_signature"],
+        {"public_key", "verifier_policy"},
+        f"capsule {capsule_id} witness_signature",
+    )
+    signature_paths = {
+        field: _relative_path(
+            witness_signature[field], f"capsule {capsule_id} witness_signature.{field}"
+        )
+        for field in witness_signature
+    }
+    expected_media = {
+        "public_key": "application/x-pem-file",
+        "verifier_policy": "application/json",
+    }
+    for field, expected in expected_media.items():
+        path = signature_paths[field]
+        if path not in files or files[path][0]["media_type"] != expected:
+            raise RegistryError(f"capsule {capsule_id} witness signature {field} must use {expected}")
+    public_key_file = files[signature_paths["public_key"]][1]
+    policy_file = files[signature_paths["verifier_policy"]][1]
+    if witness_policy_paths != {signature_paths["verifier_policy"]}:
+        raise RegistryError(
+            f"capsule {capsule_id} must enumerate exactly one witness verifier policy"
+        )
+    policy = _parse_json(policy_file.raw, f"capsule {capsule_id} witness verifier policy")
+    _verify_witness_policy(policy, public_key_file, f"capsule {capsule_id} witness verifier policy")
+    _openssl_version(openssl)
+    witness_message = _domain_message(WITNESS_INDEX_DOMAIN, launch_raw.digest)
+    _verify_ed25519(
+        openssl,
+        public_key_file.path,
+        launch_signature_raw.path,
+        witness_message,
+        f"capsule {capsule_id} witness index",
+    )
+    return CapsuleResult(
+        records=len(records),
+        files=len(actual_files),
+        crypto_checks=2,
+        signing_key_digest=_public_key_fingerprint(
+            openssl, public_key_file.path, f"capsule {capsule_id} witness"
+        ),
+    )
+
+
 def _validate_capsule(
     source_root: Path,
     entry: dict[str, Any],
     openssl: str,
+    entries_by_id: dict[str, dict[str, Any]],
 ) -> CapsuleResult:
     capsule_id = _identifier(entry["id"], "registry entry id")
     capsule_relative = _relative_path(entry["capsule"], f"registry entry {capsule_id}.capsule")
@@ -618,6 +1505,20 @@ def _validate_capsule(
     _match_raw(launch_descriptor, launch_raw, f"capsule {capsule_id} launch index")
     _match_raw(signature_descriptor, launch_signature_raw, f"capsule {capsule_id} launch signature")
     index = _parse_json(launch_raw.raw, f"capsule {capsule_id} launch index")
+    if index.get("schema") == WITNESS_INDEX_SCHEMA:
+        return _validate_witness_capsule(
+            source_root,
+            entry,
+            openssl,
+            capsule_id,
+            capsule,
+            launch_descriptor,
+            signature_descriptor,
+            launch_raw,
+            launch_signature_raw,
+            index,
+            entries_by_id,
+        )
     required_index_keys = {
         "schema",
         "capsule_id",
@@ -712,6 +1613,10 @@ def _validate_capsule(
                 f"capsule {capsule_id}/{path}",
             )
             publisher_inventories += 1
+        if candidate.get("schema") in {WITNESS_INDEX_SCHEMA, WITNESS_VERIFIER_POLICY_SCHEMA}:
+            raise RegistryError(
+                f"capsule {capsule_id} release launch contains witness-only control bytes: {path}"
+            )
     if publisher_inventories > 1:
         raise RegistryError(f"capsule {capsule_id} has more than one publisher inventory")
     expected_substrate_paths = set(record_paths) | set(receipt_paths)
@@ -999,7 +1904,14 @@ def _validate_capsule(
         launch_message,
         f"capsule {capsule_id} launch index",
     )
-    return CapsuleResult(records=len(records), files=len(actual_files), crypto_checks=2)
+    return CapsuleResult(
+        records=len(records),
+        files=len(actual_files),
+        crypto_checks=2,
+        signing_key_digest=_public_key_fingerprint(
+            openssl, public_key_file.path, f"capsule {capsule_id} release"
+        ),
+    )
 
 
 def _capsule_directories(root: Path, label: str) -> set[str]:
@@ -1097,8 +2009,15 @@ def validate_registry(source: Path, public: Path | None = None) -> dict[str, int
     record_count = 0
     file_count = 0
     crypto_count = 0
+    signing_keys: set[str] = set()
+    entries_by_id = {entry["id"]: entry for entry in normalized_entries}
     for entry in normalized_entries:
-        result = _validate_capsule(source, entry, openssl)
+        result = _validate_capsule(source, entry, openssl, entries_by_id)
+        if result.signing_key_digest in signing_keys:
+            raise RegistryError(
+                f"capsule {entry['id']} reuses a task signing key from another registry capsule"
+            )
+        signing_keys.add(result.signing_key_digest)
         record_count += result.records
         file_count += result.files
         crypto_count += result.crypto_checks

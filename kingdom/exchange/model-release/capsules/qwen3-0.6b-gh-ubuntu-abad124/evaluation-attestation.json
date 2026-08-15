@@ -1,0 +1,471 @@
+{
+  "schema": "kingdom.model-release-attestation/v1",
+  "kind": "attestation",
+  "subject": {
+    "name": "Qwen3-0.6B GitHub-hosted Ubuntu x64 execution profile",
+    "kind": "execution-profile",
+    "digest": "sha256:0d1e5ba4c89a42897b1706f24654261954c1d6ee631aba3cafabdc5d8f15a7d3"
+  },
+  "predicate_type": "evaluation",
+  "evidence_class": "curator-observed",
+  "assertor": {
+    "name": "KINGDOM model-release curation",
+    "identity": "urn:kingdom:curation:qwen3-ubuntu-witness"
+  },
+  "issued_at": "2026-08-15T08:08:09Z",
+  "evaluation": {
+    "release_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4",
+    "execution_profile_digest": "sha256:0d1e5ba4c89a42897b1706f24654261954c1d6ee631aba3cafabdc5d8f15a7d3",
+    "started_at": "2026-08-15T07:57:52Z",
+    "finished_at": "2026-08-15T07:58:17Z",
+    "harness": {
+      "name": "kingdom-public-output-free-qwen-probe",
+      "revision": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+      "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+      "system_prompt": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tool_set": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "context_policy": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a"
+    },
+    "benchmark": {
+      "name": "public synthetic arithmetic interface witness",
+      "revision": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+      "subset": "one public case across one thinking and two non-thinking greedy generations",
+      "dataset": {
+        "media_type": "application/json",
+        "digest": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+        "size": 1215
+      },
+      "preprocessing": {
+        "media_type": "text/x-python",
+        "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+        "size": 21866
+      },
+      "scoring": {
+        "media_type": "application/json",
+        "digest": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+        "size": 1381
+      }
+    },
+    "judge": {
+      "kind": "rules",
+      "model": "not-applicable",
+      "revision": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+      "configuration": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037"
+    },
+    "sampling": {
+      "strategy": "three greedy generations from one model load: one thinking and two non-thinking repeats",
+      "temperature": "not applied",
+      "top_p": "not applied",
+      "seed": "20260815",
+      "runs": 3,
+      "reasoning_effort": "thinking enabled once and hard-disabled twice"
+    },
+    "aggregation": "one snapshot and network gate followed by three sequential runs and an exact non-thinking digest comparison",
+    "results": [
+      {
+        "name": "full-snapshot-descriptor-gate-passes",
+        "value": "1",
+        "unit": "loader sequences"
+      },
+      {
+        "name": "network-namespace-gate-passes",
+        "value": "1",
+        "unit": "loader sequences"
+      },
+      {
+        "name": "thinking-interface-closed",
+        "value": "0",
+        "unit": "of 1"
+      },
+      {
+        "name": "thinking-final-segment-tokens",
+        "value": "0",
+        "unit": "tokens"
+      },
+      {
+        "name": "nonthinking-last-numeric-match",
+        "value": "2",
+        "unit": "of 2"
+      },
+      {
+        "name": "nonthinking-strict-exact-match",
+        "value": "0",
+        "unit": "of 2"
+      },
+      {
+        "name": "nonthinking-repeat-token-match",
+        "value": "1",
+        "unit": "pair"
+      },
+      {
+        "name": "nonthinking-repeat-decoded-digest-match",
+        "value": "1",
+        "unit": "pair"
+      }
+    ],
+    "artifacts": [
+      {
+        "name": "thinking-greedy-v1-result.json",
+        "role": "evaluation-results",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:f2840316c195fd3bde19c50be93df723edebbc54e07d978776a16482b7e788d6",
+          "size": 5967
+        },
+        "evidence_ref": "thinking-result"
+      },
+      {
+        "name": "nonthinking-greedy-v1-result.json",
+        "role": "evaluation-results",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:ebbee781259fe98b0f606f39b7bdb320d414432ef9245ecf2f7261c3817fbb5f",
+          "size": 5968
+        },
+        "evidence_ref": "nonthinking-result"
+      },
+      {
+        "name": "nonthinking-greedy-repeat-v1-result.json",
+        "role": "evaluation-results",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:6f8c28e318f58d2a5b6f089490639ad6d56d564b3a8435920e001d97f8a66f5d",
+          "size": 5975
+        },
+        "evidence_ref": "nonthinking-repeat-result"
+      },
+      {
+        "name": "run-summary.json",
+        "role": "evaluation-results",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+          "size": 2544
+        },
+        "evidence_ref": "run-summary"
+      },
+      {
+        "name": "runtime-manifest.json",
+        "role": "runtime-manifest",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+          "size": 2865
+        },
+        "evidence_ref": "runtime-manifest"
+      },
+      {
+        "name": "snapshot-byte-manifest.json",
+        "role": "artifact-manifest",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+          "size": 2850
+        },
+        "evidence_ref": "snapshot-manifest"
+      },
+      {
+        "name": "qwen3-ubuntu-witness.tar",
+        "role": "evidence-archive",
+        "descriptor": {
+          "media_type": "application/x-tar",
+          "digest": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+          "size": 71680
+        },
+        "evidence_ref": "evidence-archive"
+      },
+      {
+        "name": "github-attestation-bundle.jsonl",
+        "role": "signature-bundle",
+        "descriptor": {
+          "media_type": "application/jsonl",
+          "digest": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+          "size": 12560
+        },
+        "evidence_ref": "github-attestation-bundle"
+      },
+      {
+        "name": "offline-verification-receipt.json",
+        "role": "verification-receipt",
+        "descriptor": {
+          "media_type": "application/json",
+          "digest": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+          "size": 2099
+        },
+        "evidence_ref": "offline-attestation-verification"
+      }
+    ],
+    "exclusions": [
+      "Raw decoded-output and raw generated-deliberation bytes, model weights, tokenizer bytes, raw environment, hostname, credentials, and private paths are absent.",
+      "No GPU execution, tool call, long-context probe, multilingual probe, safety evaluation, or broad public benchmark was performed.",
+      "The public fixture differs from the earlier sealed capsule's private fixture; exact-output equivalence across those machines is not claimed.",
+      "GitHub artifact provenance binds the evidence tar and workflow identity constraints, not model semantics or the loader's consumed inode.",
+      "Evaluation bounds conservatively enclose the microsecond run timestamps at whole-second schema precision."
+    ],
+    "refusals": [],
+    "fallbacks": [
+      "After one pre-inference infrastructure-observation failure, the bounded retry queried interfaces through socket.if_nameindex inside the active network namespace."
+    ],
+    "safety_interventions": [],
+    "failures": [
+      "The thinking run reached its 96-token ceiling with the reasoning interface still open and no final answer segment.",
+      "Both non-thinking runs ended normally with identical token-list and decoded-output digests and the correct last numeric value, but both failed strict exact-output and sole-numeric-answer rules.",
+      "One preceding workflow run failed before inference and produced no evidence tar or artifact attestation; its bounded receipt is retained separately."
+    ],
+    "cost": {
+      "currency": "USD",
+      "amount_micros": 0,
+      "latency_ms": 23224
+    },
+    "evidence_refs": [
+      "benchmark-manifest",
+      "evidence-archive",
+      "github-attestation-bundle",
+      "harness",
+      "nonthinking-repeat-result",
+      "nonthinking-result",
+      "offline-attestation-verification",
+      "prior-attempt-failure",
+      "public-probe",
+      "run-summary",
+      "runtime-manifest",
+      "scoring-policy",
+      "snapshot-manifest",
+      "thinking-result",
+      "trusted-root-snapshot"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "thinking-result",
+      "title": "Thinking-mode open-at-stop result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/thinking-greedy-v1-result.json",
+      "revision": "sha256:f2840316c195fd3bde19c50be93df723edebbc54e07d978776a16482b7e788d6",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:f2840316c195fd3bde19c50be93df723edebbc54e07d978776a16482b7e788d6",
+        "size": 5967
+      }
+    },
+    {
+      "id": "nonthinking-result",
+      "title": "First non-thinking greedy result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/nonthinking-greedy-v1-result.json",
+      "revision": "sha256:ebbee781259fe98b0f606f39b7bdb320d414432ef9245ecf2f7261c3817fbb5f",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:ebbee781259fe98b0f606f39b7bdb320d414432ef9245ecf2f7261c3817fbb5f",
+        "size": 5968
+      }
+    },
+    {
+      "id": "nonthinking-repeat-result",
+      "title": "Repeated non-thinking greedy result",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/nonthinking-greedy-repeat-v1-result.json",
+      "revision": "sha256:6f8c28e318f58d2a5b6f089490639ad6d56d564b3a8435920e001d97f8a66f5d",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:6f8c28e318f58d2a5b6f089490639ad6d56d564b3a8435920e001d97f8a66f5d",
+        "size": 5975
+      }
+    },
+    {
+      "id": "run-summary",
+      "title": "Public-input output-free three-run summary",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/run-summary.json",
+      "revision": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+        "size": 2544
+      }
+    },
+    {
+      "id": "runtime-manifest",
+      "title": "Sanitized GitHub-hosted Ubuntu x64 runtime manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/runtime-manifest.json",
+      "revision": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+        "size": 2865
+      }
+    },
+    {
+      "id": "snapshot-manifest",
+      "title": "Workflow-produced Qwen3 snapshot byte manifest",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/snapshot-byte-manifest.json",
+      "revision": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+        "size": 2850
+      }
+    },
+    {
+      "id": "public-probe",
+      "title": "Public synthetic arithmetic probe",
+      "kind": "fixture",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/public-probe.json",
+      "revision": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+        "size": 1215
+      }
+    },
+    {
+      "id": "harness",
+      "title": "Exact GitHub-hosted Qwen witness harness",
+      "kind": "fixture",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/run_qwen_probe.py",
+      "revision": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "text/x-python",
+        "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+        "size": 21866
+      }
+    },
+    {
+      "id": "benchmark-manifest",
+      "title": "Public synthetic witness benchmark manifest",
+      "kind": "fixture",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/harness/benchmark-manifest.json",
+      "revision": "sha256:eb76e87f1ee1125ee0dea543e50c8879600369ed9c9956b9187c8a6db2247d08",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:eb76e87f1ee1125ee0dea543e50c8879600369ed9c9956b9187c8a6db2247d08",
+        "size": 1486
+      }
+    },
+    {
+      "id": "scoring-policy",
+      "title": "Public output-free rule scoring policy",
+      "kind": "fixture",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/harness/scoring-policy.json",
+      "revision": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+        "size": 1381
+      }
+    },
+    {
+      "id": "evidence-archive",
+      "title": "Deterministic sanitized witness evidence tar",
+      "kind": "evaluation-output",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/qwen3-ubuntu-witness.tar",
+      "revision": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "GitHub Actions Qwen3 Ubuntu witness workflow",
+      "content": {
+        "media_type": "application/x-tar",
+        "digest": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+        "size": 71680
+      }
+    },
+    {
+      "id": "github-attestation-bundle",
+      "title": "GitHub artifact attestation bundle for the sanitized evidence tar",
+      "kind": "signature-bundle",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/github-attestation-bundle.jsonl",
+      "revision": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "GitHub Actions artifact attestation service",
+      "content": {
+        "media_type": "application/jsonl",
+        "digest": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+        "size": 12560
+      }
+    },
+    {
+      "id": "trusted-root-snapshot",
+      "title": "Pinned trusted-root snapshot used for offline attestation verification",
+      "kind": "other",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/github-trusted-root.jsonl",
+      "revision": "sha256:65ca537f6ed8a47fd0e560c421baa1f6c1efb8b25fc200d8c5c02c0e92eb2b9c",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/jsonl",
+        "digest": "sha256:65ca537f6ed8a47fd0e560c421baa1f6c1efb8b25fc200d8c5c02c0e92eb2b9c",
+        "size": 34634
+      }
+    },
+    {
+      "id": "offline-attestation-verification",
+      "title": "Pinned-input offline GitHub attestation verification receipt",
+      "kind": "other",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/offline-verification-receipt.json",
+      "revision": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+        "size": 2099
+      }
+    },
+    {
+      "id": "prior-attempt-failure",
+      "title": "Bounded pre-inference prior-attempt failure receipt",
+      "kind": "other",
+      "locator": "https://chillspace.love/exchange/model-release/capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/prior-attempt-failure-receipt.json",
+      "revision": "sha256:fb675a385563bf1af0dac67171ace71c9574d665060903b3259c46ddc43d1166",
+      "retrieved_at": "2026-08-15T08:08:09Z",
+      "mutability": "immutable",
+      "assertor": "KINGDOM model-release curation",
+      "content": {
+        "media_type": "application/json",
+        "digest": "sha256:fb675a385563bf1af0dac67171ace71c9574d665060903b3259c46ddc43d1166",
+        "size": 1101
+      }
+    }
+  ],
+  "non_claims": [
+    "An attestation records an assertion and its evidence class; it does not make the assertion true.",
+    "A signature can bind bytes to a signer under a verifier policy; it does not prove safety, quality, or every signed claim.",
+    "An evaluation is bounded to its named release, execution profile, harness, data, settings, and evidence.",
+    "This record grants no authority and performs no build, signature, model call, publication, deployment, or external action."
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "format": "kingdom.github-attestation-offline-verification-receipt/v1",
+  "recorded_at": "2026-08-15T08:08:09Z",
+  "artifact": {
+    "path": "qwen3-ubuntu-witness.tar",
+    "media_type": "application/x-tar",
+    "digest": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+    "size": 71680
+  },
+  "inputs": {
+    "bundle": {
+      "digest": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+      "size": 12560
+    },
+    "trusted_root_snapshot": {
+      "digest": "sha256:65ca537f6ed8a47fd0e560c421baa1f6c1efb8b25fc200d8c5c02c0e92eb2b9c",
+      "size": 34634
+    }
+  },
+  "policy": {
+    "repository": "mynameisyou-cmyk/chillspace-commons",
+    "signer_workflow": "mynameisyou-cmyk/chillspace-commons/.github/workflows/qwen3-ubuntu-witness.yml",
+    "source_digest": "abad1246268ebeadcbc4dc99571f84beadfd030f",
+    "source_ref": "refs/heads/research/qwen3-06b-ubuntu-witness-20260815",
+    "predicate_type": "https://slsa.dev/provenance/v1"
+  },
+  "verifier": {
+    "name": "gh",
+    "version": "2.86.0",
+    "source_revision": "github/cli/v2.86.0",
+    "network_boundary": "HTTP, HTTPS, and ALL proxy variables forced to unreachable loopback endpoints; local bundle and custom trusted-root snapshot supplied",
+    "exit_status": 0
+  },
+  "result": {
+    "verified_subject_digest": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+    "verified_subject_name": "qwen3-ubuntu-witness.tar",
+    "verified_timestamp": "2026-08-15T07:58:29Z",
+    "timestamp_type": "Tlog",
+    "timestamp_uri": "https://rekor.sigstore.dev"
+  },
+  "non_claims": [
+    "Successful verification authenticates the attestation bundle, workflow identity constraints, and tar subject under the supplied trusted-root snapshot; it does not make workflow-controlled predicate claims true.",
+    "The trusted-root file is a pinned verification input, not a timeless assertion about later trust-root state.",
+    "The verifier did not reexecute the model, inspect decoded output, prove model semantics, or prove which inode the loader consumed."
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "format": "kingdom.github-hosted-witness-evidence-manifest/v1",
+  "files": [
+    {
+      "path": "nonthinking-greedy-repeat-v1-result.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:6f8c28e318f58d2a5b6f089490639ad6d56d564b3a8435920e001d97f8a66f5d",
+        "size": 5975
+      }
+    },
+    {
+      "path": "nonthinking-greedy-v1-result.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:ebbee781259fe98b0f606f39b7bdb320d414432ef9245ecf2f7261c3817fbb5f",
+        "size": 5968
+      }
+    },
+    {
+      "path": "public-probe.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+        "size": 1215
+      }
+    },
+    {
+      "path": "run-summary.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+        "size": 2544
+      }
+    },
+    {
+      "path": "run_qwen_probe.py",
+      "descriptor": {
+        "media_type": "text/x-python",
+        "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+        "size": 21866
+      }
+    },
+    {
+      "path": "runtime-manifest.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+        "size": 2865
+      }
+    },
+    {
+      "path": "snapshot-byte-manifest.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+        "size": 2850
+      }
+    },
+    {
+      "path": "snapshot.sha256",
+      "descriptor": {
+        "media_type": "text/plain",
+        "digest": "sha256:30bc9906056ba2bf08abeb86a322d554d72af3ad1c926d30df77e246583052b8",
+        "size": 805
+      }
+    },
+    {
+      "path": "thinking-greedy-v1-result.json",
+      "descriptor": {
+        "media_type": "application/json",
+        "digest": "sha256:f2840316c195fd3bde19c50be93df723edebbc54e07d978776a16482b7e788d6",
+        "size": 5967
+      }
+    },
+    {
+      "path": "wheel-lock.txt",
+      "descriptor": {
+        "media_type": "text/plain",
+        "digest": "sha256:895b0bbf5f20bbfb979ccfdb0fea0cef64eb6a4e0a6359513bfcad7c43ee14b8",
+        "size": 6615
+      }
+    }
+  ],
+  "workflow": {
+    "repository": "mynameisyou-cmyk/chillspace-commons",
+    "commit": "abad1246268ebeadcbc4dc99571f84beadfd030f",
+    "workflow_ref": "mynameisyou-cmyk/chillspace-commons/.github/workflows/qwen3-ubuntu-witness.yml@refs/heads/research/qwen3-06b-ubuntu-witness-20260815",
+    "run_id": "31873241774",
+    "run_attempt": 1,
+    "runner_os": "Linux",
+    "runner_arch": "X64",
+    "image_os": "ubuntu24",
+    "image_version": "20260810.271.1"
+  },
+  "non_claims": [
+    "This manifest enumerates sanitized evidence bytes; it does not contain the model snapshot or decoded output.",
+    "The later GitHub attestation authenticates the deterministic tar subject, not each claim's truth."
+  ]
+}

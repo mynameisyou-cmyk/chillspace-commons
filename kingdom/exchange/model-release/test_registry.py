@@ -4,15 +4,18 @@
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
+from unittest import mock
 
 
 HERE = Path(__file__).resolve().parent
@@ -42,9 +45,13 @@ def file_descriptor(path: str, raw: bytes, media_type: str) -> dict[str, Any]:
 
 
 def media_type(path: str) -> str:
+    if path.endswith(".jsonl"):
+        return "application/jsonl"
     if path.endswith(".json"):
         return "application/json"
-    if path.endswith(".pem"):
+    if path.endswith(".tar"):
+        return "application/x-tar"
+    if path.endswith(".pem") or path.endswith(".pub"):
         return "application/x-pem-file"
     if path.endswith(".txt") or path.endswith(".md"):
         return "text/plain"
@@ -393,6 +400,337 @@ class SignedFixture:
         self.mirror()
 
 
+class WitnessFixture:
+    """Add one signed, archive-backed witness capsule to ``SignedFixture``."""
+
+    capsule_id = "witness-fixture-v1"
+    index_path = "witness-index.json"
+    signature_path = "witness-index.sig"
+    profile_path = "ubuntu-x64-profile.json"
+    evaluation_path = "evaluation-attestation.json"
+    profile_receipt_path = "receipts/ubuntu-x64-profile.receipt.json"
+    evaluation_receipt_path = "receipts/evaluation-attestation.receipt.json"
+    archive_path = "evidence/provenance/qwen3-ubuntu-witness.tar"
+    bundle_path = "evidence/provenance/github-attestation-bundle.jsonl"
+    root_path = "evidence/provenance/github-trusted-root.jsonl"
+    public_key_path = "signing/public-key.pub"
+    policy_path = "signing/verifier-policy.json"
+    member_names = sorted(
+        [
+            "benchmark-dataset.json",
+            "benchmark-preprocessing.txt",
+            "benchmark-scoring.json",
+            "evidence-manifest.json",
+            "nonthinking-result.json",
+            "public-probe.json",
+            "run-summary.json",
+            "run_qwen_probe.py",
+            "runtime-manifest.json",
+            "snapshot-byte-manifest.json",
+            "wheel-lock.txt",
+        ]
+    )
+
+    def __init__(self, base: SignedFixture) -> None:
+        self.base = base
+        self.source = base.source
+        self.public = base.public
+        self.directory = base.directory
+        self.capsule = self.source / "capsules" / self.capsule_id
+        self.private_key = self.directory / "witness-private-ed25519.pem"
+        self.openssl = base.openssl
+        self.member_raw = {
+            name: (f"Synthetic witness bytes for {name}.\n").encode("utf-8")
+            for name in self.member_names
+        }
+        self._build()
+
+    def _write(self, relative: str, raw: bytes) -> None:
+        target = self.capsule / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+
+    def _write_json(self, relative: str, value: dict[str, Any]) -> None:
+        self._write(relative, pretty(value))
+
+    def _json(self, relative: str) -> dict[str, Any]:
+        return json.loads((self.capsule / relative).read_text(encoding="utf-8"))
+
+    def _sign(self, message: bytes, output: Path, key: Path | None = None) -> None:
+        message_path = self.directory / "witness-message-to-sign.bin"
+        message_path.write_bytes(message)
+        result = subprocess.run(
+            [
+                self.openssl,
+                "pkeyutl",
+                "-sign",
+                "-inkey",
+                str(key or self.private_key),
+                "-rawin",
+                "-in",
+                str(message_path),
+                "-out",
+                str(output),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        message_path.unlink()
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr or result.stdout)
+
+    def _receipt(self, record_path: str, receipt_path: str) -> None:
+        loaded = release_v1.read_document(self.capsule / record_path, f"test {record_path}")
+        self._write_json(receipt_path, release_v1.make_receipt(loaded.value, loaded.raw))
+
+    def _build_archive(self, *, omit: str | None = None, mismatch: str | None = None) -> None:
+        buffer = io.BytesIO()
+        with tarfile.open(fileobj=buffer, mode="w", format=tarfile.GNU_FORMAT) as handle:
+            root = tarfile.TarInfo(".")
+            root.type = tarfile.DIRTYPE
+            root.mode = 0o755
+            root.uid = root.gid = root.mtime = 0
+            root.uname = root.gname = ""
+            handle.addfile(root)
+            for name in self.member_names:
+                if name == omit:
+                    continue
+                raw = self.member_raw[name]
+                if name == mismatch:
+                    raw += b"mismatched archive-only byte\n"
+                item = tarfile.TarInfo(f"./{name}")
+                item.type = tarfile.REGTYPE
+                item.mode = 0o644
+                item.uid = item.gid = item.mtime = 0
+                item.uname = item.gname = ""
+                item.size = len(raw)
+                handle.addfile(item, io.BytesIO(raw))
+        self._write(self.archive_path, buffer.getvalue())
+
+    def _build(self) -> None:
+        self.capsule.mkdir(parents=True)
+        generated = subprocess.run(
+            [self.openssl, "genpkey", "-algorithm", "ED25519", "-out", str(self.private_key)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if generated.returncode != 0:
+            raise RuntimeError(generated.stderr or generated.stdout)
+        public_target = self.capsule / self.public_key_path
+        public_target.parent.mkdir(parents=True)
+        exported = subprocess.run(
+            [
+                self.openssl,
+                "pkey",
+                "-in",
+                str(self.private_key),
+                "-pubout",
+                "-out",
+                str(public_target),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if exported.returncode != 0:
+            raise RuntimeError(exported.stderr or exported.stdout)
+
+        release_loaded = release_v1.read_document(
+            self.base.capsule / self.base.release_path, "witness fixture base release"
+        )
+        release_digest = release_v1.validate_document(release_loaded.value)
+        profile = json.loads((HERE / "examples" / "synthetic-profile.json").read_text())
+        profile["backend"]["provider"] = "KINGDOM workflow on a GitHub-hosted runner"
+        profile["hardware"]["visibility"] = "observed"
+        profile["subject"]["release_digest"] = release_digest
+        self._write_json(self.profile_path, profile)
+        profile_loaded = release_v1.read_document(self.capsule / self.profile_path, "witness profile")
+        profile_digest = release_v1.validate_document(profile_loaded.value)
+
+        for name, raw in self.member_raw.items():
+            self._write(f"evidence/execution/{name}", raw)
+        evaluation = json.loads((HERE / "examples" / "synthetic-evaluation.json").read_text())
+        evaluation["subject"]["digest"] = profile_digest
+        evaluation["evaluation"]["release_digest"] = release_digest
+        evaluation["evaluation"]["execution_profile_digest"] = profile_digest
+        result_raw = self.member_raw["nonthinking-result.json"]
+        result_descriptor = raw_descriptor(result_raw, "application/json")
+        evaluation["evaluation"]["artifacts"] = [
+            {
+                "name": "nonthinking-result.json",
+                "role": "evaluation-results",
+                "descriptor": result_descriptor,
+                "evidence_ref": "fixture-evaluation-output",
+            }
+        ]
+        evaluation["evidence"][0]["content"] = result_descriptor
+        for field, name in {
+            "dataset": "benchmark-dataset.json",
+            "preprocessing": "benchmark-preprocessing.txt",
+            "scoring": "benchmark-scoring.json",
+        }.items():
+            evaluation["evaluation"]["benchmark"][field] = raw_descriptor(
+                self.member_raw[name], media_type(name)
+            )
+        self._write_json(self.evaluation_path, evaluation)
+        self._receipt(self.profile_path, self.profile_receipt_path)
+        self._receipt(self.evaluation_path, self.evaluation_receipt_path)
+        self._write(self.bundle_path, b'{}\n')
+        self._write(self.root_path, b'{"synthetic":"trusted-root"}\n')
+        self._write(
+            "evidence/provenance/offline-verification-receipt.json",
+            b'{"fixture":"offline-verification"}\n',
+        )
+        self._write(
+            "evidence/provenance/prior-attempt-failure-receipt.json",
+            b'{"fixture":"prior-failure"}\n',
+        )
+        self._build_archive()
+        self._write("README.md", b"Synthetic witness fixture.\n")
+
+        public_raw = public_target.read_bytes()
+        policy = {
+            "schema": registry_v1.WITNESS_VERIFIER_POLICY_SCHEMA,
+            "algorithm": "Ed25519",
+            "public_key": raw_descriptor(public_raw, "application/x-pem-file"),
+            "signer_identity": "urn:kingdom:ed25519:" + hashlib.sha256(public_raw).hexdigest(),
+            "witness_index_domain": registry_v1.WITNESS_INDEX_DOMAIN,
+            "signed_value": registry_v1.SIGNED_VALUE,
+            "identity_claim": registry_v1.WITNESS_IDENTITY_CLAIM,
+            "authority_claim": registry_v1.AUTHORITY_CLAIM,
+            "issuer": registry_v1.ISSUER,
+        }
+        self._write_json(self.policy_path, policy)
+        self.seal()
+
+    def _inventory(self) -> list[dict[str, Any]]:
+        excluded = {self.index_path, self.signature_path}
+        return [
+            file_descriptor(
+                path.relative_to(self.capsule).as_posix(),
+                path.read_bytes(),
+                media_type(path.name),
+            )
+            for path in sorted(self.capsule.rglob("*"))
+            if path.is_file() and path.relative_to(self.capsule).as_posix() not in excluded
+        ]
+
+    def _index(self) -> dict[str, Any]:
+        base_launch_raw = (self.base.capsule / self.base.launch_index_path).read_bytes()
+        base_release = release_v1.read_document(
+            self.base.capsule / self.base.release_path, "witness fixture base release"
+        )
+        return {
+            "schema": registry_v1.WITNESS_INDEX_SCHEMA,
+            "capsule_id": self.capsule_id,
+            "base_release": {
+                "capsule_id": self.base.capsule_id,
+                "launch_index_digest": "sha256:" + hashlib.sha256(base_launch_raw).hexdigest(),
+                "release_path": self.base.release_path,
+                "release_canonical_digest": release_v1.validate_document(base_release.value),
+            },
+            "files": self._inventory(),
+            "records": [
+                {"path": self.evaluation_path, "receipt": self.evaluation_receipt_path},
+                {"path": self.profile_path, "receipt": self.profile_receipt_path},
+            ],
+            "profile_sets": [
+                {"profile": self.profile_path, "attestations": [self.evaluation_path]}
+            ],
+            "archive_evidence": {
+                "archive": self.archive_path,
+                "members": [
+                    {"member": name, "path": f"evidence/execution/{name}"}
+                    for name in self.member_names
+                ],
+            },
+            "github_attestation": {
+                "artifact": self.archive_path,
+                "bundle": self.bundle_path,
+                "trusted_root": self.root_path,
+                "repository": "fixture/example",
+                "signer_workflow": "fixture/example/.github/workflows/qwen3-ubuntu-witness.yml",
+                "source_digest": "b" * 40,
+                "source_ref": "refs/heads/research/witness-fixture",
+                "run_id": "123456789",
+                "run_attempt": 1,
+                "predicate_type": registry_v1.SLSA_PROVENANCE_V1,
+                "runner_environment": "github-hosted",
+                "verifier": {
+                    "name": "gh",
+                    "minimum_version": registry_v1.GH_ATTESTATION_MINIMUM_VERSION,
+                    "source_revision": registry_v1.GH_ATTESTATION_SOURCE_REVISION,
+                },
+            },
+            "witness_signature": {
+                "public_key": self.public_key_path,
+                "verifier_policy": self.policy_path,
+            },
+            "non_claims": list(registry_v1.WITNESS_INDEX_NON_CLAIMS),
+        }
+
+    def _write_registry(self) -> None:
+        registry_path = self.source / "registry.json"
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        registry["entries"] = [
+            entry for entry in registry["entries"] if entry["id"] != self.capsule_id
+        ]
+        index_raw = (self.capsule / self.index_path).read_bytes()
+        signature_raw = (self.capsule / self.signature_path).read_bytes()
+        registry["entries"].append(
+            {
+                "id": self.capsule_id,
+                "title": "Synthetic GitHub-hosted witness fixture",
+                "capsule": f"capsules/{self.capsule_id}",
+                "launch_index": file_descriptor(self.index_path, index_raw, "application/json"),
+                "launch_signature": file_descriptor(
+                    self.signature_path, signature_raw, "application/octet-stream"
+                ),
+            }
+        )
+        registry["entries"].sort(key=lambda entry: entry["id"])
+        registry_path.write_bytes(pretty(registry))
+
+    def mirror(self) -> None:
+        public_capsules = self.public / "capsules"
+        if public_capsules.exists():
+            shutil.rmtree(public_capsules)
+        shutil.copytree(self.source / "capsules", public_capsules)
+        shutil.copyfile(self.source / "registry.json", self.public / "registry.json")
+
+    def seal(self, *, key: Path | None = None) -> None:
+        index_raw = pretty(self._index())
+        self._write(self.index_path, index_raw)
+        self._sign(
+            registry_v1._domain_message(
+                registry_v1.WITNESS_INDEX_DOMAIN,
+                "sha256:" + hashlib.sha256(index_raw).hexdigest(),
+            ),
+            self.capsule / self.signature_path,
+            key,
+        )
+        self._write_registry()
+        self.mirror()
+
+    def mutate_index(self, transform: Any, *, key: Path | None = None) -> None:
+        index = self._json(self.index_path)
+        transform(index)
+        index_raw = pretty(index)
+        self._write(self.index_path, index_raw)
+        self._sign(
+            registry_v1._domain_message(
+                registry_v1.WITNESS_INDEX_DOMAIN,
+                "sha256:" + hashlib.sha256(index_raw).hexdigest(),
+            ),
+            self.capsule / self.signature_path,
+            key,
+        )
+        self._write_registry()
+        self.mirror()
+
+
 class RegistryTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory(prefix="kingdom-registry-test-")
@@ -673,6 +1011,337 @@ class RegistryTests(unittest.TestCase):
         target = self.fixture.public / "capsules" / self.fixture.capsule_id / "extra.txt"
         target.write_bytes(b"extra\n")
         self.assert_rejected("public .* file set differs", public=True)
+
+
+class WitnessRegistryTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory(prefix="kingdom-witness-registry-test-")
+        self.root = Path(self.temporary.name)
+        self.base = SignedFixture(self.root)
+        self.fixture = WitnessFixture(self.base)
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def validate(self, *, public: bool = True) -> dict[str, int | bool]:
+        with mock.patch.object(registry_v1, "_verify_github_attestation") as verifier:
+            result = registry_v1.validate_registry(
+                self.fixture.source, self.fixture.public if public else None
+            )
+        verifier.assert_called_once()
+        return result
+
+    def assert_rejected(self, pattern: str, *, patch_github: bool = True) -> None:
+        context = (
+            mock.patch.object(registry_v1, "_verify_github_attestation")
+            if patch_github
+            else mock.patch.object(registry_v1, "_gh_version", return_value="2.86.0")
+        )
+        with context:
+            with self.assertRaisesRegex(registry_v1.RegistryError, pattern):
+                registry_v1.validate_registry(self.fixture.source, self.fixture.public)
+
+    def test_valid_legacy_and_witness_capsules_pass_without_mutating_legacy_bytes(self) -> None:
+        base_index_before = (self.base.capsule / self.base.launch_index_path).read_bytes()
+        base_signature_before = (self.base.capsule / self.base.launch_signature_path).read_bytes()
+        result = self.validate()
+        self.assertEqual(result["capsules"], 2)
+        self.assertEqual(result["records"], 5)
+        self.assertEqual(result["crypto_checks"], 4)
+        self.assertEqual(
+            (self.base.capsule / self.base.launch_index_path).read_bytes(), base_index_before
+        )
+        self.assertEqual(
+            (self.base.capsule / self.base.launch_signature_path).read_bytes(),
+            base_signature_before,
+        )
+
+    def test_wrong_base_anchor_and_launch_digest_are_rejected(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["base_release"].__setitem__("capsule_id", "missing-base")
+        )
+        self.assert_rejected("base release must name another registered capsule")
+
+    def test_wrong_base_launch_digest_is_rejected(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["base_release"].__setitem__(
+                "launch_index_digest", "sha256:" + "f" * 64
+            )
+        )
+        self.assert_rejected("base launch-index digest differs from registry")
+
+    def test_reused_task_key_is_rejected_after_valid_reseal(self) -> None:
+        base_public = (self.base.capsule / self.base.public_key_path).read_bytes()
+        self.fixture._write(self.fixture.public_key_path, base_public)
+        policy = self.fixture._json(self.fixture.policy_path)
+        policy["public_key"] = raw_descriptor(base_public, "application/x-pem-file")
+        policy["signer_identity"] = (
+            "urn:kingdom:ed25519:" + hashlib.sha256(base_public).hexdigest()
+        )
+        self.fixture._write_json(self.fixture.policy_path, policy)
+        self.fixture.seal(key=self.base.private_key)
+        self.assert_rejected("reuses a task signing key")
+
+    def test_missing_tar_member_is_rejected_after_valid_reseal(self) -> None:
+        self.fixture._build_archive(omit=self.fixture.member_names[0])
+        self.fixture.seal()
+        self.assert_rejected("members differ from the sorted witness mapping")
+
+    def test_mismatched_tar_member_is_rejected_after_valid_reseal(self) -> None:
+        self.fixture._build_archive(mismatch=self.fixture.member_names[0])
+        self.fixture.seal()
+        self.assert_rejected("member bytes differ from indexed extracted evidence")
+
+    def test_stale_witness_receipt_is_rejected(self) -> None:
+        profile = self.fixture._json(self.fixture.profile_path)
+        profile["determinism"]["known_nondeterminism"].append("Resealed fixture mutation.")
+        self.fixture._write_json(self.fixture.profile_path, profile)
+        self.fixture.seal()
+        self.assert_rejected("receipt does not match")
+
+    def test_evaluation_binding_is_checked_after_receipt_refresh(self) -> None:
+        evaluation = self.fixture._json(self.fixture.evaluation_path)
+        evaluation["evaluation"]["release_digest"] = "sha256:" + "f" * 64
+        self.fixture._write_json(self.fixture.evaluation_path, evaluation)
+        self.fixture._receipt(self.fixture.evaluation_path, self.fixture.evaluation_receipt_path)
+        self.fixture.seal()
+        self.assert_rejected("base/profile/evaluation binding failed")
+
+    def test_evaluation_artifact_and_benchmark_descriptors_require_unique_raw_files(self) -> None:
+        result_raw = self.fixture.member_raw["nonthinking-result.json"]
+        self.fixture._write("evidence/duplicate-result.json", result_raw)
+        self.fixture.seal()
+        self.assert_rejected("evaluation artifact nonthinking-result.json must match exactly one")
+
+    def test_evaluation_benchmark_descriptor_requires_one_unique_raw_file(self) -> None:
+        dataset_raw = self.fixture.member_raw["benchmark-dataset.json"]
+        self.fixture._write("evidence/duplicate-dataset.json", dataset_raw)
+        self.fixture.seal()
+        self.assert_rejected("evaluation benchmark dataset must match exactly one")
+
+    def test_github_policy_rejects_non_branch_source_ref_before_verification(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["github_attestation"].__setitem__(
+                "source_ref", "refs/tags/unreviewed"
+            )
+        )
+        root_digest = (self.fixture.capsule / self.fixture.root_path).read_bytes()
+        with mock.patch.object(
+            registry_v1,
+            "GH_TRUSTED_ROOT_DIGEST",
+            "sha256:" + hashlib.sha256(root_digest).hexdigest(),
+        ), mock.patch.object(registry_v1, "_gh_version", return_value="2.86.0"):
+            with self.assertRaisesRegex(registry_v1.RegistryError, "full branch ref"):
+                registry_v1.validate_registry(self.fixture.source, self.fixture.public)
+
+    def test_github_policy_rejects_self_hosted_runner_declaration(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["github_attestation"].__setitem__(
+                "runner_environment", "self-hosted"
+            )
+        )
+        root_raw = (self.fixture.capsule / self.fixture.root_path).read_bytes()
+        with mock.patch.object(
+            registry_v1,
+            "GH_TRUSTED_ROOT_DIGEST",
+            "sha256:" + hashlib.sha256(root_raw).hexdigest(),
+        ), mock.patch.object(registry_v1, "_gh_version", return_value="2.86.0"):
+            with self.assertRaisesRegex(registry_v1.RegistryError, "must be github-hosted"):
+                registry_v1.validate_registry(self.fixture.source, self.fixture.public)
+
+    def test_offline_github_verification_failure_is_rejected(self) -> None:
+        with mock.patch.object(
+            registry_v1,
+            "_verify_github_attestation",
+            side_effect=registry_v1.RegistryError(
+                "synthetic offline gh verification failed"
+            ),
+        ):
+            with self.assertRaisesRegex(registry_v1.RegistryError, "offline gh verification failed"):
+                registry_v1.validate_registry(self.fixture.source, self.fixture.public)
+
+    def test_witness_index_rejects_floats_and_path_traversal(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["github_attestation"].__setitem__("run_attempt", 1.5)
+        )
+        self.assert_rejected("floating-point JSON")
+
+    def test_witness_index_rejects_base_path_traversal(self) -> None:
+        self.fixture.mutate_index(
+            lambda index: index["base_release"].__setitem__(
+                "release_path", "../signed-fixture-v1/release.json"
+            )
+        )
+        self.assert_rejected("traversal-free")
+
+
+class GitHubIdentityCompatibilityTests(unittest.TestCase):
+    workflow = "fixture/example/.github/workflows/qwen3-ubuntu-witness.yml"
+
+    @staticmethod
+    def identity(regexp: str) -> dict[str, Any]:
+        return {
+            "subjectAlternativeName": {"subjectAlternativeName": "", "regexp": regexp},
+            "issuer": {"issuer": "", "regexp": ".*"},
+            "runnerEnvironment": "github-hosted",
+        }
+
+    def test_reviewed_gh_san_regex_spellings_are_accepted(self) -> None:
+        legacy = f"^https://github.com/{self.workflow}"
+        registry_v1._validate_gh_verified_identity(
+            self.identity(legacy), self.workflow, "synthetic GitHub attestation"
+        )
+        registry_v1._validate_gh_verified_identity(
+            self.identity(legacy.replace(".", r"\.")),
+            self.workflow,
+            "synthetic GitHub attestation",
+        )
+
+    def test_broader_or_different_gh_identity_is_rejected(self) -> None:
+        for regexp in (
+            "^https://github.com/.+",
+            "^https://github\\.com/fixture/other/\\.github/workflows/qwen3-ubuntu-witness\\.yml",
+        ):
+            with self.subTest(regexp=regexp), self.assertRaisesRegex(
+                registry_v1.RegistryError, "verified identity constraints differ"
+            ):
+                registry_v1._validate_gh_verified_identity(
+                    self.identity(regexp), self.workflow, "synthetic GitHub attestation"
+                )
+
+
+class GitHubProcessIsolationTests(unittest.TestCase):
+    def test_version_and_attestation_use_only_disposable_state_roots(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="kingdom-fake-gh-isolation-") as directory:
+            root = Path(directory)
+            audit = root / "fake-gh-audit.jsonl"
+            fake_gh = root / "gh"
+            checkout = root / "checkout"
+            checkout.mkdir()
+            state_variables = (
+                "HOME",
+                "GH_CONFIG_DIR",
+                "XDG_CONFIG_HOME",
+                "XDG_STATE_HOME",
+                "XDG_DATA_HOME",
+                "XDG_CACHE_HOME",
+            )
+            ambient_paths = {
+                name: root / "ambient" / name.lower().replace("_", "-")
+                for name in state_variables
+            }
+            fake_gh.write_text(
+                f"""#!{sys.executable}
+import json
+import os
+import pathlib
+import sys
+
+audit = pathlib.Path({str(audit)!r})
+command = sys.argv[1] if len(sys.argv) > 1 else "missing"
+state_names = {state_variables!r}
+paths = {{name: os.environ[name] for name in state_names}}
+for name, value in paths.items():
+    target = pathlib.Path(value)
+    target.mkdir(parents=True, exist_ok=True)
+    (target / ("fake-gh-" + command + ".marker")).write_text("isolated\\n")
+record = {{
+    "command": command,
+    "paths": paths,
+    "controls": {{name: os.environ.get(name) for name in (
+        "GH_PROMPT_DISABLED", "GIT_TERMINAL_PROMPT", "GH_TELEMETRY",
+        "DO_NOT_TRACK", "GH_NO_UPDATE_NOTIFIER", "HTTP_PROXY", "HTTPS_PROXY",
+        "ALL_PROXY", "NO_PROXY", "http_proxy", "https_proxy", "all_proxy", "no_proxy",
+    )}},
+}}
+with audit.open("a", encoding="utf-8") as handle:
+    handle.write(json.dumps(record, sort_keys=True) + "\\n")
+if command == "version":
+    print("gh version 2.96.0 (synthetic)")
+else:
+    print("[]")
+""",
+                encoding="utf-8",
+            )
+            fake_gh.chmod(0o755)
+
+            artifact_path = root / "artifact.tar"
+            bundle_path = root / "bundle.jsonl"
+            trusted_root_path = root / "trusted-root.jsonl"
+            artifact_path.write_bytes(b"synthetic artifact")
+            bundle_path.write_bytes(b"{}\n")
+            trusted_root_path.write_bytes(b'{"synthetic":"trusted-root"}\n')
+            artifact = registry_v1.RawFile(artifact_path, artifact_path.read_bytes())
+            bundle = registry_v1.RawFile(bundle_path, bundle_path.read_bytes())
+            trusted_root = registry_v1.RawFile(
+                trusted_root_path, trusted_root_path.read_bytes()
+            )
+            policy = {
+                "repository": "fixture/example",
+                "signer_workflow": (
+                    "fixture/example/.github/workflows/qwen3-ubuntu-witness.yml"
+                ),
+                "source_digest": "b" * 40,
+                "source_ref": "refs/heads/research/witness-fixture",
+                "run_id": "123456789",
+                "run_attempt": 1,
+                "predicate_type": registry_v1.SLSA_PROVENANCE_V1,
+                "runner_environment": "github-hosted",
+                "verifier": {
+                    "name": "gh",
+                    "minimum_version": registry_v1.GH_ATTESTATION_MINIMUM_VERSION,
+                    "source_revision": registry_v1.GH_ATTESTATION_SOURCE_REVISION,
+                },
+            }
+            ambient_environment = {name: str(path) for name, path in ambient_paths.items()}
+            previous_directory = Path.cwd()
+            try:
+                os.chdir(checkout)
+                with mock.patch.dict(os.environ, ambient_environment, clear=False), mock.patch.object(
+                    registry_v1, "GH_TRUSTED_ROOT_DIGEST", trusted_root.digest
+                ):
+                    with self.assertRaisesRegex(
+                        registry_v1.RegistryError,
+                        "must verify exactly one bundled attestation",
+                    ):
+                        registry_v1._verify_github_attestation(
+                            str(fake_gh),
+                            artifact,
+                            bundle,
+                            trusted_root,
+                            policy,
+                            "synthetic GitHub attestation",
+                        )
+            finally:
+                os.chdir(previous_directory)
+
+            records = [json.loads(line) for line in audit.read_text().splitlines()]
+            self.assertEqual([record["command"] for record in records], ["version", "attestation"])
+            self.assertEqual(records[0]["paths"], records[1]["paths"])
+            isolated_paths = {name: Path(value) for name, value in records[0]["paths"].items()}
+            for name, path in isolated_paths.items():
+                self.assertNotEqual(path, ambient_paths[name])
+                self.assertFalse(path.exists())
+            controls = records[0]["controls"]
+            self.assertEqual(controls["GH_PROMPT_DISABLED"], "1")
+            self.assertEqual(controls["GIT_TERMINAL_PROMPT"], "0")
+            self.assertEqual(controls["GH_TELEMETRY"], "false")
+            self.assertEqual(controls["DO_NOT_TRACK"], "true")
+            self.assertEqual(controls["GH_NO_UPDATE_NOTIFIER"], "1")
+            for name in (
+                "HTTP_PROXY",
+                "HTTPS_PROXY",
+                "ALL_PROXY",
+                "http_proxy",
+                "https_proxy",
+                "all_proxy",
+            ):
+                self.assertEqual(controls[name], "http://127.0.0.1:9")
+            self.assertEqual(controls["NO_PROXY"], "")
+            self.assertEqual(controls["no_proxy"], "")
+            for path in ambient_paths.values():
+                self.assertFalse(path.exists())
+            self.assertEqual(list(checkout.iterdir()), [])
 
 
 if __name__ == "__main__":

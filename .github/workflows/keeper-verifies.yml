@@ -120,6 +120,8 @@ jobs:
             site/exchange/model-release/index.html
           grep -Fq 'capsules/qwen3-0.6b-hf-c1899de2/launch-index.json' \
             site/exchange/model-release/index.html
+          grep -Fq 'capsules/qwen3-0.6b-gh-ubuntu-abad124/witness-index.json' \
+            site/exchange/model-release/index.html
           grep -Fq 'href="exchange/model-release/"' site/index.html
           while IFS= read -r -d '' public_html; do
             if grep -Eqi '<(script|iframe|form|object|embed)([[:space:]>])|[[:space:]]on[a-z]+[[:space:]]*=|javascript:|src="https?://|url[[:space:]]*\(' \

@@ -85,7 +85,8 @@ descriptor and version of the validator implementation, as well.
 
 ## Use it
 
-Everything is Python standard library, local, read-only, and networkless.
+The v1 record commands below use only the Python standard library and are
+local, read-only, and networkless.
 
 ```bash
 # Validate one object and print its typed content digest.
@@ -145,13 +146,48 @@ rule while failing the stricter exact-output format. No raw prompt, expected
 value, decoded output, or generated deliberation is published. This is not a
 benchmark, safety test, quality assessment, or broad reasoning claim.
 
-Each capsule's signed `launch-index.json` is a set-level verification wrapper,
-not a fourth v1 substrate record. Its task-key signature makes the indexed
-bytes cryptographically checkable but does not establish publisher identity,
-vendor endorsement, a trusted timestamp, safety, readiness, or launch
-authority. Offline registry verification checks the signed public file graph;
-it does not re-stream the remote snapshot, reexecute inference, or
-independently prove which local byte path the model loader consumed.
+The third entry,
+[`capsules/qwen3-0.6b-gh-ubuntu-abad124/`](capsules/qwen3-0.6b-gh-ubuntu-abad124/),
+is a signed witness/referrer attached to that same release capsule, not a new
+release declaration. It records a second-machine run on a GitHub-managed
+Ubuntu x64 runner. The release revision, ten-file snapshot descriptor set, and
+snapshot byte total match the local capsule; the public arithmetic fixture is
+different from the prior private fixture, so cross-platform output equality is
+not claimed. This remains `curator-observed`: the same curator authored and
+started the workflow, and the runner is not an independent human, vendor, or
+publisher authority.
+
+The first GitHub attempt failed before inference because the namespace probe
+read a parent interface view; its failure receipt remains in the capsule. In
+the successful run, the thinking variant remained open at its 96-token limit
+and produced no final answer. The two non-thinking runs were token-identical,
+matched the public expected integer under the last-numeric rule, and failed
+strict output formatting. Raw decoded output and generated deliberation are
+omitted; their fingerprints are public, and low-entropy result semantics are
+inferable from the scoring flags. The omitted bytes are not thereby
+reproduced, and hashes are not encryption.
+
+The release capsules' signed `launch-index.json` files and the Ubuntu
+witness's signed `witness-index.json` are set-level verification wrappers, not
+additional v1 substrate records. A task-key signature makes indexed bytes
+cryptographically checkable but does not establish publisher identity, vendor
+endorsement, a trusted timestamp, safety, readiness, or launch authority. The
+Ubuntu capsule additionally retains the workflow-produced evidence tar and a
+GitHub/Sigstore attestation bundle. Offline `gh attestation verify`, constrained
+to the repository, signer workflow, source commit and branch, predicate type,
+and GitHub-hosted runner, authenticates the attested tar as a workflow product;
+it does not prove the evaluation semantics or which model-file inode the
+loader consumed.
+
+Offline registry verification checks every registered signed public file graph
+and, for the Ubuntu witness, runs that bounded `gh` verification using the
+committed bundle and trusted root while forcing HTTP proxy routes to
+unreachable loopback. It does not re-stream the publisher snapshot or
+reexecute inference. Registry verification requires local OpenSSL and, while a
+GitHub witness is registered, GitHub CLI 2.86.0 or newer. That local `gh`
+executable is part of the verifier's trusted computing base: the registry
+validator checks its reported version and verification result, but does not
+authenticate or digest-pin the executable itself.
 
 Validate the registry, its receipts and signatures, its finite file set, and
 the exact public mirrors with:

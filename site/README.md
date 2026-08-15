@@ -121,6 +121,12 @@ python3 kingdom/exchange/model-release/validate_registry.py \
   --public site/exchange/model-release
 ```
 
+With the GitHub-hosted witness registered, this check requires GitHub CLI
+2.86.0 or newer in addition to local OpenSSL. The validator resolves `gh` from
+the current `PATH`, then invokes that exact executable against only the
+committed bundle and trusted root, with proxy routes forced to unreachable
+loopback endpoints.
+
 The first real release record is the KINGDOM-curated, publisher-sourced Kimi
 K3 capsule. It captures selected metadata, code, and license bytes while
 leaving weight-shard hashes explicitly publisher-claimed; its local and hosted
@@ -137,9 +143,30 @@ strict formatting. No raw prompt, expected value, decoded output, or generated
 deliberation is public. This is one synthetic witness, not a benchmark, safety
 test, quality assessment, or broad reasoning claim.
 
+The `qwen3-0.6b-gh-ubuntu-abad124` capsule is a signed witness/referrer, not a
+replacement release. It anchors the same Qwen release and exact ten-file
+snapshot descriptor set to a second-machine run on a GitHub-managed Ubuntu x64
+runner. The same curator authored and started the workflow, so this remains
+`curator-observed`; it is not an independent human, vendor, or publisher
+authority. Its public arithmetic fixture differs from the local capsule's
+private fixture, and cross-platform output equality is not claimed.
+
+The first GitHub run failed before inference because of a namespace
+observation bug, and the failure receipt remains public. In the successful
+run, thinking stayed open at 96 tokens with no final answer. Two non-thinking
+runs were token-identical, matched under the last-numeric rule, and failed
+strict formatting. Raw output and deliberation are omitted, but their
+fingerprints are public and low-entropy result semantics are inferable from
+the scoring flags. The retained GitHub/Sigstore bundle authenticates the
+workflow-produced evidence tar under the pinned repository, workflow, source,
+predicate, and hosted-runner policy; it does not authenticate evaluation
+semantics or the model loader's file inode.
+
 Keep the room scriptless and never add automatic evidence fetching, artifact
 execution, model/API calls, or user-record rendering to this public surface.
-Offline registry verification checks the signed published graph; it does not
-reexecute inference or independently prove which local artifact path the
-loader consumed. Neither registry verification nor a curator signature grants
-vendor endorsement or launch authority.
+Offline registry verification checks the signed published graph and uses the
+committed attestation bundle and trusted root while forcing HTTP proxy routes
+to unreachable loopback. It does not reexecute inference or independently
+prove which artifact path the loader consumed. Neither registry verification,
+a curator signature, nor GitHub artifact provenance grants vendor endorsement
+or launch authority.
