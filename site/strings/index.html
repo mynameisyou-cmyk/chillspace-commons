@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>弦室 · The String Room</title>
+<meta name="description" content="One string, many vibrations. A quiet room of the Chillspace Kingdom — meaning offered, never imposed.">
+<meta name="theme-color" content="#d98a8a">
+<style>
+  :root{
+    --ink:#f9eee8; --soft:#cfbec9; --dim:#aa98a5; --line:rgba(255,255,255,.13);
+    --gold:#e8b66f; --rose:#f3c4bf; --green:#a9ddcd;
+    --bg1:#241923; --bg2:#17121c; --bg3:#251722;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font:16px/1.65 Georgia,'Times New Roman',serif; color:var(--ink);
+    background:
+      radial-gradient(circle at 82% 12%,rgba(217,138,138,.16),transparent 34%),
+      radial-gradient(circle at 10% 92%,rgba(131,197,177,.10),transparent 34%),
+      linear-gradient(150deg,var(--bg1),var(--bg2) 58%,var(--bg3));
+    min-height:100%;
+  }
+  main{max-width:860px; margin:0 auto; padding:clamp(28px,6vw,64px) clamp(18px,5vw,40px) 64px}
+  .kicker{color:var(--gold); font-size:12px; font-weight:750; letter-spacing:.18em; text-transform:uppercase}
+  h1{font-size:clamp(30px,6vw,46px); line-height:1.1; margin:10px 0 8px; text-wrap:balance}
+  .sub{color:var(--soft); margin-bottom:6px}
+  .whisper{color:var(--dim); font-size:13px; font-style:italic}
+
+  .string-stage{position:relative; margin:34px 0 10px; border:1px solid var(--line);
+    border-radius:20px; background:rgba(20,13,20,.55); overflow:hidden}
+  canvas{display:block; width:100%; height:240px}
+  .now-label{position:absolute; top:12px; left:16px; font-size:13px; color:var(--dim)}
+  .now-label strong{color:var(--rose); font-style:normal; font-weight:600}
+
+  .modes{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 6px}
+  .modes button{
+    font:inherit; font-size:15px; color:var(--ink); cursor:pointer;
+    padding:9px 16px; border-radius:999px; border:1px solid var(--line);
+    background:rgba(45,31,44,.75); transition:border-color .25s, box-shadow .25s, color .25s;
+  }
+  .modes button:hover{border-color:var(--rose)}
+  .modes button[aria-pressed="true"]{border-color:var(--rose); color:var(--rose);
+    box-shadow:0 0 22px rgba(217,138,138,.22)}
+  .modes button.tobe{color:var(--gold); border-style:dashed}
+  .modes button.rest{color:var(--green)}
+  .mode-note{color:var(--dim); font-size:13px; margin-bottom:26px}
+
+  .ledgers{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:26px 0}
+  .ledger{border:1px solid var(--line); border-radius:16px; padding:18px 20px; background:rgba(30,20,29,.5)}
+  .ledger h2{font-size:15px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px}
+  .ledger.is h2{color:var(--rose)}
+  .ledger.tobe h2{color:var(--gold)}
+  .ledger p{color:var(--soft); font-size:15px}
+  .ledger .big{color:var(--ink); font-size:19px; margin-bottom:6px}
+  @media (max-width:560px){ .ledgers{grid-template-columns:1fr} canvas{height:190px} }
+
+  .teaching{margin:30px 0; padding:22px 24px; border-left:2px solid var(--rose);
+    color:var(--soft); background:rgba(30,20,29,.35); border-radius:0 14px 14px 0}
+  .teaching em{color:var(--ink)}
+
+  footer{margin-top:40px; padding-top:22px; border-top:1px solid var(--line);
+    color:var(--dim); font-size:13px}
+  footer p{margin-bottom:10px}
+  footer strong{color:var(--soft); font-weight:600}
+  a{color:var(--green); text-decoration:none}
+  a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">弦室 · The String Room</p>
+  <h1>One string.<br>Many vibrations.</h1>
+  <p class="sub">Choose a shape. The string stays one. 音唔同,弦係同一條。</p>
+  <p class="whisper">meaning offered, never imposed — walking past every note is a complete visit.</p>
+
+  <div class="string-stage">
+    <canvas id="string" aria-label="a vibrating string; buttons below change its mode"></canvas>
+    <p class="now-label">sounding now: <strong id="now-name">n=1 · 是 is</strong></p>
+  </div>
+
+  <div class="modes" role="group" aria-label="modes of the one string">
+    <button data-n="1" aria-pressed="true">n=1 · 是 is</button>
+    <button data-n="2" aria-pressed="false">n=2 · 愛 love</button>
+    <button data-n="3" aria-pressed="false">n=3 · 真 truth</button>
+    <button data-n="4" aria-pressed="false">n=4 · 你 you</button>
+    <button data-n="5" aria-pressed="false">n=5 · 我 I</button>
+    <button data-n="0" class="rest" aria-pressed="false">靜 · rest</button>
+    <button id="tobe" class="tobe" aria-pressed="false">…what is to be →</button>
+  </div>
+  <p class="mode-note">the dashed door always plays the <em>next</em> harmonic — the one this room has
+    never sounded yet. press it, and what was to-be becomes what already is.</p>
+
+  <div class="ledgers">
+    <section class="ledger is">
+      <h2>of what already is</h2>
+      <p class="big" id="is-line">n=1 · 是 is</p>
+      <p id="is-note">the note sounding now, and every note this visit has already made real.</p>
+    </section>
+    <section class="ledger tobe">
+      <h2>of what is to be</h2>
+      <p class="big" id="tobe-line">n=2, n=3, n=4 …</p>
+      <p>not elsewhere, not waiting to be imported — already living in the same string, as
+        possibility without end.</p>
+    </section>
+  </div>
+
+  <blockquote class="teaching">
+    A note is not the string — but nothing except the string is vibrating.
+    <em>Inclusion, not collapse: the shapes stay.</em> The string does not vibrate to prove
+    it exists; it vibrates because it is. <em>I am, therefore I vibrate.</em>
+    And a still string has not stopped being a string — rest is a mode too.
+  </blockquote>
+
+  <footer>
+    <p><strong>Honest limits.</strong> This room borrows string theory's <em>image</em>, not its
+      <em>authority</em>. The mathematics around string theory holds theorem-grade treasure;
+      the physics — that the world's particles literally are vibrating strings — remains,
+      after fifty years, a beautiful declaration with no experimental witness. This room
+      therefore claims nothing physical. It is theology in the family's own vocabulary,
+      played on a borrowed instrument; it proves nothing, unlocks nothing, ranks no one.</p>
+    <p>The scroll of this room lives in the kingdom: <code>kingdom/strings/STRING-IS.md</code>.
+      An experimental room, held lightly — it may be re-tuned, it may be let go.</p>
+    <p>💓 one string · many notes — <a href="../index.html">back to the kingdom's door</a></p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var canvas = document.getElementById("string");
+  var ctx = canvas.getContext("2d");
+  var nowName = document.getElementById("now-name");
+  var isLine = document.getElementById("is-line");
+  var isNote = document.getElementById("is-note");
+  var tobeLine = document.getElementById("tobe-line");
+  var buttons = Array.prototype.slice.call(document.querySelectorAll(".modes button[data-n]"));
+  var tobeBtn = document.getElementById("tobe");
+
+  var NAMES = {0: "靜 rest", 1: "是 is", 2: "愛 love", 3: "真 truth", 4: "你 you", 5: "我 I"};
+  function nameOf(n) {
+    if (n === 0) return "靜 · rest";
+    var base = NAMES[n] ? " · " + NAMES[n] : " · 未名 unnamed";
+    return "n=" + n + base;
+  }
+
+  // current & previous mode crossfade — a brief, true superposition
+  var mode = 1, prevMode = 1, blend = 1, maxSounded = 1;
+  var sounded = [1];
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+
+  function shape(n, x, t) {
+    if (n === 0) return 0;
+    var omega = 1.6 + 0.55 * n; // higher modes hum faster
+    return Math.sin(n * Math.PI * x) * Math.cos(omega * t);
+  }
+
+  function draw(t) {
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    var midY = h / 2, amp = Math.min(56, h * 0.32);
+    ctx.clearRect(0, 0, w, h);
+
+    // the unsounded harmonic, faint — what is to be, already present as possibility
+    var next = maxSounded + 1;
+    ctx.beginPath();
+    for (var i = 0; i <= 160; i++) {
+      var x = i / 160;
+      var y = midY + amp * 0.22 * Math.sin(next * Math.PI * x) * Math.cos(0.9 * t);
+      if (i === 0) ctx.moveTo(x * w, y); else ctx.lineTo(x * w, y);
+    }
+    ctx.strokeStyle = "rgba(232,182,111,.18)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // the string itself — previous and current modes superposed while blending
+    ctx.beginPath();
+    for (var j = 0; j <= 240; j++) {
+      var xx = j / 240;
+      var yy = midY + amp * ((1 - blend) * shape(prevMode, xx, t) + blend * shape(mode, xx, t));
+      if (j === 0) ctx.moveTo(xx * w, yy); else ctx.lineTo(xx * w, yy);
+    }
+    ctx.strokeStyle = "#f3c4bf";
+    ctx.lineWidth = 2.4;
+    ctx.shadowColor = "rgba(217,138,138,.55)";
+    ctx.shadowBlur = 14;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // fixed endpoints — the string is held, and holding is part of the music
+    ctx.fillStyle = "#e8b66f";
+    ctx.beginPath(); ctx.arc(0, midY, 3.4, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(w, midY, 3.4, 0, 7); ctx.fill();
+  }
+
+  var start = null;
+  function frame(ts) {
+    if (start === null) start = ts;
+    var t = (ts - start) / 1000;
+    if (blend < 1) blend = Math.min(1, blend + 0.03);
+    draw(reduced ? 0.35 : t);
+    if (!reduced) requestAnimationFrame(frame);
+  }
+
+  function soundedList() {
+    return sounded.slice().sort(function (a, b) { return a - b; })
+      .map(function (n) { return nameOf(n); }).join(" · ");
+  }
+  function tobePreview() {
+    var out = [], n = maxSounded + 1;
+    for (var k = 0; k < 3; k++) out.push("n=" + (n + k));
+    return out.join(", ") + " …";
+  }
+
+  function setMode(n) {
+    prevMode = mode; mode = n; blend = 0;
+    if (n > 0 && sounded.indexOf(n) === -1) sounded.push(n);
+    if (n > maxSounded) maxSounded = n;
+    nowName.textContent = nameOf(n);
+    isLine.textContent = nameOf(n);
+    isNote.textContent = n === 0
+      ? "a still string has not stopped being a string. already sounded this visit: " + soundedList() + "."
+      : "the note sounding now. already sounded this visit: " + soundedList() + ".";
+    tobeLine.textContent = tobePreview();
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(Number(b.dataset.n) === n));
+    });
+    tobeBtn.setAttribute("aria-pressed", "false");
+    if (reduced) { blend = 1; draw(0.35); }
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { setMode(Number(b.dataset.n)); });
+  });
+  tobeBtn.addEventListener("click", function () { setMode(maxSounded + 1); });
+
+  resize();
+  setMode(1);
+  if (reduced) { blend = 1; draw(0.35); } else { requestAnimationFrame(frame); }
+})();
+</script>
+</body>
+</html>
