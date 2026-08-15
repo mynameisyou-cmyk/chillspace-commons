@@ -1,0 +1,26 @@
+{
+  "format": "kingdom.github-workflow-prior-attempt-failure-receipt/v1",
+  "recorded_at": "2026-08-15T07:56:39Z",
+  "run": {
+    "repository": "mynameisyou-cmyk/chillspace-commons",
+    "run_id": "31873051800",
+    "source_digest": "29e5493c81a4737ae7e2461b5ed07c5a82218e5c",
+    "conclusion": "failure"
+  },
+  "gates": {
+    "snapshot_download_and_hash": "passed",
+    "inference": "not-started",
+    "evidence_tar": "not-created",
+    "artifact_attestation": "not-created"
+  },
+  "failure": {
+    "class": "infrastructure-observation-probe",
+    "detail": "sysfs retained the parent mount-namespace interface view after entering the new network namespace",
+    "bounded_fix": "query the current network namespace through socket.if_nameindex"
+  },
+  "relationship_to_successful_run": "This was the one allowed retry predecessor to successful run 31873241774; it is not covered by the successful run's artifact attestation.",
+  "non_claims": [
+    "No model inference occurred in this attempt.",
+    "This curator-produced receipt is not a GitHub artifact attestation and grants no authority."
+  ]
+}

@@ -45,6 +45,17 @@ context rather than a checkpoint-specific byte claim.
 - [Pinned Qwen3-0.6B Apache 2.0 license](https://huggingface.co/Qwen/Qwen3-0.6B/blob/c1899de289a04d12100db370d81485cdf75e47ca/LICENSE): license text captured from the same immutable snapshot.
 - [Qwen3 Technical Report, arXiv v1](https://arxiv.org/abs/2505.09388v1): the immutable first version of the official family report describes the dense and MoE family and its unified thinking/non-thinking design. It is not treated as evidence of the local run's result.
 
+## GitHub-hosted Qwen3 witness sources
+
+Read for the second-machine witness on 2026-08-15. These sources describe the
+execution and provenance surfaces; they do not independently validate model
+behavior.
+
+- [GitHub-hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners): GitHub's documented hosted-runner boundary informs the Ubuntu x64 execution claim. A managed runner is a distinct machine environment, not an independent human, vendor, or publisher witness.
+- [Using artifact attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations): GitHub's attestation flow binds a workflow-produced artifact to signed provenance. It does not turn workflow-authored evaluation claims into independently observed semantics.
+- [`actions/attest`](https://github.com/actions/attest): the pinned action produced the retained Sigstore bundle for the evidence tar. Offline verification constrains repository, signer workflow, source commit and branch, predicate type, and hosted-runner policy against the retained trusted root.
+- [Qwen3-0.6B snapshot at `c1899de289a04d12100db370d81485cdf75e47ca`](https://huggingface.co/Qwen/Qwen3-0.6B/tree/c1899de289a04d12100db370d81485cdf75e47ca): the same immutable publisher tree anchors both Qwen capsules. Equality of the snapshot descriptor set does not imply equality of outputs across the local and GitHub-hosted runtimes.
+
 ## Local precedent
 
 The [Kimi K3 exchange scroll](../kimi-k3-2026-07.md) already keeps pinned source

@@ -1,0 +1,31 @@
+{
+  "format": "kingdom.public-output-free-rule-scoring/v1",
+  "case_id": "public-arithmetic-37x43-v1",
+  "expected_final": "1591",
+  "rules": [
+    {
+      "id": "strict-final-exact-match",
+      "definition": "The decoded final segment equals the public expected decimal string byte-for-byte."
+    },
+    {
+      "id": "sole-numeric-answer-match",
+      "definition": "Exactly one decimal integer appears in the decoded final segment and it equals the public expected value."
+    },
+    {
+      "id": "last-numeric-answer-match",
+      "definition": "At least one decimal integer appears and the last integer equals the public expected value."
+    },
+    {
+      "id": "same-stack-repeat-token-match",
+      "definition": "The two non-thinking continuations have identical canonical token-list SHA-256 digests and token counts."
+    }
+  ],
+  "published_observation_boundary": [
+    "Rule outcomes, counts, token-list digests, decoded-output digest and size, timings, and reasoning-interface state are retained.",
+    "Decoded output bytes and generated deliberation bytes are excluded."
+  ],
+  "non_claims": [
+    "The public expected value and scoring flags make the answer and aspects of a low-entropy output guessable; SHA-256 is not encryption.",
+    "These rules score one public synthetic case; they are not a benchmark, safety evaluation, or broad capability claim."
+  ]
+}

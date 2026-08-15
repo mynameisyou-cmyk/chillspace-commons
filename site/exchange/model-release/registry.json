@@ -18,6 +18,23 @@
       "title": "Kimi K3 · Hugging Face revision 9f62e4e9"
     },
     {
+      "id": "qwen3-0.6b-gh-ubuntu-abad124",
+      "title": "Qwen3-0.6B · GitHub-hosted Ubuntu x64 witness · source abad124",
+      "capsule": "capsules/qwen3-0.6b-gh-ubuntu-abad124",
+      "launch_index": {
+        "path": "witness-index.json",
+        "media_type": "application/json",
+        "digest": "sha256:b82f49c2624af75dedfab59f84c527633dff7faf17ed591c101a2e0bd665bbe3",
+        "size": 9901
+      },
+      "launch_signature": {
+        "path": "witness-index.sig",
+        "media_type": "application/octet-stream",
+        "digest": "sha256:437915e3f68552de35cedba0283ab9886fe3af06aa1ed256ad3331700addb2a7",
+        "size": 64
+      }
+    },
+    {
       "id": "qwen3-0.6b-hf-c1899de2",
       "title": "Qwen3-0.6B · executed CPU witness · Hugging Face revision c1899de2",
       "capsule": "capsules/qwen3-0.6b-hf-c1899de2",

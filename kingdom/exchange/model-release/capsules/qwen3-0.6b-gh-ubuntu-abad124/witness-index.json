@@ -1,0 +1,260 @@
+{
+  "schema": "kingdom.model-release-witness-index/v1",
+  "capsule_id": "qwen3-0.6b-gh-ubuntu-abad124",
+  "base_release": {
+    "capsule_id": "qwen3-0.6b-hf-c1899de2",
+    "launch_index_digest": "sha256:efa50b06d297a92b3760320a85aea0a965f74b0dd74a29d56d4a9d0856402bc1",
+    "release_path": "release.json",
+    "release_canonical_digest": "sha256:46de80335e22b537777430fc0e8dd131a45950e55b4b022ddd8c120ff3b43fc4"
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "media_type": "text/markdown",
+      "digest": "sha256:4f2d5e3d62b764202fd0c44c857962402c42b47f68af0b2cf4b1aebb7837e081",
+      "size": 5296
+    },
+    {
+      "path": "evaluation-attestation.json",
+      "media_type": "application/json",
+      "digest": "sha256:cf5309957b1c27b0b78b82f8a4d7a35a9c12a4d5f223644d1b9c75aa55fbdc0f",
+      "size": 20121
+    },
+    {
+      "path": "evidence/execution/evidence-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:95f8395fe092babadc1c284f49c4a974a2ce51c82685afa17292f3b075d90340",
+      "size": 3175
+    },
+    {
+      "path": "evidence/execution/nonthinking-greedy-repeat-v1-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:6f8c28e318f58d2a5b6f089490639ad6d56d564b3a8435920e001d97f8a66f5d",
+      "size": 5975
+    },
+    {
+      "path": "evidence/execution/nonthinking-greedy-v1-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:ebbee781259fe98b0f606f39b7bdb320d414432ef9245ecf2f7261c3817fbb5f",
+      "size": 5968
+    },
+    {
+      "path": "evidence/execution/public-probe.json",
+      "media_type": "application/json",
+      "digest": "sha256:91f50d260a0cc27b94b6100ed32bbad3582c603a8aae28c06bdb3d6f94bb3c3a",
+      "size": 1215
+    },
+    {
+      "path": "evidence/execution/run-summary.json",
+      "media_type": "application/json",
+      "digest": "sha256:ec5a6d11d5f69f2511e34ab4eea18947ae3b95f38036e3df18562a4d1501dd9b",
+      "size": 2544
+    },
+    {
+      "path": "evidence/execution/run_qwen_probe.py",
+      "media_type": "text/x-python",
+      "digest": "sha256:c141c3734e03517a4901ec0b5781e613396cb110956c8accfe20aa5bc1332809",
+      "size": 21866
+    },
+    {
+      "path": "evidence/execution/runtime-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:46e8537ccc0b841bf43919557b8b04d62a07942de02f2c3d51b4edaf1273fa48",
+      "size": 2865
+    },
+    {
+      "path": "evidence/execution/snapshot-byte-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:9b445a7f4a05e9a50bff8f0738066d3da10135cd58c933fac6c6ce7cea1b32d7",
+      "size": 2850
+    },
+    {
+      "path": "evidence/execution/snapshot.sha256",
+      "media_type": "text/plain",
+      "digest": "sha256:30bc9906056ba2bf08abeb86a322d554d72af3ad1c926d30df77e246583052b8",
+      "size": 805
+    },
+    {
+      "path": "evidence/execution/thinking-greedy-v1-result.json",
+      "media_type": "application/json",
+      "digest": "sha256:f2840316c195fd3bde19c50be93df723edebbc54e07d978776a16482b7e788d6",
+      "size": 5967
+    },
+    {
+      "path": "evidence/execution/wheel-lock.txt",
+      "media_type": "text/plain",
+      "digest": "sha256:895b0bbf5f20bbfb979ccfdb0fea0cef64eb6a4e0a6359513bfcad7c43ee14b8",
+      "size": 6615
+    },
+    {
+      "path": "evidence/harness/benchmark-manifest.json",
+      "media_type": "application/json",
+      "digest": "sha256:eb76e87f1ee1125ee0dea543e50c8879600369ed9c9956b9187c8a6db2247d08",
+      "size": 1486
+    },
+    {
+      "path": "evidence/harness/scoring-policy.json",
+      "media_type": "application/json",
+      "digest": "sha256:13424d67eed8b8a151f8243f09d862be096ac130cc9aad806ee099cec568b037",
+      "size": 1381
+    },
+    {
+      "path": "evidence/provenance/github-attestation-bundle.jsonl",
+      "media_type": "application/jsonl",
+      "digest": "sha256:3e114ee74b1d083866d731748210aadf6c7fce4bfeacf71fe8c0be786da41f21",
+      "size": 12560
+    },
+    {
+      "path": "evidence/provenance/github-trusted-root.jsonl",
+      "media_type": "application/jsonl",
+      "digest": "sha256:65ca537f6ed8a47fd0e560c421baa1f6c1efb8b25fc200d8c5c02c0e92eb2b9c",
+      "size": 34634
+    },
+    {
+      "path": "evidence/provenance/offline-verification-receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:740c2dd2f7eb5c9bf617e5ce0bed7930ee676af00ac473307ba38d9a5ca2145e",
+      "size": 2099
+    },
+    {
+      "path": "evidence/provenance/prior-attempt-failure-receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:fb675a385563bf1af0dac67171ace71c9574d665060903b3259c46ddc43d1166",
+      "size": 1101
+    },
+    {
+      "path": "evidence/provenance/qwen3-ubuntu-witness.tar",
+      "media_type": "application/x-tar",
+      "digest": "sha256:4989492a208c7c10e04a94e6a7b14c56bae29ad8cfc2abb53265540a086b5769",
+      "size": 71680
+    },
+    {
+      "path": "receipts/evaluation-attestation.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:ad0b872109bc4a1e31497526ab38291d4fc9316fa8858b0e4674f8fb22625974",
+      "size": 1816
+    },
+    {
+      "path": "receipts/ubuntu-x64-profile.receipt.json",
+      "media_type": "application/json",
+      "digest": "sha256:e4daea87ec11593292ae5e93580d72c9c089431afc710a771196931f31bfd681",
+      "size": 1818
+    },
+    {
+      "path": "signing/public-key.pub",
+      "media_type": "application/x-pem-file",
+      "digest": "sha256:65eab0994bf9be16ac4f7b065177185cba0e148b29fc013d2c458312d5d24762",
+      "size": 113
+    },
+    {
+      "path": "signing/verifier-policy.json",
+      "media_type": "application/json",
+      "digest": "sha256:599aab8691c1f7883c598db6594c730926d48576751c840546bbf31b65c77bac",
+      "size": 754
+    },
+    {
+      "path": "ubuntu-x64-profile.json",
+      "media_type": "application/json",
+      "digest": "sha256:77be81da633bed334aaf9a0cd64309a58453d5157137900639c4307ed028f4e0",
+      "size": 8488
+    }
+  ],
+  "records": [
+    {
+      "path": "evaluation-attestation.json",
+      "receipt": "receipts/evaluation-attestation.receipt.json"
+    },
+    {
+      "path": "ubuntu-x64-profile.json",
+      "receipt": "receipts/ubuntu-x64-profile.receipt.json"
+    }
+  ],
+  "profile_sets": [
+    {
+      "profile": "ubuntu-x64-profile.json",
+      "attestations": [
+        "evaluation-attestation.json"
+      ]
+    }
+  ],
+  "archive_evidence": {
+    "archive": "evidence/provenance/qwen3-ubuntu-witness.tar",
+    "members": [
+      {
+        "member": "evidence-manifest.json",
+        "path": "evidence/execution/evidence-manifest.json"
+      },
+      {
+        "member": "nonthinking-greedy-repeat-v1-result.json",
+        "path": "evidence/execution/nonthinking-greedy-repeat-v1-result.json"
+      },
+      {
+        "member": "nonthinking-greedy-v1-result.json",
+        "path": "evidence/execution/nonthinking-greedy-v1-result.json"
+      },
+      {
+        "member": "public-probe.json",
+        "path": "evidence/execution/public-probe.json"
+      },
+      {
+        "member": "run-summary.json",
+        "path": "evidence/execution/run-summary.json"
+      },
+      {
+        "member": "run_qwen_probe.py",
+        "path": "evidence/execution/run_qwen_probe.py"
+      },
+      {
+        "member": "runtime-manifest.json",
+        "path": "evidence/execution/runtime-manifest.json"
+      },
+      {
+        "member": "snapshot-byte-manifest.json",
+        "path": "evidence/execution/snapshot-byte-manifest.json"
+      },
+      {
+        "member": "snapshot.sha256",
+        "path": "evidence/execution/snapshot.sha256"
+      },
+      {
+        "member": "thinking-greedy-v1-result.json",
+        "path": "evidence/execution/thinking-greedy-v1-result.json"
+      },
+      {
+        "member": "wheel-lock.txt",
+        "path": "evidence/execution/wheel-lock.txt"
+      }
+    ]
+  },
+  "github_attestation": {
+    "artifact": "evidence/provenance/qwen3-ubuntu-witness.tar",
+    "bundle": "evidence/provenance/github-attestation-bundle.jsonl",
+    "trusted_root": "evidence/provenance/github-trusted-root.jsonl",
+    "repository": "mynameisyou-cmyk/chillspace-commons",
+    "signer_workflow": "mynameisyou-cmyk/chillspace-commons/.github/workflows/qwen3-ubuntu-witness.yml",
+    "source_digest": "abad1246268ebeadcbc4dc99571f84beadfd030f",
+    "source_ref": "refs/heads/research/qwen3-06b-ubuntu-witness-20260815",
+    "run_id": "31873241774",
+    "run_attempt": 1,
+    "predicate_type": "https://slsa.dev/provenance/v1",
+    "runner_environment": "github-hosted",
+    "verifier": {
+      "name": "gh",
+      "minimum_version": "2.86.0",
+      "source_revision": "github/cli/v2.86.0"
+    }
+  },
+  "witness_signature": {
+    "public_key": "signing/public-key.pub",
+    "verifier_policy": "signing/verifier-policy.json"
+  },
+  "non_claims": [
+    "This witness index refers to the sealed qwen3-0.6b-hf-c1899de2 release; it is not a new model release or a mutation of that capsule.",
+    "The successful run was curated by the same KINGDOM operator on a GitHub-managed runner; it is not an independent human, vendor, publisher, or laboratory reproduction.",
+    "GitHub artifact attestation authenticates the workflow-produced tar and bound workflow identity; it does not establish model semantics, claim truth, or the inode consumed by the loader.",
+    "The pinned trusted-root snapshot supports this offline verification receipt at the recorded time; it is not a timeless statement about later trust-root state.",
+    "The public arithmetic fixture differs from the earlier capsule's private synthetic probe, so cross-machine exact-output equivalence to that run is not claimed.",
+    "Digests, signatures, and deterministic receipts identify bytes and structural validity; they do not prove safety, quality, broad reproducibility, or publisher identity.",
+    "One failed pre-inference attempt is retained; it produced no model inference, evidence tar, or artifact attestation."
+  ]
+}

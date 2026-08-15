@@ -134,7 +134,7 @@
   </header>
 
   <main id="main">
-    <p class="notice"><strong>Three evidence classes.</strong> The synthetic examples contain dummy identities and hashes. The Kimi K3 capsule is a real KINGDOM-curated, publisher-sourced release record: selected metadata, code, and license bytes were captured, while weight-shard hashes remain publisher-claimed. No model or API call, evaluation, build, or runtime execution was performed. Qwen3-0.6B adds one curator-observed local CPU execution whose misses and privacy boundary remain part of the record.</p>
+    <p class="notice"><strong>Evidence stays scoped.</strong> The synthetic examples contain dummy identities and hashes. The Kimi K3 capsule is a real KINGDOM-curated, publisher-sourced release record: selected metadata, code, and license bytes were captured, while weight-shard hashes remain publisher-claimed. No model or API call, evaluation, build, or runtime execution was performed. Qwen3-0.6B adds one curator-observed local CPU capsule and one signed second-machine witness from a GitHub-managed Ubuntu x64 runner. Neither is independent publisher authority.</p>
 
     <section aria-labelledby="capsule">
       <p class="label">Curated release capsule · not a launch</p>
@@ -177,6 +177,30 @@
           <li><a href="capsules/qwen3-0.6b-hf-c1899de2/evidence/execution/snapshot-byte-manifest.json">snapshot byte manifest</a></li>
           <li><a href="capsules/qwen3-0.6b-hf-c1899de2/release-signature-attestation.json">signature attestation</a></li>
           <li><a href="capsules/qwen3-0.6b-hf-c1899de2/launch-index.json">signed launch index</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="qwen-ubuntu-witness">
+      <p class="label">Signed execution referrer · same curator</p>
+      <h2 id="qwen-ubuntu-witness">Qwen3-0.6B, witnessed on GitHub-managed Ubuntu x64.</h2>
+      <p class="intro">This third capsule does not rewrite the release. Its signed witness index anchors the local capsule's exact release and launch digests to a workflow-produced evidence tar. The immutable ten-file snapshot descriptor set and byte total match; the public fixture differs from the earlier private fixture, so cross-platform output equality is not claimed. A second machine is not a second human, vendor, or publisher authority.</p>
+      <div class="capsule">
+        <div>
+          <p class="label">qwen3-0.6b-gh-ubuntu-abad124</p>
+          <h3>One public fixture · provenance and misses retained.</h3>
+          <p>The first attempt failed before inference on a namespace observation bug and remains visible. The successful thinking run stayed open at 96 tokens with no final answer; two non-thinking runs were token-identical, correct under last-numeric scoring, and strict-format failures.</p>
+          <p>Offline provenance verification assumes the locally resolved <code>gh</code> executable is trusted. The registry validator constrains its version and verification result, but does not authenticate or digest-pin that executable.</p>
+        </div>
+        <ul class="capsule-links">
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/README.md">witness README</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/ubuntu-x64-profile.json">Ubuntu x64 profile</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/evaluation-attestation.json">evaluation attestation</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/witness-index.json">signed witness index</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/execution/run-summary.json">output-free run summary</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/github-attestation-bundle.jsonl">GitHub attestation bundle</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/offline-verification-receipt.json">offline <code>gh</code> receipt</a></li>
+          <li><a href="capsules/qwen3-0.6b-gh-ubuntu-abad124/evidence/provenance/prior-attempt-failure-receipt.json">prior failed-attempt receipt</a></li>
         </ul>
       </div>
     </section>
@@ -273,8 +297,11 @@
         <li>Captured metadata, code, and license bytes are not the same evidence state as publisher-claimed weight-shard hashes.</li>
         <li>The Qwen witness streamed all ten files locally; its 1.5 GB weights and 11.4 MB tokenizer JSON are not mirrored here.</li>
         <li>Qwen's thinking attempt truncated at 128 tokens without a close or final segment. Its two non-thinking controls had identical continuation-token and decoded-output SHA-256 values and matched the private integer last, but failed strict formatting.</li>
-        <li>No raw Qwen prompt, expected value, decoded output, or generated deliberation is public. One synthetic case is not a benchmark, safety test, quality assessment, or broad reasoning claim.</li>
-        <li>Offline registry verification validates the signed file graph; it neither reexecutes inference nor independently proves which local artifact path the loader consumed.</li>
+        <li>No raw prompt, expected value, decoded output, or generated deliberation from the local Qwen capsule is public. Its one private synthetic case is not a benchmark, safety test, quality assessment, or broad reasoning claim.</li>
+        <li>The GitHub-hosted witness anchors the same release and exact snapshot descriptor set, but uses a different public fixture. It makes no cross-platform output-equality claim and remains curator-observed.</li>
+        <li>The first GitHub run failed before inference on a namespace observation bug and remains visible. The successful thinking run was open at 96 tokens with no answer; its two non-thinking runs were token-identical, last-numeric matches, and strict-format failures.</li>
+        <li>Raw hosted output and deliberation are omitted; their fingerprints are public, and low-entropy result semantics are inferable from the scoring flags. The omitted bytes are not thereby reproduced, and hashes are not encryption.</li>
+        <li>Offline registry verification validates the signed file graph and retained GitHub/Sigstore bundle while forcing HTTP proxy routes to unreachable loopback. The bundle authenticates the workflow-produced tar, not its evaluation semantics or the loader's model-file inode.</li>
         <li>A curator signature proves control of its task key, not publisher identity, vendor endorsement, safety, quality, behavior, or claim truth.</li>
         <li>No promotion of aliases, seeds, tensor inventories, or behavioral probes into weight digests.</li>
         <li>No user or KINGDOM session content in curated JSON records; captured publisher documents retain their public illustrative examples.</li>

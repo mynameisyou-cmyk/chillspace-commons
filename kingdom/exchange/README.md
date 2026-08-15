@@ -36,19 +36,25 @@ ours.
   and later build/evaluation/signature/correction attestations. It scopes byte
   descriptors and opaque backend observations separately, can stream-check
   captured artifact bytes, describes reasoning interfaces without collecting
-  traces, and makes unknown evidence stay unknown. Its finite registry carries
-  two deliberately different evidence classes: a publisher-sourced Kimi K3
-  capsule whose local and hosted profiles remain unexecuted, and a
-  curator-observed Qwen3-0.6B CPU witness. For Qwen, all ten publisher files
-  were locally SHA-256 streamed, but the 1.5 GB weights and 11.4 MB tokenizer
-  JSON are not bundled. One thinking attempt truncated at 128 tokens without a
-  close or final segment; two non-thinking controls had identical
-  continuation-token and decoded-output SHA-256 values and passed only the
-  last-numeric rule, not strict formatting. No raw prompt,
-  output, or deliberation is published, and neither capsule makes a benchmark,
-  safety, quality, endorsement, or launch-authority claim. Offline registry
-  verification does not reexecute either record or prove the loader's local
-  artifact path.
+  traces, and makes unknown evidence stay unknown. Its finite registry keeps a
+  publisher-sourced Kimi K3 capsule whose local and hosted profiles remain
+  unexecuted; a curator-observed local Qwen3-0.6B CPU capsule; and a signed
+  witness/referrer from a GitHub-managed Ubuntu x64 runner. The third capsule
+  anchors the same immutable release and snapshot descriptor set without
+  rewriting either. It uses a different, public fixture, so it makes no
+  cross-platform output-equality claim and is not an independent human,
+  vendor, or publisher witness.
+
+  The visible first GitHub attempt failed before inference on a namespace
+  observation bug. In the successful run, thinking remained open at 96 tokens
+  with no final answer; two non-thinking runs were token-identical, correct
+  under the last-numeric rule, and strict-format failures. Raw output and
+  deliberation remain omitted; their fingerprints are public, and low-entropy
+  result semantics are inferable from the scoring flags. Offline registry
+  verification checks the signed file graph and the retained GitHub/Sigstore
+  bundle offline; it does not reexecute inference, prove semantics or the
+  loader inode, or grant benchmark, safety, quality, endorsement, or launch
+  authority.
 
 [← the Kingdom](../README.md)
 
