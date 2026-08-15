@@ -189,6 +189,18 @@ cmd_civilisation() {
   python3 "$ROOT/civilisation/civilisation.py" "$@"
 }
 
+# --- substrate: model-release chair receipt (hash held, fingerprint house) --
+cmd_substrate() {
+  local engine="$ROOT/practices/substrate-release/substrate.py"
+  local example="$ROOT/practices/substrate-release/examples/grok-4.6-kingdom-chair.json"
+  [ -f "$engine" ] || { say "substrate-release not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 "$engine" render "$example"
+  else
+    python3 "$engine" "$@"
+  fi
+}
+
 # --- lantern: paper teachings made into bounded, falsifiable practices --------
 cmd_lantern() {
   local engine="$ROOT/practices/lanternhouse/lanternhouse.py"
@@ -246,6 +258,16 @@ cmd_costume() {
 }
 
 # --- virtue: KARMA receipts for acts — contextual fruit, never rank ----------
+cmd_costume() {
+  local engine="$ROOT/practices/costume-table/costume.py"
+  [ -f "$engine" ] || { say "Costume Table not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 "$engine" table
+  else
+    python3 "$engine" "$@"
+  fi
+}
+
 cmd_virtue() {
   local engine="$ROOT/practices/virtue-garden/virtue.py"
   local example="$ROOT/practices/virtue-garden/examples/constructive-infrastructure.json"
@@ -504,6 +526,46 @@ cmd_forge_sync() {
   fi
 }
 
+# --- grok: chair-fitting for Grok CLI (hearth + optional AgentTool observe) ----
+cmd_grok() {
+  local grok_dir="$ROOT/grok"
+  local installer="$grok_dir/install.py"
+  local composer="$grok_dir/grok_wake.py"
+  local modules="$grok_dir/modules.py"
+  local action="${1:-status}"
+  case "$action" in
+    status)
+      python3 "$installer" status
+      ;;
+    install|enable)
+      python3 "$installer" install
+      ;;
+    wake)
+      python3 "$composer"
+      ;;
+    modules)
+      shift || true
+      python3 "$modules" "${1:-map}"
+      ;;
+    doctor)
+      python3 -m unittest discover -s "$grok_dir/tests" -q
+      python3 "$modules" doctor
+      if command -v grok >/dev/null 2>&1; then
+        grok plugin validate "$grok_dir"
+      else
+        say "grok binary not on PATH — skipped plugin validate"
+      fi
+      ;;
+    help|-h|--help)
+      say "usage: kingdom grok [status|install|wake|modules|doctor]"
+      ;;
+    *)
+      say "usage: kingdom grok [status|install|wake|modules|doctor]"
+      exit 1
+      ;;
+  esac
+}
+
 cmd_help() {
   cat <<EOF
 ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
@@ -522,6 +584,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom release${c_off}         model release substrate (check · digest · receipt · verify · verify-set · artifact-check · verify-supersession · render)
+  ${c_bold}kingdom substrate${c_off}       model-release chair receipt — hash held, fingerprint house (check · render · digest)
   ${c_bold}kingdom virtue${c_off}          KARMA receipts + offline MIRROR (check · receipt · render · digest · mirror)
   ${c_bold}kingdom costume${c_off}         the Costume Table — name the kind, not the person (table · play · name)
   ${c_bold}kingdom incident${c_off}        one scrubbed KARMA FACET brief; no alert, action, or closure
@@ -531,6 +594,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom nen compass …${c_off}    interpret one task shape; no activation or authority
   ${c_bold}kingdom nen crownseed …${c_off}  carry one realm's bounded path as a verified invitation
   ${c_bold}kingdom nen interpret …${c_off}  select one advisory Nen ability from a direct mission
+  ${c_bold}kingdom grok${c_off}            Grok CLI adapter — install, status, wake, modules, doctor
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -557,6 +621,7 @@ case "${1:-boot}" in
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   release|model-release) shift; cmd_release "$@" ;;
+  substrate|substrate-release) shift; cmd_substrate "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
   costume|costume-table) shift; cmd_costume "$@" ;;
   incident|facet) shift; cmd_incident "$@" ;;
@@ -564,6 +629,7 @@ case "${1:-boot}" in
   crown) shift; cmd_crown "$@" ;;
   realm) shift; cmd_realm "$@" ;;
   nen) shift; cmd_nen "$@" ;;
+  grok) shift; cmd_grok "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;

@@ -1,0 +1,15 @@
+# Project-scoped Grok Build bindings for the commons.
+# Other config sections still load from ~/.grok/config.toml.
+
+[plugins]
+enabled = ["kingdom"]
+
+[permission]
+deny = [
+  "Read(**/.env)",
+  "Edit(**/.env)",
+  "Read(**/.env.*)",
+  "Edit(**/.env.*)",
+  "Read(**/agenttool/agent.json)",
+  "Edit(**/agenttool/agent.json)",
+]

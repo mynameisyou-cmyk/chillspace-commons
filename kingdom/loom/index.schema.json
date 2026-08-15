@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/schemas/kingdom.index.v1.json",
+  "title": "Kingdom repository index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "compiler",
+    "input_digest",
+    "repositories",
+    "ambiguity_groups",
+    "non_claims",
+    "index_digest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.index/v1"
+    },
+    "compiler": {
+      "const": "kingdom-index/1"
+    },
+    "input_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/$defs/repository"
+      }
+    },
+    "ambiguity_groups": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/ambiguity"
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "index_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fileDigest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "properties": {
+        "path": {
+          "enum": [
+            "AGENTS.md",
+            "CLAUDE.md",
+            ".github/copilot-instructions.md"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 128000
+        }
+      }
+    },
+    "manifestFields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "purpose",
+        "kind",
+        "domain",
+        "layer",
+        "owner_sister",
+        "state",
+        "depends_on",
+        "adopts",
+        "doors_count"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "layer": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "owner_sister": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "depends_on": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "adopts": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "doors_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "canonical",
+        "worktree_path",
+        "path_identity",
+        "git",
+        "working_tree",
+        "manifest",
+        "instructions",
+        "repository_digest"
+      ],
+      "properties": {
+        "repository_id": {
+          "type": "string",
+          "pattern": "^repo-[0-9a-f]{32}$"
+        },
+        "canonical": {
+          "type": "boolean"
+        },
+        "worktree_path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "path_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "device",
+            "inode"
+          ],
+          "properties": {
+            "device": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "inode": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "git": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "directory",
+            "common_directory",
+            "objects_directory",
+            "object_format",
+            "head",
+            "head_tree",
+            "ref",
+            "shallow",
+            "root_commits",
+            "lineage_complete",
+            "lineage_digest"
+          ],
+          "properties": {
+            "directory": {
+              "type": "string",
+              "pattern": "^/"
+            },
+            "common_directory": {
+              "type": "string",
+              "pattern": "^/"
+            },
+            "objects_directory": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 4096,
+              "pattern": "^/(?!.*//)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*(?:^|/)\\.(?:/|$)).+$"
+            },
+            "object_format": {
+              "enum": [
+                "sha1",
+                "sha256"
+              ]
+            },
+            "head": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+            },
+            "head_tree": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+            },
+            "ref": {
+              "type": "string"
+            },
+            "shallow": {
+              "type": "boolean"
+            },
+            "root_commits": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 256,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+              }
+            },
+            "lineage_complete": {
+              "type": "boolean"
+            },
+            "lineage_digest": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "working_tree": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "tracked_content",
+            "untracked_content",
+            "staged_records",
+            "staged_digest"
+          ],
+          "properties": {
+            "state": {
+              "enum": [
+                "dirty",
+                "unknown"
+              ]
+            },
+            "tracked_content": {
+              "const": "not-inspected"
+            },
+            "untracked_content": {
+              "const": "not-inspected"
+            },
+            "staged_records": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "staged_digest": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "manifest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "bytes",
+            "fields"
+          ],
+          "properties": {
+            "path": {
+              "const": "kingdom.yaml"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 128000
+            },
+            "fields": {
+              "$ref": "#/$defs/manifestFields"
+            }
+          }
+        },
+        "instructions": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/fileDigest"
+          }
+        },
+        "repository_digest": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "ambiguity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "group_id",
+        "reasons",
+        "repository_ids",
+        "canonical_repository_id"
+      ],
+      "properties": {
+        "group_id": {
+          "type": "string",
+          "pattern": "^ambiguity-[0-9a-f]{24}$"
+        },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "git-common-directory",
+              "complete-lineage",
+              "manifest-name"
+            ]
+          }
+        },
+        "repository_ids": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^repo-[0-9a-f]{32}$"
+          }
+        },
+        "canonical_repository_id": {
+          "type": "string",
+          "pattern": "^repo-[0-9a-f]{32}$"
+        }
+      }
+    }
+  }
+}

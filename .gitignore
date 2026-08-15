@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
+
 .kingdom-quest/
 
 # Local Cloudflare/Wrangler state inside the intentionally tracked node_modules tree.

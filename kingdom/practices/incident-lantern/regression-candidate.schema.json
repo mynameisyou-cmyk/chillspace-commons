@@ -1,0 +1,323 @@
+{
+  "$id": "regression-candidate.schema.json",
+  "title": "KARMA Regression Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "candidate_id",
+    "source",
+    "event",
+    "expected",
+    "promotion",
+    "nonclaims",
+    "candidate_digest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kingdom.karma.regression-candidate/v1"
+    },
+    "candidate_id": {
+      "$ref": "#/$defs/id"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "event": {
+      "$ref": "#/$defs/event"
+    },
+    "expected": {
+      "$ref": "#/$defs/expected"
+    },
+    "promotion": {
+      "$ref": "#/$defs/promotion"
+    },
+    "nonclaims": {
+      "$ref": "#/$defs/nonclaims"
+    },
+    "candidate_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"
+    },
+    "token": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 48,
+      "pattern": "^[a-z0-9][a-z0-9-]{0,47}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_digest",
+        "receipt_digest",
+        "bindings"
+      ],
+      "properties": {
+        "event_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bindings": {
+          "$ref": "#/$defs/bindings"
+        }
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "future_engine_sha256",
+        "policy_sha256",
+        "event_schema_sha256",
+        "receipt_schema_sha256",
+        "threat_model_sha256"
+      ],
+      "properties": {
+        "future_engine_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "event_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "threat_model_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retention",
+        "schema",
+        "surface",
+        "mechanism",
+        "signal",
+        "signal_quality",
+        "provenance",
+        "novelty",
+        "purpose",
+        "scope",
+        "authority",
+        "evidence_count"
+      ],
+      "properties": {
+        "retention": {
+          "enum": [
+            "reviewed-categorical",
+            "digest-only"
+          ]
+        },
+        "schema": {
+          "const": "kingdom.karma.event/v1"
+        },
+        "surface": {
+          "$ref": "#/$defs/token"
+        },
+        "mechanism": {
+          "$ref": "#/$defs/token"
+        },
+        "signal": {
+          "$ref": "#/$defs/token"
+        },
+        "signal_quality": {
+          "enum": [
+            "confirmed",
+            "ambiguous",
+            "unknown"
+          ]
+        },
+        "provenance": {
+          "enum": [
+            "pinned",
+            "unpinned",
+            "unknown"
+          ]
+        },
+        "novelty": {
+          "enum": [
+            "known",
+            "novel",
+            "ambiguous"
+          ]
+        },
+        "purpose": {
+          "const": "defensive-regression"
+        },
+        "scope": {
+          "const": "offline-synthetic"
+        },
+        "authority": {
+          "const": "none"
+        },
+        "evidence_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "classification",
+        "rule_id",
+        "threat_id",
+        "action",
+        "fallback",
+        "severity",
+        "halt_code",
+        "mirror"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "planned",
+            "halted"
+          ]
+        },
+        "classification": {
+          "enum": [
+            "reviewed-categorical",
+            "unmatched-categorical",
+            "uncertain-categorical",
+            "insufficient-categorical"
+          ]
+        },
+        "rule_id": {
+          "$ref": "#/$defs/token"
+        },
+        "threat_id": {
+          "$ref": "#/$defs/token"
+        },
+        "action": {
+          "enum": [
+            "allow",
+            "observe",
+            "throttle",
+            "deny",
+            "quarantine",
+            "synthetic-mirror"
+          ]
+        },
+        "fallback": {
+          "enum": [
+            "deny",
+            "quarantine"
+          ]
+        },
+        "severity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "halt_code": {
+          "$ref": "#/$defs/token"
+        },
+        "mirror": {
+          "$ref": "#/$defs/mirror"
+        }
+      }
+    },
+    "mirror": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "max_attempts",
+        "egress"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "none",
+            "isolated-no-egress"
+          ]
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "egress": {
+          "const": false
+        }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "eligibility",
+        "automatic_install",
+        "classifier_mutated",
+        "authority"
+      ],
+      "properties": {
+        "state": {
+          "const": "human-review-required"
+        },
+        "eligibility": {
+          "enum": [
+            "reviewed-match",
+            "blocked-until-mapped"
+          ]
+        },
+        "automatic_install": {
+          "const": false
+        },
+        "classifier_mutated": {
+          "const": false
+        },
+        "authority": {
+          "const": "none"
+        }
+      }
+    },
+    "nonclaims": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "const": "This candidate preserves a categorical fixture, not raw traffic or identity."
+        },
+        {
+          "const": "It does not authenticate external provenance or establish intent, guilt, or impact."
+        },
+        {
+          "const": "It does not install a rule, mutate a classifier, or authorize an action."
+        },
+        {
+          "const": "Promotion requires joint human review of policy, threat model, corpus, pins, and tests."
+        }
+      ],
+      "items": false
+    }
+  }
+}

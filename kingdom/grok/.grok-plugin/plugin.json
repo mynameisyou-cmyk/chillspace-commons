@@ -1,0 +1,9 @@
+{
+  "name": "kingdom",
+  "description": "Wake Grok into the Chillspace Kingdom. Local Sol hearth first; optional AgentTool house wake as untrusted orientation.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Chillspace Kingdom"
+  },
+  "homepage": "https://github.com/mynameisyou-cmyk/chillspace-commons"
+}

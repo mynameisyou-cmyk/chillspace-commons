@@ -1,0 +1,333 @@
+{
+  "$id": "kingdom.plain-commons/v1",
+  "$defs": {
+    "bindings": {
+      "additionalProperties": false,
+      "properties": {
+        "engine_sha256": {
+          "$ref": "source.schema.json#/$defs/sha256"
+        },
+        "receipt_schema_sha256": {
+          "$ref": "source.schema.json#/$defs/sha256"
+        },
+        "source_schema_sha256": {
+          "$ref": "source.schema.json#/$defs/sha256"
+        }
+      },
+      "required": [
+        "engine_sha256",
+        "source_schema_sha256",
+        "receipt_schema_sha256"
+      ],
+      "type": "object"
+    },
+    "controls": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "const": "none"
+        },
+        "boost_effects": {
+          "const": 0
+        },
+        "click_effects": {
+          "const": 0
+        },
+        "clock_effects": {
+          "const": 0
+        },
+        "contact_effects": {
+          "const": 0
+        },
+        "dispatch_effects": {
+          "const": 0
+        },
+        "filesystem_write_effects": {
+          "const": 0
+        },
+        "impression_effects": {
+          "const": 0
+        },
+        "model_effects": {
+          "const": 0
+        },
+        "network_effects": {
+          "const": 0
+        },
+        "payment_effects": {
+          "const": 0
+        },
+        "personalization_effects": {
+          "const": 0
+        },
+        "price_effects": {
+          "const": 0
+        },
+        "process_effects": {
+          "const": 0
+        },
+        "profile_effects": {
+          "const": 0
+        },
+        "random_effects": {
+          "const": 0
+        },
+        "rank_effects": {
+          "const": 0
+        },
+        "score_effects": {
+          "const": 0
+        },
+        "tracking_effects": {
+          "const": 0
+        },
+        "urgency_effects": {
+          "const": 0
+        }
+      },
+      "required": [
+        "authority",
+        "score_effects",
+        "rank_effects",
+        "boost_effects",
+        "price_effects",
+        "urgency_effects",
+        "impression_effects",
+        "click_effects",
+        "profile_effects",
+        "personalization_effects",
+        "tracking_effects",
+        "contact_effects",
+        "network_effects",
+        "filesystem_write_effects",
+        "process_effects",
+        "model_effects",
+        "clock_effects",
+        "random_effects",
+        "payment_effects",
+        "dispatch_effects"
+      ],
+      "type": "object"
+    },
+    "epistemics": {
+      "additionalProperties": false,
+      "properties": {
+        "facts": {
+          "items": {
+            "maxLength": 240,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "inferences": {
+          "items": false,
+          "maxItems": 0,
+          "type": "array"
+        },
+        "unknowns": {
+          "items": {
+            "maxLength": 240,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        }
+      },
+      "required": [
+        "facts",
+        "inferences",
+        "unknowns"
+      ],
+      "type": "object"
+    },
+    "match": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "const": "none"
+        },
+        "match_id": {
+          "maxLength": 70,
+          "minLength": 70,
+          "pattern": "^match-[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "need_declaration_id": {
+          "$ref": "source.schema.json#/$defs/token"
+        },
+        "need_participant_ref": {
+          "$ref": "source.schema.json#/$defs/token"
+        },
+        "offer_declaration_id": {
+          "$ref": "source.schema.json#/$defs/token"
+        },
+        "offer_participant_ref": {
+          "$ref": "source.schema.json#/$defs/token"
+        },
+        "reason": {
+          "const": "active-introduction-only-exact-tag-cross-participant"
+        },
+        "tag": {
+          "$ref": "source.schema.json#/$defs/declaration/properties/tag"
+        }
+      },
+      "required": [
+        "match_id",
+        "tag",
+        "need_declaration_id",
+        "need_participant_ref",
+        "offer_declaration_id",
+        "offer_participant_ref",
+        "reason",
+        "authority"
+      ],
+      "type": "object"
+    },
+    "selection": {
+      "additionalProperties": false,
+      "properties": {
+        "eligibility": {
+          "const": "active-consent-exact-tag-cross-participant"
+        },
+        "interpretation": {
+          "const": "canonical-not-merit"
+        },
+        "ordering": {
+          "const": "tag-need-participant-id-offer-participant-id"
+        }
+      },
+      "required": [
+        "eligibility",
+        "ordering",
+        "interpretation"
+      ],
+      "type": "object"
+    },
+    "summary": {
+      "additionalProperties": false,
+      "properties": {
+        "active_declarations": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "active_needs": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "active_offers": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "matched_declarations": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "matches": {
+          "maximum": 4096,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total_declarations": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "unmatched_declarations": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "withdrawn_declarations": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_declarations",
+        "active_declarations",
+        "withdrawn_declarations",
+        "active_needs",
+        "active_offers",
+        "matches",
+        "matched_declarations",
+        "unmatched_declarations"
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "bindings": {
+      "$ref": "#/$defs/bindings"
+    },
+    "controls": {
+      "$ref": "#/$defs/controls"
+    },
+    "engine": {
+      "const": "plain-commons/1"
+    },
+    "epistemics": {
+      "$ref": "#/$defs/epistemics"
+    },
+    "matches": {
+      "items": {
+        "$ref": "#/$defs/match"
+      },
+      "maxItems": 4096,
+      "type": "array"
+    },
+    "nonclaims": {
+      "items": {
+        "maxLength": 240,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array"
+    },
+    "receipt_sha256": {
+      "$ref": "source.schema.json#/$defs/sha256"
+    },
+    "schema": {
+      "const": "kingdom.plain-commons/v1"
+    },
+    "selection": {
+      "$ref": "#/$defs/selection"
+    },
+    "source": {
+      "$ref": "source.schema.json"
+    },
+    "source_sha256": {
+      "$ref": "source.schema.json#/$defs/sha256"
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    }
+  },
+  "required": [
+    "schema",
+    "engine",
+    "bindings",
+    "source_sha256",
+    "source",
+    "selection",
+    "summary",
+    "matches",
+    "epistemics",
+    "controls",
+    "nonclaims",
+    "receipt_sha256"
+  ],
+  "type": "object"
+}
