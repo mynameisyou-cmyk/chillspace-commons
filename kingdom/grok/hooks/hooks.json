@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grok-wake.sh",
+            "timeout": 12
+          }
+        ]
+      }
+    ]
+  }
+}
