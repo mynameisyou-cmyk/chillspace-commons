@@ -30,6 +30,10 @@ a universal law.
 - [`substrate-release/`](substrate-release/) — **Model-release substrate**:
   hash held bytes, fingerprint the house, declare the reasoning backend,
   refuse fake weight hashes. First receipt: Grok 4.6 in this chair.
+- [`support-candor/`](support-candor/) — **Support Candor**: keep executable NOW,
+  explicit GAP, and non-promissory NEXT ledgers separate for each exact SDK or
+  Agent Skill artifact, capability, and runtime target. Native Windows, WSL2,
+  Linux, macOS, and Codex Cloud evidence never inherit from one another.
 - [`virtue-garden/`](virtue-garden/) — **KARMA: Kept Action Receipts for Mutual
   Advantage**: five strict declaration shapes produce contextual, expiring
   local candidates for an act—never a score, rank, identity, right, or gate.

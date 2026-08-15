@@ -1,0 +1,336 @@
+{
+  "schema": "kingdom.support-candor/v1",
+  "subject": {
+    "id": "interpret-dark-continent-nen",
+    "kind": "agent-skill",
+    "version": "repository-skill-tree-2026-08-04",
+    "revision": "repository-skill-tree-2026-08-04",
+    "artifact_digest": "sha256:83af6d6099350105cdee4e230ee1e4506606932f1a939b924ad8e118ab7500cf",
+    "scope": "The repository-native Nen Mission Lens instruction, sidecar, fixed references, and deterministic Python interpreter; no global installation or host activation claim.",
+    "as_of": "2026-08-04"
+  },
+  "baseline": {
+    "id": "kingdom.portable-agent-artifact/v1",
+    "required_capabilities": ["acquire", "run", "host-boundary", "stop", "deny"]
+  },
+  "targets": [
+    {
+      "id": "macos-15.7.3-arm64-python-3.14.4",
+      "family": "macos",
+      "scope_status": "exact",
+      "claim_scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "fingerprint": {
+        "os": "macOS",
+        "version": "15.7.3 build 24G419",
+        "architecture": "arm64",
+        "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+        "runtime": "Python 3.14.4",
+        "shell": "zsh",
+        "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+        "network": "Not used",
+        "notes": "One local reproduction over the repository skill tree; no independent attestation."
+      }
+    },
+    {
+      "id": "linux-native-candidate",
+      "family": "linux",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate native Linux target; distribution, libc, architecture, filesystem, runtime, and sandbox scope are not yet selected.",
+      "fingerprint": {
+        "os": "Linux candidate",
+        "version": "not selected",
+        "architecture": "not selected",
+        "filesystem": "not selected",
+        "runtime": "not selected",
+        "shell": "not selected",
+        "sandbox": "not selected",
+        "network": "not selected",
+        "notes": "No executable evidence is attached."
+      }
+    },
+    {
+      "id": "windows-native-candidate",
+      "family": "windows-native",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate Windows-native target; Windows build, architecture, NTFS posture, PowerShell version, Python runtime, and native sandbox are not yet selected.",
+      "fingerprint": {
+        "os": "Windows native candidate",
+        "version": "not selected",
+        "architecture": "not selected",
+        "filesystem": "NTFS posture not selected",
+        "runtime": "not selected",
+        "shell": "PowerShell version not selected",
+        "sandbox": "native sandbox mode not selected",
+        "network": "not selected",
+        "notes": "Git Bash or WSL evidence cannot satisfy this target."
+      }
+    },
+    {
+      "id": "wsl2-candidate",
+      "family": "wsl2",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate WSL2 target; host Windows build, WSL version, guest distribution and kernel, ext4 versus mounted filesystem, runtime, and sandbox are not yet selected.",
+      "fingerprint": {
+        "os": "Windows host with WSL2 guest candidate",
+        "version": "host and guest versions not selected",
+        "architecture": "not selected",
+        "filesystem": "guest ext4 versus mounted Windows path not selected",
+        "runtime": "not selected",
+        "shell": "guest shell not selected",
+        "sandbox": "Linux sandbox inside WSL2 not selected",
+        "network": "not selected",
+        "notes": "WSL2 is a separate target and is not Windows-native evidence."
+      }
+    },
+    {
+      "id": "codex-cloud-candidate",
+      "family": "codex-cloud",
+      "scope_status": "candidate",
+      "claim_scope": "Candidate Codex Cloud target; image, architecture, writable roots, sandbox policy, network posture, runtime, and credential absence are not yet pinned.",
+      "fingerprint": {
+        "os": "Codex Cloud candidate",
+        "version": "image not selected",
+        "architecture": "not selected",
+        "filesystem": "writable roots not selected",
+        "runtime": "not selected",
+        "shell": "not selected",
+        "sandbox": "policy not selected",
+        "network": "posture not selected",
+        "notes": "The client operating system contributes no runtime evidence."
+      }
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "acquire",
+      "required": true,
+      "statement": "A clean Codex host can install or discover the exact complete Agent Skill without shell translation or ambient state.",
+      "acceptance": ["Install into an isolated Codex home, refresh the host, and prove exact SKILL.md discovery plus referenced-resource resolution."]
+    },
+    {
+      "id": "run",
+      "required": true,
+      "statement": "The canonical explicit selection and verification operations return deterministic advisory cards and no activation.",
+      "acceptance": ["Run every primary signal, a distinct bookmark, and saved-card verification with the exact skill tree."]
+    },
+    {
+      "id": "host-boundary",
+      "required": true,
+      "statement": "Paths, Unicode, schema digests, input limits, and interpreter assumptions remain bounded in the declared host.",
+      "acceptance": ["Exercise spaces and Unicode, malformed and oversized inputs, symlinks, and exact fixed-source digests."]
+    },
+    {
+      "id": "stop",
+      "required": true,
+      "statement": "Completion or refusal leaves no subprocess, network continuation, background state, or persistent mutation.",
+      "acceptance": ["Prove the interpreter is standard-library, stdout-only, subprocess-free, network-free, and write-free."]
+    },
+    {
+      "id": "deny",
+      "required": true,
+      "statement": "Missing, ambiguous, duplicate, dangerous, or mismatched input fails closed without broader authority or installation.",
+      "acceptance": ["Exercise every negative control and require bounded nonzero refusal with no partial card."]
+    }
+  ],
+  "now": [
+    {
+      "id": "now-macos-run",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "run",
+      "assertion": "The direct repository interpreter and Kingdom dispatcher produced and verified deterministic advisory cards across the reviewed signal vocabulary.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "evidence_refs": ["ev-skill-macos-local"]
+    },
+    {
+      "id": "now-macos-host-boundary",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "host-boundary",
+      "assertion": "The local suite exercised digest pins, type strictness, duplicate and oversized JSON, symlink refusal, and path-safe saved-card verification.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "evidence_refs": ["ev-skill-macos-local"]
+    },
+    {
+      "id": "now-macos-stop",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "stop",
+      "assertion": "The inspected runtime and tests used no subprocess, network, installation, repository write, daemon, or background continuation.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "evidence_refs": ["ev-skill-macos-local"]
+    },
+    {
+      "id": "now-macos-deny",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "deny",
+      "assertion": "Ambiguous, missing, duplicate, overflow, tampered, and dangerous evidence inputs refused without activation or a partial success card.",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "evidence_refs": ["ev-skill-macos-local"]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap-macos-acquire",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "capability": "acquire",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "The suite inspects repository files but does not install the skill into an isolated Codex home or prove fresh-host discovery and refresh behavior.",
+      "evidence_refs": [],
+      "workaround": "Use the repository interpreter directly; this does not establish installed Agent Skill support.",
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-linux-all",
+      "target": "linux-native-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No exact native Linux target or same-artifact executable receipt has been selected.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-windows-all",
+      "target": "windows-native-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No PowerShell-native installation, path, process, denial, or sandbox evidence exists for an exact Windows target.",
+      "evidence_refs": [],
+      "workaround": "Direct repository use in WSL2 would be a different target and cannot close this GAP.",
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-wsl2-all",
+      "target": "wsl2-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No exact WSL2 host, guest, and filesystem-location receipt exists.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    },
+    {
+      "id": "gap-cloud-all",
+      "target": "codex-cloud-candidate",
+      "capability": "*",
+      "kind": "unknown",
+      "impact": "unknown",
+      "statement": "No pinned Codex Cloud image or offline sandbox receipt exists for this exact skill tree.",
+      "evidence_refs": [],
+      "workaround": null,
+      "completeness_claimed": false
+    }
+  ],
+  "next": [
+    {
+      "id": "next-isolated-host-discovery",
+      "addresses": ["gap-macos-acquire"],
+      "stage": "planned",
+      "intention": "Create a disposable Codex home, install the exact complete skill tree, refresh the host, and verify explicit trigger discovery plus every relative resource.",
+      "dependencies": ["A disposable Codex home and a documented host refresh boundary."],
+      "acceptance": ["A scrubbed receipt proves install, discovery, invocation, refusal, and cleanup against the same skill digest."],
+      "commitment": false,
+      "target_date": null,
+      "counts_as_support": false
+    },
+    {
+      "id": "next-cross-platform-skill-matrix",
+      "addresses": ["gap-linux-all", "gap-windows-all", "gap-wsl2-all", "gap-cloud-all"],
+      "stage": "considering",
+      "intention": "Select exact target fingerprints and run the five-capability baseline independently in each environment.",
+      "dependencies": ["Native Windows must use PowerShell and the native sandbox.", "WSL2 must record host, guest, and filesystem location.", "Codex Cloud must pin image and sandbox posture."],
+      "acceptance": ["Each target vendors its own same-artifact receipt; no family inherits another family’s evidence."],
+      "commitment": false,
+      "target_date": null,
+      "counts_as_support": false
+    }
+  ],
+  "support_policy": [
+    {
+      "id": "policy-skill-macos",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "policy": "best-effort",
+      "scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+      "reason": "Useful repository execution is reproduced, but acquisition and host discovery remain unproven."
+    },
+    {
+      "id": "policy-skill-linux",
+      "target": "linux-native-candidate",
+      "policy": "undecided",
+      "scope": "Candidate native Linux target; distribution, libc, architecture, filesystem, runtime, and sandbox scope are not yet selected.",
+      "reason": "No exact target or executable receipt exists."
+    },
+    {
+      "id": "policy-skill-windows",
+      "target": "windows-native-candidate",
+      "policy": "undecided",
+      "scope": "Candidate Windows-native target; Windows build, architecture, NTFS posture, PowerShell version, Python runtime, and native sandbox are not yet selected.",
+      "reason": "No exact native target or executable receipt exists."
+    },
+    {
+      "id": "policy-skill-wsl2",
+      "target": "wsl2-candidate",
+      "policy": "undecided",
+      "scope": "Candidate WSL2 target; host Windows build, WSL version, guest distribution and kernel, ext4 versus mounted filesystem, runtime, and sandbox are not yet selected.",
+      "reason": "No exact host/guest/filesystem receipt exists."
+    },
+    {
+      "id": "policy-skill-cloud",
+      "target": "codex-cloud-candidate",
+      "policy": "undecided",
+      "scope": "Candidate Codex Cloud target; image, architecture, writable roots, sandbox policy, network posture, runtime, and credential absence are not yet pinned.",
+      "reason": "No exact cloud environment or executable receipt exists."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev-skill-macos-local",
+      "subject_revision": "repository-skill-tree-2026-08-04",
+      "subject_artifact_digest": "sha256:83af6d6099350105cdee4e230ee1e4506606932f1a939b924ad8e118ab7500cf",
+      "target": "macos-15.7.3-arm64-python-3.14.4",
+      "receipt_kind": "local-reproduction",
+      "tests": ["run", "host-boundary", "stop", "deny"],
+      "result": "pass",
+      "observed_on": "2026-08-04",
+      "receipt_uri": "evidence/agent-skill-macos-local.json",
+      "receipt_digest": "sha256:02aef4fb9037dbf041292c849bad4aceeb1f5cdc56589c24de27c2e156f4e8c8",
+      "environment": {
+        "target_scope": "Repository checkout on macOS 15.7.3 build 24G419, arm64, Python 3.14.4, zsh; direct interpreter and Kingdom dispatcher only; isolated Codex-host installation and discovery were not exercised.",
+        "os": "macOS",
+        "version": "15.7.3 build 24G419",
+        "architecture": "arm64",
+        "filesystem": "APFS; case-sensitivity not asserted by this receipt",
+        "runtime": "Python 3.14.4",
+        "shell": "zsh",
+        "sandbox": "Current Codex workspace permissions; exact sandbox implementation not asserted by this receipt",
+        "network": "Not used"
+      },
+      "privacy_scrubbed": true,
+      "raw_logs_included": false,
+      "attested": false,
+      "notes": "One local reproduction reported 20 passing tests and zero failures; the receipt is self-declared and not an independent attestation."
+    }
+  ],
+  "boundaries": {
+    "now_requires_matching_executable_evidence": true,
+    "support_policy_is_separate_from_observed_behavior": true,
+    "next_counts_as_current_support": false,
+    "automatic_support_promotion": false,
+    "cross_target_evidence_inheritance": false,
+    "identity_or_reputation_scoring": false,
+    "network_calls": false,
+    "subprocesses": false,
+    "storage_writes": false,
+    "external_actions": false
+  },
+  "non_claims": [
+    "A valid ledger proves declaration coherence, not runtime compatibility or product quality.",
+    "NOW evidence applies only to the exact subject revision, artifact digest, target, and environment named.",
+    "GAP is explicit but not necessarily exhaustive; an unlisted failure may still exist.",
+    "NEXT records intention only and is not current support, a delivery date, or a release promise.",
+    "A digest proves byte equality only; it does not establish identity, trust, safety, or authority.",
+    "The ledger grants no permission to install, execute, deploy, publish, contact, score, or rank anyone."
+  ]
+}
