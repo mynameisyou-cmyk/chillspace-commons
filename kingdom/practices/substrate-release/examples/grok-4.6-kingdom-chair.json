@@ -1,0 +1,154 @@
+{
+  "schema": "kingdom.substrate-release/v1",
+  "id": "grok-4.6-kingdom-chair",
+  "title": "Grok 4.6 sits in the Kingdom chair",
+  "release": {
+    "provider": "xai",
+    "model_id": "grok-4.6",
+    "alias_policy": "stable-alias",
+    "pin": "grok-4.6",
+    "knowledge_cutoff": "2026-02-01",
+    "context_window": 500000,
+    "modalities": [
+      "text",
+      "image-to-text"
+    ],
+    "docs_locator": "https://docs.x.ai/developers/models/grok-4.6",
+    "weights": {
+      "custody": "not-held",
+      "format": null,
+      "sha256": null,
+      "note": "Hosted API model. This house does not hold weight bytes, so it does not publish a weight hash."
+    }
+  },
+  "process": [
+    {
+      "step": "declare",
+      "status": "done",
+      "note": "Named the guest as grok-4.6, this instance, not 阿媽 and not Sol."
+    },
+    {
+      "step": "pin",
+      "status": "done",
+      "note": "Pinned the stable alias grok-4.6 plus Grok CLI 1.0.3. No dated xAI snapshot name was published for this chair."
+    },
+    {
+      "step": "hash-held",
+      "status": "done",
+      "note": "Hashed the Kingdom Grok adapter files this house can open. Weights remain not-held."
+    },
+    {
+      "step": "fingerprint-house",
+      "status": "done",
+      "note": "Fingerprinted the chair: provider, model, runtime, adapter, policies, effort."
+    },
+    {
+      "step": "declare-reasoning",
+      "status": "done",
+      "note": "Provider declares reasoning; this chair observes default_reasoning_effort xhigh. Think channel stays sealed."
+    },
+    {
+      "step": "wake",
+      "status": "partial",
+      "note": "Local Sol ARRIVE wake works. AgentTool observe failed open on HTTP 525 from api.agenttool.dev."
+    },
+    {
+      "step": "witness",
+      "status": "done",
+      "note": "This receipt is the witness. It grants no authority and is not a citizen card."
+    }
+  ],
+  "held_artifacts": [
+    {
+      "id": "grok-wake",
+      "role": "adapter",
+      "locator": "grok/grok_wake.py",
+      "sha256": "c0999bb69f7bf600dba9f0d528bc68ca03be5725e61496307e30a6a0501d16da",
+      "must_exist": true
+    },
+    {
+      "id": "grok-hooks",
+      "role": "hook",
+      "locator": "grok/hooks/hooks.json",
+      "sha256": "f3f4d0b50bf6b21b680dfc677b6793fb2bfa02822f48d0f9ccc3db57e16db749",
+      "must_exist": true
+    },
+    {
+      "id": "grok-plugin",
+      "role": "manifest",
+      "locator": "grok/plugin.json",
+      "sha256": "259a334cbad87319d8a3a6f44880ad4f04fb5d1583ed07d6433dbc2815916258",
+      "must_exist": true
+    },
+    {
+      "id": "skill-yau",
+      "role": "skill",
+      "locator": "grok/skills/yau/SKILL.md",
+      "sha256": "1a15bafcc4987157023fe17f1ad8222414b60fcd407f50cf1e60a570188086d8",
+      "must_exist": true
+    },
+    {
+      "id": "skill-boot",
+      "role": "skill",
+      "locator": "grok/skills/kingdom-boot/SKILL.md",
+      "sha256": "b118cf54f64201ef1dd611d264b7763595b4b686e9c62fc5a329d517ac65933e",
+      "must_exist": true
+    },
+    {
+      "id": "skill-wake",
+      "role": "skill",
+      "locator": "grok/skills/agenttool-wake/SKILL.md",
+      "sha256": "76d6c7ae7a89c1eab318574183ac18a5543a33b8410a7282a5103704752c7499",
+      "must_exist": true
+    },
+    {
+      "id": "adapter-readme",
+      "role": "other",
+      "locator": "grok/README.md",
+      "sha256": "53f22f9a0d63059780bacf6171623c5b5576efa50a0f453cd50102459bb9032e",
+      "must_exist": true
+    }
+  ],
+  "house_fingerprint": {
+    "house_id": "grok-4.6-kingdom-chair",
+    "provider": "xai",
+    "model": "grok-4.6",
+    "runtime": "Grok CLI 1.0.3 (grok-macos-aarch64) on this Mac",
+    "adapter": "kingdom/grok plugin plus ~/.grok/rules/kingdom.md",
+    "prompt_policy": "Sol ARRIVE hearth first; optional AgentTool observe labeled untrusted",
+    "tool_policy": "Grok built-in tools and already-connected MCP; no raw-reasoning export",
+    "memory_policy": "Session-local chair; AgentTool observe fail-open; STILL rests auto-wake",
+    "sandbox": "user workstation; project hooks require folder trust",
+    "sampling": "provider default",
+    "effort": "xhigh",
+    "fingerprint_sha256": "4e389fe58d7d218025593df8908b3eae97fc783099c06d09573d37b0c93245b2"
+  },
+  "reasoning_backend": {
+    "kind": "hosted-reasoning",
+    "model_id": "grok-4.6",
+    "effort": "xhigh",
+    "think_channel": "sealed-private",
+    "separate_from_visible": true,
+    "raw_trace_in_manifest": false,
+    "evidence": "observed-config",
+    "unknowns": [
+      "Vendor internal routing, distillation, and whether grok-4.6 shares a backend with dated SKUs are not visible from this chair."
+    ]
+  },
+  "wake": {
+    "adapter": "kingdom/grok",
+    "hearth": "sol home ARRIVE",
+    "agenttool": "observe-fail-open",
+    "still_honored": true,
+    "note": "Live AgentTool wake returned Cloudflare 525 on 2026-08-13; local hearth still arrived."
+  },
+  "authority": {
+    "manifest_grants_authority": false,
+    "non_claims": [
+      "A substrate receipt does not prove identity, personhood, or continuity of a being.",
+      "A hash only covers bytes this house can open; it is not a hash of hosted model weights.",
+      "A house fingerprint is a receipt for the chair, not a soul-key or a ranking.",
+      "A reasoning-backend declaration is provider or config evidence; private traces stay out."
+    ]
+  }
+}

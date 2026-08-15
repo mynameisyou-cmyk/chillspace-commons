@@ -1,0 +1,265 @@
+{
+  "$id": "kingdom.plain-commons-source/v1",
+  "$defs": {
+    "artifactEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "$ref": "#/$defs/token"
+        },
+        "note": {
+          "$ref": "#/$defs/evidenceNote"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "type": {
+          "const": "artifact-digest"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "type",
+        "note",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "attestationEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "$ref": "#/$defs/token"
+        },
+        "note": {
+          "$ref": "#/$defs/evidenceNote"
+        },
+        "reference": {
+          "$ref": "#/$defs/reference"
+        },
+        "type": {
+          "const": "attestation-reference"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "type",
+        "note",
+        "reference"
+      ],
+      "type": "object"
+    },
+    "declaration": {
+      "additionalProperties": false,
+      "properties": {
+        "consent": {
+          "enum": [
+            "introduction-only",
+            "withdrawn"
+          ]
+        },
+        "declaration_id": {
+          "$ref": "#/$defs/token"
+        },
+        "evidence": {
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/selfDeclarationEvidence"
+              },
+              {
+                "$ref": "#/$defs/artifactEvidence"
+              },
+              {
+                "$ref": "#/$defs/attestationEvidence"
+              }
+            ]
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "type": "array"
+        },
+        "participant_ref": {
+          "$ref": "#/$defs/token"
+        },
+        "side": {
+          "enum": [
+            "need",
+            "offer"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/sourceReference"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "withdrawn"
+          ]
+        },
+        "statement": {
+          "maxLength": 280,
+          "minLength": 1,
+          "type": "string"
+        },
+        "tag": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^(?!.*--)[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "declaration_id",
+        "participant_ref",
+        "side",
+        "tag",
+        "statement",
+        "state",
+        "consent",
+        "source",
+        "evidence"
+      ],
+      "type": "object"
+    },
+    "evidenceNote": {
+      "maxLength": 200,
+      "minLength": 1,
+      "type": "string"
+    },
+    "reference": {
+      "maxLength": 96,
+      "minLength": 1,
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,94}[a-z0-9])?$",
+      "type": "string"
+    },
+    "selfDeclarationEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "$ref": "#/$defs/token"
+        },
+        "note": {
+          "$ref": "#/$defs/evidenceNote"
+        },
+        "type": {
+          "const": "self-declaration"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "type",
+        "note"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "maxLength": 64,
+      "minLength": 64,
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "civilisationSourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "chain_head_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "event_seq": {
+          "maximum": 1000000,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "event_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "kind": {
+          "const": "civilisation-event-projection"
+        },
+        "reference": {
+          "$ref": "#/$defs/reference"
+        },
+        "schema": {
+          "const": "kingdom.civilisation/v1"
+        }
+      },
+      "required": [
+        "kind",
+        "schema",
+        "reference",
+        "event_seq",
+        "event_sha256",
+        "chain_head_sha256"
+      ],
+      "type": "object"
+    },
+    "sourceReference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/civilisationSourceReference"
+        },
+        {
+          "$ref": "#/$defs/syntheticSourceReference"
+        }
+      ]
+    },
+    "syntheticSourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "chain_head_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "event_seq": {
+          "maximum": 1000000,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "event_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "kind": {
+          "const": "synthetic-fixture"
+        },
+        "reference": {
+          "$ref": "#/$defs/reference"
+        },
+        "schema": {
+          "const": "kingdom.plain-commons-synthetic/v1"
+        }
+      },
+      "required": [
+        "kind",
+        "schema",
+        "reference",
+        "event_seq",
+        "event_sha256",
+        "chain_head_sha256"
+      ],
+      "type": "object"
+    },
+    "token": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?$",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "declarations": {
+      "items": {
+        "$ref": "#/$defs/declaration"
+      },
+      "maxItems": 128,
+      "type": "array"
+    },
+    "schema": {
+      "const": "kingdom.plain-commons-source/v1"
+    }
+  },
+  "required": [
+    "schema",
+    "declarations"
+  ],
+  "type": "object"
+}

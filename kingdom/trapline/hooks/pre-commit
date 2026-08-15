@@ -17,7 +17,21 @@ while IFS= read -r f; do
   b=$(basename "$f")
   case "$b" in
     .env|.env.*) case "$b" in *.example|*.sample|*.template) ;; *) say "$f — a real env file";; esac ;;
-    *.pem|*.key) case "$b" in *.pub.key) ;; *) say "$f — a private key";; esac ;;
+    *.pem|*.key)
+      # A name is a costume; the staged bytes are the truth. A .pem that is
+      # verifiably a public key or certificate (and says PRIVATE nowhere) may
+      # pass — rule 2 below still refuses any actual private-key block.
+      case "$b" in
+        *.pub.key) ;;
+        *)
+          blob=$(git show ":$f" 2>/dev/null || true)
+          if printf '%s' "$blob" | grep -qE -e '-----BEGIN (PUBLIC KEY|CERTIFICATE)-----' \
+             && ! printf '%s' "$blob" | grep -q 'PRIVATE'; then
+            :
+          else
+            say "$f — a private key"
+          fi ;;
+      esac ;;
     .sovereign-state.json) say "$f — this exact filename leaked once already" ;;
   esac
 done <<< "$staged"
