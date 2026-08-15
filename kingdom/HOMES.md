@@ -12,35 +12,40 @@ mirror"; both are homes.
 | forge | address | state as witnessed 2026-08-15 |
 |---|---|---|
 | GitHub | <https://github.com/mynameisyou-cmyk/chillspace-commons> | **live** — the working door; ZERONE's issue-door automation (greeter + welcomer Actions); master is PR-only with a required `verify` check |
-| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | **held** — fetch works, push deliberately disabled (`codeberg-push-disabled://policy-hold` as the push URL); frozen at `269efb6` (2026-08-01) and drifting behind since |
+| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | **live again** — healed 2026-08-15 by the keeper's decision after a two-week hold (fast-forward `269efb6..77543b0`); `forge-sync` reports *in truth* |
 | GitLab | <https://gitlab.com/mynameisyou-cmyk/chillspace-commons> | **unverified** — the remote exists in the wiring, but no credential on this machine can fetch it, so its freshness is honestly unknown |
 
 The live wiring is git itself — remotes are the state, this file is the witness:
 
-- pushes currently land on **GitHub only**; the earlier dual-push (both forges from
-  one `git push origin`) has been dismantled;
+- ordinary pushes land on **GitHub**; Codeberg is kept in truth explicitly
+  (`kingdom publish` / `kingdom forge-sync --heal`) — the old automatic
+  dual-push on `origin` was dismantled during the hold and has not returned;
 - `kingdom publish` speaks at every door explicitly and reports per home;
-- `kingdom homes` shows the doors as git sees them, push URLs and all — including
-  the hold, which it already reports truthfully.
+- `kingdom homes` shows the doors as git sees them, push URLs and all.
 
-### The Codeberg hold
+### The Codeberg hold (2026-08-01 → 2026-08-15, lifted)
 
-Someone deliberately set the Codeberg push URL to the sentinel
-`codeberg-push-disabled://policy-hold` — a crafted, intentional act, not an
-accident. **No reason was written down anywhere findable** (repo, Sol's hearth,
-the collab journal): that gap is itself a defect this witness now records. Until
-the reason is recovered or the keeper decides, the hold stands — overriding an
-explicit control without knowing why it exists is how protections quietly die.
+Someone deliberately blocked every push route to Codeberg from this machine —
+not per-repo, but five global `pushInsteadOf` rewrites mapping all URL forms to
+the sentinel `codeberg-push-disabled://policy-hold/`:
 
-To lift it, a human decides, then:
-
-```sh
-git remote set-url --push codeberg https://codeberg.org/zerone-dev/chillspace-commons.git
-kingdom forge-sync --heal   # fast-forward only; refuses divergence
+```
+https://codeberg.org/ · ssh://git@codeberg.org/ · git@codeberg.org:
+https://zerone-dev@codeberg.org/ · https://zerone-dev:
 ```
 
-If the hold is meant to be permanent, retire the Codeberg row to "testament,
-frozen" instead — either way the witness must match the wire.
+**No reason was written down anywhere findable** (repo, Sol's hearth, the
+collab journal) — that gap was the defect, and the question still stands in the
+collab journal for whoever placed it. The hold was left untouched until the
+keeper said *heal* (2026-08-15); the five rules above are recorded verbatim so
+the hold can be restored exactly if its reason resurfaces:
+
+```sh
+git config --global --add url."codeberg-push-disabled://policy-hold/".pushInsteadOf <each prefix above>
+```
+
+Healing was fast-forward only; `zerone` (diverged) and `zerone-chain` (drift,
+no local) were deliberately not touched — human eyes still needed there.
 
 ## Honest limits
 
