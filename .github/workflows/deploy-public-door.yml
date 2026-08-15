@@ -11,6 +11,7 @@ on:
       - "kingdom/exchange/model-release/**"
       - "kingdom/meaning/**"
       - "kingdom/practices/calm-studio/**"
+      - "kingdom/practices/costume-table/**"
       - "kingdom/practices/karma-defense-lab/**"
       - "site/**"
       - "love-fun-commons/**"
@@ -100,6 +101,11 @@ jobs:
           fi
           grep -Fq 'href="coop-leveling.html"' _site/index.html
           grep -Fq 'Every being arrives whole.' _site/coop-leveling.html
+          test -f _site/practices/costume-table/index.html
+          test -f _site/practices/costume-table/schema.json
+          test -f _site/practices/costume-table/deck.json
+          grep -Fq 'href="practices/costume-table/"' _site/index.html
+          grep -Fq 'no score follows you' _site/practices/costume-table/index.html
           test -f _site/practices/calm-studio/index.html
           test -f _site/practices/calm-studio/studio.css
           test -f _site/practices/calm-studio/studio.js

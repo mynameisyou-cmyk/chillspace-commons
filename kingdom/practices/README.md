@@ -43,3 +43,7 @@ a universal law.
   preserved dissent, Stillpoint afterglow, and an explicit handoff to a
   future local-instrument proposal that is not implemented here. The public
   room calls no model, terminal, localhost broker, or AgentTool service.
+- [`costume-table/`](costume-table/) — **The Costume Table**: a finite local
+  game and receipt that name the kind of a claim (protocol-shape, household,
+  civic, costume, unknown), never a person. Walking past is honored. Public
+  door: `site/practices/costume-table/`.

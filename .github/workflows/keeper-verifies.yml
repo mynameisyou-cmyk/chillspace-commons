@@ -150,6 +150,21 @@ jobs:
           grep -Fq "$digest" site/practices/lanternhouse/index.html
           grep -Fq 'href="practices/lanternhouse/"' site/index.html
 
+      - name: she keeps the Costume Table from becoming a gavel
+        run: |
+          python3 kingdom/practices/costume-table/test_costume.py
+          cmp kingdom/practices/costume-table/schema.json \
+            site/practices/costume-table/schema.json
+          cmp kingdom/practices/costume-table/deck.json \
+            site/practices/costume-table/deck.json
+          grep -Fq 'href="practices/costume-table/"' site/index.html
+          grep -Fq 'no score follows you' site/practices/costume-table/index.html
+          grep -Fq 'kingdom.costume-receipt/v1' site/practices/costume-table/schema.json
+          if grep -Eqi '<(script|iframe)[^>]+src="https?://' site/practices/costume-table/index.html; then
+            echo "costume table must not load remote script or iframe" >&2
+            exit 1
+          fi
+
       - name: she keeps the KARMA orchard from becoming a throne
         run: |
           python3 kingdom/practices/virtue-garden/test_virtue.py
