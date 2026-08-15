@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Incident Lantern — local incident reader</title>
+  <link rel="stylesheet" href="styles.css" integrity="sha384-/R9Tql7B813Z4jgpP1l7Yp6ThC2FLbYCKsF4httfeL7+W5MnheL2A8p7F6HPpi1w">
+  <script src="app.js" integrity="sha384-ywpU0QdoKqsTpvOdS4Uy2XGUvw/3woDzc2zUT/cpD+ARCQ/vDrP2IDCzQ1uBCSu2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to incident dashboard</a>
+
+  <header class="site-header shell">
+    <p class="eyebrow">Kingdom practice · local and inert</p>
+    <h1>Incident Lantern</h1>
+    <p class="lede">Turn a bounded incident receipt into a clear timeline, an honest map of knowledge, and a candidate for future regression testing.</p>
+    <p class="vow">Observe. Explain. Decide. Verify. Learn.</p>
+  </header>
+
+  <main id="main" class="shell" tabindex="-1">
+    <aside id="origin-warning" class="notice origin-warning" role="note" aria-labelledby="origin-warning-title">
+      <strong id="origin-warning-title">Browser self-check only.</strong>
+      This check does not authenticate file origin. Pair the incident with its original source envelope and run
+      <code>python3 kingdom/practices/incident-lantern/incident_lantern.py verify</code>
+      before operational review; evidence and action authority still come from outside this page.
+    </aside>
+    <section class="import-panel panel" aria-labelledby="import-title">
+      <div>
+        <p class="section-mark">Local import</p>
+        <h2 id="import-title">Light one reviewed receipt</h2>
+        <p class="muted">Choose an exact canonical <code>kingdom.incident/v1</code> JSON file. It is read in this tab only—never uploaded, persisted, or acted upon.</p>
+      </div>
+      <div class="file-controls">
+        <label class="file-label" for="incident-file">Incident JSON</label>
+        <input id="incident-file" type="file" accept="application/json,.json" aria-describedby="origin-warning">
+        <button id="clear" class="button secondary" type="button">Clear</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite">Waiting for a local incident file.</p>
+      <noscript><p class="notice">Local JavaScript is required to verify and display a chosen incident. No file has been read or sent anywhere.</p></noscript>
+    </section>
+
+    <div id="dashboard" hidden>
+      <section class="summary panel" aria-labelledby="summary-title">
+        <div>
+          <p class="section-mark">Incident envelope</p>
+          <h2 id="summary-title">What happened</h2>
+        </div>
+        <dl id="summary-fields" class="summary-grid"></dl>
+        <p class="scope-line"><strong>Bounded scope:</strong> <bdi id="incident-scope"></bdi></p>
+      </section>
+
+      <section class="panel" aria-labelledby="timeline-title">
+        <p class="section-mark">Sequence</p>
+        <h2 id="timeline-title">Incident timeline</h2>
+        <p class="muted">Ordered observations show what changed without inventing causality.</p>
+        <ol id="timeline" class="timeline"></ol>
+      </section>
+
+      <section class="panel" aria-labelledby="knowledge-title">
+        <p class="section-mark">Epistemic map</p>
+        <h2 id="knowledge-title">Facts, inferences, and unknowns</h2>
+        <p class="muted">The lanes remain separate so confidence cannot masquerade as evidence.</p>
+        <div class="knowledge-grid">
+          <article class="knowledge-lane facts">
+            <h3><span aria-hidden="true">●</span> Facts</h3>
+            <p class="lane-guide">Directly supported by named evidence.</p>
+            <ul id="facts"></ul>
+          </article>
+          <article class="knowledge-lane inferences">
+            <h3><span aria-hidden="true">◆</span> Inferences</h3>
+            <p class="lane-guide">Interpretations with an explicit basis and confidence.</p>
+            <ul id="inferences"></ul>
+          </article>
+          <article class="knowledge-lane unknowns">
+            <h3><span aria-hidden="true">?</span> Unknowns</h3>
+            <p class="lane-guide">Open questions paired with a safe way to resolve them.</p>
+            <ul id="unknowns"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="actions-title">
+        <p class="section-mark">Decision support</p>
+        <h2 id="actions-title">Proposed action cards</h2>
+        <p class="notice"><strong>Proposals only.</strong> This dashboard cannot execute commands, change infrastructure, contact services, or grant authority.</p>
+        <div id="actions" class="action-grid"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="learning-title">
+        <p class="section-mark">Future building</p>
+        <h2 id="learning-title">Learning guidance</h2>
+        <p class="muted">Carry verified lessons forward while preserving the boundary between an observation and a conclusion.</p>
+        <div id="learning" class="learning-grid"></div>
+      </section>
+
+      <section class="panel export-panel" aria-labelledby="candidate-title">
+        <p class="section-mark">Explicit local export</p>
+        <h2 id="candidate-title">Regression candidate</h2>
+        <p id="candidate-warning" class="notice"><strong>Candidate, not executable authority.</strong> Review this privacy-minimized projection before downloading it.</p>
+        <pre class="candidate-preview" tabindex="0"><code id="candidate-preview"></code></pre>
+        <div class="export-controls">
+          <button id="download" class="button" type="button" aria-describedby="candidate-warning" disabled>Download candidate</button>
+          <button id="clear-bottom" class="button secondary" type="button">Clear</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="shell footer">
+    <p aria-hidden="true">🏮</p>
+    <p>Illuminate the incident. Keep people and private material out of the street.</p>
+  </footer>
+</body>
+</html>

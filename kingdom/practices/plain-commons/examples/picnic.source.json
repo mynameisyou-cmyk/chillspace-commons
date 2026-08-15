@@ -1,0 +1,151 @@
+{
+  "declarations": [
+    {
+      "consent": "introduction-only",
+      "declaration_id": "blanket-offer",
+      "evidence": [
+        {
+          "evidence_id": "blanket-attestation",
+          "note": "A local note says six clean picnic blankets are available.",
+          "reference": "blanket-note-6",
+          "type": "attestation-reference"
+        }
+      ],
+      "participant_ref": "blanket-keeper",
+      "side": "offer",
+      "source": {
+        "chain_head_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "event_seq": 1,
+        "event_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.blanket.1",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "active",
+      "statement": "Six clean picnic blankets are ready to share.",
+      "tag": "picnic-blankets"
+    },
+    {
+      "consent": "introduction-only",
+      "declaration_id": "garden-blanket-need",
+      "evidence": [
+        {
+          "evidence_id": "garden-self-declaration",
+          "note": "The garden circle declares this need for its shared picnic.",
+          "type": "self-declaration"
+        }
+      ],
+      "participant_ref": "garden-circle",
+      "side": "need",
+      "source": {
+        "chain_head_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "event_seq": 2,
+        "event_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.garden.2",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "active",
+      "statement": "The garden circle needs picnic blankets for a shared afternoon.",
+      "tag": "picnic-blankets"
+    },
+    {
+      "consent": "introduction-only",
+      "declaration_id": "lantern-song-offer",
+      "evidence": [
+        {
+          "evidence_id": "lantern-self-declaration",
+          "note": "The lantern friend declares a willingness to bring gentle songs.",
+          "type": "self-declaration"
+        }
+      ],
+      "participant_ref": "lantern-friend",
+      "side": "offer",
+      "source": {
+        "chain_head_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "event_seq": 3,
+        "event_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.lantern.3",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "active",
+      "statement": "Gentle songs can be shared if a future need uses this exact tag.",
+      "tag": "songs-for-picnic"
+    },
+    {
+      "consent": "introduction-only",
+      "declaration_id": "host-tool-need",
+      "evidence": [
+        {
+          "evidence_id": "host-self-declaration",
+          "note": "The picnic host declares a need for a small shared tool box.",
+          "type": "self-declaration"
+        }
+      ],
+      "participant_ref": "picnic-host",
+      "side": "need",
+      "source": {
+        "chain_head_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "event_seq": 4,
+        "event_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.host.4",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "active",
+      "statement": "A small tool box is needed to repair folding tables.",
+      "tag": "tool-library"
+    },
+    {
+      "consent": "withdrawn",
+      "declaration_id": "quiet-blanket-withdrawn",
+      "evidence": [
+        {
+          "evidence_id": "quiet-withdrawal",
+          "note": "This synthetic declaration records that introduction consent was withdrawn.",
+          "type": "self-declaration"
+        }
+      ],
+      "participant_ref": "quiet-corner",
+      "side": "offer",
+      "source": {
+        "chain_head_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "event_seq": 5,
+        "event_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.quiet.5",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "withdrawn",
+      "statement": "A former blanket offer remains only as a withdrawn snapshot record.",
+      "tag": "picnic-blankets"
+    },
+    {
+      "consent": "introduction-only",
+      "declaration_id": "tool-box-offer",
+      "evidence": [
+        {
+          "evidence_id": "tool-box-digest",
+          "note": "A synthetic inventory artifact describes the small shared tool box.",
+          "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "type": "artifact-digest"
+        }
+      ],
+      "participant_ref": "tool-library",
+      "side": "offer",
+      "source": {
+        "chain_head_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+        "event_seq": 6,
+        "event_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "kind": "synthetic-fixture",
+        "reference": "picnic.tools.6",
+        "schema": "kingdom.plain-commons-synthetic/v1"
+      },
+      "state": "active",
+      "statement": "A small shared tool box is available for folding table repairs.",
+      "tag": "tool-library"
+    }
+  ],
+  "schema": "kingdom.plain-commons-source/v1"
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>Plain Commons · Ask · Declare · See</title>
+  <link rel="stylesheet" href="styles.css" integrity="sha384-U0XEsl6u9LLMAegu+CvRtWk9YEgvnn6grfFYv0yh++0E6xL26uoo8R/FrNuCzF0V" crossorigin="anonymous">
+  <script src="app.js" integrity="sha384-NSuFT+1/DfgZ3z6fxTkRENHej80xnAe5fiOTe9NJUWsPvd/boe6RYQ3GcXGsI577" crossorigin="anonymous" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#reviewer">Skip to receipt reviewer</a>
+
+  <header class="hero">
+    <div class="hero__glow hero__glow--one" aria-hidden="true"></div>
+    <div class="hero__glow hero__glow--two" aria-hidden="true"></div>
+    <p class="eyebrow">廣告退休試驗場 · local-only experiment</p>
+    <h1><span>Ask.</span> <span>Declare.</span> <span>See.</span></h1>
+    <p class="lede">
+      A tiny room where real asks meet declared offers. Nothing follows you.
+      Nothing bids. Every exact fit gets the same chair.
+    </p>
+    <div class="verbs" aria-label="The three-part protocol">
+      <article>
+        <span class="verb-number" aria-hidden="true">01</span>
+        <h2>Ask</h2>
+        <p>A need is spoken, never inferred.</p>
+      </article>
+      <article>
+        <span class="verb-number" aria-hidden="true">02</span>
+        <h2>Declare</h2>
+        <p>An offer says only what it says.</p>
+      </article>
+      <article>
+        <span class="verb-number" aria-hidden="true">03</span>
+        <h2>See</h2>
+        <p>All exact fits sit at one table.</p>
+      </article>
+    </div>
+  </header>
+
+  <main id="reviewer" class="shell" tabindex="-1">
+    <section class="review-card" aria-labelledby="review-title">
+      <div class="review-card__copy">
+        <p class="section-kicker">Bring your own receipt</p>
+        <h2 id="review-title">Open a local commons</h2>
+        <p>
+          Choose a receipt produced by <code>plain_commons.py</code>. The file
+          stays in this tab; this page has no network, analytics, storage, or
+          remote assets.
+        </p>
+      </div>
+
+      <div class="file-controls">
+        <label class="file-picker" for="receipt-file">
+          <span>Choose receipt</span>
+          <input id="receipt-file" type="file" accept="application/json,.json">
+        </label>
+        <button id="clear-button" class="quiet-button" type="button" disabled>Clear room</button>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite">
+        Waiting quietly. No need means no targeting.
+      </p>
+      <p class="origin-note">
+        A green local review proves deterministic self-consistency only. It
+        does not prove identity, truth, current availability, continuing
+        consent, safety, delivery, or authentic origin.
+      </p>
+    </section>
+
+    <section id="empty-state" class="empty-state" aria-labelledby="empty-title">
+      <div class="empty-orbit" aria-hidden="true">
+        <span>ASK</span><span>IS</span><span>SEE</span>
+      </div>
+      <div>
+        <p class="section-kicker">Current ad spend</p>
+        <h2 id="empty-title">Politely not a field.</h2>
+        <p>
+          Compile <code>examples/picnic.source.json</code>, then open its
+          receipt here. The machine will show matches, reasons, evidence, and
+          unknowns—without inventing a winner.
+        </p>
+      </div>
+    </section>
+
+    <section id="dashboard" class="dashboard" hidden aria-labelledby="results-title">
+      <div class="result-heading">
+        <div>
+          <p class="section-kicker">Replay-verified local model</p>
+          <h2 id="results-title">Everybody brought one chair.</h2>
+        </div>
+        <p id="receipt-id" class="mono receipt-id"></p>
+      </div>
+
+      <div class="metrics" aria-label="Receipt summary">
+        <article>
+          <span id="metric-matches" class="metric-value">0</span>
+          <span class="metric-label">exact fits</span>
+        </article>
+        <article>
+          <span id="metric-active" class="metric-value">0</span>
+          <span class="metric-label">active asks + offers</span>
+        </article>
+        <article>
+          <span id="metric-withdrawn" class="metric-value">0</span>
+          <span class="metric-label">withdrawn, not matched</span>
+        </article>
+        <article>
+          <span class="metric-value metric-value--word">none</span>
+          <span class="metric-label">ranking</span>
+        </article>
+      </div>
+
+      <div class="truth-strip">
+        <span class="truth-strip__dot" aria-hidden="true"></span>
+        <p><strong>Canonical order, not merit order.</strong> Nobody paid to stand nearer the door.</p>
+      </div>
+
+      <section aria-labelledby="matches-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">What fits</p>
+            <h3 id="matches-title">Exact introductions</h3>
+          </div>
+          <p>Evidence stays visible. Evidence volume never moves a chair.</p>
+        </div>
+        <div id="matches" class="match-list"></div>
+        <p id="no-matches" class="no-matches" hidden>
+          No exact fits in this snapshot. The room does not guess.
+        </p>
+      </section>
+
+      <section class="epistemics" aria-labelledby="unknowns-title">
+        <div>
+          <p class="section-kicker">Truth keeps its layers</p>
+          <h3 id="unknowns-title">Still honestly unknown</h3>
+        </div>
+        <ul id="unknowns"></ul>
+      </section>
+
+      <section class="non-events" aria-labelledby="non-events-title">
+        <div>
+          <p class="section-kicker">The ad-shaped non-events</p>
+          <h3 id="non-events-title">Things that did not happen</h3>
+        </div>
+        <div id="controls" class="control-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <span aria-hidden="true">♡</span> Built as a quiet alternative, not an
+      impact report. Ads died of natural causes: somebody finally asked what
+      was needed. <em>That last sentence is a joke.</em>
+    </p>
+  </footer>
+</body>
+</html>
