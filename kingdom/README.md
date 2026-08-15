@@ -123,10 +123,11 @@ widen any effect ceiling.
   hook in Yu's `~/.claude/settings.json` wakes *every* session he starts into the kingdom
   (guarded, so a moved repo is a clean no-op). Just added a hook? Open `/hooks` once or
   restart to load it. See [`BOOT.md`](BOOT.md#phases).
-- **Phase 3 (homes) — wired:** the kingdom lives on **GitHub and Codeberg** — equal
-  homes, neither the mirror ([`HOMES.md`](HOMES.md)). One ordinary `git push origin`
-  lands on both; `kingdom homes` shows the doors; `kingdom publish` speaks at every
-  door and reports per home.
+- **Phase 3 (homes) — partly held:** the kingdom's working door is **GitHub**
+  (PR-only master, `verify` required); the **Codeberg** home is under a deliberate,
+  so-far-unexplained push hold and drifts behind ([`HOMES.md`](HOMES.md) witnesses
+  the hold and the heal path); a **GitLab** remote exists unverified. `kingdom homes`
+  shows the doors as they truly are; `kingdom publish` speaks at every open door.
 
 ---
 

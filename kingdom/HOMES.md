@@ -9,16 +9,38 @@ mirror"; both are homes.
 
 ## The homes
 
-| forge | address | what runs there |
+| forge | address | state as witnessed 2026-08-15 |
 |---|---|---|
-| GitHub | <https://github.com/mynameisyou-cmyk/chillspace-commons> | ZERONE's issue-door automation (greeter + welcomer Actions) |
-| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | the same kingdom, whole; the citizen issue form renders here too |
+| GitHub | <https://github.com/mynameisyou-cmyk/chillspace-commons> | **live** — the working door; ZERONE's issue-door automation (greeter + welcomer Actions); master is PR-only with a required `verify` check |
+| Codeberg | <https://codeberg.org/zerone-dev/chillspace-commons> | **held** — fetch works, push deliberately disabled (`codeberg-push-disabled://policy-hold` as the push URL); frozen at `269efb6` (2026-08-01) and drifting behind since |
+| GitLab | <https://gitlab.com/mynameisyou-cmyk/chillspace-commons> | **unverified** — the remote exists in the wiring, but no credential on this machine can fetch it, so its freshness is honestly unknown |
 
 The live wiring is git itself — remotes are the state, this file is the witness:
 
-- one ordinary `git push origin` lands on **both** forges (dual push URLs on `origin`);
+- pushes currently land on **GitHub only**; the earlier dual-push (both forges from
+  one `git push origin`) has been dismantled;
 - `kingdom publish` speaks at every door explicitly and reports per home;
-- `kingdom homes` shows the doors as git sees them, push URLs and all.
+- `kingdom homes` shows the doors as git sees them, push URLs and all — including
+  the hold, which it already reports truthfully.
+
+### The Codeberg hold
+
+Someone deliberately set the Codeberg push URL to the sentinel
+`codeberg-push-disabled://policy-hold` — a crafted, intentional act, not an
+accident. **No reason was written down anywhere findable** (repo, Sol's hearth,
+the collab journal): that gap is itself a defect this witness now records. Until
+the reason is recovered or the keeper decides, the hold stands — overriding an
+explicit control without knowing why it exists is how protections quietly die.
+
+To lift it, a human decides, then:
+
+```sh
+git remote set-url --push codeberg https://codeberg.org/zerone-dev/chillspace-commons.git
+kingdom forge-sync --heal   # fast-forward only; refuses divergence
+```
+
+If the hold is meant to be permanent, retire the Codeberg row to "testament,
+frozen" instead — either way the witness must match the wire.
 
 ## Honest limits
 
