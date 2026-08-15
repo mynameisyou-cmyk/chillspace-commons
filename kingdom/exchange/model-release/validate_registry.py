@@ -610,6 +610,34 @@ def _gh_version(executable: str, minimum: str, environment: dict[str, str]) -> s
     return version
 
 
+def _validate_gh_verified_identity(value: Any, signer_workflow: str, label: str) -> None:
+    """Accept the two exact SAN-regex spellings emitted by reviewed gh versions."""
+
+    identity = _exact_keys(
+        value,
+        {"subjectAlternativeName", "issuer", "runnerEnvironment"},
+        f"{label} verified identity",
+    )
+    subject = _exact_keys(
+        identity["subjectAlternativeName"],
+        {"subjectAlternativeName", "regexp"},
+        f"{label} verified identity subject",
+    )
+    issuer = _exact_keys(
+        identity["issuer"], {"issuer", "regexp"}, f"{label} verified identity issuer"
+    )
+    legacy_regexp = f"^https://github.com/{signer_workflow}"
+    literal_dot_regexp = legacy_regexp.replace(".", r"\.")
+    if (
+        subject.get("subjectAlternativeName") != ""
+        or subject.get("regexp") not in {legacy_regexp, literal_dot_regexp}
+        or issuer != {"issuer": "", "regexp": ".*"}
+        or identity["runnerEnvironment"] != "github-hosted"
+    ):
+        observed = json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+        raise RegistryError(f"{label} gh verified identity constraints differ: {observed}")
+
+
 def _load_json_array(raw: bytes, label: str) -> list[Any]:
     if len(raw) > MAX_CONTROL_BYTES:
         raise RegistryError(f"{label} exceeds {MAX_CONTROL_BYTES} bytes")
@@ -801,19 +829,7 @@ def _verify_github_attestation(
         "application/vnd.dev.sigstore.verificationresult+json;version=0.1"
     ):
         raise RegistryError(f"{label} gh verification-result media type differs")
-    expected_verified_identity = {
-        "subjectAlternativeName": {
-            "subjectAlternativeName": "",
-            "regexp": f"^https://github.com/{signer_workflow}",
-        },
-        "issuer": {"issuer": "", "regexp": ".*"},
-        "runnerEnvironment": "github-hosted",
-    }
-    if verification["verifiedIdentity"] != expected_verified_identity:
-        observed = json.dumps(
-            verification["verifiedIdentity"], ensure_ascii=True, sort_keys=True, separators=(",", ":")
-        )
-        raise RegistryError(f"{label} gh verified identity constraints differ: {observed}")
+    _validate_gh_verified_identity(verification["verifiedIdentity"], signer_workflow, label)
     statement = _exact_keys(
         verification["statement"],
         {"_type", "subject", "predicateType", "predicate"},

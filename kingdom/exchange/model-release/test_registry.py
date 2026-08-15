@@ -1175,6 +1175,41 @@ class WitnessRegistryTests(unittest.TestCase):
         self.assert_rejected("traversal-free")
 
 
+class GitHubIdentityCompatibilityTests(unittest.TestCase):
+    workflow = "fixture/example/.github/workflows/qwen3-ubuntu-witness.yml"
+
+    @staticmethod
+    def identity(regexp: str) -> dict[str, Any]:
+        return {
+            "subjectAlternativeName": {"subjectAlternativeName": "", "regexp": regexp},
+            "issuer": {"issuer": "", "regexp": ".*"},
+            "runnerEnvironment": "github-hosted",
+        }
+
+    def test_reviewed_gh_san_regex_spellings_are_accepted(self) -> None:
+        legacy = f"^https://github.com/{self.workflow}"
+        registry_v1._validate_gh_verified_identity(
+            self.identity(legacy), self.workflow, "synthetic GitHub attestation"
+        )
+        registry_v1._validate_gh_verified_identity(
+            self.identity(legacy.replace(".", r"\.")),
+            self.workflow,
+            "synthetic GitHub attestation",
+        )
+
+    def test_broader_or_different_gh_identity_is_rejected(self) -> None:
+        for regexp in (
+            "^https://github.com/.+",
+            "^https://github\\.com/fixture/other/\\.github/workflows/qwen3-ubuntu-witness\\.yml",
+        ):
+            with self.subTest(regexp=regexp), self.assertRaisesRegex(
+                registry_v1.RegistryError, "verified identity constraints differ"
+            ):
+                registry_v1._validate_gh_verified_identity(
+                    self.identity(regexp), self.workflow, "synthetic GitHub attestation"
+                )
+
+
 class GitHubProcessIsolationTests(unittest.TestCase):
     def test_version_and_attestation_use_only_disposable_state_roots(self) -> None:
         with tempfile.TemporaryDirectory(prefix="kingdom-fake-gh-isolation-") as directory:
