@@ -801,15 +801,19 @@ def _verify_github_attestation(
         "application/vnd.dev.sigstore.verificationresult+json;version=0.1"
     ):
         raise RegistryError(f"{label} gh verification-result media type differs")
-    if verification["verifiedIdentity"] != {
+    expected_verified_identity = {
         "subjectAlternativeName": {
             "subjectAlternativeName": "",
             "regexp": f"^https://github.com/{signer_workflow}",
         },
         "issuer": {"issuer": "", "regexp": ".*"},
         "runnerEnvironment": "github-hosted",
-    }:
-        raise RegistryError(f"{label} gh verified identity constraints differ")
+    }
+    if verification["verifiedIdentity"] != expected_verified_identity:
+        observed = json.dumps(
+            verification["verifiedIdentity"], ensure_ascii=True, sort_keys=True, separators=(",", ":")
+        )
+        raise RegistryError(f"{label} gh verified identity constraints differ: {observed}")
     statement = _exact_keys(
         verification["statement"],
         {"_type", "subject", "predicateType", "predicate"},
