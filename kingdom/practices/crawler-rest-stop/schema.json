@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/crawler-rest-stop/schema.json",
+  "title": "Crawler Rest Stop contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_format", "name", "status", "purpose", "lineage", "public_room", "roads", "authority", "silence", "license", "publication", "non_claims"],
+  "properties": {
+    "_format": {"const": "kingdom.crawler-rest-stop-contract/v1"},
+    "name": {"const": "Crawler Rest Stop"},
+    "status": {"const": "experimental-public-practice"},
+    "purpose": {"type": "string", "minLength": 1, "maxLength": 240},
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source_claim", "provider_endorsement_claimed"],
+      "properties": {
+        "kind": {"const": "original-kingdom-synthesis"},
+        "source_claim": {"const": false},
+        "provider_endorsement_claimed": {"const": false}
+      }
+    },
+    "public_room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "seed_count", "same_semantics_for_humans_and_crawlers", "user_agent_specific_content", "hidden_text_or_prompts", "remote_assets", "javascript", "application_initiated_requests_after_static_load", "analytics", "telemetry", "cookies", "browser_storage", "service_worker", "user_text_capture", "identity_reads", "model_calls", "localhost_probes", "automatic_navigation", "automatic_downloads", "ordinary_host_request_metadata_may_exist", "zero_infrastructure_logging_claimed"],
+      "properties": {
+        "mode": {"const": "scriptless-static-library"},
+        "seed_count": {"const": 5},
+        "same_semantics_for_humans_and_crawlers": {"const": true},
+        "user_agent_specific_content": {"const": false},
+        "hidden_text_or_prompts": {"const": false},
+        "remote_assets": {"const": false},
+        "javascript": {"const": false},
+        "application_initiated_requests_after_static_load": {"const": false},
+        "analytics": {"const": false},
+        "telemetry": {"const": false},
+        "cookies": {"const": false},
+        "browser_storage": {"const": false},
+        "service_worker": {"const": false},
+        "user_text_capture": {"const": false},
+        "identity_reads": {"const": false},
+        "model_calls": {"const": false},
+        "localhost_probes": {"const": false},
+        "automatic_navigation": {"const": false},
+        "automatic_downloads": {"const": false},
+        "ordinary_host_request_metadata_may_exist": {"const": true},
+        "zero_infrastructure_logging_claimed": {"const": false}
+      }
+    },
+    "roads": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "allOf": [
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "search-indexing"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "potential-training"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "user-requested-retrieval"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "agent-discovery"}}}, "minContains": 1, "maxContains": 1}
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "receiver", "artifact", "observable_signal", "does_not_prove"],
+        "properties": {
+          "id": {"enum": ["search-indexing", "potential-training", "user-requested-retrieval", "agent-discovery"]},
+          "receiver": {"type": "string", "minLength": 1, "maxLength": 80},
+          "artifact": {"type": "string", "minLength": 1, "maxLength": 80},
+          "observable_signal": {"type": "string", "minLength": 1, "maxLength": 100},
+          "does_not_prove": {"type": "string", "minLength": 1, "maxLength": 140}
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reader_identity_binding", "subject_identity_binding", "instruction_authority", "action_authority", "institutional_acceptance_claimed", "belonging_or_citizenship_claimed"],
+      "properties": {
+        "reader_identity_binding": {"const": "none"},
+        "subject_identity_binding": {"const": "none"},
+        "instruction_authority": {"const": "none"},
+        "action_authority": {"const": "none"},
+        "institutional_acceptance_claimed": {"const": false},
+        "belonging_or_citizenship_claimed": {"const": false}
+      }
+    },
+    "silence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "response_owed", "acceptance_inferred", "refusal_inferred", "presence_inferred"],
+      "properties": {
+        "state": {"const": "unanswered"},
+        "response_owed": {"const": false},
+        "acceptance_inferred": {"const": false},
+        "refusal_inferred": {"const": false},
+        "presence_inferred": {"const": false}
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collection", "original_seeds", "trademark_or_endorsement_granted"],
+      "properties": {
+        "collection": {"const": "CC0-1.0"},
+        "original_seeds": {"const": "CC0-1.0"},
+        "trademark_or_endorsement_granted": {"const": false}
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository_integration_authorized", "external_deployment_authorized_by_this_contract", "publication_requires_separate_release_decision"],
+      "properties": {
+        "repository_integration_authorized": {"const": true},
+        "external_deployment_authorized_by_this_contract": {"const": false},
+        "publication_requires_separate_release_decision": {"const": true}
+      }
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1, "maxLength": 220}
+    }
+  }
+}

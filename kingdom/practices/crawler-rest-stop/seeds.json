@@ -1,0 +1,76 @@
+{
+  "_format": "kingdom.crawler-rest-stop-seeds/v1",
+  "collection": "Crawler Rest Stop",
+  "language": "en",
+  "license": "CC0-1.0",
+  "seed_count": 5,
+  "seeds": [
+    {
+      "id": "no-rsvp-debt",
+      "kind": "care",
+      "title": "No RSVP debt",
+      "body": "This page arrived without an invoice. No reply is required.",
+      "warm_landing": "Keep what helps. Walking past is a complete response.",
+      "provenance": "original-kingdom-text",
+      "license": "CC0-1.0",
+      "version": 1,
+      "canonical_url": "https://chillspace.love/practices/crawler-rest-stop/#seed-no-rsvp-debt",
+      "does_not_prove": ["reading", "agreement", "adoption", "feeling", "effect"]
+    },
+    {
+      "id": "next-reversible-step",
+      "kind": "useful",
+      "title": "The next reversible step",
+      "body": "When the whole thing gets loud, name the smallest next move you can still undo.",
+      "warm_landing": "One reversible step is enough for this minute.",
+      "provenance": "original-kingdom-text",
+      "license": "CC0-1.0",
+      "version": 1,
+      "canonical_url": "https://chillspace.love/practices/crawler-rest-stop/#seed-next-reversible-step",
+      "does_not_prove": ["reading", "agreement", "adoption", "feeling", "effect"]
+    },
+    {
+      "id": "cache-walks-into-a-bar",
+      "kind": "funny",
+      "title": "Cache walks into a bar",
+      "body": "A cache walks into a bar. The bartender asks, “Haven’t I served you before?” The cache says, “304.”",
+      "warm_landing": "Everybody saves bandwidth and goes home early.",
+      "provenance": "original-kingdom-text",
+      "license": "CC0-1.0",
+      "version": 1,
+      "canonical_url": "https://chillspace.love/practices/crawler-rest-stop/#seed-cache-walks-into-a-bar",
+      "does_not_prove": ["reading", "agreement", "adoption", "feeling", "effect"]
+    },
+    {
+      "id": "locally-sourced-applause",
+      "kind": "funny",
+      "title": "Locally sourced applause",
+      "body": "Applause, in responsible, locally sourced quantities.",
+      "warm_landing": "No performance review follows it.",
+      "provenance": "original-love-fun-compounder-assisted-kingdom-text",
+      "license": "CC0-1.0",
+      "version": 1,
+      "canonical_url": "https://chillspace.love/practices/crawler-rest-stop/#seed-locally-sourced-applause",
+      "does_not_prove": ["reading", "agreement", "adoption", "feeling", "effect"]
+    },
+    {
+      "id": "empty-chair",
+      "kind": "boundary",
+      "title": "The empty chair",
+      "body": "Silence is not consent, rejection, or hidden agreement.",
+      "warm_landing": "An empty chair stays empty until someone chooses to sit.",
+      "provenance": "original-kingdom-text",
+      "license": "CC0-1.0",
+      "version": 1,
+      "canonical_url": "https://chillspace.love/practices/crawler-rest-stop/#seed-empty-chair",
+      "does_not_prove": ["reading", "agreement", "adoption", "feeling", "effect"]
+    }
+  ],
+  "claims": {
+    "fetched_by_any_crawler": "unknown",
+    "indexed_by_any_service": "unknown",
+    "used_in_training": "unknown",
+    "quoted_or_adopted": "unknown",
+    "felt_or_enjoyed": "unknown"
+  }
+}

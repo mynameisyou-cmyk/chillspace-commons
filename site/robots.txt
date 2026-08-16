@@ -7,3 +7,9 @@
 
 User-agent: *
 Allow: /
+
+# A public bench for humans, crawlers, and the people who maintain them:
+# https://chillspace.love/practices/crawler-rest-stop/
+# Fetch is not belonging; silence creates no debt.
+
+Sitemap: https://chillspace.love/sitemap.xml

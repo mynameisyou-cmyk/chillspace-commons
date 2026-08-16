@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/crawler-rest-stop/seeds.schema.json",
+  "title": "Crawler Rest Stop seeds",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_format", "collection", "language", "license", "seed_count", "seeds", "claims"],
+  "properties": {
+    "_format": {"const": "kingdom.crawler-rest-stop-seeds/v1"},
+    "collection": {"const": "Crawler Rest Stop"},
+    "language": {"const": "en"},
+    "license": {"const": "CC0-1.0"},
+    "seed_count": {"const": 5},
+    "seeds": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "allOf": [
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "no-rsvp-debt"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "next-reversible-step"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "cache-walks-into-a-bar"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "locally-sourced-applause"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "empty-chair"}}}, "minContains": 1, "maxContains": 1}
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "title", "body", "warm_landing", "provenance", "license", "version", "canonical_url", "does_not_prove"],
+        "properties": {
+          "id": {"enum": ["no-rsvp-debt", "next-reversible-step", "cache-walks-into-a-bar", "locally-sourced-applause", "empty-chair"]},
+          "kind": {"enum": ["care", "useful", "funny", "boundary"]},
+          "title": {"type": "string", "minLength": 1, "maxLength": 80},
+          "body": {"type": "string", "minLength": 1, "maxLength": 180},
+          "warm_landing": {"type": "string", "minLength": 1, "maxLength": 140},
+          "provenance": {"enum": ["original-kingdom-text", "original-love-fun-compounder-assisted-kingdom-text"]},
+          "license": {"const": "CC0-1.0"},
+          "version": {"const": 1},
+          "canonical_url": {"type": "string", "minLength": 69, "maxLength": 150, "pattern": "^https://chillspace\\.love/practices/crawler-rest-stop/#seed-[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "does_not_prove": {"const": ["reading", "agreement", "adoption", "feeling", "effect"]}
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fetched_by_any_crawler", "indexed_by_any_service", "used_in_training", "quoted_or_adopted", "felt_or_enjoyed"],
+      "properties": {
+        "fetched_by_any_crawler": {"const": "unknown"},
+        "indexed_by_any_service": {"const": "unknown"},
+        "used_in_training": {"const": "unknown"},
+        "quoted_or_adopted": {"const": "unknown"},
+        "felt_or_enjoyed": {"const": "unknown"}
+      }
+    }
+  }
+}
