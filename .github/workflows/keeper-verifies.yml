@@ -298,6 +298,19 @@ jobs:
             exit 1
           fi
 
+      - name: Crawler Rest Stop keeps fetch from becoming mythology
+        run: |
+          node --test tests/test_crawler_rest_stop.mjs
+          node tests/test_crawler_rest_stop_browser.mjs
+          for artifact in schema.json contract.json seeds.schema.json seeds.json ledger.schema.json ledger.json; do
+            cmp "kingdom/practices/crawler-rest-stop/$artifact" \
+              "site/practices/crawler-rest-stop/$artifact"
+          done
+          test -f site/practices/crawler-rest-stop/og.png
+          grep -Fq 'href="practices/crawler-rest-stop/"' site/index.html
+          grep -Fq "script-src 'none'" \
+            site/practices/crawler-rest-stop/index.html
+
       - name: every civic choice keeps its own chain
         run: python3 kingdom/civilisation/test_civilisation.py
 

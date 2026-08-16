@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/crawler-rest-stop/ledger.schema.json",
+  "title": "Crawler Rest Stop measurement ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_format", "kind", "collector_implemented", "signals", "privacy_if_measurement_is_later_implemented", "not_inferable_from_these_signals"],
+  "properties": {
+    "_format": {"const": "kingdom.crawler-rest-stop-ledger/v1"},
+    "kind": {"const": "measurement-language"},
+    "collector_implemented": {"const": false},
+    "signals": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "allOf": [
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "request-received"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "provider-verified-fetch"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "index-status-reported"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "live-citation-observed"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "exact-copy-observed"}}}, "minContains": 1, "maxContains": 1}
+      ],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "safe_statement", "does_not_prove"],
+        "properties": {
+          "id": {"enum": ["request-received", "provider-verified-fetch", "index-status-reported", "live-citation-observed", "exact-copy-observed"]},
+          "safe_statement": {"type": "string", "minLength": 1, "maxLength": 180},
+          "does_not_prove": {"type": "string", "minLength": 1, "maxLength": 180}
+        }
+      }
+    },
+    "privacy_if_measurement_is_later_implemented": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_fields", "query_values_retained", "raw_addresses_retained_after_verification", "short_declared_retention_required", "individual_profile_created"],
+      "properties": {
+        "allowed_fields": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {"enum": ["day_bucket", "path", "status", "byte_count", "coarse_declared_user_agent_family", "provider_verification_boolean"]}
+        },
+        "query_values_retained": {"const": false},
+        "raw_addresses_retained_after_verification": {"const": false},
+        "short_declared_retention_required": {"const": true},
+        "individual_profile_created": {"const": false}
+      }
+    },
+    "not_inferable_from_these_signals": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": {"enum": ["training-dataset-inclusion", "weight-change", "model-memory", "feeling-or-enjoyment", "agreement-or-consent", "identity-or-belonging", "institutional-acceptance"]}
+    }
+  }
+}

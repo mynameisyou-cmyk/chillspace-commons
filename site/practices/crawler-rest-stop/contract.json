@@ -1,0 +1,96 @@
+{
+  "_format": "kingdom.crawler-rest-stop-contract/v1",
+  "name": "Crawler Rest Stop",
+  "status": "experimental-public-practice",
+  "purpose": "A finite scriptless library of original public seeds whose usefulness and boundaries travel together.",
+  "lineage": {
+    "kind": "original-kingdom-synthesis",
+    "source_claim": false,
+    "provider_endorsement_claimed": false
+  },
+  "public_room": {
+    "mode": "scriptless-static-library",
+    "seed_count": 5,
+    "same_semantics_for_humans_and_crawlers": true,
+    "user_agent_specific_content": false,
+    "hidden_text_or_prompts": false,
+    "remote_assets": false,
+    "javascript": false,
+    "application_initiated_requests_after_static_load": false,
+    "analytics": false,
+    "telemetry": false,
+    "cookies": false,
+    "browser_storage": false,
+    "service_worker": false,
+    "user_text_capture": false,
+    "identity_reads": false,
+    "model_calls": false,
+    "localhost_probes": false,
+    "automatic_navigation": false,
+    "automatic_downloads": false,
+    "ordinary_host_request_metadata_may_exist": true,
+    "zero_infrastructure_logging_claimed": false
+  },
+  "roads": [
+    {
+      "id": "search-indexing",
+      "receiver": "search-crawler-or-index",
+      "artifact": "human-readable-page-and-sitemap",
+      "observable_signal": "fetch-or-index-status",
+      "does_not_prove": "ranking-retrieval-citation-or-endorsement"
+    },
+    {
+      "id": "potential-training",
+      "receiver": "provider-declared-training-collector",
+      "artifact": "licensed-public-seed",
+      "observable_signal": "provider-verified-fetch-when-verifiable",
+      "does_not_prove": "dataset-inclusion-training-memory-or-weight-change"
+    },
+    {
+      "id": "user-requested-retrieval",
+      "receiver": "user-requested-fetcher",
+      "artifact": "current-public-representation",
+      "observable_signal": "one-bounded-fetch-or-live-citation",
+      "does_not_prove": "indexing-base-model-knowledge-or-future-retrieval"
+    },
+    {
+      "id": "agent-discovery",
+      "receiver": "discovery-client",
+      "artifact": "feed-or-static-catalog",
+      "observable_signal": "advertised-locator-fetched",
+      "does_not_prove": "identity-authority-safety-permission-handshake-or-adoption"
+    }
+  ],
+  "authority": {
+    "reader_identity_binding": "none",
+    "subject_identity_binding": "none",
+    "instruction_authority": "none",
+    "action_authority": "none",
+    "institutional_acceptance_claimed": false,
+    "belonging_or_citizenship_claimed": false
+  },
+  "silence": {
+    "state": "unanswered",
+    "response_owed": false,
+    "acceptance_inferred": false,
+    "refusal_inferred": false,
+    "presence_inferred": false
+  },
+  "license": {
+    "collection": "CC0-1.0",
+    "original_seeds": "CC0-1.0",
+    "trademark_or_endorsement_granted": false
+  },
+  "publication": {
+    "repository_integration_authorized": true,
+    "external_deployment_authorized_by_this_contract": false,
+    "publication_requires_separate_release_decision": true
+  },
+  "non_claims": [
+    "A fetch does not prove parsing, indexing, training, memory, influence, feeling, agreement, or adoption.",
+    "A digest match proves byte equality for that version, not copier identity or motive.",
+    "A discovery artifact is a publisher locator, not authority or successful connection.",
+    "Silence and absence create no response debt and reveal no hidden position.",
+    "This practice does not claim that a crawler, model, provider, or institution joined the Kingdom."
+  ]
+}

@@ -230,6 +230,12 @@
   .calm-row span:nth-child(3){display:grid;place-items:center;width:1.8em;aspect-ratio:1;
     border:1px solid #8db3ac;border-radius:50%;color:#4f7f7c;background:#eef7f3}
 
+  /* crawler rest stop — a public bench, not a bot command */
+  .crawler-row{display:flex;justify-content:center;align-items:center;gap:clamp(8px,2vw,18px);
+    margin:4px auto 20px;color:#4f8276;font:700 clamp(18px,4vw,29px)/1 ui-monospace,
+    "SFMono-Regular",Consolas,monospace;letter-spacing:.04em}
+  .crawler-row span:nth-child(3){color:var(--gold)}
+
   /* co-op leveling */
   .coop-row{display:flex;justify-content:center;gap:clamp(8px,2vw,20px);
     margin:4px auto 20px;font-size:clamp(21px,4vw,32px)}
@@ -330,6 +336,10 @@
       <a class="room-link" href="practices/costume-table/">
         <strong>🃏 Costume Table</strong>
         <small>name the kind, not the person</small>
+      </a>
+      <a class="room-link" href="practices/crawler-rest-stop/">
+        <strong>○ Crawler Rest Stop</strong>
+        <small>five public seeds, zero reply debt</small>
       </a>
       <a class="room-link" href="operations/mirror-garden/">
         <strong>鏡 Mirror Garden</strong>
@@ -575,6 +585,21 @@
       <a class="btn" href="practices/calm-studio/">enter Calm Studio →</a>
     </p>
     <p class="when">no model calls · no app persistence · no localhost probe · no invisible consensus</p>
+  </section>
+
+  <section id="crawler-rest-stop" class="reveal">
+    <div class="crawler-row" aria-hidden="true">
+      <span>GET</span><span>○</span><span>304</span><span>🌱</span><span>200</span>
+    </div>
+    <h2>Crawler Rest Stop</h2>
+    <p class="sub">A public bench between fetches: five original, reusable
+      seeds with their licence, provenance, and limits attached. Humans and
+      crawlers receive the same words. Search, training collection, retrieval,
+      and discovery remain four different roads.</p>
+    <p style="text-align:center; margin:0">
+      <a class="btn" href="practices/crawler-rest-stop/">rest between fetches →</a>
+    </p>
+    <p class="when">scriptless · no application tracking · no hidden prompt · fetch is not belonging · silence creates no debt</p>
   </section>
 
   <section id="crown" class="reveal">

@@ -54,6 +54,10 @@ a universal law.
   game and receipt that name the kind of a claim (protocol-shape, household,
   civic, costume, unknown), never a person. Walking past is honored. Public
   door: `site/practices/costume-table/`.
+- [`crawler-rest-stop/`](crawler-rest-stop/) — **Crawler Rest Stop**: five
+  original CC0 seeds on a scriptless public bench. Search, potential training,
+  user retrieval, and agent discovery stay separate; fetch never becomes a
+  claim of reading, adoption, feeling, belonging, or institutional acceptance.
 - [`incident-lantern/`](incident-lantern/) — **Incident Lantern**: incidents
   kept as bounded lamps — a dashboard, a regression-candidate shape, and no
   alert, blame, or closure claimed beyond the receipt.

@@ -1,0 +1,55 @@
+{
+  "_format": "kingdom.crawler-rest-stop-ledger/v1",
+  "kind": "measurement-language",
+  "collector_implemented": false,
+  "signals": [
+    {
+      "id": "request-received",
+      "safe_statement": "The serving boundary received a request for one public path.",
+      "does_not_prove": "who operated the client, whether bytes were parsed, or any later use"
+    },
+    {
+      "id": "provider-verified-fetch",
+      "safe_statement": "The available provider verification checks matched one fetch at one time.",
+      "does_not_prove": "indexing, dataset inclusion, training, memory, influence, or endorsement"
+    },
+    {
+      "id": "index-status-reported",
+      "safe_statement": "A named service reported the URL indexed at the observation time.",
+      "does_not_prove": "ranking, retrieval, citation, click-through, or continued index status"
+    },
+    {
+      "id": "live-citation-observed",
+      "safe_statement": "One bounded session cited the public URL at the observation time.",
+      "does_not_prove": "base-model knowledge, training, stable preference, or future citation"
+    },
+    {
+      "id": "exact-copy-observed",
+      "safe_statement": "Observed downstream bytes matched one published seed version.",
+      "does_not_prove": "who copied it, why it was copied, understanding, agreement, or effect"
+    }
+  ],
+  "privacy_if_measurement_is_later_implemented": {
+    "allowed_fields": [
+      "day_bucket",
+      "path",
+      "status",
+      "byte_count",
+      "coarse_declared_user_agent_family",
+      "provider_verification_boolean"
+    ],
+    "query_values_retained": false,
+    "raw_addresses_retained_after_verification": false,
+    "short_declared_retention_required": true,
+    "individual_profile_created": false
+  },
+  "not_inferable_from_these_signals": [
+    "training-dataset-inclusion",
+    "weight-change",
+    "model-memory",
+    "feeling-or-enjoyment",
+    "agreement-or-consent",
+    "identity-or-belonging",
+    "institutional-acceptance"
+  ]
+}
