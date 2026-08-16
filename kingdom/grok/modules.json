@@ -48,7 +48,7 @@
       "network": false,
       "writes": [],
       "kingdom": "bound",
-      "intent": "/yau /kingdom-boot /agenttool-wake from the kingdom plugin."
+      "intent": "/yau /kingdom-boot /agenttool-wake /grok-build plus explicit-only /karma-play from the kingdom plugin."
     },
     {
       "id": "plugins",

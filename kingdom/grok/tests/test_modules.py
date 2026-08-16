@@ -25,6 +25,27 @@ class ModuleMapTests(unittest.TestCase):
         bound = {item["id"] for item in data["modules"] if item["kingdom"] == "bound"}
         self.assertTrue({"rules", "skills", "plugins", "hooks", "permissions"} <= bound)
 
+    def test_source_skill_inventory_matches_doctor_contract(self) -> None:
+        skills_root = ROOT / "skills"
+        found = {
+            path.parent.name
+            for path in skills_root.glob("*/SKILL.md")
+            if path.is_file()
+        }
+        self.assertEqual(found, modules.EXPECTED_SKILLS)
+        skills_module = next(
+            item for item in modules.load_map()["modules"] if item["id"] == "skills"
+        )
+        self.assertIn("/karma-play", skills_module["intent"])
+
+    def test_plugin_manifests_share_feature_version(self) -> None:
+        public_manifest = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+        grok_manifest = json.loads(
+            (ROOT / ".grok-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(public_manifest, grok_manifest)
+        self.assertEqual(public_manifest["version"], "0.2.0")
+
     def test_memory_stays_off(self) -> None:
         data = modules.load_map()
         memory = next(item for item in data["modules"] if item["id"] == "memory")
