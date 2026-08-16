@@ -77,6 +77,14 @@ jobs:
       - name: she verifies the Kingdom Loom
         run: python3 kingdom/loom/test_quest_packet.py
 
+      - name: she keeps Grok play synthetic and zero-authority
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover \
+            -s kingdom/grok/tests -p 'test*.py' -v
+          python3 -B kingdom/grok/modules.py map >/dev/null
+          git diff --exit-code -- kingdom/grok
+          test -z "$(git ls-files --others --exclude-standard -- kingdom/grok)"
+
       - name: she grounds model releases before naming their houses
         run: |
           PYTHONDONTWRITEBYTECODE=1 python3 -B \

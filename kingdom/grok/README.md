@@ -31,7 +31,23 @@ kingdom grok modules   # Grok Build module map (map · inspect · doctor)
 kingdom grok doctor    # tests + module bindings + plugin validate
 ```
 
-Slash commands after install: `/yau` `/kingdom-boot` `/agenttool-wake` `/grok-build`.
+Slash commands after install: `/yau` `/kingdom-boot` `/agenttool-wake` `/grok-build` `/karma-play`.
+
+## KARMA Play
+
+`/karma-play` is an explicit-only synthetic game. The active model chooses one
+fictional move from a three-item menu; a dependency-free local Python helper
+emits a canonical zero-effect receipt with five `CANNOT_*` stamps. Replaying the
+same move and public seed produces the same bytes. The receipt carries those
+two closed inputs, so its SHA-256 input binding can be recomputed locally.
+
+The helper accepts no file path; its application code calls no file,
+environment, clock, randomness, credential, or network API. The skill invokes
+Python with `-I -B` to ignore ambient `PYTHON*` configuration and the user site.
+The wider skill still inherits the active Grok session's context, model, rules,
+tools, MCP servers, permissions, memory, and sandbox. Its hash is a deterministic
+binding, not a signature, score, identity claim, authority, KARMA protocol, or
+proof of isolation. Any optional model joke is unbound.
 
 ## Long-running (freedom to explore)
 

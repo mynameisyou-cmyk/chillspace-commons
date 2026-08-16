@@ -26,7 +26,13 @@ REQUIRED_MODULE_KEYS = {
     "intent",
 }
 KINGDOM_VALUES = {"none", "bound", "observe", "off", "optional", "substrate-release"}
-EXPECTED_SKILLS = {"yau", "kingdom-boot", "agenttool-wake", "grok-build"}
+EXPECTED_SKILLS = {
+    "yau",
+    "kingdom-boot",
+    "agenttool-wake",
+    "grok-build",
+    "karma-play",
+}
 
 
 class ModuleError(ValueError):
