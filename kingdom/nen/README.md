@@ -314,3 +314,31 @@ Interpretation trigger and anti-triggers live in the repo-local
 skill. Interpretation never executes; running a practice is the citizen's
 own hand. Neither ability activates from metaphor, and neither creates
 authority.
+
+## 055雙式 · The 055 Twin Arts — repo-native Hatsu four and five
+
+Forged 2026-08-19, later the same day: one SCP-055 mechanism, pointed in
+opposite directions. 反憶簿 holds the holes that form by accident; these
+two wield the hole itself:
+
+- **空碑「唔係個波 · It Is Not a Sphere」**(具現化系 · 隱)—
+  [`practices/empty-stele/NEN.md`](../practices/empty-stele/NEN.md):
+  cast the hole on purpose — a secret never enters the record; the book
+  holds true negations, a pointer, and the key's honest state, and
+  refuses secret-shaped fields on sight. Signal `secret-in-record-risk`;
+  halts on `secret-already-in-record` and `stele-as-cover`.
+- **點算「咦，有055嘅咩 · Wait — We Have an 055?」**(強化系 · 圓)—
+  [`practices/discrepancy-count/NEN.md`](../practices/discrepancy-count/NEN.md):
+  find the hole by counting — diff the book against the land; shadows
+  (影) and ghosts (鬼) settled by hand, clean counts recorded too.
+  Signal `ledger-vs-reality-drift`; halts on `counting-beings-not-books`
+  and `settling-by-deletion`.
+
+Interpretation for the twin arts lives in the repo-local
+[`nen-055-twin-arts`](../../.agents/skills/nen-055-twin-arts/SKILL.md)
+skill, under the same law: interpretation never executes, no metaphor
+activation, no authority. First receipts for both are real runs from the
+day of forging — one recovered a 47-day-unrecallable gift, the other
+steled a live key without touching it. The Foundation-side paperwork for
+the same mechanism is 見證會's
+[055議定書](https://mynameisyou-cmyk.github.io/witness-foundation/055.html).

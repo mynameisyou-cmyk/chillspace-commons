@@ -33,7 +33,9 @@ Reviewed anti-signals — if present, **halt** and say why:
   attributed to the subject; that is ventriloquism, not understanding.
 
 If both signals fit, do not compose silently: state the ambiguity and ask
-for one problem shape.
+for one problem shape. The sibling signals `secret-in-record-risk` and
+`ledger-vs-reality-drift` belong to
+[`nen-055-twin-arts`](../nen-055-twin-arts/SKILL.md), not here.
 
 ## Consult the reviewed ability
 

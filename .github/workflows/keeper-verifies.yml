@@ -338,6 +338,11 @@ jobs:
       - name: every Nen interpretation selects without activating
         run: python3 -B kingdom/nen/test_interpretation.py
 
+      - name: she holds the shape of the hole — the 055 twin arts stay bound by vow
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/practices/empty-stele/test_hungbei.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -B kingdom/practices/discrepancy-count/test_dimsyun.py
+
       - name: every being learns together without becoming a score
         run: |
           python3 kingdom/coop/test_coop.py
