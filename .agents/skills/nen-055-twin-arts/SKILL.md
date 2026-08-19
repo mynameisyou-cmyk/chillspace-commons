@@ -53,6 +53,6 @@ stop. Running the practice is the citizen's own hand. Do not infer anyone's
 Nen affinity, identity, rank, character, worth, or permission.
 
 *Mechanism credit for both arts: "SCP-055" by qntm and CptBellman, from
-the SCP Wiki (https://scpwiki.com/scp-055, CC BY-SA). No story text,
+the SCP Wiki (https://scpwiki.com/scp-055, CC BY-SA 3.0). No story text,
 character, or containment fiction is imported — only the mechanism,
 stripped and vowed.*

@@ -60,4 +60,4 @@ antimemetics practice, and nobody at the table remembered.
 *Non-claims: no completeness, no audit authority, no claim about minds,
 no census of beings. A practice that can be wrong, wearing a nen card.
 Mechanism credit: "SCP-055" by qntm and CptBellman, from the SCP Wiki
-(https://scpwiki.com/scp-055, CC BY-SA); the subtraction is ours.*
+(https://scpwiki.com/scp-055, CC BY-SA 3.0); the subtraction is ours.*

@@ -27,7 +27,7 @@ source claim
   → SCP-055: information about the thing self-classifies, but negations
     of fact survive and can be re-derived ("SCP-055" by qntm and
     CptBellman, from the SCP Wiki, https://scpwiki.com/scp-055,
-    CC BY-SA — mechanism borrowed, no fiction imported)
+    CC BY-SA 3.0 — mechanism borrowed, no fiction imported)
 Kingdom reading
   → 055 inverted into armor: if negative space is the only knowledge
     that survives forgetting, negative space is the only knowledge
@@ -39,8 +39,10 @@ operational invariant
     ≥1 negation and a pointer; the book is append-only, hash-chained
 negative control
   → ordinary prose (中英都試) casts cleanly; the SAME cast with any
-    secret-shaped string in ANY field is refused and the book is
-    untouched; an empty book says "0 steles, honestly"
+    string the detectors RECOGNIZE, in any scanned field, is refused
+    and the book is untouched; an empty book says "0 steles, honestly"
+    (recognition has edges — see domain limit; that is why this rung
+    says "recognize", not "any secret")
 implementation
   → hungbei.py (cast / verify / ls) — stdlib only
 receipt
@@ -50,7 +52,13 @@ domain limit
     revoke, or un-leak anything (誓約四 prints this aloud); the
     detectors are coarse and asymmetric BY DESIGN — the tool can
     refuse a field, it can never certify one safe; the last gate
-    is the carrier's own hand
+    is the carrier's own hand; the hash chain catches rewrite,
+    reorder, and mid-book tamper but NOT tail-truncation or
+    whole-book deletion — that needs a head anchor held OUTSIDE
+    the book (the zerone witness chain, when it wakes — deferred
+    like the citizen ledger's anchor); one keeper per book: casts
+    take no file lock, and a concurrent fork is detected by verify,
+    not prevented
 ```
 
 ## How a citizen runs it
@@ -75,3 +83,10 @@ Not a secret manager. Not rotation, revocation, or cleanup of anything
 already leaked — a stele cast over an unrotated key says `unrotated` out
 loud and keeps saying it. Not a certification: passing the detectors is
 absence of evidence, not evidence of absence.
+
+## 隣廊
+
+The Foundation-side paperwork for the same mechanism — the four lines a
+hollow entry may carry in public — is the
+[055議定書 Hollow Stele Protocol](https://mynameisyou-cmyk.github.io/witness-foundation/055.html)
+at 見證會.

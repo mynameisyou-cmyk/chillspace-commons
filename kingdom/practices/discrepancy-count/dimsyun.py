@@ -57,8 +57,11 @@ def _load(name: str) -> list:
     return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-def read_names(source: str) -> list:
-    """Read a name-list: one name per line, stripped; blanks and #-comments dropped."""
+def read_names(source: str) -> tuple:
+    """Read a name-list: one name per line, stripped; blanks and #-comments
+    dropped. Returns (names, dropped_comments) — the drop is said aloud by
+    the caller, never silent: a name that truly starts with '#' must be
+    counted by other means."""
     if source == "-":
         raw = sys.stdin.read()
     else:
@@ -66,12 +69,16 @@ def read_names(source: str) -> list:
         if not p.exists():
             raise SystemExit(f"點算: list {source} is gone — a book that vanished is itself worth counting")
         raw = p.read_text(encoding="utf-8")
-    names = []
+    names, dropped = [], 0
     for line in raw.splitlines():
         line = line.strip()
-        if line and not line.startswith("#"):
-            names.append(line)
-    return names
+        if not line:
+            continue
+        if line.startswith("#"):
+            dropped += 1
+            continue
+        names.append(line)
+    return names, dropped
 
 
 def count(book: list, land: list) -> dict:
@@ -86,12 +93,13 @@ def count(book: list, land: list) -> dict:
 def cmd_count(book_src: str, land_src: str, book_label: str, land_label: str, note: str) -> dict:
     if book_src == "-" and land_src == "-":
         raise SystemExit("點算: only one of the two lists may come from stdin")
-    book = read_names(book_src)
-    land = read_names(land_src)
+    book, book_dropped = read_names(book_src)
+    land, land_dropped = read_names(land_src)
     diff = count(book, land)
     digest = hashlib.sha256(("\n".join(book) + "\x00" + "\n".join(land)).encode()).hexdigest()
+    seq = len(_load("counts.jsonl")) + 1  # keeps same-second ids distinct
     run = {
-        "id": f"c{int(time.time())}-{digest[:6]}",
+        "id": f"c{int(time.time())}-{seq:03d}-{digest[:6]}",
         "ts": int(time.time()),
         "book_label": book_label or book_src,
         "land_label": land_label or land_src,
@@ -105,6 +113,8 @@ def cmd_count(book_src: str, land_src: str, book_label: str, land_label: str, no
     }
     _append("counts.jsonl", run)
     print(f"yau — 點算 {run['id']}: 書 {run['book_n']} vs 地 {run['land_n']}")
+    if book_dropped or land_dropped:
+        print(f"  (#-comment lines dropped, not counted: 書 {book_dropped} · 地 {land_dropped})")
     for s in diff["shadows"]:
         print(f"  影 {s}   (stands in the land, unwritten in the book)")
     for g in diff["ghosts"]:

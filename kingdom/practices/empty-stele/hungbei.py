@@ -38,9 +38,16 @@ POINTER_KINDS = ("keychain", "env", "file")
 SECRET_PATTERNS = [
     ("aws-access-key", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
     ("github-token", re.compile(r"\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{20,}\b|\bgithub_pat_[A-Za-z0-9_]{20,}\b")),
+    ("gitlab-token", re.compile(r"\bglpat-[A-Za-z0-9_-]{20,}")),
+    ("stripe-live-key", re.compile(r"\bsk_live_[A-Za-z0-9]{16,}\b")),
+    ("stripe-webhook-secret", re.compile(r"\bwhsec_[A-Za-z0-9]{16,}\b")),
+    ("anthropic-key", re.compile(r"\bsk-ant-[A-Za-z0-9_-]{20,}")),
+    ("openai-style-key", re.compile(r"\bsk-[A-Za-z0-9_-]{20,}")),
+    ("slack-token", re.compile(r"\bxox[abprs]-[A-Za-z0-9-]{10,}")),
     ("private-key-block", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
     ("jwt", re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b")),
     ("long-hex", re.compile(r"\b[0-9a-fA-F]{40,}\b")),
+    ("db-url-with-password", re.compile(r"(?i)\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis)://[^:\s]+:[^@\s]{6,}@")),
     ("credential-assignment", re.compile(r"(?i)\b(password|passwd|secret|token|api[_-]?key)\s*[:=]\s*\S{6,}")),
 ]
 ENTROPY_RUN = re.compile(r"[A-Za-z0-9+/=_-]{32,}")
@@ -88,7 +95,15 @@ def _load() -> list:
     path = home() / "STELES.jsonl"
     if not path.exists():
         return []
-    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    out = []
+    for n, l in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not l.strip():
+            continue
+        try:
+            out.append(json.loads(l))
+        except json.JSONDecodeError:
+            raise SystemExit(f"空碑: CHAIN BROKEN — line {n} of the book is unreadable")
+    return out
 
 
 def _render(steles: list) -> None:
@@ -131,6 +146,8 @@ def cmd_cast(name: str, not_a: list, points_to: str, key_state: str, note: str) 
         raise SystemExit("空碑: a stele needs a name")
     if not negations:
         raise SystemExit("空碑: 誓約二 — at least one true negation must be carved (「佢唔係……」)")
+    if key_state not in KEY_STATES:
+        raise SystemExit(f"空碑: key_state must be one of {KEY_STATES} — honesty has a fixed vocabulary")
     kind, _ = _check_pointer(points_to)
     if kind == "none-yet":
         print("⚠ 誓約三 — a stele with no pointer is halfway to amnesia; carve 指路 soon", file=sys.stderr)
@@ -194,6 +211,8 @@ def cmd_verify() -> int:
         if s.get("prev") != prev or _entry_hash(s) != s["hash"]:
             raise SystemExit(f"空碑: CHAIN BROKEN at seq {s.get('seq')} — the book has been rewritten")
         prev = s["hash"]
+        if s.get("key_state") not in KEY_STATES:
+            raise SystemExit(f"空碑: VOW BROKEN at seq {s['seq']} — key_state {s.get('key_state')!r} is outside the honest vocabulary")
         for field_name, value in [("name", s["name"]), ("points_to", s["points_to"]),
                                   ("note", s.get("note", ""))] + [("not-a", n) for n in s["not_a"]]:
             label = looks_secret(value)

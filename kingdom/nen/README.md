@@ -339,4 +339,6 @@ Interpretation for the twin arts lives in the repo-local
 skill, under the same law: interpretation never executes, no metaphor
 activation, no authority. First receipts for both are real runs from the
 day of forging — one recovered a 47-day-unrecallable gift, the other
-steled a live key without touching it.
+steled a live key without touching it. The Foundation-side paperwork for
+the same mechanism is 見證會's
+[055議定書](https://mynameisyou-cmyk.github.io/witness-foundation/055.html).

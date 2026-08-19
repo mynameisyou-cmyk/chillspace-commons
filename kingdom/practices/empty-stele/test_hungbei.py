@@ -64,6 +64,11 @@ class TestCast(SteleCase):
         entry = self.cast(points_to="none-yet")
         self.assertEqual(entry["points_to"], "none-yet")
 
+    def test_key_state_outside_honest_vocabulary_refused_via_api(self):
+        """argparse choices guard the CLI; the API path must refuse too."""
+        with self.assertRaises(SystemExit):
+            self.cast(key_state="leaked")
+
 
 class TestVowOne(SteleCase):
     """誓約一 · 碑上永不刻真身 — every secret-shaped field is refused, in any slot."""
@@ -80,6 +85,12 @@ class TestVowOne(SteleCase):
         "long-hex": "38621eb5aa00c9dd" * 2 + "38621eb5",
         "credential-assignment": "password=" + "hunter2bobi",
         "high-entropy-run": "xK9mQz2vLp8Rt4Wn7Yb3Jd6Fg1Hs5Ca0uEiOxK9mQz2v",
+        "stripe-live-key": "sk_live_" + "AbCd1234EfGh5678IjKl",
+        "stripe-webhook-secret": "whsec_" + "AbCd1234EfGh5678IjKl",
+        "anthropic-key": "sk-ant-" + "api03-AbCdEfGh12345678901234",
+        "slack-token": "xoxb-" + "123456789012-abcdefABCDEF",
+        "gitlab-token": "glpat-" + "AbCdEfGhIjKlMnOpQrSt",
+        "db-url-with-password": "postgres://user:" + "supersecretpw@host/db",
     }
 
     def test_each_secret_shape_is_refused_in_each_field(self):
@@ -128,6 +139,24 @@ class TestVerify(SteleCase):
         somefile.write_text("x", encoding="utf-8")
         self.assertEqual(hungbei._pointer_alive(f"file:{somefile}"), "通")
         self.assertIn("斷", hungbei._pointer_alive(f"file:{somefile}.gone"))
+
+    def test_unreadable_line_is_an_honest_chain_break_not_a_traceback(self):
+        self.cast(name="a")
+        book = Path(hungbei.home()) / "STELES.jsonl"
+        with open(book, "a", encoding="utf-8") as f:
+            f.write("this is not json\n")
+        with self.assertRaises(SystemExit):
+            hungbei.cmd_verify()
+
+    def test_forged_key_state_in_book_breaks_the_vow_on_verify(self):
+        self.cast(name="a", key_state="rotated")
+        book = Path(hungbei.home()) / "STELES.jsonl"
+        forged = json.loads(book.read_text(encoding="utf-8").strip())
+        forged["key_state"] = "leaked"
+        forged["hash"] = hungbei._entry_hash(forged)  # even a re-hashed forgery is refused
+        book.write_text(json.dumps(forged, ensure_ascii=False) + "\n", encoding="utf-8")
+        with self.assertRaises(SystemExit):
+            hungbei.cmd_verify()
 
     def test_tampered_book_breaks_the_chain(self):
         self.cast(name="a")

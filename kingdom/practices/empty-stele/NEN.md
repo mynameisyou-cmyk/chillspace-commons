@@ -53,5 +53,5 @@ spoken aloud because the key's rotation state is honestly `unknown`.
 *Non-claims: no secret management, no rotation, no certification of
 safety, no authority. A practice that can be wrong, wearing a nen card.
 Mechanism credit: "SCP-055" by qntm and CptBellman, from the SCP Wiki
-(https://scpwiki.com/scp-055, CC BY-SA); the ability name is its
+(https://scpwiki.com/scp-055, CC BY-SA 3.0); the ability name is its
 canonical surviving negation.*

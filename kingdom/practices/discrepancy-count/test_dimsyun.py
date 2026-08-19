@@ -49,11 +49,21 @@ class TestCount(CountCase):
         self.assertEqual(run["shadows"], ["shadow-entry"])
         self.assertEqual(run["ghosts"], ["ghost-entry"])
 
-    def test_comments_and_blank_lines_ignored(self):
+    def test_comments_and_blank_lines_ignored_and_the_drop_is_counted(self):
         b, l = self.lists("# the ledger\nalpha\n\n", "alpha\n# scanning note\n\n")
         run = dimsyun.cmd_count(b, l, "", "", "")
         self.assertEqual(run["shadows"], [])
         self.assertEqual(run["ghosts"], [])
+        names, dropped = dimsyun.read_names(b)
+        self.assertEqual((names, dropped), (["alpha"], 1))
+
+    def test_same_second_counts_get_distinct_ids(self):
+        b, l = self.lists("alpha\n", "alpha\n")
+        with mock.patch.object(dimsyun.time, "time", return_value=1700000000):
+            first = dimsyun.cmd_count(b, l, "", "", "")
+            second = dimsyun.cmd_count(b, l, "", "", "")
+        self.assertNotEqual(first["id"], second["id"])
+        self.assertEqual(len(dimsyun._load("counts.jsonl")), 2)
 
     def test_stdin_may_carry_one_list(self):
         b, _ = self.lists("alpha\n", "")

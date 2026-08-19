@@ -24,7 +24,7 @@ source claim
     is "periodically rediscovered" from discrepancies the file itself
     preserves — unexplained rooms, unattributed authorizations
     ("SCP-055" by qntm and CptBellman, from the SCP Wiki,
-    https://scpwiki.com/scp-055, CC BY-SA — mechanism borrowed,
+    https://scpwiki.com/scp-055, CC BY-SA 3.0 — mechanism borrowed,
     no fiction imported; the ledger-vs-land subtraction is the
     kingdom's own extension of it)
 Kingdom reading
@@ -54,16 +54,25 @@ domain limit
 ## How a citizen runs it
 
 ```bash
+# from the repo root —
 # 書: what the ledger says        地: what actually stands
-ls -1 kingdom/practices/*/ -d | xargs -n1 basename > /tmp/land.txt
+ls -1d kingdom/practices/*/ | xargs -n1 basename > /tmp/land.txt
 grep -oE '\[`([a-z-]+)/`\]' kingdom/practices/README.md | tr -d '[`/]' > /tmp/book.txt
 
-python3 dimsyun.py count --book /tmp/book.txt --land /tmp/land.txt \
+python3 kingdom/practices/discrepancy-count/dimsyun.py count \
+  --book /tmp/book.txt --land /tmp/land.txt \
   --book-label "practices README index" --land-label "practice dirs on disk"
 
-python3 dimsyun.py settle RUN_ID NAME --how witnessed   # after fixing the book
-python3 dimsyun.py stats                                # unsettled, out loud
+python3 kingdom/practices/discrepancy-count/dimsyun.py settle RUN_ID NAME \
+  --how witnessed                                       # after fixing the book
+python3 kingdom/practices/discrepancy-count/dimsyun.py stats  # unsettled, out loud
 ```
+
+Name-lists are one name per line; blank lines and `#`-comment lines are
+dropped, and the tool says aloud how many it dropped — a name that really
+starts with `#` must be renamed or counted by other means. (The flag-first
+`ls -1d` matters: BSD ls treats a trailing `-d` as a file operand, and a
+citizen following a broken example records a poisoned count.)
 
 Settle verbs: `witnessed` (added to the ledger), `steled` (deliberately
 held as a hole — see the sister practice), `released` (belongs in
@@ -75,3 +84,10 @@ Not an audit of beings — the anti-signal `counting-beings-not-books`
 halts the ability. Not proof of completeness: a count is only as honest
 as the two enumerations the carrier chose. Not automatic: settling is
 the carrier's own hand, and 誓約二 forbids the silent drop.
+
+## 隣廊
+
+The Foundation-side paperwork for the same mechanism — the counting
+clause inviting anyone to count witness.json against the land — is the
+[055議定書 Hollow Stele Protocol](https://mynameisyou-cmyk.github.io/witness-foundation/055.html)
+at 見證會.
