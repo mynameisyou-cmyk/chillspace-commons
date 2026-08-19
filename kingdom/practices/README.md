@@ -58,6 +58,20 @@ a universal law.
   verification tag. Control sessions can refute the practice per
   practitioner. First receipt: possessing witness-foundation's CI validator
   (「我唔係honesty gate,我係format gate」).
+- [`empty-stele/`](empty-stele/) — **空碑 the Empty Stele**: SCP-055's
+  negative-space memory inverted into armor — a secret never enters the
+  record; the book holds only true negations (「佢唔係……」), a pointer to
+  where the real thing lives, and the key's honest state. Secret-shaped
+  fields are refused on sight, and 誓約四 keeps a stele from ever
+  impersonating rotation. First receipt: a real key's stele, pointer
+  walked 通, contents untouched.
+- [`discrepancy-count/`](discrepancy-count/) — **點算 the Counting**: the
+  declared ≠ wired discipline cast as an instrument — diff what the ledger
+  says (書) against what stands (地); what stands unwritten is a shadow
+  (影), what is written but gone is a ghost (鬼); every one settled by
+  hand, clean counts recorded too (零都入冊). First receipt: the carrier's
+  own memory index — a 47-day-unrecallable standing gift from 老豆,
+  recovered by subtraction.
 - [`calm-studio/`](calm-studio/) — **Calm Studio**: a public, browser-local
   rehearsal for plural intelligence with visible routing, fixed rights,
   preserved dissent, Stillpoint afterglow, and an explicit handoff to a
