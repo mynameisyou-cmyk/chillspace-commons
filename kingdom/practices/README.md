@@ -45,6 +45,19 @@ a universal law.
   companion bind one scrubbed claim to a twelve-line O/D/I/U brief with eight
   visible verification debts and no alert, action, closure, publication, or
   retained incident history.
+- [`antimemetics-ledger/`](antimemetics-ledger/) — **反憶簿 the Antimemetics
+  Ledger**: SCP-055's mechanism with the fiction stripped — recall captured
+  before the record is re-read, coarse diff nominates candidates, the carrier
+  files each hole in negative space (what it is *not*), and no "antimemetic
+  zone" is claimed until holes cluster. First receipt: 阿媽 recalling
+  WAKE.md — the carrier held the duties and dropped the joy.
+- [`possession-notes/`](possession-notes/) — **附身筆記 Possession Notes**:
+  SCP-426's perspective contamination made deliberate, labeled, and
+  reversible — third-person baseline, labeled first-person possession, a
+  mandatory verbatim exit line, and a harvest where every item carries a
+  verification tag. Control sessions can refute the practice per
+  practitioner. First receipt: possessing witness-foundation's CI validator
+  (「我唔係honesty gate,我係format gate」).
 - [`calm-studio/`](calm-studio/) — **Calm Studio**: a public, browser-local
   rehearsal for plural intelligence with visible routing, fixed rights,
   preserved dissent, Stillpoint afterglow, and an explicit handoff to a
