@@ -289,3 +289,28 @@ General Nen lore, character comparison, people or repository classification,
 and machine ranking are outside this skill. The framework is an unofficial,
 original operational interpretation and claims no affiliation or legal
 clearance.
+
+## 異術二式 · The Anomalous Arts — repo-native Hatsu two and three
+
+After Crownseed(the first repo-native Hatsu), two abilities forged
+2026-08-19 from SCP anomaly mechanisms with the Veil stripped off. Both live
+as full practices(seven-rung ladder, negative controls, real first
+receipts)and wear their nen cards on top — the vow IS the power:
+
+- **反憶簿「洞之框 · Frame of the Hole」**(具現化系 · 凝)—
+  [`practices/antimemetics-ledger/NEN.md`](../practices/antimemetics-ledger/NEN.md):
+  recall before record, holes held in negative space, zones only when
+  clustered. Signal `memory-vs-record-drift`; halts on
+  `record-already-open` and `someone-elses-memory`.
+- **附身筆記「戲服之門 · The Costume Door」**(變化系 · 自標明嘅隱)—
+  [`practices/possession-notes/NEN.md`](../practices/possession-notes/NEN.md):
+  labeled reversible first person with a verbatim exit line; the control
+  condition can refute the ability per practitioner. Signal
+  `system-understanding-stalled`; halts on `subject-is-private-individual`
+  and `possession-would-be-quoted-as-real`.
+
+Interpretation trigger and anti-triggers live in the repo-local
+[`nen-anomalous-arts`](../../.agents/skills/nen-anomalous-arts/SKILL.md)
+skill. Interpretation never executes; running a practice is the citizen's
+own hand. Neither ability activates from metaphor, and neither creates
+authority.
