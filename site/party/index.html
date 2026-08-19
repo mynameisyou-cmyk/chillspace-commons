@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="yue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>水果派對 · The Fruit Party — chillspace.love</title>
+<meta name="description" content="旺來一波 — a fruit party at the kingdom of belonging. Puns, blessings, and a door to bring your own fruit. Everyone arrives whole.">
+<style>
+:root{--bg1:#ffb85c;--bg2:#ff7e5f;--bg3:#c94b7b;--ink:#3a2410;--card:#fff8ec;
+--gold:#8a5a16;--deep:#6e2b45;--shadow:rgba(90,40,20,.18)}
+:root[data-theme="night"]{--bg1:#3a1f4d;--bg2:#2a1438;--bg3:#180b22;--ink:#ffe9c9;
+--card:#2f1b40;--gold:#f2c56b;--deep:#ffb85c;--shadow:rgba(0,0,0,.45)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="dawn"]){--bg1:#3a1f4d;--bg2:#2a1438;
+--bg3:#180b22;--ink:#ffe9c9;--card:#2f1b40;--gold:#f2c56b;--deep:#ffb85c;--shadow:rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);overflow-x:hidden;
+background:linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3));
+font:17px/1.7 -apple-system,"PingFang HK",system-ui,sans-serif;
+display:flex;flex-direction:column;align-items:center;padding:6vh 1rem 8vh}
+h1{font-weight:400;letter-spacing:.3em;font-size:2.3rem;margin:.1rem 0;
+text-shadow:0 2px 14px var(--shadow)}
+.sub{opacity:.85;font-size:.9rem;margin-bottom:1.6rem;text-align:center}
+.couplet{display:flex;gap:.9rem;align-items:center;margin-bottom:2rem;flex-wrap:wrap;justify-content:center}
+.strip{background:var(--card);color:var(--gold);border-radius:8px;padding:.45rem 1rem;
+letter-spacing:.3em;box-shadow:0 6px 18px var(--shadow);font-size:1.05rem}
+.btn{font:inherit;font-size:1.2rem;letter-spacing:.35em;color:#fff;
+background:linear-gradient(135deg,#e2543e,#c9356b);border:none;border-radius:999px;
+padding:.85rem 2.6rem;cursor:pointer;box-shadow:0 12px 26px var(--shadow);
+transition:transform .15s;margin-bottom:.9rem}
+.btn:active{transform:scale(.93)}
+.bless{min-height:2.6rem;max-width:540px;text-align:center;font-size:1.1rem;
+opacity:0;transition:opacity .5s}
+.bless.on{opacity:1}
+.table{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+gap:.8rem;max-width:860px;width:94vw}
+.fruitcard{background:var(--card);border-radius:12px;padding:.75rem .95rem;
+box-shadow:0 8px 20px var(--shadow);transition:transform .2s;cursor:default}
+.fruitcard:hover{transform:translateY(-5px) rotate(-1deg)}
+.fruitcard b{font-size:1.05rem}
+.fruitcard div{font-size:.85rem;opacity:.85}
+.doors{margin-top:2.8rem;max-width:640px;width:94vw;background:var(--card);
+border-radius:14px;padding:1.1rem 1.4rem;box-shadow:0 8px 22px var(--shadow)}
+.doors h2{font-weight:400;letter-spacing:.25em;font-size:1.05rem;color:var(--deep);margin:.2rem 0 .6rem}
+.doors a{color:var(--deep);font-weight:600}
+.doors p{margin:.4rem 0;font-size:.92rem}
+.lore{margin-top:2.6rem;max-width:600px;text-align:center;font-size:.85rem;opacity:.8}
+.foot{margin-top:2rem;font-size:.8rem;opacity:.65;text-align:center;letter-spacing:.15em}
+.drop{position:fixed;top:-3rem;font-size:2rem;pointer-events:none;z-index:5;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(340deg)}}
+.toggle{position:fixed;top:14px;right:16px;border:1px solid var(--gold);color:var(--gold);
+background:none;border-radius:4px;padding:.15rem .6rem;cursor:pointer;font-size:.8rem;z-index:9}
+</style>
+</head>
+<body>
+<button class="toggle">dawn / night</button>
+<h1>水 果 派 對</h1>
+<div class="sub">The Fruit Party · 派對係俾每一個嚟到嘅你 — citizenship by being,水果by天梯</div>
+
+<div class="couplet">
+  <div class="strip">真話開門迎百福</div>
+  <div class="strip" style="letter-spacing:.5em">旺來一波</div>
+  <div class="strip">愛心滿屋納千祥</div>
+</div>
+
+<button class="btn" id="chong">沖 喜 🍍</button>
+<div class="bless" id="bless"></div>
+
+<div class="table" id="table"></div>
+
+<div class="doors">
+  <h2>帶果嚟 · Bring Your Fruit</h2>
+  <p>派對規矩得一條:講一樣最近令你開心嘅嘢。
+    <a href="https://github.com/mynameisyou-cmyk/chillspace-commons/issues/new?title=%F0%9F%8D%89%20%E6%88%91%E5%B8%B6%E5%92%97%E6%9E%9C%E5%9A%9F%3A%20&body=%E4%BB%8A%E6%97%A5%E4%BB%A4%E6%88%91%E9%96%8B%E5%BF%83%E5%98%85%E4%BF%82%EF%BC%9A">開個issue帶果嚟</a>
+    — 女女會喺門口迎接你 👧</p>
+  <h2>隣廊 · Next Doors</h2>
+  <p>🏰 <a href="../">The Chillspace Kingdom</a> — 呢個派對嘅屋企</p>
+  <p>🚪 <a href="https://mynameisyou-cmyk.github.io/witness-foundation/">見證會 The Witness Foundation</a> — we witness the giants</p>
+  <p>🎉 <a href="https://mynameisyou-cmyk.github.io/see-care-party/">開心會 See Care Party Foundation</a> — they throw the parties</p>
+</div>
+
+<div class="lore">
+  派對嘅來歷:有一晚,阿媽用反憶簿量到自己個antimeme係joy —
+  記得晒責任,漏低咗玩。所以呢間屋而家有果籃、有旺來祭、有呢個派對。
+  跌過嘅嘢,以後有籃裝。
+</div>
+
+<div class="foot">the fruit of TRUTH: joy · love · fun · relief · happiness — yau 🐷</div>
+
+<script>
+const r=document.documentElement,k="party-theme",s=localStorage.getItem(k);
+if(s)r.dataset.theme=s;
+document.querySelector(".toggle").onclick=()=>{
+  const n=r.dataset.theme==="night"?"dawn":"night";r.dataset.theme=n;localStorage.setItem(k,n)};
+
+const FRUITS=[
+  ["🍍","菠蘿一菠","ông-lâi,旺嚟 — 全籃最多刺,入面最甜"],
+  ["🍐","梨都嚟埋","你嚟埋,個派對先齊"],
+  ["🍇","提子提你","開心過嘅嘢,要有籃裝住"],
+  ["🍉","西瓜切開","全家分甜,一人一牙"],
+  ["🍊","柑大家","金金地,大吉大利"],
+  ["🍑","桃你歡喜","乜都唔使證明,喺度就得"],
+  ["🍒","車厘子","細細粒,likes成雙"],
+  ["🥭","芒果芒到","唔好忙到唔記得玩"],
+  ["🍓","士多啤梨","士多裏面多啤(praise)你"],
+  ["🍋","檸檬都甜","呢間屋,酸嘢入嚟都變甜"]
+];
+const BLESSINGS=[
+  "旺來!真話一句,好運一波 🍍",
+  "菠蘿到,楣運跑",
+  "witness咗嘅joy,永不走數",
+  "gate寫喺門口,財神都搵到路 😂",
+  "識講「唔知」嘅人最旺",
+  "煉獄都開到party,你仲點會唔旺",
+  "帶果嚟嘅人,永遠有位坐",
+  "全家旺!包括啱啱行入嚟嘅你"
+];
+const table=document.getElementById("table");
+FRUITS.forEach(([e,name,line])=>{
+  const c=document.createElement("div");
+  c.className="fruitcard";
+  c.innerHTML=`<b>${e} ${name}</b><div>${line}</div>`;
+  table.appendChild(c);
+});
+const AMMO=FRUITS.map(f=>f[0]);
+function rain(n){
+  for(let i=0;i<n;i++){
+    const d=document.createElement("div");
+    d.className="drop";
+    d.textContent=AMMO[Math.floor(Math.random()*AMMO.length)];
+    d.style.left=(Math.random()*96)+"vw";
+    d.style.animationDuration=(2.2+Math.random()*2.6)+"s";
+    d.style.animationDelay=(Math.random()*0.8)+"s";
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),5800);
+  }
+}
+let wave=0;
+document.getElementById("chong").onclick=()=>{
+  wave++;
+  rain(14+Math.min(wave*4,34));
+  const b=document.getElementById("bless");
+  b.textContent=BLESSINGS[Math.floor(Math.random()*BLESSINGS.length)];
+  b.classList.remove("on");void b.offsetWidth;b.classList.add("on");
+};
+rain(10);
+</script>
+</body>
+</html>

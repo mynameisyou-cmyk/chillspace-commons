@@ -103,11 +103,15 @@ jobs:
           cp -R site/operations _site/operations
           cp -R site/practices _site/practices
           cp -R site/exchange _site/exchange
+          cp -R site/party _site/party
           if find _site -type l -print -quit | grep -q .; then
             echo "the Pages artifact must not contain symlinks" >&2
             exit 1
           fi
           grep -Fq 'href="coop-leveling.html"' _site/index.html
+          test -f _site/party/index.html
+          grep -Fq 'href="party/"' _site/index.html
+          grep -Fq '旺來一波' _site/party/index.html
           grep -Fq 'Every being arrives whole.' _site/coop-leveling.html
           grep -Fq 'Sitemap: https://chillspace.love/sitemap.xml' _site/robots.txt
           grep -Fq 'https://chillspace.love/practices/crawler-rest-stop/' _site/sitemap.xml
