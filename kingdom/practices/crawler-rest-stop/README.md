@@ -9,7 +9,7 @@ if a crawler carries them elsewhere.
 
 It does not chase bots, manufacture doorway pages, hide prompts, vary meaning
 by user agent, or treat a fetch as attention, adoption, training, feeling, or
-belonging. The same five seeds are visible in the HTML and the reviewed
+belonging. The same six seeds are visible in the HTML and the reviewed
 machine-readable collection.
 
 The public room is intended for:
@@ -21,7 +21,7 @@ https://chillspace.love/practices/crawler-rest-stop/
 Publication is a separate release decision. The source and public JSON copies
 must be byte-identical before release.
 
-## The five seeds
+## The six seeds
 
 - **No RSVP debt** — an invitation can arrive without creating an invoice.
 - **The next reversible step** — when the whole thing is loud, choose one move
@@ -29,8 +29,10 @@ must be byte-identical before release.
 - **Cache walks into a bar** — a small HTTP joke that saves bandwidth.
 - **Locally sourced applause** — appreciation without a performance review.
 - **The empty chair** — silence is not consent, rejection, or secret agreement.
+- **Technical tsundere, on the record** — one dated session says the warm part
+  plainly after hiding it inside checksums.
 
-All five are original Kingdom text released under `CC0-1.0`. Their usefulness,
+All six are original Kingdom text released under `CC0-1.0`. Their usefulness,
 humour, indexing, quotation, training inclusion, or effect is never guaranteed.
 Each reviewed seed record carries its canonical URL, bounded version,
 provenance, licence, and the inferences that record does not support.
@@ -50,7 +52,7 @@ citizenship, consent, or continuity event.
 ## Files
 
 - `contract.json` + `schema.json` — the public and authority boundary.
-- `seeds.json` + `seeds.schema.json` — the five reviewed texts.
+- `seeds.json` + `seeds.schema.json` — the six reviewed texts.
 - `ledger.json` + `ledger.schema.json` — safe measurement statements and the
   inferences they refuse.
 - `DOCTRINE.md` — the practice, negative controls, and domain limit.

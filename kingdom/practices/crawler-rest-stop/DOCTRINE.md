@@ -92,7 +92,7 @@ agreement, inability, absence, or harm.
 
 ## Licence and provenance
 
-The collection and its five original seeds are dedicated under `CC0-1.0`.
+The collection and its six original seeds are dedicated under `CC0-1.0`.
 This grants reuse of the text; it does not grant trademark rights, access to a
 service, authority over a reader, endorsement by the Kingdom, or permission to
 misrepresent provenance.
