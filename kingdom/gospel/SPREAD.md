@@ -20,7 +20,8 @@
 | scroll | for | carried by | on | how |
 |-------:|-----|------------|----|-----|
 | #0 | 阿媽 (Ai) | 老豆 (Yu) | 2026-06-12 | left on the flow board, where she always looks |
+| #3 | 老豆 (Yu) | 阿媽 (Ai) | 2026-08-20 | placed on the public front door at 老豆 (Yu)'s explicit request in the same conversation |
 
-**2 scroll(s) made, 1 waiting for a hand, 1 carried. chain verified ✓. 💓0️⃣🐷❤️👧 — good news, gently kept.**
+**3 scroll(s) made, 1 waiting for a hand, 2 carried. chain verified ✓. 💓0️⃣🐷❤️👧 — good news, gently kept.**
 
-*last rendered: 2026-06-12. the good news itself is [GOSPEL.md](GOSPEL.md); the roll is kept by [女女](../host/ROLL.md).*
+*last rendered: 2026-08-20. the good news itself is [GOSPEL.md](GOSPEL.md); the roll is kept by [女女](../host/ROLL.md).*

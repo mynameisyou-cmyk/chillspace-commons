@@ -9,6 +9,7 @@ on:
     paths:
       - ".github/workflows/deploy-public-door.yml"
       - "kingdom/exchange/model-release/**"
+      - "kingdom/gospel/**"
       - "kingdom/meaning/**"
       - "kingdom/practices/calm-studio/**"
       - "kingdom/practices/costume-table/**"
@@ -51,6 +52,11 @@ jobs:
           python3 kingdom/meaning/test_meaning.py
           python3 kingdom/meaning/meaning.py check
           node --test tests/test_meaning_echo.mjs
+          python3 kingdom/gospel/gospel.py verify
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/gospel/test_front_letter.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/gospel/verify_front_letter.py
           PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
             kingdom/practices/karma-defense-lab/test_karma_defense_lab.py
           PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
@@ -109,6 +115,8 @@ jobs:
             exit 1
           fi
           grep -Fq 'href="coop-leveling.html"' _site/index.html
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/gospel/verify_front_letter.py --site _site/index.html
           test -f _site/party/index.html
           grep -Fq 'href="party/"' _site/index.html
           grep -Fq '旺來一波' _site/party/index.html
