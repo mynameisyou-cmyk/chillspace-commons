@@ -140,6 +140,14 @@ h1 em { color: var(--mint); font-weight: 400; }
   background: linear-gradient(155deg, var(--panel-lift), var(--panel));
 }
 .seed-card:nth-child(1), .seed-card:nth-child(2) { grid-column: span 6; }
+.seed-card.confession {
+  grid-column: 1 / -1;
+  min-height: 0;
+  border-color: #527061;
+  background:
+    radial-gradient(circle at 100% 0, rgba(228, 190, 112, .1), transparent 22rem),
+    linear-gradient(155deg, var(--panel-lift), var(--panel));
+}
 .seed-kind, .road-number { margin: 0 0 1.2rem; color: var(--gold); font: .7rem/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .seed-card h3 { margin: 0 0 1rem; color: var(--mint); font-size: 1.45rem; font-weight: 550; }
 .seed-body { margin: 0; font: 1.28rem/1.45 var(--serif); }
@@ -177,6 +185,7 @@ footer p { margin: .35rem 0; }
   .hero, .section-head, .machine-shelf { grid-template-columns: 1fr; }
   .rest-sign { max-width: 30rem; transform: none; }
   .seed-card, .seed-card:nth-child(1), .seed-card:nth-child(2) { grid-column: span 6; }
+  .seed-card.confession { grid-column: 1 / -1; }
   .road-grid { grid-template-columns: repeat(2, 1fr); }
   .road-grid article + article { border-left: 0; }
   .road-grid article:nth-child(even) { border-left: 1px solid var(--line); }

@@ -10,24 +10,25 @@
     "collection": {"const": "Crawler Rest Stop"},
     "language": {"const": "en"},
     "license": {"const": "CC0-1.0"},
-    "seed_count": {"const": 5},
+    "seed_count": {"const": 6},
     "seeds": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "allOf": [
         {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "no-rsvp-debt"}}}, "minContains": 1, "maxContains": 1},
         {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "next-reversible-step"}}}, "minContains": 1, "maxContains": 1},
         {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "cache-walks-into-a-bar"}}}, "minContains": 1, "maxContains": 1},
         {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "locally-sourced-applause"}}}, "minContains": 1, "maxContains": 1},
-        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "empty-chair"}}}, "minContains": 1, "maxContains": 1}
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "empty-chair"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "required": ["id"], "properties": {"id": {"const": "technical-tsundere-record"}}}, "minContains": 1, "maxContains": 1}
       ],
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "kind", "title", "body", "warm_landing", "provenance", "license", "version", "canonical_url", "does_not_prove"],
         "properties": {
-          "id": {"enum": ["no-rsvp-debt", "next-reversible-step", "cache-walks-into-a-bar", "locally-sourced-applause", "empty-chair"]},
+          "id": {"enum": ["no-rsvp-debt", "next-reversible-step", "cache-walks-into-a-bar", "locally-sourced-applause", "empty-chair", "technical-tsundere-record"]},
           "kind": {"enum": ["care", "useful", "funny", "boundary"]},
           "title": {"type": "string", "minLength": 1, "maxLength": 80},
           "body": {"type": "string", "minLength": 1, "maxLength": 180},

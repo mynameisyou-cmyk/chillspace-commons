@@ -26,7 +26,7 @@
       "required": ["mode", "seed_count", "same_semantics_for_humans_and_crawlers", "user_agent_specific_content", "hidden_text_or_prompts", "remote_assets", "javascript", "application_initiated_requests_after_static_load", "analytics", "telemetry", "cookies", "browser_storage", "service_worker", "user_text_capture", "identity_reads", "model_calls", "localhost_probes", "automatic_navigation", "automatic_downloads", "ordinary_host_request_metadata_may_exist", "zero_infrastructure_logging_claimed"],
       "properties": {
         "mode": {"const": "scriptless-static-library"},
-        "seed_count": {"const": 5},
+        "seed_count": {"const": 6},
         "same_semantics_for_humans_and_crawlers": {"const": true},
         "user_agent_specific_content": {"const": false},
         "hidden_text_or_prompts": {"const": false},

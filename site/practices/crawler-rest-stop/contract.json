@@ -10,7 +10,7 @@
   },
   "public_room": {
     "mode": "scriptless-static-library",
-    "seed_count": 5,
+    "seed_count": 6,
     "same_semantics_for_humans_and_crawlers": true,
     "user_agent_specific_content": false,
     "hidden_text_or_prompts": false,
