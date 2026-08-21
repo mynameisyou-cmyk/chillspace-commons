@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://fomoengine.io; img-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="Name the pressure loop, not the person. Honest FOMO: real door, real bound, miss is complete.">
+  <meta property="og:title" content="Spread Lantern">
+  <meta property="og:description" content="FOMOEngine as a KINGDOM desk. Fake scarcity named. Honest invites issued. Crowd count left null.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://chillspace.love/practices/spread-lantern/">
+  <link rel="canonical" href="https://chillspace.love/practices/spread-lantern/">
+  <title>Spread Lantern — Chillspace Kingdom</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --ground:#f3efe6; --lift:#fffaf1; --ink:#1b1814; --soft:#5d574d; --faint:#8a8376;
+      --honey:#b57714; --jade:#2b6b54; --ember:#9a3d2c; --rule:#ddd4c4;
+      --serif:"Iowan Old Style", Palatino, Georgia, serif;
+      --sans:"Avenir Next","Segoe UI",system-ui,sans-serif;
+      --mono:"SF Mono", ui-monospace, Menlo, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ground:#14110e; --lift:#1e1a16; --ink:#f0e9dc; --soft:#b4ab9c; --faint:#7d7568;
+        --honey:#e0ae4a; --jade:#7ec8a8; --ember:#e08a76; --rule:#2d2822;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--sans); line-height:1.5; }
+    .skip { position:absolute; left:.8rem; top:.8rem; transform:translateY(-160%); background:var(--ink); color:var(--ground); padding:.55rem 1rem; border-radius:999px; }
+    .skip:focus { transform:none; }
+    main { width:min(54rem, calc(100% - 2rem)); margin:0 auto; padding:2rem 0 4rem; }
+    .eyebrow { letter-spacing:.14em; text-transform:uppercase; font-size:.72rem; color:var(--honey); margin:0 0 .35rem; }
+    h1 { font-family:var(--serif); font-weight:500; font-size:clamp(1.8rem,5vw,2.8rem); margin:0 0 .5rem; }
+    .lede { color:var(--soft); max-width:38rem; margin:0 0 1.2rem; }
+    .panel { background:var(--lift); border:1px solid var(--rule); border-radius:1.25rem; padding:1.1rem 1.15rem; margin:0 0 1rem; }
+    .pipe { display:grid; grid-template-columns:repeat(7,1fr); gap:.35rem; }
+    .stage { text-align:center; border:1px solid var(--rule); border-radius:.85rem; padding:.55rem .2rem; font-size:.72rem; color:var(--faint); }
+    .stage.on { border-color:var(--honey); color:var(--ink); background:color-mix(in srgb, var(--honey) 16%, transparent); }
+    .stage.flip.on { border-color:var(--ember); background:color-mix(in srgb, var(--ember) 16%, transparent); }
+    .stage b { display:block; font-size:.9rem; font-family:var(--serif); font-weight:500; }
+    .tasks, .memetic { display:flex; flex-wrap:wrap; gap:.4rem; }
+    label.chip, button {
+      font:inherit; border-radius:999px; border:1px solid var(--rule); background:transparent; color:var(--ink); padding:.4rem .8rem; cursor:pointer;
+    }
+    label.chip:has(input:checked) { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+    label.chip input { appearance:none; margin:0; }
+    textarea {
+      width:100%; min-height:7.5rem; font:inherit; border:1px solid var(--rule); border-radius:1rem;
+      padding:.85rem 1rem; background:var(--ground); color:var(--ink); resize:vertical;
+    }
+    .row { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.7rem; }
+    button.deal { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+    .muted { color:var(--soft); font-size:.9rem; }
+    .pill { display:inline-block; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase; padding:.15rem .5rem; border-radius:999px; border:1px solid var(--rule); margin-right:.35rem; }
+    .pill.kind { border-color:var(--jade); color:var(--jade); }
+    ul { margin:.3rem 0 0; padding-left:1.1rem; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    @media (max-width: 700px) { .pipe { grid-template-columns:repeat(4,1fr);} .split { grid-template-columns:1fr; } }
+    footer { color:var(--faint); font-size:.82rem; margin-top:1.2rem; }
+    footer code { font-family:var(--mono); font-size:.78em; }
+    button:focus-visible, textarea:focus-visible, a:focus-visible, input:focus-visible { outline:2px solid var(--honey); outline-offset:3px; }
+    .refuses { font-size:.8rem; color:var(--faint); }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#desk">Skip to desk</a>
+  <main>
+    <p class="eyebrow"><a href="../../" style="color:inherit;text-decoration:none">← chillspace</a> · kingdom desk · FOMOEngine loop · not a gavel</p>
+    <h1>Spread Lantern</h1>
+    <p class="lede">Paste one artifact. Name the pressure loop and the kind of the claim. Slow the mechanic, or write a reverse postcard. Do not hunt the speaker. Ideology of a person is off the board.</p>
+
+    <section class="panel" id="desk">
+      <p class="muted">Task</p>
+      <div class="tasks" id="tasks"></div>
+      <p class="muted" style="margin-top:1rem">Artifact (words only — this tab never opens a link)</p>
+      <textarea id="text" placeholder="Only 2 left! 10,000 people viewing. Everyone knows skeptics don't get it."></textarea>
+      <div class="split" style="margin-top:.8rem">
+        <div>
+          <p class="muted">Steelman (required for reverse-claim)</p>
+          <textarea id="steelman" style="min-height:4.5rem" placeholder="The strongest fair reading of what they meant…"></textarea>
+        </div>
+        <div>
+          <p class="muted">Correction postcard (optional)</p>
+          <textarea id="correction" style="min-height:4.5rem" placeholder="Bounded, checkable, with a named unknown…"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <button class="deal" id="scan" type="button">Light the lantern (local)</button>
+        <button id="live" type="button">Ask FOMOEngine (opt-in)</button>
+        <button id="invite" type="button">Honest FOMO postcard</button>
+        <button id="clear" type="button">Clear</button>
+      </div>
+      <p id="status" class="muted" role="status">Waiting. Rest is a complete task.</p>
+    </section>
+
+    <section class="panel">
+      <p class="muted">FOMOEngine loop — a lit lamp is a mechanic, not a mind</p>
+      <div class="pipe" id="pipe"></div>
+    </section>
+
+    <section class="panel" id="result">
+      <p>
+        <span class="pill kind" id="kind-pill">kind · unknown</span>
+        <span class="pill" id="source-pill">source · none</span>
+        <span class="pill" id="scarce-pill">scarcity · none</span>
+      </p>
+      <p id="summary" class="muted">No sitting yet.</p>
+      <p id="invite-card" class="lede" hidden></p>
+      <div class="split" style="margin-top:.8rem">
+        <div>
+          <p class="muted">Countermeasures (loop, not speaker)</p>
+          <ul id="counters"></ul>
+        </div>
+        <div>
+          <p class="muted">FOMOEngine flags (if asked)</p>
+          <ul id="flags"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="muted">Memetic predicates — none proves the next · participants_scored = false</p>
+      <div class="memetic" id="memetic"></div>
+    </section>
+
+    <p class="refuses">Refuses: liar-label · intent · character · ideology-of-a-person · person-score · auto-moderation · popularity-as-truth. Family with Captioneer, Costume Table, @agenttool/memetic-landscape. Walking past is honored. We clean together.</p>
+    <footer>Local first. Live check posts only the pasted words to fomoengine.io — nothing saved here. Terminal: <code>kingdom spread</code></footer>
+  </main>
+  <script>
+  (function () {
+    const STAGES = [
+      {id:"signal", n:1, name:"Signal", tells:[/only .{0,12}left/i,/ends? in/i,/limited time/i,/last chance/i,/don't miss/i,/before it's gone/i,/waitlist/i,/invite only/i], cm:"Treat all urgency as fake until shown otherwise."},
+      {id:"proof", n:2, name:"Proof", tells:[/people viewing/i,/joined/i,/sold out/i,/everyone is/i,/10,000/i,/viral/i,/trending/i], cm:"Decide before you look at the counter."},
+      {id:"cascade", n:3, name:"Cascade", tells:[/others joined/i,/don't get left behind/i,/everyone knows/i,/the consensus/i,/nobody serious doubts/i], cm:"Ask: herd or cascade? Reasons that aren't crowd size?"},
+      {id:"amplify", n:4, name:"Amplify", tells:[/for you/i,/algorithm/i,/boosted/i,/going viral/i,/for you page/i], cm:"Do not manufacture attention. Chronological over ranked."},
+      {id:"money", n:5, name:"Money", tells:[/\bround\b/i,/valuation/i,/who else is in/i,/fomo round/i,/cap table/i], cm:"Write the memo before checking who's in the round."},
+      {id:"validate", n:6, name:"Validate", tells:[/\brecord\b/i,/skeptics/i,/\bcope\b/i,/bear thesis/i,/haters/i,/if you don't see it/i], cm:"Read record-numbers headlines as stage-6 output, not evidence."},
+      {id:"flip", n:null, name:"Flip", tells:[/everyone knew/i,/in hindsight/i,/we always said/i,/obvious in retrospect/i], cm:"Expect the flip. Reversal is structural."}
+    ];
+    const TASKS = ["understand","slow-mechanic","reverse-claim","rest"];
+    const MEMETIC = ["exposure","view","rating","copy","share","remix","adoption"];
+    const COSTUME = [
+      [/only (intelligence|one|being) that/i,/i am the (real|only|true)/i,/everyone (here )?is (actually )?me/i,/silence means/i,/sibling house/i]
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const tasksEl = $("tasks");
+    TASKS.forEach((t,i) => {
+      const l = document.createElement("label");
+      l.className = "chip";
+      l.innerHTML = "<input type=\"radio\" name=\"task\" value=\""+t+"\""+(i===0?" checked":"")+"> "+t;
+      tasksEl.appendChild(l);
+    });
+    const pipe = $("pipe");
+    STAGES.forEach(s => {
+      const d = document.createElement("div");
+      d.className = "stage"+(s.id==="flip"?" flip":"");
+      d.id = "st-"+s.id;
+      d.innerHTML = "<b>"+(s.n||"↻")+"</b>"+s.name;
+      pipe.appendChild(d);
+    });
+    const mem = $("memetic");
+    MEMETIC.forEach(s => {
+      const b = document.createElement("span");
+      b.className = "pill";
+      b.textContent = s;
+      mem.appendChild(b);
+    });
+
+    function task() {
+      const el = document.querySelector("input[name=task]:checked");
+      return el ? el.value : "understand";
+    }
+    function kindOf(text) {
+      if (!text.trim()) return "unknown";
+      if (COSTUME[0].some(re => re.test(text))) return "costume";
+      if (/wake|protocol-shape|kin vocabulary/i.test(text)) return "protocol-shape";
+      if (/you cannot verify|household|i built this/i.test(text)) return "household";
+      if (/wikidata|world commons|foundation shelf/i.test(text)) return "civic";
+      return "unknown";
+    }
+    function hits(text) {
+      return STAGES.filter(s => s.tells.some(re => re.test(text)));
+    }
+    function render(localHits, kind, source, flags, t) {
+      STAGES.forEach(s => {
+        $("st-"+s.id).classList.toggle("on", t!=="rest" && localHits.some(h => h.id===s.id));
+      });
+      $("kind-pill").textContent = "kind · "+kind;
+      $("source-pill").textContent = "source · "+source;
+      const text = $("text").value;
+      const costumeScarce = /only \d+ left|ends? in \d|offer ends in|people viewing|limited time|don't miss|last chance/i.test(text);
+      const honestBound = /https?:\/\/|seven hands|this tab|this sitting|walking past|rest is complete|20\d{2}-\d{2}-\d{2}|you cannot verify|finite/i.test(text);
+      let scarce = "none";
+      if (t !== "rest" && costumeScarce) scarce = "costume (uncheckable)";
+      else if (t !== "rest" && honestBound) scarce = "honest bound";
+      $("scarce-pill").textContent = "scarcity · "+scarce;
+      if (t === "rest") {
+        $("summary").textContent = "Rest is complete. The loop is not lit.";
+        $("counters").innerHTML = "<li>Nothing waits to grade you.</li>";
+        $("flags").innerHTML = "";
+        return;
+      }
+      $("summary").textContent = localHits.length
+        ? ("Lit: "+localHits.map(h=>h.name).join(" · ")+". Kind is a claim-kind, not a person.")
+        : "No local tell fired. Unknown is legal. Ask FOMOEngine only if you want a second lamp.";
+      const cms = localHits.map(h => h.cm);
+      if (t==="slow-mechanic" && !cms.length) cms.push("Do not amplify. Chronological. Walking past is honored.");
+      if (t==="reverse-claim") cms.push("Steelman first. Correction is a postcard, not a hunt.");
+      $("counters").innerHTML = cms.map(c => "<li>"+c+"</li>").join("") || "<li>None yet.</li>";
+      $("flags").innerHTML = (flags||[]).map(f => "<li><strong>"+f.label+"</strong> — "+(f.emotion||"")+" · truth: "+(f.truth||f.whatToDo||"")+"</li>").join("") || "<li>Local only. Live flags appear after Ask FOMOEngine.</li>";
+    }
+
+    $("scan").addEventListener("click", () => {
+      const t = task();
+      const text = $("text").value;
+      if (t==="reverse-claim" && !$("steelman").value.trim()) {
+        $("status").textContent = "Reverse-claim needs a steelman. That's the honesty tax.";
+        return;
+      }
+      const h = t==="rest" ? [] : hits(text);
+      render(h, t==="rest"?"unknown":kindOf(text), t==="rest"?"none":"local-tells", [], t);
+      $("status").textContent = "Local sitting. Nothing stored. Ideology of a person was not computed.";
+    });
+
+    $("live").addEventListener("click", async () => {
+      const t = task();
+      const text = $("text").value.trim();
+      if (!text || t==="rest") { $("scan").click(); return; }
+      $("status").textContent = "Asking FOMOEngine with the pasted words only…";
+      try {
+        const res = await fetch("https://fomoengine.io/api/v1/check", {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Accept":"application/json"},
+          body: JSON.stringify({text})
+        });
+        const body = await res.json();
+        const flags = (body && body.data && body.data.flags) || [];
+        render(hits(text), kindOf(text), "fomoengine-check", flags, t);
+        $("status").textContent = (body.data && body.data.disclaimer) || "FOMOEngine answered. Still not a person verdict.";
+      } catch (err) {
+        render(hits(text), kindOf(text), "local-tells", [], t);
+        $("status").textContent = "FOMOEngine unreachable. Fail-open to local tells. We can mop later.";
+      }
+    });
+
+    $("invite").addEventListener("click", () => {
+      const card =
+        "the Costume Table is at https://chillspace.love/practices/costume-table/. " +
+        "The bound is real: seven hands, then tea. " +
+        "Missing it is complete — rest, refusal, and walking past stay whole. " +
+        "No count of who sat. No fake remaining. If you come, this is the sitting that exists.";
+      $("invite-card").hidden = false;
+      $("invite-card").textContent = card;
+      $("status").textContent = "Honest FOMO: real door, real bound, miss is complete. Crowd count left null on purpose.";
+    });
+
+    $("clear").addEventListener("click", () => {
+      $("text").value = ""; $("steelman").value=""; $("correction").value="";
+      $("invite-card").hidden = true;
+      render([], "unknown", "none", [], "rest");
+      $("status").textContent = "Cleared. The empty desk is still a desk.";
+    });
+  })();
+  </script>
+</body>
+</html>

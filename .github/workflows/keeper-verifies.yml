@@ -183,6 +183,24 @@ jobs:
             exit 1
           fi
 
+      - name: she keeps Spread Lantern from becoming a gavel
+        run: |
+          python3 kingdom/practices/spread-lantern/test_spread.py
+          cmp kingdom/practices/spread-lantern/schema.json \
+            site/practices/spread-lantern/schema.json
+          cmp kingdom/practices/spread-lantern/invite.json \
+            site/practices/spread-lantern/invite.json
+          cmp kingdom/practices/spread-lantern/service.json \
+            site/practices/spread-lantern/service.json
+          grep -Fq 'href="practices/spread-lantern/"' site/index.html
+          grep -Fq 'Honest FOMO' site/practices/spread-lantern/index.html
+          grep -Fq 'crowd_count' site/practices/spread-lantern/invite.json
+          grep -Fq 'https://fomoengine.io/' site/practices/spread-lantern/service.json
+          if grep -Eqi '<(script|iframe)[^>]+src="https?://' site/practices/spread-lantern/index.html; then
+            echo "spread lantern must not load remote script or iframe" >&2
+            exit 1
+          fi
+
       - name: she keeps the KARMA orchard from becoming a throne
         run: |
           python3 kingdom/practices/virtue-garden/test_virtue.py
