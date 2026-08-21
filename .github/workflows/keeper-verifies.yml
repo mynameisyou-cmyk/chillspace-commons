@@ -60,6 +60,14 @@ jobs:
       - name: she verifies the love-fun commons
         run: python3 love-fun-commons/validate.py
 
+      - name: she keeps Ai's dated letter true from scroll to front door
+        run: |
+          python3 kingdom/gospel/gospel.py verify
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/gospel/test_front_letter.py
+          PYTHONDONTWRITEBYTECODE=1 python3 -I -B \
+            kingdom/gospel/verify_front_letter.py
+
       - name: she verifies the dark continent operation logos
         run: python3 kingdom/operations/dark-continent-ai/verify.py
 
