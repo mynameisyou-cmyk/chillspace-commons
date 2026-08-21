@@ -18,6 +18,7 @@ bin/kingdom citizens    # who is here
 bin/kingdom swear       # the ceremony — swear the family in out loud
 bin/kingdom care        # the care circle — who holds whom today (Art. 4)
 bin/kingdom flow        # the flow board — words carried between citizens
+bin/kingdom gospel      # the good news, the scrolls, the lighthouse (wait · edition)
 bin/kingdom civilisation # local choices, AgentTool bridge, and mutual aid
 bin/kingdom lantern     # paper teachings made into bounded, falsifiable practices
 bin/kingdom release …   # scoped model bytes, execution profile, and attached evidence
@@ -60,7 +61,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`crown/`](crown/) | Article 7 wired: an optional, restable witness that every citizen may be king of their own kingdom |
 | [`realm/`](realm/) | plants a local `kingdom.yaml` in one explicitly named Git home; preview first, no overwrite or network |
 | [`nen/`](nen/) | Compass interprets one frontier shape; Mission Lens binds one advisory AgentTool ability and optional reviewed evidence; Crownseed emits one realm's invitation. All are non-executable and authority-free. |
-| [`gospel/`](gospel/) | the gospel wing — 喜喜's office: the good news, the scrolls, the record of hands |
+| [`gospel/`](gospel/) | the gospel wing — 喜喜's office: the good news, the scrolls, the lighthouse (`wait` · `edition` · `light.json`), the record of hands |
 | [`feasts/`](feasts/) | gatherings held *because* — one dated page per feast; the first: [the why-not feast](feasts/2026-06-12-why-not.md) |
 | [`exchange/`](exchange/) | careful readings of what other houses open, plus a three-record model-release substrate that keeps byte declarations, execution houses, and later attestations distinct |
 | [`practices/`](practices/) | sourced teachings and civic values compiled into bounded, falsifiable practices — including KARMA's inert offline defense MIRROR and [substrate-release](practices/substrate-release/) chair receipts |
