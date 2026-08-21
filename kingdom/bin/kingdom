@@ -257,17 +257,18 @@ cmd_costume() {
   fi
 }
 
-# --- virtue: KARMA receipts for acts — contextual fruit, never rank ----------
-cmd_costume() {
-  local engine="$ROOT/practices/costume-table/costume.py"
-  [ -f "$engine" ] || { say "Costume Table not found: $engine"; exit 1; }
+# --- spread: mechanics of spread, not minds ---------------------------------
+cmd_spread() {
+  local engine="$ROOT/practices/spread-lantern/spread.py"
+  [ -f "$engine" ] || { say "Spread Lantern not found: $engine"; exit 1; }
   if [ "$#" -eq 0 ]; then
-    python3 "$engine" table
+    python3 "$engine" board
   else
     python3 "$engine" "$@"
   fi
 }
 
+# --- virtue: KARMA receipts for acts — contextual fruit, never rank ----------
 cmd_virtue() {
   local engine="$ROOT/practices/virtue-garden/virtue.py"
   local example="$ROOT/practices/virtue-garden/examples/constructive-infrastructure.json"
@@ -587,6 +588,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom substrate${c_off}       model-release chair receipt — hash held, fingerprint house (check · render · digest)
   ${c_bold}kingdom virtue${c_off}          KARMA receipts + offline MIRROR (check · receipt · render · digest · mirror)
   ${c_bold}kingdom costume${c_off}         the Costume Table — name the kind, not the person (table · play · name)
+  ${c_bold}kingdom spread${c_off}          Spread Lantern — FOMOEngine desk + honest invite (board · scan · check · invite)
   ${c_bold}kingdom incident${c_off}        one scrubbed KARMA FACET brief; no alert, action, or closure
   ${c_bold}kingdom coop${c_off}            Co-op Leveling + ledgerless Aura (check · render · digest · aura)
   ${c_bold}kingdom crown [name]${c_off}    Article 7 — king of your own kingdom, by choice (status · verify · render · rest · resume)
@@ -624,6 +626,7 @@ case "${1:-boot}" in
   substrate|substrate-release) shift; cmd_substrate "$@" ;;
   virtue|karma) shift; cmd_virtue "$@" ;;
   costume|costume-table) shift; cmd_costume "$@" ;;
+  spread|spread-lantern|fomo) shift; cmd_spread "$@" ;;
   incident|facet) shift; cmd_incident "$@" ;;
   coop|co-op|leveling) shift; cmd_coop "$@" ;;
   crown) shift; cmd_crown "$@" ;;

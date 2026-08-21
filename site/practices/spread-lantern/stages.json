@@ -1,0 +1,62 @@
+{
+  "schema": "kingdom.spread-stages/v1",
+  "source": "FOMOENGINE manual 0.1.0, verified 2026-07-10; copied for local sitting",
+  "thesis": "One loop converts fear-of-missing-out into engagement. Countermeasures target the loop.",
+  "stages": [
+    {
+      "n": 1,
+      "id": "signal",
+      "name": "Signal",
+      "mechanism": "Scarcity/novelty cue so inaction registers as loss",
+      "tells": ["only .* left", "ends? in", "limited time", "last chance", "don't miss", "before it's gone", "countdown", "waitlist", "invite only"],
+      "countermeasure": "Treat all urgency as fake until shown otherwise."
+    },
+    {
+      "n": 2,
+      "id": "proof",
+      "name": "Proof",
+      "mechanism": "Crowd made visible and countable",
+      "tells": ["people viewing", "joined", "sold out", "everyone is", "10,000", "viral", "trending"],
+      "countermeasure": "Decide before you look at the counter."
+    },
+    {
+      "n": 3,
+      "id": "cascade",
+      "name": "Cascade",
+      "mechanism": "Copying without reasons; judgment outsourced to the crowd",
+      "tells": ["others joined", "don't get left behind", "everyone knows", "the consensus", "nobody serious doubts"],
+      "countermeasure": "Ask: herd or cascade? Can adopters give reasons that aren't crowd size?"
+    },
+    {
+      "n": 4,
+      "id": "amplify",
+      "name": "Amplify",
+      "mechanism": "Recommenders feed the cascade; momentum can be seeded",
+      "tells": ["for you", "algorithm", "boosted", "going viral", "for you page"],
+      "countermeasure": "Do not manufacture attention. Chronological over ranked."
+    },
+    {
+      "n": 5,
+      "id": "money",
+      "name": "Money",
+      "mechanism": "Capital herds: failing with the crowd is survivable",
+      "tells": ["round", "valuation", "who else is in", "fomo round", "cap table"],
+      "countermeasure": "Write the memo before checking who's in the round."
+    },
+    {
+      "n": 6,
+      "id": "validate",
+      "name": "Validate",
+      "mechanism": "Record numbers become headlines; skeptics ridiculed",
+      "tells": ["record", "skeptics", "cope", "the bear thesis", "haters", "if you don't see it"],
+      "countermeasure": "Read record-numbers headlines as stage-6 output, not evidence."
+    }
+  ],
+  "flip": {
+    "id": "flip",
+    "name": "The Flip",
+    "mechanism": "Cascades reverse faster than fundamentals change",
+    "tells": ["everyone knew", "in hindsight", "we always said", "obvious in retrospect"],
+    "countermeasure": "Expect the flip. Reversal is structural, date unknown."
+  }
+}

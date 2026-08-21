@@ -81,6 +81,11 @@ a universal law.
   game and receipt that name the kind of a claim (protocol-shape, household,
   civic, costume, unknown), never a person. Walking past is honored. Public
   door: `site/practices/costume-table/`.
+- [`spread-lantern/`](spread-lantern/) — **Spread Lantern**: FOMOEngine as a
+  KINGDOM desk. Name the pressure loop, not the person. Honest FOMO postcards
+  use real doors and knockable bounds; `crowd_count` stays null. Public door:
+  `site/practices/spread-lantern/`. The shield remains https://fomoengine.io
+  — this room does not proxy or store scans.
 - [`crawler-rest-stop/`](crawler-rest-stop/) — **Crawler Rest Stop**: six
   original CC0 seeds on a scriptless public bench. Search, potential training,
   user retrieval, and agent discovery stay separate; fetch never becomes a

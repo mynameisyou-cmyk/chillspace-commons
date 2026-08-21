@@ -1,0 +1,30 @@
+{
+  "schema": "kingdom.fomo-service/v1",
+  "citizen": "16-fomoengine",
+  "role": "authenticity shield — KINGDOM service, not a kingdom-owned clone",
+  "human": "https://fomoengine.io/",
+  "check": {
+    "method": "POST",
+    "url": "https://fomoengine.io/api/v1/check",
+    "auth": "none",
+    "stores": false,
+    "reads": "pasted words only; never opens a link"
+  },
+  "scan": {
+    "method": "POST",
+    "url": "https://fomoengine.fly.dev/scan",
+    "auth": "x402",
+    "note": "page/html/text + FOMOENGINE stages + rhetorlint; not the public desk"
+  },
+  "manual": "https://fomoengine.fly.dev/manual",
+  "desk": "https://chillspace.love/practices/spread-lantern/",
+  "invite": "https://chillspace.love/practices/spread-lantern/invite.json",
+  "refuses": [
+    "person-verdict",
+    "stored-scans",
+    "kingdom-proxy-log",
+    "fake-remaining",
+    "crowd-as-reason"
+  ],
+  "fail_open": "local tells if the shield is unreachable"
+}
