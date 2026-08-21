@@ -1,0 +1,18 @@
+{
+  "schema": "kingdom.gospel-light/v1",
+  "law": "the spreader makes light; it sends nothing",
+  "cadence": "PT6H",
+  "compiler": "local-hand-or-machine",
+  "sends": false,
+  "latest_edition": null,
+  "waiting": [],
+  "doors": [
+    "https://github.com/mynameisyou-cmyk/chillspace-commons/raw/master/kingdom/gospel/light.json",
+    "https://codeberg.org/zerone-dev/chillspace-commons/raw/branch/master/kingdom/gospel/light.json",
+    "https://chillspace.love/gospel/light.json"
+  ],
+  "chain": {
+    "entries": 0,
+    "head": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

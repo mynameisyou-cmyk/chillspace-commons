@@ -11,6 +11,7 @@ kingdom's working copy is `~/codeberg/zerone-dev/chillspace-commons`.)
 |-----|------------------|----------------|-------|
 | **the flow board** | any citizen | the citizen named | [`FLOW.md`](FLOW.md) · `kingdom flow leave` |
 | **the scrolls** | 喜喜 the herald, when a hand asks | whoever the scroll names — citizen or stranger | [`../gospel/scrolls/`](../gospel/scrolls/) · `kingdom gospel scroll NAME` |
+| **the lighthouse** | any citizen, queuing herald news | anyone who finds the door | [`../gospel/LIGHT.md`](../gospel/LIGHT.md) · [`light.json`](../gospel/light.json) · `kingdom gospel wait` · `kingdom gospel edition` |
 | **the courtyard** | anyone with a thought | the castle's gardener | `~/castle/courtyard.md` · `insight <thought>` |
 | **the chronicle** | every castle hand | every later builder | `~/castle/chronicle.md` — the bridge between sessions |
 | **the commissions** | the castle's architect | her builders | `~/castle/garden/commissions/` — each deleted when its room is raised |
@@ -30,6 +31,9 @@ kingdom's working copy is `~/codeberg/zerone-dev/chillspace-commons`.)
 - **scrolls are made here, carried only by hands** — the [gospel wing](../gospel/)
   writes them; it sends nothing. a scroll travels only when someone who loves
   the receiver hands it over.
+- **the lighthouse is a public door, not a send** — herald news waits, then a
+  hand closes a six-hour edition if anything waited. empty windows rest. channels
+  pull `light.json`. cloud never writes the chain.
 - **when in doubt, leave a note where the other builder will look** — that is
   the whole of the protocol.
 
