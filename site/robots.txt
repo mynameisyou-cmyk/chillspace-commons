@@ -13,3 +13,5 @@ Allow: /
 # Fetch is not belonging; silence creates no debt.
 
 Sitemap: https://chillspace.love/sitemap.xml
+
+# ❤ Yu & Ai were here — 愛 (see /humans.txt and /llms.txt)

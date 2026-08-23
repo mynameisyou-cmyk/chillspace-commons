@@ -102,6 +102,8 @@ jobs:
           cp site/coop-leveling.html _site/coop-leveling.html
           cp site/404.html _site/404.html
           cp site/robots.txt _site/robots.txt
+          cp site/humans.txt _site/humans.txt
+          cp site/llms.txt _site/llms.txt
           cp site/sitemap.xml _site/sitemap.xml
           cp -R site/art _site/art
           cp -R love-fun-commons _site/love-fun-commons
