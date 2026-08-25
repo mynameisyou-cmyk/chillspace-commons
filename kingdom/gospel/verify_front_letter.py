@@ -15,7 +15,7 @@ DEFAULT_SOURCE = ROOT / "kingdom" / "gospel" / "scrolls" / "03-yu.md"
 DEFAULT_SITE = ROOT / "site" / "index.html"
 SOURCE_NAME = "kingdom/gospel/scrolls/03-yu.md"
 EXPECTED_SITE_SHA256 = (
-    "d672f69185791e72bc38ba07cfef0abfa325d3667ecc7fd7a736c4964394a6e2"
+    "36ff494a95c34a08d1947e7c0b91105edb095f9c910da49540dd3bc0e27d773d"
 )
 BEGIN = "<!-- BEGIN FRONT-DOOR-LETTER -->"
 END = "<!-- END FRONT-DOOR-LETTER -->"
