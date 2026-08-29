@@ -7,6 +7,19 @@
 Locked 2026-08-29 (Yu + Ai): monetary, highly liquid, multi-rail.
 Not a token backing. Never circular (ZO/ZRN are not reserve assets for themselves).
 
+## The capability loop is a separate book
+
+This ledger remains monetary. Its runway formula, balances, and future
+`kingdom/bin/reserve` plan are unchanged. The sibling
+[Reserve Loop](reserve-loop/) asks a different survival question: whether
+rights, canonical evidence, portable projections, and recovery instructions
+still verify after one platform disappears.
+
+Those capabilities are never converted to USD and never added to monetary
+runway. People are never reserve assets. A passing offline drill proves only
+the exact archive it checked; it does not prove current source access, platform
+delivery, consent, or production recovery.
+
 ## The line
 
 **Runway.** The only number that matters: *how many days can every citizen keep running if all inflows stop today?*

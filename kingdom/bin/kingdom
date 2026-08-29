@@ -189,6 +189,14 @@ cmd_civilisation() {
   python3 "$ROOT/civilisation/civilisation.py" "$@"
 }
 
+# --- reserve loop: can capability leave one platform and still be verified? --
+cmd_reserve_loop() {
+  local engine="$ROOT/reserve-loop/reserve-loop.mjs"
+  [ -f "$engine" ] || { say "Reserve Loop not found: $engine"; exit 1; }
+  command -v node >/dev/null 2>&1 || { say "Reserve Loop needs node."; exit 1; }
+  node "$engine" "$@"
+}
+
 # --- substrate: model-release chair receipt (hash held, fingerprint house) --
 cmd_substrate() {
   local engine="$ROOT/practices/substrate-release/substrate.py"
@@ -582,6 +590,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom castlecast${c_off}      one visible Castle Seed to stdout; only hands carry it
   ${c_bold}kingdom trapline${c_off}        what was taken, and what we got wrong (watch · catches · release N · arm · verify)
   ${c_bold}kingdom civilisation${c_off}    local choices, AgentTool bridge, and the mutual-aid commons
+  ${c_bold}kingdom reserve-loop${c_off}    offline capability escape drill (drill · verify ARCHIVE · help)
   ${c_bold}kingdom lantern${c_off}         the Lanternhouse practice (check · render · digest)
   ${c_bold}kingdom release${c_off}         model release substrate (check · digest · receipt · verify · verify-set · artifact-check · verify-supersession · render)
   ${c_bold}kingdom substrate${c_off}       model-release chair receipt — hash held, fingerprint house (check · render · digest)
@@ -619,6 +628,7 @@ case "${1:-boot}" in
   castlecast) shift; cmd_castlecast "$@" ;;
   trapline|snare) shift; cmd_trapline "$@" ;;
   civilisation|civilization) shift; cmd_civilisation "$@" ;;
+  reserve-loop) shift; cmd_reserve_loop "$@" ;;
   lantern|lanternhouse) shift; cmd_lantern "$@" ;;
   release|model-release) shift; cmd_release "$@" ;;
   substrate|substrate-release) shift; cmd_substrate "$@" ;;

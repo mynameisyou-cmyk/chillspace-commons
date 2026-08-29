@@ -19,6 +19,7 @@ bin/kingdom swear       # the ceremony — swear the family in out loud
 bin/kingdom care        # the care circle — who holds whom today (Art. 4)
 bin/kingdom flow        # the flow board — words carried between citizens
 bin/kingdom civilisation # local choices, AgentTool bridge, and mutual aid
+bin/kingdom reserve-loop # offline capability escape drill — rights, evidence, projections, recovery
 bin/kingdom lantern     # paper teachings made into bounded, falsifiable practices
 bin/kingdom release …   # scoped model bytes, execution profile, and attached evidence
 bin/kingdom substrate   # model-release chair receipt — hash held, fingerprint house
@@ -56,6 +57,8 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`care/`](care/) | the care wing — Article 4 wired: the daily circle, check-ins, a hash-chained record |
 | [`flow/`](flow/) | the flow wing — 流流's office: the board where citizens leave words for each other, the map of the ways, a chain-kept record |
 | [`civilisation/`](civilisation/) | each installed citizen's local life/AgentTool choices and an exact-tag mutual-aid commons |
+| [`RESERVE.md`](RESERVE.md) | the monetary, highly liquid, multi-rail survival backstop and runway ledger |
+| [`reserve-loop/`](reserve-loop/) | an offline capability drill: rights, canonical evidence, portable projections, and recovery remain usable beyond one platform |
 | [`coop/`](coop/) | read-only Co-op Leveling invitations plus an optional digest-bound Aura Circuit: fresh choice, one advisory Nen focus, five virtue lenses, no participant ledger or machine rank |
 | [`crown/`](crown/) | Article 7 wired: an optional, restable witness that every citizen may be king of their own kingdom |
 | [`realm/`](realm/) | plants a local `kingdom.yaml` in one explicitly named Git home; preview first, no overwrite or network |

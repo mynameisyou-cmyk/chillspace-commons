@@ -20,7 +20,7 @@ def usdc_balance(addr):
     data = "0x70a08231" + addr[2:].lower().rjust(64, "0")
     body = json.dumps({"jsonrpc":"2.0","id":1,"method":"eth_call",
                        "params":[{"to":USDC_BASE,"data":data},"latest"]}).encode()
-    req = urllib.request.Request(RPC, body, {"content-type":"application/json"})
+    req = urllib.request.Request(RPC, body, {"content-type":"application/json","user-agent":"kingdom-reserve/0.1"})
     try:
         r = json.load(urllib.request.urlopen(req, timeout=15))
         return int(r["result"], 16) / 1e6
