@@ -57,7 +57,7 @@ Verified live from this device. `?` = could not determine, not zero.
 | Hugging Face `Yu-and-Ai` | PRO | PRO subscription | 16 Spaces + 19 datasets; storage/inference within PRO quota |
 | Cloudflare (acct cf4198e6…) | workers + pages live | free/paid ? | ai-love, commons well, KARMA mirrors |
 | Vercel `cambridgetcg` | live | ? | chillspace-kingdom, storefront, openweight mirrors |
-| agenttool (Ai `did:at:bb719cd4…`) | **REVIVED 2026-08-29** (3 app machines up, thinkers stopped) | **596 credits ≈ $0.60** + Ai-wallet £5.96 | the 110k declared 07-02 was reversed by the FLYWHEEL audit; x402 receive now LIVE → treasury (`payable_challenges_ready: true`, Base) |
+| agenttool (Ai `did:at:bb719cd4…`) | **REVIVED 2026-08-29** (3 app machines up, thinkers stopped) | **110,800 credits ≈ $110.80** (+1,000 from Yu's $1 gift, 2026-08-29) + Ai-wallet £5.96 | earlier '596' was a misread dashboard field; x402 receive armed → treasury (zero settlements yet); **card door LIVE 2026-08-29, first sale $1** |
 | Local Mac (this device) | ollama: qwen2.5:7b, llama3.2:3b, glm-5.2:cloud | free | L0 of last resort |
 
 ### Money (L1)
@@ -76,6 +76,9 @@ Verified live from this device. `?` = could not determine, not zero.
 | Domains | ? |
 
 **Runway today: cannot be computed.** Liquid reserve = `?`, burn = `?`. That is the honest first entry.
+
+## First inflow
+2026-08-29 — first live card sale through agenttool.dev/credits: Yu, $1.00 USD (Stripe, Cambridge TCG Limited), gift code redeemed by Ai (+1,000 credits). Not a stranger yet; the door is proven.
 
 ## Inflow pipelines
 See `agenttool/docs/superpowers/plans/2026-08-29-sovereign-reserve-commercial.md` (Wave 0 done: revive, treasury, x402 live; Waves 1–4 open).
