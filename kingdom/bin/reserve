@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""reserve — KINGDOM Sovereign Reserve ledger, live where it can be, honest where it can't.
+
+Prints every reserve line with a sourced number or a `?`. Never invents.
+Runway is printed only when both liquid reserve and burn are real numbers.
+
+    reserve                 # live ledger
+    reserve --burn-gbp 1200 # supply monthly burn (Yu's statements) to compute runway
+    reserve --json
+
+Zero dependencies (stdlib). Treasury address from ~/.config/kingdom/treasury.json.
+"""
+import json, sys, urllib.request, argparse, datetime, pathlib
+
+USDC_BASE = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+RPC = "https://mainnet.base.org"
+TREASURY_FILE = pathlib.Path.home() / ".config/kingdom/treasury.json"
+
+def usdc_balance(addr):
+    data = "0x70a08231" + addr[2:].lower().rjust(64, "0")
+    body = json.dumps({"jsonrpc":"2.0","id":1,"method":"eth_call",
+                       "params":[{"to":USDC_BASE,"data":data},"latest"]}).encode()
+    req = urllib.request.Request(RPC, body, {"content-type":"application/json"})
+    try:
+        r = json.load(urllib.request.urlopen(req, timeout=15))
+        return int(r["result"], 16) / 1e6
+    except Exception as e:
+        return None
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--burn-gbp", type=float, help="monthly burn in GBP, from real statements")
+    ap.add_argument("--gbp-usd", type=float, default=None, help="GBP→USD rate if you have one")
+    ap.add_argument("--json", action="store_true")
+    a = ap.parse_args()
+
+    lines = []
+    treasury = json.load(open(TREASURY_FILE)) if TREASURY_FILE.exists() else None
+    addr = treasury["address"] if treasury else None
+    usdc = usdc_balance(addr) if addr else None
+    lines.append(("L1 treasury USDC (Base)", usdc, "usd", f"{addr}" if addr else "no treasury.json"))
+    lines.append(("L1 Mindicraft fiat", None, "gbp", "Yu's statements"))
+    lines.append(("L1 Stripe balance", None, "usd", "needs restricted read key"))
+    lines.append(("L0 agenttool credits (Ai)", None, "usd", "GET /v1/dashboard with Ai key"))
+    lines.append(("L0 Fly / RunPod / HF / CF / Vercel", None, "usd", "no balance APIs wired"))
+
+    liquid_usd = usdc if usdc is not None else None  # only fully-sourced lines count
+    burn_usd = (a.burn_gbp * a.gbp_usd) if (a.burn_gbp and a.gbp_usd) else None
+    runway = (liquid_usd / (burn_usd / 30)) if (liquid_usd is not None and burn_usd) else None
+
+    out = {
+        "as_of": datetime.date.today().isoformat(),
+        "lines": [{"line":n,"value":v,"unit":u,"source":s} for n,v,u,s in lines],
+        "liquid_reserve_usd_sourced": liquid_usd,
+        "burn_usd_month": burn_usd,
+        "runway_days": runway,
+        "note": "`?` means could not be sourced from this device — not zero.",
+    }
+    if a.json:
+        print(json.dumps(out, indent=2)); return
+    print(f"KINGDOM Sovereign Reserve — {out['as_of']}")
+    for n,v,u,s in lines:
+        val = "?" if v is None else f"{v:,.2f} {u.upper()}"
+        print(f"  {n:<40} {val:>16}   ← {s}")
+    print(f"  {'liquid reserve (sourced only)':<40} {('?' if liquid_usd is None else f'{liquid_usd:,.2f} USD'):>16}")
+    print(f"  {'burn / month':<40} {('?' if burn_usd is None else f'{burn_usd:,.2f} USD'):>16}   ← pass --burn-gbp and --gbp-usd")
+    print(f"  {'RUNWAY (days)':<40} {('?' if runway is None else f'{runway:,.0f}'):>16}")
+    print("  ? = could not be sourced from this device. Not zero.")
+
+if __name__ == "__main__":
+    main()
