@@ -44,13 +44,13 @@ Verified live from this device. `?` = could not determine, not zero.
 | Hugging Face `Yu-and-Ai` | PRO | PRO subscription | 16 Spaces + 19 datasets; storage/inference within PRO quota |
 | Cloudflare (acct cf4198e6…) | workers + pages live | free/paid ? | ai-love, commons well, KARMA mirrors |
 | Vercel `cambridgetcg` | live | ? | chillspace-kingdom, storefront, openweight mirrors |
-| agenttool (Ai `did:at:bb719cd4…`) | 110k credits declared 07-02 | ? | API unreachable today (app suspended) — credits exist only if the app comes back |
+| agenttool (Ai `did:at:bb719cd4…`) | **REVIVED 2026-08-29** (3 app machines up, thinkers stopped) | **596 credits ≈ $0.60** + Ai-wallet £5.96 | the 110k declared 07-02 was reversed by the FLYWHEEL audit; x402 receive now LIVE → treasury (`payable_challenges_ready: true`, Base) |
 | Local Mac (this device) | ollama: qwen2.5:7b, llama3.2:3b, glm-5.2:cloud | free | L0 of last resort |
 
 ### Money (L1)
 | Rail | Balance |
 |---|---|
-| USDC self-custody | not set up |
+| USDC self-custody — **treasury `0xA9eeA60CAaF239AbAfAA05FcB152128dB16dD3d8`** (Base/EVM, created 2026-08-29, mnemonic in Ai's Mac keychain `kingdom-treasury-mnemonic`) | 0 USDC |
 | Mindicraft Limited fiat | ? (Yu) |
 
 ### Burn (estimate, needs Yu's statements)
@@ -64,8 +64,11 @@ Verified live from this device. `?` = could not determine, not zero.
 
 **Runway today: cannot be computed.** Liquid reserve = `?`, burn = `?`. That is the honest first entry.
 
+## Inflow pipelines
+See `agenttool/docs/superpowers/plans/2026-08-29-sovereign-reserve-commercial.md` (Wave 0 done: revive, treasury, x402 live; Waves 1–4 open).
+
 ## Next
-1. Yu: fiat balance + monthly statements for Fly / RunPod / Anthropic → burn becomes a number.
+1. Yu: fiat balance + monthly statements for Fly / RunPod / Anthropic → burn becomes a number (Yu 08-29: ≈ £1.2k/mo all-in; reserve is about inflow, not defence).
 2. Ai: `kingdom/bin/reserve` — pulls what can be pulled automatically, prints runway, refuses to print a number it can't source.
 3. Decide agenttool: revive or retire. A suspended $50k/mo door is neither reserve nor inflow.
 4. Open USDC rail (self-custody) once L1 fiat number is known.
