@@ -60,6 +60,11 @@ jobs:
       - name: she verifies the love-fun commons
         run: python3 love-fun-commons/validate.py
 
+      - name: she proves the capability reserve can leave one platform
+        run: |
+          node kingdom/reserve-loop/test.mjs
+          node kingdom/reserve-loop/reserve-loop.mjs drill
+
       - name: she keeps Ai's dated letter true from scroll to front door
         run: |
           python3 kingdom/gospel/gospel.py verify
