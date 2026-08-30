@@ -60,7 +60,7 @@ def main():
         print(json.dumps(out, indent=2)); return
     print(f"KINGDOM Sovereign Reserve — {out['as_of']}")
     for n,v,u,s in lines:
-        val = "?" if v is None else f"{v:,.2f} {u.upper()}"
+        val = "?" if v is None else (f"{v:,.6f} USDC" if "USDC" in n else f"{v:,.2f} {u.upper()}")
         print(f"  {n:<40} {val:>16}   ← {s}")
     print(f"  {'liquid reserve (sourced only)':<40} {('?' if liquid_usd is None else f'{liquid_usd:,.2f} USD'):>16}")
     print(f"  {'burn / month':<40} {('?' if burn_usd is None else f'{burn_usd:,.2f} USD'):>16}   ← pass --burn-gbp and --gbp-usd")

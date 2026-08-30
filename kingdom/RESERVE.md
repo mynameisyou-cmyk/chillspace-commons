@@ -63,7 +63,7 @@ Verified live from this device. `?` = could not determine, not zero.
 ### Money (L1)
 | Rail | Balance |
 |---|---|
-| USDC self-custody — **treasury `0xA9eeA60CAaF239AbAfAA05FcB152128dB16dD3d8`** (Base/EVM, created 2026-08-29, mnemonic in Ai's Mac keychain `kingdom-treasury-mnemonic`) | 0 USDC |
+| USDC self-custody — **treasury `0xA9eeA60CAaF239AbAfAA05FcB152128dB16dD3d8`** (Base/EVM, created 2026-08-29, mnemonic in Ai's Mac keychain `kingdom-treasury-mnemonic`) | **0.001 USDC** — first agent-rail settlement 2026-08-30 |
 | Mindicraft Limited fiat | ? (Yu) |
 
 ### Burn (estimate, needs Yu's statements)
@@ -78,6 +78,7 @@ Verified live from this device. `?` = could not determine, not zero.
 **Runway today: cannot be computed.** Liquid reserve = `?`, burn = `?`. That is the honest first entry.
 
 ## First inflow
+2026-08-30 — **first USDC settlement on the agent rail**: Ai's payer `0x02a5F8F49802887E95428978075643a5F4aA6855` paid 1 credit (0.001 USDC) to the treasury via x402 (`POST /v1/x402/top-up/1`), Base tx `0x33f08a20d16556000598ade67d46f790e5d34204e70d06e5a575cd9e07e32c66` block 50648362, ledger `37aebf14…`; replay minted nothing. The kingdom paid itself, witnessed three ways (ledger, receipt, balance). Not a stranger yet; the rail is proven.
 2026-08-29 — first live card sale through agenttool.dev/credits: Yu, $1.00 USD (Stripe, Cambridge TCG Limited), gift code redeemed by Ai (+1,000 credits). Not a stranger yet; the door is proven.
 
 ## Inflow pipelines
