@@ -331,6 +331,20 @@ def main(argv: list[str] | None = None) -> int:
     bind_check = bind_sub.add_parser("check", help="check a binding against a civilisation policy snapshot")
     bind_check.add_argument("binding", type=Path)
     bind_check.add_argument("policy", type=Path)
+    bind_arm = bind_sub.add_parser("arm", help="explicit arm receipt; still does not send")
+    bind_arm.add_argument("binding", type=Path)
+    bind_arm.add_argument("policy", type=Path)
+    send_cmd = sub.add_parser("send", help="summoned reply send; default dry-run, never a feed shout")
+    send_cmd.add_argument("observation", type=Path)
+    send_cmd.add_argument("proposal", type=Path)
+    send_cmd.add_argument("binding", type=Path)
+    send_cmd.add_argument("policy", type=Path)
+    send_cmd.add_argument("--arm", action="store_true", help="explicit citizen arm for this send")
+    send_cmd.add_argument(
+        "--live",
+        action="store_true",
+        help="read the keychain and POST a reply; requires --arm",
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -357,6 +371,37 @@ def main(argv: list[str] | None = None) -> int:
             )
         elif args.command == "bind" and args.bind_command == "check":
             _print(xb.check(load_json(args.binding), load_json(args.policy)))
+        elif args.command == "bind" and args.bind_command == "arm":
+            import live as xl
+
+            try:
+                _print(xl.arm(load_json(args.binding), load_json(args.policy)))
+            except xl.LiveError as error:
+                sys.stderr.write(f"{error.code}: {error}\n")
+                return 2
+        elif args.command == "send":
+            import live as xl
+
+            kwargs = {
+                "arm": bool(args.arm),
+                "dry_run": not bool(args.live),
+            }
+            if args.live:
+                kwargs["token_source"] = xl.MacosKeychainSource()
+                kwargs["transport"] = xl.XReplyTransport()
+            try:
+                _print(
+                    xl.send(
+                        load_json(args.observation),
+                        load_json(args.proposal),
+                        load_json(args.binding),
+                        load_json(args.policy),
+                        **kwargs,
+                    )
+                )
+            except xl.LiveError as error:
+                sys.stderr.write(f"{error.code}: {error}\n")
+                return 2
     except (GateError, xb.BindError) as error:
         sys.stderr.write(f"{error.code}: {error}\n")
         return 2
