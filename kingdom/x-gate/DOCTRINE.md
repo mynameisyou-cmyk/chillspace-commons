@@ -113,3 +113,18 @@ scraped again.
 The Grok chair may search X (`x_keyword_search` in Latest) and *then* save
 JSON for `kingdom x gather`. The gate never ranks. Crawler Rest Stop still
 applies: a fetch is not attention, belonging, or consent.
+
+## XAA summoned listen
+
+Push-shaped listen, still not a daemon. X Activity API can fire
+`post.mention.create` (explicit @) and `post.reply.create` (direct reply to
+the speaker). Those two are summons. Likes, quotes, reposts, follows, Grok
+news, and encrypted chat are not.
+
+`kingdom x xaa plan` prints the allowed subscription types. It does **not**
+open `/2/activity/stream`. `kingdom x xaa ingest` accepts caller-supplied
+envelopes, strips `public_metrics`, and yields an `observation_id` for
+gather/bridge/draft. Empty events are a complete listen.
+
+A live stream adapter would be a later slice, same pattern as `--live` send:
+opt-in, speaker-owned token, fail closed, no firehose.
