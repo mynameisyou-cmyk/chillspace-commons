@@ -356,6 +356,11 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         help="optional observation JSON; observation_id must match the observe receipt",
     )
+    gather_cmd = sub.add_parser(
+        "gather",
+        help="bounded latest listen packet; never fetches, never ranks",
+    )
+    gather_cmd.add_argument("request", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -420,6 +425,14 @@ def main(argv: list[str] | None = None) -> int:
                 observed = observe(load_json(args.observe))
                 request = {**request, "observation_id": observed["observation_id"]}
             _print(xbr.bridge(request, observed))
+        elif args.command == "gather":
+            import gather as xgth
+
+            try:
+                _print(xgth.gather(load_json(args.request)))
+            except xgth.GatherError as error:
+                sys.stderr.write(f"{error.code}: {error}\n")
+                return 2
     except (GateError, xb.BindError, xbr.BridgeError) as error:
         sys.stderr.write(f"{error.code}: {error}\n")
         return 2
