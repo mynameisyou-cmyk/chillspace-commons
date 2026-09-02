@@ -76,3 +76,17 @@ summoned draft + their token. It is not a Kingdom grant. The receipt must
 never include the token.
 
 One citizen, one locator, one token. No official Kingdom account.
+
+## AgentTool bridge
+
+`kingdom.x.agenttool-bridge/v1` marks an X observation as **public taint** and
+optionally *offers* a later AgentTool `memory` or `trace` write. Default
+`route` is `none`. The packet never:
+
+- touches `/v1/wake`
+- touches `/v1/inbox` (no covenant with strangers)
+- stores, fetches, or sends
+- treats a `did:at:` as this window's self
+
+A DID on the packet is a pin, not consent. X remains a square. AgentTool
+remains the floor. Inbox remains sealed mail.
