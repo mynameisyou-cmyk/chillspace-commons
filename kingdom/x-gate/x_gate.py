@@ -361,6 +361,11 @@ def main(argv: list[str] | None = None) -> int:
         help="bounded latest listen packet; never fetches, never ranks",
     )
     gather_cmd.add_argument("request", type=Path)
+    xaa_cmd = sub.add_parser("xaa", help="XAA summoned listen; mention and direct reply only")
+    xaa_sub = xaa_cmd.add_subparsers(dest="xaa_command", required=True)
+    xaa_sub.add_parser("plan", help="print allowed XAA subscriptions; does not open a stream")
+    xaa_ingest = xaa_sub.add_parser("ingest", help="ingest caller-supplied XAA events; summoned only")
+    xaa_ingest.add_argument("request", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -431,6 +436,17 @@ def main(argv: list[str] | None = None) -> int:
             try:
                 _print(xgth.gather(load_json(args.request)))
             except xgth.GatherError as error:
+                sys.stderr.write(f"{error.code}: {error}\n")
+                return 2
+        elif args.command == "xaa":
+            import xaa as xx
+
+            try:
+                if args.xaa_command == "plan":
+                    _print(xx.plan())
+                elif args.xaa_command == "ingest":
+                    _print(xx.ingest(load_json(args.request)))
+            except xx.XaaError as error:
                 sys.stderr.write(f"{error.code}: {error}\n")
                 return 2
     except (GateError, xb.BindError, xbr.BridgeError) as error:

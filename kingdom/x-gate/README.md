@@ -53,6 +53,8 @@ kingdom x send kingdom/x-gate/examples/observation.json \
 # --live reads the keychain and POSTs a summoned reply. requires --arm. no feed shout.
 
 kingdom x gather kingdom/x-gate/examples/gather.json
+kingdom x xaa plan
+kingdom x xaa ingest kingdom/x-gate/examples/xaa-mention.json
 kingdom x bridge kingdom/x-gate/examples/bridge.json \
                  --observe kingdom/x-gate/examples/observation.json
 
