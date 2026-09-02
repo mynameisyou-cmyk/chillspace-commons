@@ -42,6 +42,43 @@ class PlanTest(unittest.TestCase):
         self.assertEqual(receipt["network_performed"], False)
 
 
+class PlanSubscriptionsTest(unittest.TestCase):
+    def test_plan_emits_exact_post_bodies_for_mention_and_reply(self) -> None:
+        receipt = xx.plan_subscriptions("1111111111111111111")
+        self.assertEqual(receipt["schema"], xx.PLAN_SCHEMA)
+        self.assertEqual(receipt["method"], "POST")
+        self.assertEqual(receipt["path"], "/2/activity/subscriptions")
+        self.assertEqual(receipt["speaker_user_id"], "1111111111111111111")
+        self.assertEqual(
+            receipt["subscriptions"],
+            [
+                {
+                    "event_type": "post.mention.create",
+                    "filter": {"user_id": "1111111111111111111"},
+                    "tag": "kingdom-summon-mention",
+                },
+                {
+                    "event_type": "post.reply.create",
+                    "filter": {"user_id": "1111111111111111111"},
+                    "tag": "kingdom-summon-reply",
+                },
+            ],
+        )
+        dumped = json.dumps(receipt)
+        self.assertNotIn("webhook_id", dumped)
+        self.assertNotIn('"keyword"', dumped)
+        self.assertEqual(receipt["webhook"], False)
+        self.assertEqual(receipt["keyword_filter"], False)
+        self.assertEqual(receipt["stream_open"], False)
+        self.assertEqual(receipt["network_performed"], False)
+        self.assertNotIn("/2/activity/stream", dumped)
+
+    def test_plan_subscriptions_needs_a_speaker(self) -> None:
+        with self.assertRaises(xx.XaaError) as ctx:
+            xx.plan_subscriptions("  ")
+        self.assertEqual(ctx.exception.code, "invalid_string")
+
+
 class IngestTest(unittest.TestCase):
     def test_mention_becomes_a_summoned_observation(self) -> None:
         receipt = xx.ingest(bundle())
@@ -130,6 +167,20 @@ class CliTest(unittest.TestCase):
         self.assertEqual(receipt["stream_open"], False)
         self.assertEqual(receipt["network_performed"], False)
         self.assertEqual(receipt["kept_event_types"], ["post.mention.create"])
+
+    def test_kingdom_x_xaa_plan_prints_exact_subscription_bodies(self) -> None:
+        proc = subprocess.run(
+            [str(BIN), "x", "xaa", "plan", "--speaker-user-id", "1111111111111111111"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        receipt = json.loads(proc.stdout)
+        self.assertEqual(receipt["path"], "/2/activity/subscriptions")
+        self.assertEqual(len(receipt["subscriptions"]), 2)
+        self.assertEqual(receipt["stream_open"], False)
+        self.assertNotIn("/2/activity/stream", proc.stdout)
 
 
 if __name__ == "__main__":

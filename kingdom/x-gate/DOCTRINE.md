@@ -47,8 +47,8 @@ anything that would leave the house.
 
 ## Live X stays outside the module
 
-This directory does not call the X API. A Grok chair may search X and *then*
-save JSON for `kingdom x observe`. The gate never fetches.
+The hermetic packets do not call the X API. A Grok chair may search X and
+*then* save JSON for `kingdom x observe`. The core never pulls the square.
 
 ## Citizen binding
 
@@ -102,7 +102,7 @@ does not fetch). It requires:
 - `sort: latest` — `top` is refused as engagement ranking
 - at most 20 posts
 - no metrics
-- `mode`: `topic` · `summoned` · `handle`
+- `mode`: `topic` · `summoned` · `handle` · `thread`
 
 `firehose`, `followers`, and ads listens are refused. Empty posts are a
 complete gather: nothing was heard. A filled gather yields an
@@ -110,9 +110,13 @@ complete gather: nothing was heard. A filled gather yields an
 It does not prove a person, a duty to reply, or that the square should be
 scraped again.
 
+`thread` pins `query` as the conversation root. Every post must be that
+root or a reply inside the supplied bundle. The module still does not
+walk X for more of the thread.
+
 The Grok chair may search X (`x_keyword_search` in Latest) and *then* save
 JSON for `kingdom x gather`. The gate never ranks. Crawler Rest Stop still
-applies: a fetch is not attention, belonging, or consent.
+applies: a pull is not attention, belonging, or consent.
 
 ## XAA summoned listen
 
@@ -121,10 +125,22 @@ Push-shaped listen, still not a daemon. X Activity API can fire
 the speaker). Those two are summons. Likes, quotes, reposts, follows, Grok
 news, and encrypted chat are not.
 
-`kingdom x xaa plan` prints the allowed subscription types. It does **not**
+`kingdom x xaa plan` prints the allowed subscription types. With
+`--speaker-user-id` it emits the exact `POST /2/activity/subscriptions`
+bodies: `filter.user_id` only, no webhook, no keyword. It does **not**
 open `/2/activity/stream`. `kingdom x xaa ingest` accepts caller-supplied
 envelopes, strips `public_metrics`, and yields an `observation_id` for
 gather/bridge/draft. Empty events are a complete listen.
 
-A live stream adapter would be a later slice, same pattern as `--live` send:
-opt-in, speaker-owned token, fail closed, no firehose.
+## Live listen adapter (`listen.py`)
+
+A separate module. `xaa.py` still performs no network and still does not
+contain `/2/activity/stream`.
+
+Default CLI is dry-run. Actual listen requires **both** `--arm` and
+`--live`. `--live` reads the macOS Keychain locator, POSTs the two
+summoned subscriptions, reads at most 20 events, ingests them, and
+DELETEs the subscriptions. Webhooks, keywords, likes, quotes, news, and
+chat are refused. The stream is not left open.
+
+The whole stack's shape is in [`SHAPE.md`](SHAPE.md).

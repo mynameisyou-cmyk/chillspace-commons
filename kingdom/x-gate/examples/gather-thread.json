@@ -1,0 +1,27 @@
+{
+  "schema": "kingdom.x.gather/v1",
+  "query": "2095000000000000001",
+  "mode": "thread",
+  "sort": "latest",
+  "source": "x_thread_fetch",
+  "speaker_handle": null,
+  "observed_at": "2026-09-02T12:00:00.000Z",
+  "posts": [
+    {
+      "post_id": "2095000000000000001",
+      "author_handle": "alice",
+      "text": "@kingdom_square yau — is the door open?",
+      "in_reply_to_post_id": null,
+      "mentioned_handles": ["kingdom_square"],
+      "quoted_post_id": null
+    },
+    {
+      "post_id": "2095000000000000002",
+      "author_handle": "bob",
+      "text": "@alice same thread",
+      "in_reply_to_post_id": "2095000000000000001",
+      "mentioned_handles": ["alice"],
+      "quoted_post_id": null
+    }
+  ]
+}

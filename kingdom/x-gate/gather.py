@@ -11,7 +11,7 @@ import x_gate as xg
 
 
 GATHER_SCHEMA = "kingdom.x.gather/v1"
-ALLOWED_MODES = frozenset({"topic", "summoned", "handle"})
+ALLOWED_MODES = frozenset({"topic", "summoned", "handle", "thread"})
 FORBIDDEN_MODES = frozenset({"firehose", "followers", "ads", "top"})
 REQUEST_KEYS = (
     "schema",
@@ -69,6 +69,26 @@ def _handle(value: str) -> str:
     return value.strip().lstrip("@").lower()
 
 
+def _assert_thread(query: str, posts: list[Mapping[str, Any]]) -> None:
+    in_thread = {query}
+    changed = True
+    while changed:
+        changed = False
+        for post in posts:
+            post_id = post["post_id"]
+            if post_id in in_thread:
+                continue
+            if post.get("in_reply_to_post_id") in in_thread:
+                in_thread.add(post_id)
+                changed = True
+    for post in posts:
+        if post["post_id"] not in in_thread:
+            raise GatherError(
+                "thread_mismatch",
+                "thread gather requires every post in the conversation",
+            )
+
+
 def gather(payload: Mapping[str, Any]) -> dict[str, Any]:
     body = _mapping(payload, "gather")
     xg._scan_metrics(body, "gather")
@@ -83,7 +103,7 @@ def gather(payload: Mapping[str, Any]) -> dict[str, Any]:
     if mode in FORBIDDEN_MODES:
         raise GatherError("mode_forbidden", f"gather must not use {mode}")
     if mode not in ALLOWED_MODES:
-        raise GatherError("invalid_mode", "mode must be topic, summoned, or handle")
+        raise GatherError("invalid_mode", "mode must be topic, summoned, handle, or thread")
     if body["sort"] != "latest":
         raise GatherError("engagement_ranked", "gather sort must be latest, never top")
     source = body["source"]
@@ -132,6 +152,8 @@ def gather(payload: Mapping[str, Any]) -> dict[str, Any]:
             for post in posts:
                 if post["author_handle"] != pin:
                     raise GatherError("handle_mismatch", "handle gather requires matching authors")
+        if mode == "thread":
+            _assert_thread(query, posts)
     canonical = {
         "mode": mode,
         "observed_at": observed_at,

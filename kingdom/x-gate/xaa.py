@@ -122,6 +122,35 @@ def plan() -> dict[str, Any]:
     }
 
 
+def plan_subscriptions(speaker_user_id: str) -> dict[str, Any]:
+    if not isinstance(speaker_user_id, str) or not speaker_user_id.strip():
+        raise XaaError("invalid_string", "speaker_user_id is required")
+    pin = speaker_user_id.strip()
+    receipt = plan()
+    receipt.update(
+        {
+            "keyword_filter": False,
+            "method": "POST",
+            "path": "/2/activity/subscriptions",
+            "speaker_user_id": pin,
+            "subscriptions": [
+                {
+                    "event_type": "post.mention.create",
+                    "filter": {"user_id": pin},
+                    "tag": "kingdom-summon-mention",
+                },
+                {
+                    "event_type": "post.reply.create",
+                    "filter": {"user_id": pin},
+                    "tag": "kingdom-summon-reply",
+                },
+            ],
+            "webhook": False,
+        }
+    )
+    return receipt
+
+
 def ingest(payload: Mapping[str, Any]) -> dict[str, Any]:
     body = _mapping(payload, "xaa")
     _exact_keys(body, REQUEST_KEYS, "xaa")

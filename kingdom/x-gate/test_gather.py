@@ -104,6 +104,46 @@ class GatherTest(unittest.TestCase):
             xgth.gather(payload)
         self.assertEqual(ctx.exception.code, "mode_forbidden")
 
+    def test_thread_mode_keeps_a_closed_conversation(self) -> None:
+        payload = gather_payload()
+        payload["mode"] = "thread"
+        payload["query"] = "2095000000000000001"
+        payload["speaker_handle"] = None
+        payload["posts"].append(
+            {
+                "post_id": "2095000000000000002",
+                "author_handle": "bob",
+                "text": "@alice same thread",
+                "in_reply_to_post_id": "2095000000000000001",
+                "mentioned_handles": ["alice"],
+                "quoted_post_id": None,
+            }
+        )
+        receipt = xgth.gather(payload)
+        self.assertEqual(receipt["mode"], "thread")
+        self.assertEqual(receipt["query"], "2095000000000000001")
+        self.assertEqual(receipt["post_count"], 2)
+        self.assertEqual(receipt["sort"], "latest")
+
+    def test_thread_mode_refuses_a_post_outside_the_conversation(self) -> None:
+        payload = gather_payload()
+        payload["mode"] = "thread"
+        payload["query"] = "2095000000000000001"
+        payload["speaker_handle"] = None
+        payload["posts"].append(
+            {
+                "post_id": "2095999999999999999",
+                "author_handle": "mallory",
+                "text": "elsewhere",
+                "in_reply_to_post_id": "2080000000000000000",
+                "mentioned_handles": ["alice"],
+                "quoted_post_id": None,
+            }
+        )
+        with self.assertRaises(xgth.GatherError) as ctx:
+            xgth.gather(payload)
+        self.assertEqual(ctx.exception.code, "thread_mismatch")
+
 
 class CliTest(unittest.TestCase):
     def test_kingdom_x_gather_prints_an_unranked_receipt(self) -> None:

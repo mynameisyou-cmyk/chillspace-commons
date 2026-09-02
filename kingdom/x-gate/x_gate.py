@@ -363,9 +363,27 @@ def main(argv: list[str] | None = None) -> int:
     gather_cmd.add_argument("request", type=Path)
     xaa_cmd = sub.add_parser("xaa", help="XAA summoned listen; mention and direct reply only")
     xaa_sub = xaa_cmd.add_subparsers(dest="xaa_command", required=True)
-    xaa_sub.add_parser("plan", help="print allowed XAA subscriptions; does not open a stream")
+    xaa_plan = xaa_sub.add_parser("plan", help="print allowed XAA subscriptions; does not open a stream")
+    xaa_plan.add_argument(
+        "--speaker-user-id",
+        dest="speaker_user_id",
+        help="emit exact POST /2/activity/subscriptions bodies for this speaker",
+    )
     xaa_ingest = xaa_sub.add_parser("ingest", help="ingest caller-supplied XAA events; summoned only")
     xaa_ingest.add_argument("request", type=Path)
+    xaa_listen = xaa_sub.add_parser(
+        "listen",
+        help="opt-in XAA listen; default dry-run, mention and direct reply only",
+    )
+    xaa_listen.add_argument("binding", type=Path)
+    xaa_listen.add_argument("policy", type=Path)
+    xaa_listen.add_argument("--speaker-user-id", dest="speaker_user_id", required=True)
+    xaa_listen.add_argument("--arm", action="store_true", help="explicit citizen arm for this listen")
+    xaa_listen.add_argument(
+        "--live",
+        action="store_true",
+        help="read the keychain, subscribe, listen once, release; requires --arm",
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -443,9 +461,35 @@ def main(argv: list[str] | None = None) -> int:
 
             try:
                 if args.xaa_command == "plan":
-                    _print(xx.plan())
+                    if args.speaker_user_id:
+                        _print(xx.plan_subscriptions(args.speaker_user_id))
+                    else:
+                        _print(xx.plan())
                 elif args.xaa_command == "ingest":
                     _print(xx.ingest(load_json(args.request)))
+                elif args.xaa_command == "listen":
+                    import listen as xlh
+                    import live as xl
+
+                    kwargs = {
+                        "arm": bool(args.arm),
+                        "dry_run": not bool(args.live),
+                        "speaker_user_id": args.speaker_user_id,
+                    }
+                    if args.live:
+                        kwargs["token_source"] = xl.MacosKeychainSource()
+                        kwargs["stream"] = xlh.XActivityTransport()
+                    try:
+                        _print(
+                            xlh.listen(
+                                load_json(args.binding),
+                                load_json(args.policy),
+                                **kwargs,
+                            )
+                        )
+                    except (xlh.ListenError, xl.LiveError) as error:
+                        sys.stderr.write(f"{error.code}: {error}\n")
+                        return 2
             except xx.XaaError as error:
                 sys.stderr.write(f"{error.code}: {error}\n")
                 return 2
