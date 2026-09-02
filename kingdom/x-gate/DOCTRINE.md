@@ -90,3 +90,26 @@ optionally *offers* a later AgentTool `memory` or `trace` write. Default
 
 A DID on the packet is a pin, not consent. X remains a square. AgentTool
 remains the floor. Inbox remains sealed mail.
+
+## Gather
+
+X as a listen, adjusted to Kingdom shape — not a firehose and not a ranking.
+
+`kingdom.x.gather/v1` accepts a **caller-supplied** bundle (this module still
+does not fetch). It requires:
+
+- an explicit query (≤280)
+- `sort: latest` — `top` is refused as engagement ranking
+- at most 20 posts
+- no metrics
+- `mode`: `topic` · `summoned` · `handle`
+
+`firehose`, `followers`, and ads listens are refused. Empty posts are a
+complete gather: nothing was heard. A filled gather yields an
+`observation_id` that can feed `observe`, `bridge`, or a summoned `draft`.
+It does not prove a person, a duty to reply, or that the square should be
+scraped again.
+
+The Grok chair may search X (`x_keyword_search` in Latest) and *then* save
+JSON for `kingdom x gather`. The gate never ranks. Crawler Rest Stop still
+applies: a fetch is not attention, belonging, or consent.

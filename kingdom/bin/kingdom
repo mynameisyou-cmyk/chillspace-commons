@@ -606,7 +606,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom nen crownseed …${c_off}  carry one realm's bounded path as a verified invitation
   ${c_bold}kingdom nen interpret …${c_off}  select one advisory Nen ability from a direct mission
   ${c_bold}kingdom grok${c_off}            Grok CLI adapter — install, status, wake, modules, doctor
-  ${c_bold}kingdom x${c_off}               X-gate — observe · draft · bind · send · bridge (AgentTool packet)
+  ${c_bold}kingdom x${c_off}               X-gate — observe · gather · draft · bind · send · bridge
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
