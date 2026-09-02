@@ -22,9 +22,10 @@ into packets. It does not mint a bot, claim a handle, or spend Ads.
 | **Speaker** | draft a summoned reply or chat | `authorization_granted: false` |
 | **Pipeline** | four distinct agent holders review the same bytes | proposal only |
 
-v0 never:
+v0 core (`x_gate.py`, `binding.py`) never:
 
 - performs network
+- reads a token
 - posts, likes, follows, or quotes
 - creates a timeline shout (`mode: post`)
 - answers unless the speaker handle was mentioned
@@ -62,5 +63,16 @@ Even when `life` is `local` and a keychain locator is present:
 - `publish` is false
 - `live_client` is false
 
-A future live adapter is a different slice. It still cannot share one token
-across citizens, and it still cannot speak as the Kingdom.
+## Live adapter (`live.py`)
+
+A separate module. `x_gate.py` and `binding.py` still perform no network.
+
+Default CLI is dry-run. Actual POST requires **both** `--arm` and `--live`.
+`--live` reads the macOS Keychain locator and calls `POST /2/tweets` as a
+**reply**. Chat and timeline posts stay out.
+
+Authorization for a published send is that citizen's arm + `life=local` +
+summoned draft + their token. It is not a Kingdom grant. The receipt must
+never include the token.
+
+One citizen, one locator, one token. No official Kingdom account.
