@@ -52,6 +52,9 @@ kingdom x send kingdom/x-gate/examples/observation.json \
                --arm
 # --live reads the keychain and POSTs a summoned reply. requires --arm. no feed shout.
 
+kingdom x bridge kingdom/x-gate/examples/bridge.json \
+                 --observe kingdom/x-gate/examples/observation.json
+
 Put a bot token in the login keychain yourself (do not commit it):
 
 ```sh

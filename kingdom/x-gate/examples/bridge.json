@@ -1,0 +1,7 @@
+{
+  "schema": "kingdom.x.agenttool-bridge/v1",
+  "observation_id": "sha256:replace-me",
+  "did": null,
+  "taint": "public",
+  "route": "none"
+}

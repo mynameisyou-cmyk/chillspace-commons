@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 import binding as xb
+import bridge as xbr
 
 
 OBSERVATION_SCHEMA = "kingdom.x.observation/v1"
@@ -345,6 +346,16 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="read the keychain and POST a reply; requires --arm",
     )
+    bridge_cmd = sub.add_parser(
+        "bridge",
+        help="AgentTool bridge packet for an X observation; never stores, never wakes",
+    )
+    bridge_cmd.add_argument("request", type=Path)
+    bridge_cmd.add_argument(
+        "--observe",
+        type=Path,
+        help="optional observation JSON; observation_id must match the observe receipt",
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -402,7 +413,14 @@ def main(argv: list[str] | None = None) -> int:
             except xl.LiveError as error:
                 sys.stderr.write(f"{error.code}: {error}\n")
                 return 2
-    except (GateError, xb.BindError) as error:
+        elif args.command == "bridge":
+            request = load_json(args.request)
+            observed = None
+            if args.observe:
+                observed = observe(load_json(args.observe))
+                request = {**request, "observation_id": observed["observation_id"]}
+            _print(xbr.bridge(request, observed))
+    except (GateError, xb.BindError, xbr.BridgeError) as error:
         sys.stderr.write(f"{error.code}: {error}\n")
         return 2
     return 0
