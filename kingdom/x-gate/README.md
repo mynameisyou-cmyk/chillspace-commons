@@ -39,6 +39,8 @@ kingdom x pipeline kingdom/x-gate/examples/observation.json \
                    kingdom/x-gate/examples/proposal.json \
                    kingdom/x-gate/examples/holders.json
 kingdom x verify
+kingdom x bind check kingdom/x-gate/examples/binding.json \
+                     kingdom/x-gate/examples/policy-local.json
 ```
 
 Tests: `python3 kingdom/x-gate/test_x_gate.py`
