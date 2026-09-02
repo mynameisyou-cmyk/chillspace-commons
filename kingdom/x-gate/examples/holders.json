@@ -1,0 +1,6 @@
+{
+  "connector": "agent-a",
+  "summons_reviewer": "agent-b",
+  "draft_proposer": "agent-c",
+  "speak_auditor": "agent-d"
+}
