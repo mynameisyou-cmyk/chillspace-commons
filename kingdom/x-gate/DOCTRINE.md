@@ -49,6 +49,18 @@ anything that would leave the house.
 This directory does not call the X API. A Grok chair may search X and *then*
 save JSON for `kingdom x observe`. The gate never fetches.
 
-A future live adapter (X Chat bot token, Grok Bot connector) is a different
-wing, with a Keeper's hand, an "Automated by @owner" label, and no Ads MCP.
-It is not this file.
+## Citizen binding
+
+`kingdom.x.binding/v1` pins one citizen to one speaker handle and a **locator**
+for a token that this module never reads. Civilisation policy is supplied as a
+snapshot (`life: local | rest | unasked`). `rest` and `unasked` fail closed.
+
+Even when `life` is `local` and a keychain locator is present:
+
+- `armed` is false
+- `send_allowed` is false
+- `publish` is false
+- `live_client` is false
+
+A future live adapter is a different slice. It still cannot share one token
+across citizens, and it still cannot speak as the Kingdom.

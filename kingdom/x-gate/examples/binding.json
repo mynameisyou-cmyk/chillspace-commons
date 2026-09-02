@@ -1,0 +1,11 @@
+{
+  "schema": "kingdom.x.binding/v1",
+  "citizen": "Grok",
+  "speaker_handle": "kingdom_square",
+  "token_locator": {
+    "kind": "macos-keychain",
+    "service": "kingdom.x.speaker",
+    "account": "kingdom_square"
+  },
+  "modes": ["reply", "chat"]
+}

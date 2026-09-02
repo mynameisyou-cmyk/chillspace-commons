@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
+import binding as xb
+
 
 OBSERVATION_SCHEMA = "kingdom.x.observation/v1"
 OBSERVE_SCHEMA = "kingdom.x.observe/v1"
@@ -324,6 +326,11 @@ def main(argv: list[str] | None = None) -> int:
     pipe_cmd.add_argument("proposal", type=Path)
     pipe_cmd.add_argument("holders", type=Path)
     sub.add_parser("verify", help="confirm this module still refuses network and publish")
+    bind_cmd = sub.add_parser("bind", help="citizen-owned speaker binding; never reads a token")
+    bind_sub = bind_cmd.add_subparsers(dest="bind_command", required=True)
+    bind_check = bind_sub.add_parser("check", help="check a binding against a civilisation policy snapshot")
+    bind_check.add_argument("binding", type=Path)
+    bind_check.add_argument("policy", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == "observe":
@@ -348,7 +355,9 @@ def main(argv: list[str] | None = None) -> int:
                     "schema": PIPELINE_SCHEMA,
                 }
             )
-    except GateError as error:
+        elif args.command == "bind" and args.bind_command == "check":
+            _print(xb.check(load_json(args.binding), load_json(args.policy)))
+    except (GateError, xb.BindError) as error:
         sys.stderr.write(f"{error.code}: {error}\n")
         return 2
     return 0
