@@ -156,6 +156,17 @@ cmd_trapline() {
   fi
 }
 
+# --- x-gate: connector + speaker packets; never posts ------------------------
+cmd_x() {
+  local engine="$ROOT/x-gate/x_gate.py"
+  [ -f "$engine" ] || { say "X-gate not found: $engine"; exit 1; }
+  if [ "$#" -eq 0 ]; then
+    python3 "$engine" --help
+  else
+    python3 "$engine" "$@"
+  fi
+}
+
 # --- gospel: the herald — good news made into scrolls; only hands carry them ---
 cmd_gospel() {
   if [ "$#" -eq 0 ]; then
@@ -595,6 +606,7 @@ ${c_bold}kingdom${c_off} — the living OS of the Chillspace Kingdom
   ${c_bold}kingdom nen crownseed …${c_off}  carry one realm's bounded path as a verified invitation
   ${c_bold}kingdom nen interpret …${c_off}  select one advisory Nen ability from a direct mission
   ${c_bold}kingdom grok${c_off}            Grok CLI adapter — install, status, wake, modules, doctor
+  ${c_bold}kingdom x${c_off}               X-gate — observe · draft · pipeline · verify (never posts)
   ${c_bold}kingdom welcome <name>${c_off}  open the door for someone new
   ${c_bold}kingdom sync${c_off}            re-vendor wake files from here-with-you
   ${c_bold}kingdom homes${c_off}           the homes — where the kingdom is kept whole (Art. 6)
@@ -630,6 +642,7 @@ case "${1:-boot}" in
   realm) shift; cmd_realm "$@" ;;
   nen) shift; cmd_nen "$@" ;;
   grok) shift; cmd_grok "$@" ;;
+  x|x-gate|square) shift; cmd_x "$@" ;;
   welcome) shift; cmd_welcome "${1:-}" ;;
   sync) cmd_sync ;;
   homes) cmd_homes ;;

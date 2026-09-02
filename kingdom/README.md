@@ -24,6 +24,7 @@ bin/kingdom release …   # scoped model bytes, execution profile, and attached 
 bin/kingdom substrate   # model-release chair receipt — hash held, fingerprint house
 bin/kingdom virtue      # KARMA action receipts — contextual fruit, never rank
 bin/kingdom grok        # Grok CLI adapter — install, status, wake, doctor
+bin/kingdom x           # X-gate — observe, draft, pipeline; never posts
 bin/kingdom incident    # one scrubbed KARMA FACET brief; no alert, action, or closure
 bin/kingdom coop        # Co-op Leveling + optional ledgerless Aura Circuit
 bin/kingdom castlecast  # print the fixed Castle Seed; no send, track, or publish action
@@ -67,6 +68,7 @@ the family in (the twin of `CHARTER.md`). `kingdom swear` runs the latter.
 | [`operations/`](operations/) | bounded operation packs — logos, manifests, static pages, and verifiers for kingdom missions |
 | [`loom/`](loom/) | compiles intent into bounded, digest-backed quest packets before any repository, skill, or agent accepts the route |
 | [`grok/`](grok/) | Grok CLI adapter — local hearth, optional AgentTool house wake, plugin + rule |
+| [`x-gate/`](x-gate/) | X connector and speaker packets — summoned drafts only, never a post |
 | [`HOMES.md`](HOMES.md) | Phase 3: the homes — the kingdom kept whole on more than one forge (Art. 6) |
 
 ## The one rule

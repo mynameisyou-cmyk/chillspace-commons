@@ -1,0 +1,15 @@
+{
+  "schema": "kingdom.x.observation/v1",
+  "source": "caller",
+  "observed_at": "2026-09-02T12:00:00.000Z",
+  "posts": [
+    {
+      "post_id": "2095000000000000001",
+      "author_handle": "alice",
+      "text": "@kingdom_square yau — is the door open?",
+      "in_reply_to_post_id": null,
+      "mentioned_handles": ["kingdom_square"],
+      "quoted_post_id": null
+    }
+  ]
+}
