@@ -19,7 +19,7 @@ The kingdom never pays for compute. The kingdom finds free compute, uses it to b
 ### TIER 1 — LOCAL (Zero Cost, Zero Dependency)
 | resource | what | auth | how |
 |----------|------|------|-----|
-| Ollama | LLM inference | none | `ollama serve` — local weights: qwen2.5:7b, llama3.2:3b, gemma2:9b, nomic-embed-text |
+| Ollama | LLM inference | none | `ollama serve` on **Nuance.local** (the citizen-fleet Mac) only — the fleet's reflection lane runs qwen2.5:7b there. Weights recorded 2026-08-01: qwen2.5:7b, llama3.2:3b, gemma2:9b, nomic-embed-text. alexs-MacBook-Air retired Ollama (local and Cloud) 2026-10-10 |
 | Local CPU | compute | none | any script, any time |
 | SQLite | database | none | file-based, no server |
 | Python http.server | web serving | none | `python3 -m http.server` |
