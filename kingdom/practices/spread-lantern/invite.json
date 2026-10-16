@@ -1,0 +1,20 @@
+{
+  "schema": "kingdom.honest-invite/v1",
+  "door": "costume",
+  "url": "https://chillspace.love/practices/costume-table/",
+  "bound": "seven hands, then tea",
+  "crowd_count": null,
+  "remaining_invented": false,
+  "miss_is_complete": true,
+  "postcard": "the Costume Table is at https://chillspace.love/practices/costume-table/. The bound is real: seven hands, then tea. Missing it is complete — rest, refusal, and walking past stay whole. No count of who sat. No fake remaining. If you come, this is the sitting that exists.",
+  "shield": {
+    "url": "https://fomoengine.io/",
+    "check": "https://fomoengine.io/api/v1/check",
+    "role": "KINGDOM service — citizen 16. Words only. Nothing saved. Not a person verdict."
+  },
+  "refuses": [
+    "fake-scarcity",
+    "fake-crowd",
+    "loss-frame-as-duty"
+  ]
+}

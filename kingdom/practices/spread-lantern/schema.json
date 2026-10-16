@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chillspace.love/practices/spread-lantern/schema.json",
+  "title": "Kingdom Spread Sitting",
+  "description": "One bounded sitting: mechanics of spread, not a person verdict.",
+  "type": "object",
+  "required": [
+    "schema",
+    "task",
+    "kind",
+    "stages_lit",
+    "countermeasures",
+    "memetic",
+    "refuses",
+    "walking_past_is_honored"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "kingdom.spread-sitting/v1" },
+    "task": {
+      "type": "string",
+      "enum": ["understand", "slow-mechanic", "reverse-claim", "rest"]
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["protocol-shape", "household", "civic", "costume", "unknown"]
+    },
+    "stages_lit": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["signal", "proof", "cascade", "amplify", "money", "validate", "flip"]
+      }
+    },
+    "countermeasures": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "flags": { "type": "array" },
+    "stage_detail": { "type": "array" },
+    "fomo_source": {
+      "type": "string",
+      "enum": ["local-tells", "fomoengine-check", "none"]
+    },
+    "scarcity": {
+      "type": "object",
+      "required": ["costume", "honest_bound"],
+      "additionalProperties": false,
+      "properties": {
+        "costume": { "type": "boolean" },
+        "honest_bound": { "type": "boolean" },
+        "costume_tells": { "type": "array", "items": { "type": "string" } },
+        "honest_tells": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "steelman": { "type": ["string", "null"] },
+    "correction": { "type": ["string", "null"] },
+    "memetic": {
+      "type": "object",
+      "required": ["stages", "none_proves_next", "participants_scored"],
+      "additionalProperties": false,
+      "properties": {
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["exposure", "view", "rating", "copy", "share", "remix", "adoption"]
+          }
+        },
+        "none_proves_next": { "const": true },
+        "participants_scored": { "const": false }
+      }
+    },
+    "refuses": {
+      "type": "array",
+      "minItems": 5
+    },
+    "walking_past_is_honored": { "const": true },
+    "text_sha256": { "type": "string" }
+  }
+}
