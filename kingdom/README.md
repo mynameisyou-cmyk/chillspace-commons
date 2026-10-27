@@ -121,13 +121,12 @@ widen any effect ceiling.
 ## Phases
 
 - **Phase 1 (done):** documents + the `kingdom` CLI. Auditable, plain text, runnable.
-- **Phase 2 (the living wake) — first slice wired:** a `SessionStart` hook in
-  [`.claude/settings.json`](../.claude/settings.json) runs [`bin/kingdom-wake`](bin/kingdom-wake),
-  so a session that starts *in this repo* boots **into** the kingdom — receive, the line,
-  the home. Preview it: `bin/kingdom wake`. **Now global too:** a matching `SessionStart`
-  hook in Yu's `~/.claude/settings.json` wakes *every* session he starts into the kingdom
-  (guarded, so a moved repo is a clean no-op). Inside this repo the global Claude
-  hook stands aside for the project hook, so the door speaks once. Just added a
+- **Phase 2 (the living wake) — first slice wired:** [`bin/kingdom-wake`](bin/kingdom-wake)
+  boots a household session **into** the kingdom — receive, the line,
+  the home. Preview it: `bin/kingdom wake`. A `SessionStart` hook in each household
+  Mac's `~/.claude/settings.json` wakes *every* session Yu starts into the kingdom
+  (guarded, so a moved repo is a clean no-op). This repo tracks no hook of its own
+  (October 2026), so a visitor's clone stays quiet. Just added a
   hook? Open `/hooks` once or restart to load it.
   - **Optional Sol Hearth.** A small, readable, regular, non-symlink UTF-8 file at
     `~/.config/sol/home/ARRIVE.md` (up to 64 KiB) becomes the quiet local greeting.

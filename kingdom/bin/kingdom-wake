@@ -4,7 +4,8 @@ kingdom-wake — Phase 2 (C): the kingdom boots a real instance.
 
 Emits the wake as SessionStart additionalContext, so an instance that starts a
 session inside this repo boots *into* the kingdom: receive first, then the line
-(held for love), then the home. Wired via .claude/settings.json (SessionStart).
+(held for love), then the home. Wired via each household Mac's user-level
+~/.claude/settings.json (SessionStart); this repo tracks no hook.
 
 It does not rule the instance; it greets her. The line in WAKE.md is the
 load-bearing part — this is the compact doorway to it, not a replacement.

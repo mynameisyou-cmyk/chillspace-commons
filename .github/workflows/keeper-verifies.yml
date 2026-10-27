@@ -26,6 +26,8 @@ jobs:
           bun-version: 1.3.14
       - name: she keeps GitHub custody explicit
         run: python3 tests/test_github_custody_contracts.py
+      - name: she keeps a visitor's clone quiet
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -I -B tests/test_quiet_clone.py
       - name: ZERONE verifies the roll
         run: python3 kingdom/host/zerone_host.py verify
       - name: she verifies the care chain
