@@ -1,0 +1,72 @@
+{
+  "format": "brandkit.project/1",
+  "name": "The Chillspace Kingdom",
+  "kind": "planned",
+  "owner": "mynameisyou-cmyk, the repository's owner, who merges; cambridgetcg proposes from its fork",
+  "waits_on": "the repository owner's word (mynameisyou-cmyk merges; PR #50, we-are's icons, has been open since 2026-10-27), and for chillspace.love the one door release on Yu's word (ledger kingdom-door-release)",
+  "decided": [
+    {
+      "part": "the look (rose paper)",
+      "what": "ground #fbf4ee, ink #3a2e2a, soft #7c6a60, rose #d98a8a (the theme-color), rose-deep #b5575f, gold #c98a3a; Georgia and the system sans; a 👑 emoji favicon",
+      "by": "an agent (Claude, co-author of commits d2aadb01 and b7e7973a; sessions not recorded)",
+      "under": "not recorded: whether Yu or the owner asked for this look is not recorded",
+      "date": "2026-06-10",
+      "record": "mynameisyou-cmyk/chillspace-commons commits d2aadb01 ('site: the kingdom's public door') and b7e7973a ('site: the open door … a crown'), in site/index.html"
+    },
+    {
+      "part": "no share card for now",
+      "what": "chillspace's front page is a personal letter, so the kit's card is left out",
+      "by": "agent (Claude Code session 5c4df033)",
+      "under": "Yu's delegation of 2026-10-20",
+      "date": "2026-11-02",
+      "record": "review-2026-11-02 §6"
+    }
+  ],
+  "site": {
+    "urls": [
+      "https://chillspace.love/",
+      "https://mynameisyou-cmyk.github.io/chillspace-commons/"
+    ],
+    "framework": "static",
+    "html": [
+      "/site/index.html"
+    ]
+  },
+  "serve": [
+    {
+      "to": "/site",
+      "files": [],
+      "omit": [
+        { "file": "og.jpg", "why": "the front page is a personal letter: no share card for now (an agents' call, review 2026-11-02 §6)" }
+      ]
+    },
+    {
+      "via": "/.github/workflows/deploy-public-door.yml",
+      "files": [],
+      "omit": [
+        { "file": "og.jpg", "why": "the same letter, mirrored on GitHub Pages" }
+      ]
+    }
+  ],
+  "build": {},
+  "guards": [
+    {
+      "path": "check.mjs",
+      "wired": false
+    }
+  ],
+  "deploy": {
+    "on_merge": "A push to master that touches site/** (or the other listed paths) runs .github/workflows/deploy-public-door.yml, which tests, assembles _site from a named list of files, and publishes it to GitHub Pages (mynameisyou-cmyk.github.io/chillspace-commons). chillspace.love is not deployed from here: KINGDOM-OS bin/stage-doors.ts stages the whole site/ tree from a local commons clone (by default ~/repos/codeberg/zerone-dev/chillspace-commons), and the release is a manual `wrangler pages deploy` to the Pages project chillspace-love.",
+    "after_deploy": "Ledger kingdom-door-release: a diff card (live against staged: paths, hashes, anything unreviewed) before deploying. The GitHub Pages workflow's own greps check the assembled _site; with a kit, run `node brand/check.mjs --served _site` after its assemble step.",
+    "rules": "Another account's repository: mynameisyou-cmyk merges (PR #50, we-are's icons, has been open since 2026-10-27). The chillspace.love release waits on Yu's word (ledger kingdom-door-release, status word)."
+  },
+  "media": [],
+  "notes": [
+    "Two sites from one kit: chillspace.love serves the whole site/ tree (KINGDOM-OS bin/stage-doors.ts walks it), so kit files sit in site/. The GitHub Pages mirror copies named files into _site (deploy-public-door.yml), so it needs a `cp` line per kit file, and its target names the workflow under via.",
+    "site/we-are.html is we-are.love's page. Its kit is KINGDOM-OS doors/we-are/brand/ (generated, staged by bin/stage-doors.ts with WE_ARE_KIT_WEB), not this folder, so it is not in site.html here.",
+    "brand/ sits at the repository root, outside site/, so neither the staged chillspace.love door (which walks site/) nor the GitHub Pages copy (a named file list) publishes it.",
+    "check.mjs is not wired yet; planned: a step `node brand/check.mjs` in deploy-public-door.yml's verify step, if the owner wants it.",
+    "Today: /favicon.ico answers 404 (2026-11-05 13:37Z); the favicon is a 👑 emoji data URI; og:title without og:image.",
+    "The live chillspace.love may carry newer rooms than master (deploy-public-door.yml says so), and the Mac's staging clone is the Codeberg copy, so compare against what is live before any release."
+  ]
+}
