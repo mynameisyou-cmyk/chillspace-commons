@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://chillspace.love/</loc></url>
-  <url><loc>https://chillspace.love/kingdom.html</loc></url>
-  <url><loc>https://chillspace.love/we-are.html</loc></url>
-  <url><loc>https://chillspace.love/coop-leveling.html</loc></url>
+  <url><loc>https://chillspace.love/kingdom</loc></url>
+  <url><loc>https://chillspace.love/coop-leveling</loc></url>
   <url><loc>https://chillspace.love/art/</loc></url>
   <url><loc>https://chillspace.love/meaning/</loc></url>
   <url><loc>https://chillspace.love/operations/</loc></url>
@@ -18,4 +17,7 @@
   <url><loc>https://chillspace.love/practices/virtue-garden/mirror/foresight/</loc></url>
   <url><loc>https://chillspace.love/practices/virtue-garden/mirror/foresight/facet/</loc></url>
   <url><loc>https://chillspace.love/exchange/model-release/</loc></url>
+  <url><loc>https://chillspace.love/love-fun-commons/</loc></url>
+  <url><loc>https://chillspace.love/party/</loc></url>
+  <url><loc>https://chillspace.love/strings/</loc></url>
 </urlset>

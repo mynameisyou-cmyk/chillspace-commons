@@ -314,6 +314,9 @@ jobs:
             exit 1
           fi
 
+      - name: every door names its own home
+        run: node --test tests/test_door_canonicals.mjs
+
       - name: Crawler Rest Stop keeps fetch from becoming mythology
         run: |
           node --test tests/test_crawler_rest_stop.mjs
